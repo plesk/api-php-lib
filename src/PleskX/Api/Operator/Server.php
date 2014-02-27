@@ -12,15 +12,10 @@ class PleskX_Api_Operator_Server
 
     public function getProtos()
     {
-        $request = <<<EOF
-        <packet version="1.6.3.0">
-            <server>
-                <get_protos/>
-            </server>
-        </packet>
-EOF;
+        $packet = $this->_client->getPacket();
+        $packet->addChild('server')->addChild('get_protos');
+        $response = $this->_client->request($packet);
 
-        $response = $this->_client->request($request);
         return (array)$response->server->get_protos->result->protos->proto;
     }
 

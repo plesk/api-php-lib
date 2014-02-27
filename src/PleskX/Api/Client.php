@@ -11,6 +11,7 @@ class PleskX_Api_Client
     private $_login;
     private $_password;
     private $_secretKey;
+    private $_version = '';
 
     /**
      * Create client
@@ -49,13 +50,39 @@ class PleskX_Api_Client
     }
 
     /**
+     * Set default version for requests
+     *
+     * @param string $version
+     */
+    public function setVersion($version)
+    {
+        $this->_version = $version;
+    }
+
+    /**
+     * Retrieve XML template for packet
+     *
+     * @param string|null $version
+     * @return SimpleXMLElement
+     */
+    public function getPacket($version = null)
+    {
+        $protocolVersion = !is_null($version) ? $version : $this->_version;
+        return new SimpleXMLElement("<?xml version='1.0' encoding='UTF-8' ?><packet version='$protocolVersion'/>");
+    }
+
+    /**
      * Perform API request
      *
-     * @param string $request
+     * @param string|SimpleXMLElement $request
      * @return string
      */
     public function request($request)
     {
+        if ($request instanceof SimpleXMLElement) {
+            $request = $request->asXml();
+        }
+
         $curl = curl_init();
 
         curl_setopt($curl, CURLOPT_URL, "$this->_protocol://$this->_host:$this->_port/enterprise/control/agent.php");
