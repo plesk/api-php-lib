@@ -11,7 +11,7 @@ $client = new PleskApiClient($host);
 $client->setCredentials($login, $password);
 
 $request = <<<EOF
-<packet version="1.6.3.0">
+<packet>
   <server>
     <get_protos/>
   </server>
