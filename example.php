@@ -4,7 +4,7 @@
 require_once('PleskApiClient.php');
 
 $host = getenv('REMOTE_HOST');
-$login = getenv('REMOTE_LOGIN');
+$login = getenv('REMOTE_LOGIN') ?: 'admin';
 $password = getenv('REMOTE_PASSWORD');
 
 $client = new PleskApiClient($host);
