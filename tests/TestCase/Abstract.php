@@ -3,6 +3,7 @@
 class TestCase_Abstract extends PHPUnit_Framework_TestCase
 {
 
+    /** @var PleskX_Api_Client */
     protected $_client;
 
     public function setUp()
