@@ -1,5 +1,6 @@
 <?php
-class PleskX_Api_Struct_Server_GeneralInfo
+
+class PleskX_Api_Struct_Server_GeneralInfo extends PleskX_Api_Struct_Abstract
 {
     /** @var string */
     public $serverName;
@@ -12,8 +13,10 @@ class PleskX_Api_Struct_Server_GeneralInfo
 
     public function __construct($apiResponse)
     {
-        $this->serverName = (string)$apiResponse->server_name;
-        $this->serverGuid = (string)$apiResponse->server_guid;
-        $this->mode = (string)$apiResponse->mode;
+        $this->_initScalarProperties($apiResponse, [
+            'server_name',
+            'server_guid',
+            'mode',
+        ]);
     }
 }

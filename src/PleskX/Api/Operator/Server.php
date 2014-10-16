@@ -35,4 +35,13 @@ class PleskX_Api_Operator_Server
         return new PleskX_Api_Struct_Server_GeneralInfo($response->server->get->result->gen_info);
     }
 
+    public function getPreferences()
+    {
+        $packet = $this->_client->getPacket();
+        $packet->addChild('server')->addChild('get')->addChild('prefs');
+        $response = $this->_client->request($packet);
+
+        return new PleskX_Api_Struct_Server_Preferences($response->server->get->result->prefs);
+    }
+
 }

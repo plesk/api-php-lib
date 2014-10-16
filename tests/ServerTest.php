@@ -18,4 +18,12 @@ class ServerTest extends TestCase_Abstract
         $this->assertEquals('standard', $generalInfo->mode);
     }
 
+    public function testGetPreferences()
+    {
+        $preferences = $this->_client->server()->getPreferences();
+        $this->assertInternalType('integer', $preferences->statTtl);
+        $this->assertGreaterThan(0, $preferences->statTtl);
+        $this->assertEquals(0, $preferences->restartApacheInterval);
+    }
+
 }
