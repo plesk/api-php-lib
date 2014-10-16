@@ -26,4 +26,12 @@ class ServerTest extends TestCase_Abstract
         $this->assertEquals(0, $preferences->restartApacheInterval);
     }
 
+    public function testGetAdmin()
+    {
+        $admin = $this->_client->server()->getAdmin();
+        $this->assertGreaterThan(0, strlen($admin->companyName));
+        $this->assertGreaterThan(0, strlen($admin->name));
+        $this->assertContains('@', $admin->email);
+    }
+
 }

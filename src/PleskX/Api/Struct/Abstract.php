@@ -18,12 +18,17 @@ abstract class PleskX_Api_Struct_Abstract
     protected function _initScalarProperties($apiResponse, array $properties)
     {
         foreach ($properties as $property) {
-            $classPropertyName = $this->_underToCamel($property);
+            if (is_array($property)) {
+                $classPropertyName = current($property);
+                $value = $apiResponse->{key($property)};
+            } else {
+                $classPropertyName = $this->_underToCamel($property);
+                $value = $apiResponse->$property;
+            }
+
             $reflectionProperty = new ReflectionProperty($this, $classPropertyName);
             $docBlock = $reflectionProperty->getDocComment();
             $propertyType = preg_replace('/^.+ @var ([a-z]+) .+$/', '\1', $docBlock);
-
-            $value = $apiResponse->$property;
 
             if ('string' == $propertyType) {
                 $value = (string)$value;

@@ -44,4 +44,13 @@ class PleskX_Api_Operator_Server
         return new PleskX_Api_Struct_Server_Preferences($response->server->get->result->prefs);
     }
 
+    public function getAdmin()
+    {
+        $packet = $this->_client->getPacket();
+        $packet->addChild('server')->addChild('get')->addChild('admin');
+        $response = $this->_client->request($packet);
+
+        return new PleskX_Api_Struct_Server_Admin($response->server->get->result->admin);
+    }
+
 }
