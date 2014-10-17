@@ -23,34 +23,32 @@ class PleskX_Api_Operator_Server
         return (array)$response->server->get_protos->result->protos->proto;
     }
 
-    /**
-     * @return PleskX_Api_Struct_Server_GeneralInfo
-     */
     public function getGeneralInfo()
     {
-        $packet = $this->_client->getPacket();
-        $packet->addChild('server')->addChild('get')->addChild('gen_info');
-        $response = $this->_client->request($packet);
-
-        return new PleskX_Api_Struct_Server_GeneralInfo($response->server->get->result->gen_info);
+        return new PleskX_Api_Struct_Server_GeneralInfo($this->_getInfo('gen_info'));
     }
 
     public function getPreferences()
     {
-        $packet = $this->_client->getPacket();
-        $packet->addChild('server')->addChild('get')->addChild('prefs');
-        $response = $this->_client->request($packet);
-
-        return new PleskX_Api_Struct_Server_Preferences($response->server->get->result->prefs);
+        return new PleskX_Api_Struct_Server_Preferences($this->_getInfo('prefs'));
     }
 
     public function getAdmin()
     {
+        return new PleskX_Api_Struct_Server_Admin($this->_getInfo('admin'));
+    }
+
+    /**
+     * @param string $operation
+     * @return mixed
+     */
+    private function _getInfo($operation)
+    {
         $packet = $this->_client->getPacket();
-        $packet->addChild('server')->addChild('get')->addChild('admin');
+        $packet->addChild('server')->addChild('get')->addChild($operation);
         $response = $this->_client->request($packet);
 
-        return new PleskX_Api_Struct_Server_Admin($response->server->get->result->admin);
+        return $response->server->get->result->$operation;
     }
 
 }
