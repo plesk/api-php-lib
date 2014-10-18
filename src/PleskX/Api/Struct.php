@@ -1,19 +1,21 @@
 <?php
 
-abstract class PleskX_Api_Struct_Abstract
+namespace PleskX\Api;
+
+abstract class Struct
 {
 
     public function __set($property, $value)
     {
-        throw new Exception("Try to set an undeclared property '$property'.");
+        throw new \Exception("Try to set an undeclared property '$property'.");
     }
 
     /**
      * Initialize list of scalar properties by response
      *
-     * @param SimpleXMLElement $apiResponse
+     * @param \SimpleXMLElement $apiResponse
      * @param array $properties
-     * @throws Exception
+     * @throws \Exception
      */
     protected function _initScalarProperties($apiResponse, array $properties)
     {
@@ -26,7 +28,7 @@ abstract class PleskX_Api_Struct_Abstract
                 $value = $apiResponse->$property;
             }
 
-            $reflectionProperty = new ReflectionProperty($this, $classPropertyName);
+            $reflectionProperty = new \ReflectionProperty($this, $classPropertyName);
             $docBlock = $reflectionProperty->getDocComment();
             $propertyType = preg_replace('/^.+ @var ([a-z]+) .+$/', '\1', $docBlock);
 
@@ -35,7 +37,7 @@ abstract class PleskX_Api_Struct_Abstract
             } else if ('integer' == $propertyType) {
                 $value = (int)$value;
             } else {
-                throw new Exception("Unknown property type '$propertyType'.");
+                throw new \Exception("Unknown property type '$propertyType'.");
             }
 
             $this->$classPropertyName = $value;

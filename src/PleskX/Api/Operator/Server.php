@@ -1,9 +1,12 @@
 <?php
 
-class PleskX_Api_Operator_Server
+namespace PleskX\Api\Operator;
+use PleskX\Api\Struct\Server as Struct;
+
+class Server
 {
 
-    /** @var PleskX_Api_Client */
+    /** @var \PleskX\Api\Client */
     private $_client;
 
     public function __construct($client)
@@ -25,22 +28,22 @@ class PleskX_Api_Operator_Server
 
     public function getGeneralInfo()
     {
-        return new PleskX_Api_Struct_Server_GeneralInfo($this->_getInfo('gen_info'));
+        return new Struct\GeneralInfo($this->_getInfo('gen_info'));
     }
 
     public function getPreferences()
     {
-        return new PleskX_Api_Struct_Server_Preferences($this->_getInfo('prefs'));
+        return new Struct\Preferences($this->_getInfo('prefs'));
     }
 
     public function getAdmin()
     {
-        return new PleskX_Api_Struct_Server_Admin($this->_getInfo('admin'));
+        return new Struct\Admin($this->_getInfo('admin'));
     }
 
     /**
      * @param string $operation
-     * @return mixed
+     * @return \SimpleXMLElement
      */
     private function _getInfo($operation)
     {

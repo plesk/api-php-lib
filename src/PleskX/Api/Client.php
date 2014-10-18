@@ -1,9 +1,12 @@
 <?php
 
+namespace PleskX\Api;
+use SimpleXMLElement;
+
 /**
  * Client for Plesk API-RPC
  */
-class PleskX_Api_Client
+class Client
 {
     private $_host;
     private $_port;
@@ -130,7 +133,7 @@ class PleskX_Api_Client
         static $serverOperator;
 
         if (!$serverOperator) {
-            $serverOperator = new PleskX_Api_Operator_Server($this);
+            $serverOperator = new Operator\Server($this);
         }
 
         return $serverOperator;

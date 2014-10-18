@@ -1,6 +1,6 @@
 <?php
 
-class ServerTest extends TestCase_Abstract
+class ServerTest extends TestCase
 {
 
     public function testGetProtos()

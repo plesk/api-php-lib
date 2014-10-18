@@ -1,6 +1,8 @@
 <?php
 
-class PleskX_Api_Struct_Server_Admin extends PleskX_Api_Struct_Abstract
+namespace PleskX\Api\Struct\Server;
+
+class Admin extends \PleskX\Api\Struct
 {
     /** @var string */
     public $companyName;

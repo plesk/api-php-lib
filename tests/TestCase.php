@@ -1,9 +1,9 @@
 <?php
 
-class TestCase_Abstract extends PHPUnit_Framework_TestCase
+abstract class TestCase extends PHPUnit_Framework_TestCase
 {
 
-    /** @var PleskX_Api_Client */
+    /** @var PleskX\Api\Client */
     protected $_client;
 
     public function setUp()
@@ -12,7 +12,7 @@ class TestCase_Abstract extends PHPUnit_Framework_TestCase
         $login = getenv('REMOTE_LOGIN');
         $password = getenv('REMOTE_PASSWORD');
 
-        $this->_client = new PleskX_Api_Client($host);
+        $this->_client = new PleskX\Api\Client($host);
         $this->_client->setCredentials($login, $password);
     }
 

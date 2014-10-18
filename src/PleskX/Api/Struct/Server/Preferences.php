@@ -1,6 +1,8 @@
 <?php
 
-class PleskX_Api_Struct_Server_Preferences extends PleskX_Api_Struct_Abstract
+namespace PleskX\Api\Struct\Server;
+
+class Preferences extends \PleskX\Api\Struct
 {
     /** @var integer */
     public $statTtl;
