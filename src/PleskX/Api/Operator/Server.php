@@ -42,6 +42,89 @@ class Server
     }
 
     /**
+     * @return array
+     */
+    public function getKeyInfo()
+    {
+        $keyInfo = [];
+        $keyInfoXml = $this->_getInfo('key');
+
+        foreach ($keyInfoXml->property as $property) {
+            $keyInfo[(string)$property->name] = (string)$property->value;
+        }
+
+        return $keyInfo;
+    }
+
+    /**
+     * @return array
+     */
+    public function getComponents()
+    {
+        $components = [];
+        $componentsXml = $this->_getInfo('components');
+
+        foreach ($componentsXml->component as $component) {
+            $components[(string)$component->name] = (string)$component->version;
+        }
+
+        return $components;
+    }
+
+    /**
+     * @return array
+     */
+    public function getServiceStates()
+    {
+        $states = [];
+        $statesXml = $this->_getInfo('services_state');
+
+        foreach ($statesXml->srv as $service) {
+            $states[(string)$service->id] = [
+                'id' => (string)$service->id,
+                'title' => (string)$service->title,
+                'state' => (string)$service->state,
+            ];
+        }
+
+        return $states;
+    }
+
+    public function getSessionPreferences()
+    {
+        return new Struct\SessionPreferences($this->_getInfo('session_setup'));
+    }
+
+    /**
+     * @return array
+     */
+    public function getShells()
+    {
+        $shells = [];
+        $shellsXml = $this->_getInfo('shells');
+
+        foreach ($shellsXml->shell as $shell) {
+            $shells[(string)$shell->name] = (string)$shell->path;
+        }
+
+        return $shells;
+    }
+
+    /**
+     * @return array
+     */
+    public function getNetworkInterfaces()
+    {
+        $interfacesXml = $this->_getInfo('interfaces');
+        return (array)$interfacesXml->interface;
+    }
+
+    public function getStatistics()
+    {
+        return new Struct\Statistics($this->_getInfo('stat'));
+    }
+
+    /**
      * @param string $operation
      * @return \SimpleXMLElement
      */
