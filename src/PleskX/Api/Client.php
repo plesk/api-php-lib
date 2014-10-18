@@ -71,7 +71,9 @@ class Client
     public function getPacket($version = null)
     {
         $protocolVersion = !is_null($version) ? $version : $this->_version;
-        return new SimpleXMLElement("<?xml version='1.0' encoding='UTF-8' ?><packet version='$protocolVersion'/>");
+        $content = "<?xml version='1.0' encoding='UTF-8' ?>";
+        $content .= "<packet" . ("" === $protocolVersion ? "" : " version='$protocolVersion'") . "/>";
+        return new SimpleXMLElement($content);
     }
 
     /**
