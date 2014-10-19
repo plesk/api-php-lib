@@ -9,3 +9,12 @@ function autoload($className)
 }
 
 spl_autoload_register('autoload');
+
+if ($executionLogFile = getenv('EXECUTION_LOG')) {
+    PleskX\Api\Client::enableExecutionLog();
+
+    register_shutdown_function(function () use ($executionLogFile) {
+        $executionLog = PleskX\Api\Client::getExecutionLog();
+        file_put_contents($executionLogFile, json_encode($executionLog));
+    });
+}

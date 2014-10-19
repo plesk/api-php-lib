@@ -16,6 +16,9 @@ class Client
     private $_secretKey;
     private $_version = '';
 
+    private static $_isExecutionsLogEnabled = false;
+    private static $_executionLog = [];
+
     /**
      * Create client
      *
@@ -100,6 +103,14 @@ class Client
 
         $result = curl_exec($curl);
 
+        if (self::$_isExecutionsLogEnabled) {
+            self::$_executionLog[] = [
+                'trace' => debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS),
+                'request' => $request,
+                'response' => $result,
+            ];
+        }
+
         curl_close($curl);
 
         // TODO: add error handling
@@ -130,6 +141,31 @@ class Client
         return $headers;
     }
 
+    /**
+     * Enable or disable execution log
+     *
+     * @param bool $enable
+     */
+    public static function enableExecutionLog($enable = true)
+    {
+        self::$_isExecutionsLogEnabled = $enable;
+    }
+
+    /**
+     * Retrieve execution log
+     *
+     * @return array
+     */
+    public static function getExecutionLog()
+    {
+        return self::$_executionLog;
+    }
+
+    /**
+     * Server operator
+     *
+     * @return Operator\Server
+     */
     public function server()
     {
         static $serverOperator;
