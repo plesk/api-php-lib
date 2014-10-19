@@ -178,7 +178,7 @@ class Client
     }
 
     /**
-     * Server operator
+     * Certificate operator
      *
      * @return Operator\Certificate
      */
