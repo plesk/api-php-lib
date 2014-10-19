@@ -177,4 +177,20 @@ class Client
         return $serverOperator;
     }
 
+    /**
+     * Server operator
+     *
+     * @return Operator\Certificate
+     */
+    public function certificate()
+    {
+        static $certificateOperator;
+
+        if (!$certificateOperator) {
+            $certificateOperator = new Operator\Certificate($this);
+        }
+
+        return $certificateOperator;
+    }
+
 }

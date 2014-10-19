@@ -3,16 +3,8 @@
 namespace PleskX\Api\Operator;
 use PleskX\Api\Struct\Server as Struct;
 
-class Server
+class Server extends \PleskX\Api\Operator
 {
-
-    /** @var \PleskX\Api\Client */
-    private $_client;
-
-    public function __construct($client)
-    {
-        $this->_client = $client;
-    }
 
     /**
      * @return array
