@@ -99,4 +99,12 @@ class ServerTest extends TestCase
         $this->assertEquals('psa', $stats->version->internalName);
     }
 
+    public function testGetSiteIsolationConfig()
+    {
+        $config = $this->_client->server()->getSiteIsolationConfig();
+        $this->assertInternalType('array', $config);
+        $this->assertGreaterThan(0, count($config));
+        $this->assertArrayHasKey('php', $config);
+    }
+
 }

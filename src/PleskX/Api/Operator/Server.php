@@ -117,6 +117,21 @@ class Server extends \PleskX\Api\Operator
     }
 
     /**
+     * @return array
+     */
+    public function getSiteIsolationConfig()
+    {
+        $config = [];
+        $configXml = $this->_getInfo('site-isolation-config');
+
+        foreach ($configXml->property as $property) {
+            $config[(string)$property->name] = (string)$property->value;
+        }
+
+        return $config;
+    }
+
+    /**
      * @param string $operation
      * @return \SimpleXMLElement
      */
