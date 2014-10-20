@@ -107,4 +107,10 @@ class ServerTest extends TestCase
         $this->assertArrayHasKey('php', $config);
     }
 
+    public function testGetUpdatesInfo()
+    {
+        $updatesInfo = $this->_client->server()->getUpdatesInfo();
+        $this->assertInternalType('boolean', $updatesInfo->installUpdatesAutomatically);
+    }
+
 }

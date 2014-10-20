@@ -131,6 +131,11 @@ class Server extends \PleskX\Api\Operator
         return $config;
     }
 
+    public function getUpdatesInfo()
+    {
+        return new Struct\UpdatesInfo($this->_getInfo('updates'));
+    }
+
     /**
      * @param string $operation
      * @return \SimpleXMLElement
