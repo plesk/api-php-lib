@@ -193,4 +193,20 @@ class Client
         return $certificateOperator;
     }
 
+    /**
+     * Customer operator
+     *
+     * @return Operator\Customer
+     */
+    public function customer()
+    {
+        static $customerOperator;
+
+        if (!$customerOperator) {
+            $customerOperator = new Operator\Customer($this);
+        }
+
+        return $customerOperator;
+    }
+
 }
