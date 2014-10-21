@@ -209,4 +209,20 @@ class Client
         return $customerOperator;
     }
 
+    /**
+     * Reseller operator
+     *
+     * @return Operator\Reseller
+     */
+    public function reseller()
+    {
+        static $resellerOperator;
+
+        if (!$resellerOperator) {
+            $resellerOperator = new Operator\Reseller($this);
+        }
+
+        return $resellerOperator;
+    }
+
 }

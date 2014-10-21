@@ -3,6 +3,7 @@
     <testsuites>
         <testsuite>
             <file>CustomerTest.php</file>
+            <file>ResellerTest.php</file>
             <file>CertificateTest.php</file>
             <file>ServerTest.php</file>
         </testsuite>
