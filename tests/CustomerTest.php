@@ -25,4 +25,14 @@ class CustomerTest extends TestCase
         $this->assertTrue($result);
     }
 
+    public function testGet()
+    {
+        $customer = $this->_client->customer()->create($this->_customerProperties);
+        $customerInfo = $this->_client->customer()->get('id', $customer->id);
+        $this->assertEquals('John Smith', $customerInfo->personalName);
+        $this->assertEquals('john-unit-test', $customerInfo->login);
+
+        $this->_client->customer()->delete('id', $customer->id);
+    }
+
 }

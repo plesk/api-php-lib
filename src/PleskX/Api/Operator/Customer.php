@@ -36,4 +36,14 @@ class Customer extends \PleskX\Api\Operator
         return 'ok' === (string)$response->customer->del->result->status;
     }
 
+    public function get($field, $value)
+    {
+        $packet = $this->_client->getPacket();
+        $getTag = $packet->addChild('customer')->addChild('get');
+        $getTag->addChild('filter')->addChild($field, $value);
+        $getTag->addChild('dataset')->addChild('gen_info');
+        $response = $this->_client->request($packet);
+        return new Struct\GeneralInfo($response->customer->get->result->data->gen_info);
+    }
+
 }
