@@ -36,6 +36,11 @@ class Reseller extends \PleskX\Api\Operator
         return 'ok' === (string)$response->reseller->del->result->status;
     }
 
+    /**
+     * @param string $field
+     * @param integer|string $value
+     * @return Struct\GeneralInfo
+     */
     public function get($field, $value)
     {
         $packet = $this->_client->getPacket();
