@@ -19,6 +19,8 @@ class Client
     private static $_isExecutionsLogEnabled = false;
     private static $_executionLog = [];
 
+    private static $_operatorsCache = [];
+
     /**
      * Create client
      *
@@ -162,67 +164,49 @@ class Client
     }
 
     /**
-     * Server operator
-     *
+     * @param string $name
+     * @return \PleskX\Api\Operator
+     */
+    private function _getOperator($name)
+    {
+        if (!isset(self::$_operatorsCache[$name])) {
+            $className = '\\PleskX\\Api\\Operator\\' . $name;
+            self::$_operatorsCache[$name] = new $className($this);
+        }
+
+        return self::$_operatorsCache[$name];
+    }
+
+    /**
      * @return Operator\Server
      */
     public function server()
     {
-        static $serverOperator;
-
-        if (!$serverOperator) {
-            $serverOperator = new Operator\Server($this);
-        }
-
-        return $serverOperator;
+        return $this->_getOperator('Server');
     }
 
     /**
-     * Certificate operator
-     *
      * @return Operator\Certificate
      */
     public function certificate()
     {
-        static $certificateOperator;
-
-        if (!$certificateOperator) {
-            $certificateOperator = new Operator\Certificate($this);
-        }
-
-        return $certificateOperator;
+        return $this->_getOperator('Certificate');
     }
 
     /**
-     * Customer operator
-     *
      * @return Operator\Customer
      */
     public function customer()
     {
-        static $customerOperator;
-
-        if (!$customerOperator) {
-            $customerOperator = new Operator\Customer($this);
-        }
-
-        return $customerOperator;
+        return $this->_getOperator('Customer');
     }
 
     /**
-     * Reseller operator
-     *
      * @return Operator\Reseller
      */
     public function reseller()
     {
-        static $resellerOperator;
-
-        if (!$resellerOperator) {
-            $resellerOperator = new Operator\Reseller($this);
-        }
-
-        return $resellerOperator;
+        return $this->_getOperator('Reseller');
     }
 
 }
