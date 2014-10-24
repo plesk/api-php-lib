@@ -1,4 +1,5 @@
 <?php
+// Copyright 1999-2014. Parallels IP Holdings GmbH. All Rights Reserved.
 
 set_include_path(get_include_path() . ':../src');
 
