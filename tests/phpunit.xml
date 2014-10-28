@@ -2,11 +2,11 @@
 <phpunit colors="true" bootstrap="autoload.php">
     <testsuites>
         <testsuite>
-            <file>CustomerTest.php</file>
-            <file>ResellerTest.php</file>
             <file>CertificateTest.php</file>
-            <file>ServerTest.php</file>
+            <file>CustomerTest.php</file>
             <file>LocaleTest.php</file>
+            <file>ResellerTest.php</file>
+            <file>ServerTest.php</file>
         </testsuite>
     </testsuites>
 </phpunit>
