@@ -6,6 +6,7 @@
             <file>ResellerTest.php</file>
             <file>CertificateTest.php</file>
             <file>ServerTest.php</file>
+            <file>LocaleTest.php</file>
         </testsuite>
     </testsuites>
 </phpunit>
