@@ -116,8 +116,8 @@ class Client
 
         curl_close($curl);
 
-        // TODO: add error handling
         $xml = simplexml_load_string($result);
+        $this->_verifyResponse($xml);
 
         return $xml;
     }
@@ -162,6 +162,19 @@ class Client
     public static function getExecutionLog()
     {
         return self::$_executionLog;
+    }
+
+    /**
+     * Verify that response does not contain errors
+     *
+     * @param SimpleXMLElement $xml
+     * @throws \Exception
+     */
+    private function _verifyResponse($xml)
+    {
+        if ($xml->system && $xml->system->status && 'error' == (string)$xml->system->status) {
+            throw new Exception((string)$xml->system->errtext, (int)$xml->system->errcode);
+        }
     }
 
     /**
