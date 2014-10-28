@@ -187,14 +187,6 @@ class Client
     }
 
     /**
-     * @return Operator\Certificate
-     */
-    public function certificate()
-    {
-        return $this->_getOperator('Certificate');
-    }
-
-    /**
      * @return Operator\Customer
      */
     public function customer()
@@ -203,11 +195,323 @@ class Client
     }
 
     /**
+     * @return Operator\Webspace
+     */
+    public function webspace()
+    {
+        return $this->_getOperator('Webspace');
+    }
+
+    /**
+     * @return Operator\Subdomain
+     */
+    public function subdomain()
+    {
+        return $this->_getOperator('Subdomain');
+    }
+
+    /**
+     * @return Operator\Dns
+     */
+    public function dns()
+    {
+        return $this->_getOperator('Dns');
+    }
+
+    /**
+     * @return Operator\DatabaseServer
+     */
+    public function databaseServer()
+    {
+        return $this->_getOperator('DatabaseServer');
+    }
+
+    /**
+     * @return Operator\Mail
+     */
+    public function mail()
+    {
+        return $this->_getOperator('Mail');
+    }
+
+    /**
+     * @return Operator\Migration
+     */
+    public function migration()
+    {
+        return $this->_getOperator('Migration');
+    }
+
+    /**
+     * @return Operator\Certificate
+     */
+    public function certificate()
+    {
+        return $this->_getOperator('Certificate');
+    }
+
+    /**
+     * @return Operator\SiteAlias
+     */
+    public function siteAlias()
+    {
+        return $this->_getOperator('SiteAlias');
+    }
+
+    /**
+     * @return Operator\Ip
+     */
+    public function ip()
+    {
+        return $this->_getOperator('Ip');
+    }
+
+    /**
+     * @return Operator\EventLog
+     */
+    public function eventLog()
+    {
+        return $this->_getOperator('EventLog');
+    }
+
+    /**
+     * @return Operator\SpamFilter
+     */
+    public function spamFilter()
+    {
+        return $this->_getOperator('SpamFilter');
+    }
+
+    /**
+     * @return Operator\SecretKey
+     */
+    public function secretKey()
+    {
+        return $this->_getOperator('SecretKey');
+    }
+
+    /**
+     * @return Operator\Ui
+     */
+    public function ui()
+    {
+        return $this->_getOperator('Ui');
+    }
+
+    /**
+     * @return Operator\ServicePlan
+     */
+    public function servicePlan()
+    {
+        return $this->_getOperator('ServicePlan');
+    }
+
+    /**
+     * @return Operator\WebUser
+     */
+    public function webUser()
+    {
+        return $this->_getOperator('WebUser');
+    }
+
+    /**
+     * @return Operator\MailList
+     */
+    public function mailList()
+    {
+        return $this->_getOperator('MailList');
+    }
+
+    /**
+     * @return Operator\VirtualDirectory
+     */
+    public function virtualDirectory()
+    {
+        return $this->_getOperator('VirtualDirectory');
+    }
+
+    /**
+     * @return Operator\Database
+     */
+    public function database()
+    {
+        return $this->_getOperator('Database');
+    }
+
+    /**
+     * @return Operator\FtpUser
+     */
+    public function ftpUser()
+    {
+        return $this->_getOperator('FtpUser');
+    }
+
+    /**
+     * @return Operator\Session
+     */
+    public function session()
+    {
+        return $this->_getOperator('Session');
+    }
+
+    /**
+     * @return Operator\Updater
+     */
+    public function updater()
+    {
+        return $this->_getOperator('Updater');
+    }
+
+    /**
+     * @return Operator\Locale
+     */
+    public function locale()
+    {
+        return $this->_getOperator('Locale');
+    }
+
+    /**
+     * @return Operator\LogRotation
+     */
+    public function logRotation()
+    {
+        return $this->_getOperator('LogRotation');
+    }
+
+    /**
+     * @return Operator\BackupManager
+     */
+    public function backupManager()
+    {
+        return $this->_getOperator('BackupManager');
+    }
+
+    /**
+     * @return Operator\Sso
+     */
+    public function sso()
+    {
+        return $this->_getOperator('Sso');
+    }
+
+    /**
+     * @return Operator\ProtectedDirectory
+     */
+    public function protectedDirectory()
+    {
+        return $this->_getOperator('ProtectedDirectory');
+    }
+
+    /**
      * @return Operator\Reseller
      */
     public function reseller()
     {
         return $this->_getOperator('Reseller');
+    }
+
+    /**
+     * @return Operator\ResellerPlan
+     */
+    public function resellerPlan()
+    {
+        return $this->_getOperator('ResellerPlan');
+    }
+
+    /**
+     * @return Operator\Aps
+     */
+    public function aps()
+    {
+        return $this->_getOperator('Aps');
+    }
+
+    /**
+     * @return Operator\ServicePlanAddon
+     */
+    public function servicePlanAddon()
+    {
+        return $this->_getOperator('ServicePlanAddon');
+    }
+
+    /**
+     * @return Operator\Site
+     */
+    public function site()
+    {
+        return $this->_getOperator('Site');
+    }
+
+    /**
+     * @return Operator\User
+     */
+    public function user()
+    {
+        return $this->_getOperator('User');
+    }
+
+    /**
+     * @return Operator\Role
+     */
+    public function role()
+    {
+        return $this->_getOperator('Role');
+    }
+
+    /**
+     * @return Operator\BusinessLogicUpgrade
+     */
+    public function businessLogicUpgrade()
+    {
+        return $this->_getOperator('BusinessLogicUpgrade');
+    }
+
+    /**
+     * @return Operator\Webmail
+     */
+    public function webmail()
+    {
+        return $this->_getOperator('Webmail');
+    }
+
+    /**
+     * @return Operator\PlanItem
+     */
+    public function planItem()
+    {
+        return $this->_getOperator('PlanItem');
+    }
+
+    /**
+     * @return Operator\Sitebuilder
+     */
+    public function sitebuilder()
+    {
+        return $this->_getOperator('Sitebuilder');
+    }
+
+    /**
+     * @return Operator\ServiceNode
+     */
+    public function serviceNode()
+    {
+        return $this->_getOperator('ServiceNode');
+    }
+
+    /**
+     * @return Operator\IpBan
+     */
+    public function ipBan()
+    {
+        return $this->_getOperator('IpBan');
+    }
+
+    /**
+     * @return Operator\WpInstance
+     */
+    public function wpInstance()
+    {
+        return $this->_getOperator('WpInstance');
     }
 
 }
