@@ -63,4 +63,10 @@ class ApiClientTest extends TestCase
         $client->request($packet);
     }
 
+    public function testRequestShortSyntax()
+    {
+        $response = $this->_client->request('server.get.gen_info');
+        $this->assertGreaterThan(0, strlen($response->server->get->result->gen_info->server_name));
+    }
+
 }

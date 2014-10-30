@@ -94,6 +94,10 @@ class Client
             $request = $request->asXml();
         }
 
+        if (preg_match('/^[a-z]/', $request)) {
+            $request = $this->_expandRequestShortSyntax($request);
+        }
+
         $curl = curl_init();
 
         curl_setopt($curl, CURLOPT_URL, "$this->_protocol://$this->_host:$this->_port/enterprise/control/agent.php");
@@ -175,6 +179,26 @@ class Client
         if ($xml->system && $xml->system->status && 'error' == (string)$xml->system->status) {
             throw new Exception((string)$xml->system->errtext, (int)$xml->system->errcode);
         }
+    }
+
+    /**
+     * Expand short syntax (some.method.call) into full XML representation
+     *
+     * @param string $request
+     * @return string
+     */
+    private function _expandRequestShortSyntax($request)
+    {
+        $xml = $this->getPacket();
+
+        $parts = explode('.', $request);
+        $node = $xml;
+
+        foreach ($parts as $part) {
+            $node = $node->addChild($part);
+        }
+
+        return $xml->asXML();
     }
 
     /**
