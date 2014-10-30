@@ -21,7 +21,7 @@ class Certificate extends \PleskX\Api\Operator
         }
 
         $response = $this->_client->request($packet);
-        return new Struct\Info($response->certificate->generate->result);
+        return new Struct\Info($response);
     }
 
 }

@@ -21,7 +21,7 @@ class Reseller extends \PleskX\Api\Operator
         }
 
         $response = $this->_client->request($packet);
-        return new Struct\Info($response->reseller->add->result);
+        return new Struct\Info($response);
     }
 
     /**
@@ -34,7 +34,7 @@ class Reseller extends \PleskX\Api\Operator
         $packet = $this->_client->getPacket();
         $packet->addChild('reseller')->addChild('del')->addChild('filter')->addChild($field, $value);
         $response = $this->_client->request($packet);
-        return 'ok' === (string)$response->reseller->del->result->status;
+        return 'ok' === (string)$response->status;
     }
 
     /**
@@ -49,7 +49,7 @@ class Reseller extends \PleskX\Api\Operator
         $getTag->addChild('filter')->addChild($field, $value);
         $getTag->addChild('dataset')->addChild('gen-info');
         $response = $this->_client->request($packet);
-        return new Struct\GeneralInfo($response->reseller->get->result->data->{'gen-info'});
+        return new Struct\GeneralInfo($response->data->{'gen-info'});
     }
 
 }

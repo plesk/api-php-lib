@@ -16,7 +16,7 @@ class Server extends \PleskX\Api\Operator
         $packet->addChild('server')->addChild('get_protos');
         $response = $this->_client->request($packet);
 
-        return (array)$response->server->get_protos->result->protos->proto;
+        return (array)$response->protos->proto;
     }
 
     public function getGeneralInfo()
@@ -147,7 +147,7 @@ class Server extends \PleskX\Api\Operator
         $packet->addChild('server')->addChild('get')->addChild($operation);
         $response = $this->_client->request($packet);
 
-        return $response->server->get->result->$operation;
+        return $response->$operation;
     }
 
 }

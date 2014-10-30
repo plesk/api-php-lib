@@ -21,9 +21,10 @@ class Operator
      * Perform plain API request
      *
      * @param string $request
+     * @param int $mode
      * @return XmlResponse
      */
-    public function request($request)
+    public function request($request, $mode = Client::RESPONSE_SHORT)
     {
         $wrapperTag = $this->_wrapperTag;
 
@@ -38,7 +39,7 @@ class Operator
             $request = "<$wrapperTag>$request</$wrapperTag>";
         }
 
-        return $this->_client->request($request);
+        return $this->_client->request($request, $mode);
     }
 
 }

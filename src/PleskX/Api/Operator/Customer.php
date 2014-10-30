@@ -21,7 +21,7 @@ class Customer extends \PleskX\Api\Operator
         }
 
         $response = $this->_client->request($packet);
-        return new Struct\Info($response->customer->add->result);
+        return new Struct\Info($response);
     }
 
     /**
@@ -34,7 +34,7 @@ class Customer extends \PleskX\Api\Operator
         $packet = $this->_client->getPacket();
         $packet->addChild('customer')->addChild('del')->addChild('filter')->addChild($field, $value);
         $response = $this->_client->request($packet);
-        return 'ok' === (string)$response->customer->del->result->status;
+        return 'ok' === (string)$response->status;
     }
 
     /**
@@ -49,7 +49,7 @@ class Customer extends \PleskX\Api\Operator
         $getTag->addChild('filter')->addChild($field, $value);
         $getTag->addChild('dataset')->addChild('gen_info');
         $response = $this->_client->request($packet);
-        return new Struct\GeneralInfo($response->customer->get->result->data->gen_info);
+        return new Struct\GeneralInfo($response->data->gen_info);
     }
 
 }

@@ -9,6 +9,9 @@ use SimpleXMLElement;
  */
 class Client
 {
+    const RESPONSE_SHORT = 1;
+    const RESPONSE_FULL = 2;
+
     private $_host;
     private $_port;
     private $_protocol;
@@ -86,9 +89,10 @@ class Client
      * Perform API request
      *
      * @param string|SimpleXMLElement $request
+     * @param int $mode
      * @return XmlResponse
      */
-    public function request($request)
+    public function request($request, $mode = self::RESPONSE_SHORT)
     {
         if ($request instanceof SimpleXMLElement) {
             $request = $request->asXml();
@@ -123,7 +127,7 @@ class Client
         $xml = new XmlResponse($result);
         $this->_verifyResponse($xml);
 
-        return $xml;
+        return (self::RESPONSE_FULL == $mode) ? $xml : $xml->xpath('//result')[0];
     }
 
     /**
