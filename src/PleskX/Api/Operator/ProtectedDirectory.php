@@ -6,4 +6,6 @@ namespace PleskX\Api\Operator;
 class ProtectedDirectory extends \PleskX\Api\Operator
 {
 
+    protected $_wrapperTag = 'protected-dir';
+
 }

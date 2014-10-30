@@ -86,7 +86,7 @@ class Client
      * Perform API request
      *
      * @param string|SimpleXMLElement $request
-     * @return string
+     * @return XmlResponse
      */
     public function request($request)
     {
@@ -120,7 +120,7 @@ class Client
 
         curl_close($curl);
 
-        $xml = simplexml_load_string($result);
+        $xml = new XmlResponse($result);
         $this->_verifyResponse($xml);
 
         return $xml;
@@ -171,7 +171,7 @@ class Client
     /**
      * Verify that response does not contain errors
      *
-     * @param SimpleXMLElement $xml
+     * @param XmlResponse $xml
      * @throws \Exception
      */
     private function _verifyResponse($xml)

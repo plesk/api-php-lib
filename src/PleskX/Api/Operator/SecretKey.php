@@ -6,4 +6,6 @@ namespace PleskX\Api\Operator;
 class SecretKey extends \PleskX\Api\Operator
 {
 
+    protected $_wrapperTag = 'secret_key';
+
 }

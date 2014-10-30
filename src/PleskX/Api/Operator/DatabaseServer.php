@@ -6,4 +6,6 @@ namespace PleskX\Api\Operator;
 class DatabaseServer extends \PleskX\Api\Operator
 {
 
+    protected $_wrapperTag = 'db_server';
+
 }
