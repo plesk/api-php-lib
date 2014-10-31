@@ -7,6 +7,9 @@ use PleskX\Api\Struct\Ip as Struct;
 class Ip extends \PleskX\Api\Operator
 {
 
+    /**
+     * @return Struct\Info[]
+     */
     public function get()
     {
         $ips = [];
