@@ -63,6 +63,20 @@ class ApiClientTest extends TestCase
         $client->request($packet);
     }
 
+    public function testLatestMajorProtocol()
+    {
+        $packet = $this->_client->getPacket('1.6');
+        $packet->addChild('server')->addChild('get_protos');
+        $this->_client->request($packet);
+    }
+
+    public function testLatestMinorProtocol()
+    {
+        $packet = $this->_client->getPacket('1.6.5');
+        $packet->addChild('server')->addChild('get_protos');
+        $this->_client->request($packet);
+    }
+
     public function testRequestShortSyntax()
     {
         $response = $this->_client->request('server.get.gen_info');
