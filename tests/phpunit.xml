@@ -10,6 +10,7 @@
             <file>LocaleTest.php</file>
             <file>ResellerTest.php</file>
             <file>ServerTest.php</file>
+            <file>WebspaceTest.php</file>
         </testsuite>
     </testsuites>
 </phpunit>
