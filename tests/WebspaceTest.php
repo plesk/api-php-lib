@@ -11,4 +11,11 @@ class WebspaceTest extends TestCase
         $this->assertGreaterThan(0, count($descriptor->permissions));
     }
 
+    public function testGetLimitDescriptor()
+    {
+        $descriptor = $this->_client->webspace()->getLimitDescriptor();
+        $this->assertInternalType('array', $descriptor->limits);
+        $this->assertGreaterThan(0, count($descriptor->limits));
+    }
+
 }

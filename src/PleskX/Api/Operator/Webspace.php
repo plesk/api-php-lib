@@ -13,4 +13,10 @@ class Webspace extends \PleskX\Api\Operator
         return new Struct\PermissionDescriptor($response);
     }
 
+    public function getLimitDescriptor()
+    {
+        $response = $this->request('get-limit-descriptor.filter');
+        return new Struct\LimitDescriptor($response);
+    }
+
 }
