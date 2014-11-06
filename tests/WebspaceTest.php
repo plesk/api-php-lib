@@ -18,4 +18,15 @@ class WebspaceTest extends TestCase
         $this->assertGreaterThan(0, count($descriptor->limits));
     }
 
+    public function testGetPhysicalHostingDescriptor()
+    {
+        $descriptor = $this->_client->webspace()->getPhysicalHostingDescriptor();
+        $this->assertInternalType('array', $descriptor->properties);
+        $this->assertGreaterThan(0, count($descriptor->properties));
+
+        $ftpLoginProperty = $descriptor->properties['ftp_login'];
+        $this->assertEquals('ftp_login', $ftpLoginProperty->name);
+        $this->assertEquals('string', $ftpLoginProperty->type);
+    }
+
 }

@@ -19,4 +19,10 @@ class Webspace extends \PleskX\Api\Operator
         return new Struct\LimitDescriptor($response);
     }
 
+    public function getPhysicalHostingDescriptor()
+    {
+        $response = $this->request('get-physical-hosting-descriptor.filter');
+        return new Struct\PhysicalHostingDescriptor($response);
+    }
+
 }
