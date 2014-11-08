@@ -183,6 +183,12 @@ class Client
         if ($xml->system && $xml->system->status && 'error' == (string)$xml->system->status) {
             throw new Exception((string)$xml->system->errtext, (int)$xml->system->errcode);
         }
+
+        if ($xml->xpath('//status[text()="error"]') && $xml->xpath('//errcode') && $xml->xpath('//errtext')) {
+            $errorCode = (int)$xml->xpath('//errcode')[0];
+            $errorMessage = (string)$xml->xpath('//errtext')[0];
+            throw new Exception($errorMessage, $errorCode);
+        }
     }
 
     /**

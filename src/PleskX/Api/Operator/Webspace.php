@@ -25,4 +25,49 @@ class Webspace extends \PleskX\Api\Operator
         return new Struct\PhysicalHostingDescriptor($response);
     }
 
+    /**
+     * @param array $properties
+     * @return Struct\Info
+     */
+    public function create($properties)
+    {
+        $packet = $this->_client->getPacket();
+        $info = $packet->addChild('webspace')->addChild('add')->addChild('gen_setup');
+
+        foreach ($properties as $name => $value) {
+            $info->addChild($name, $value);
+        }
+
+        $response = $this->_client->request($packet);
+        return new Struct\Info($response);
+    }
+
+    /**
+     * @param string $field
+     * @param integer|string $value
+     * @return bool
+     */
+    public function delete($field, $value)
+    {
+        $packet = $this->_client->getPacket();
+        $packet->addChild('webspace')->addChild('del')->addChild('filter')->addChild($field, $value);
+        $response = $this->_client->request($packet);
+        return 'ok' === (string)$response->status;
+    }
+
+    /**
+     * @param string $field
+     * @param integer|string $value
+     * @return Struct\GeneralInfo
+     */
+    public function get($field, $value)
+    {
+        $packet = $this->_client->getPacket();
+        $getTag = $packet->addChild('webspace')->addChild('get');
+        $getTag->addChild('filter')->addChild($field, $value);
+        $getTag->addChild('dataset')->addChild('gen_info');
+        $response = $this->_client->request($packet);
+        return new Struct\GeneralInfo($response->data->gen_info);
+    }
+
 }
