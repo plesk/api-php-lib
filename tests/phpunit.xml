@@ -5,6 +5,7 @@
             <file>ApiClientTest.php</file>
             <file>CertificateTest.php</file>
             <file>CustomerTest.php</file>
+            <file>DatabaseServerTest.php</file>
             <file>EventLog.php</file>
             <file>IpTest.php</file>
             <file>LocaleTest.php</file>
