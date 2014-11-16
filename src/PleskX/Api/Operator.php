@@ -29,7 +29,8 @@ class Operator
         $wrapperTag = $this->_wrapperTag;
 
         if (is_null($wrapperTag)) {
-            $wrapperTag = end(explode('\\', get_class($this)));
+            $classNameParts = explode('\\', get_class($this));
+            $wrapperTag = end($classNameParts);
             $wrapperTag = strtolower(preg_replace('/([a-z])([A-Z])/', '\1-\2', $wrapperTag));
         }
 
