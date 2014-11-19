@@ -90,4 +90,22 @@ class ApiClientTest extends TestCase
         $this->assertEquals(36, strlen($response->getValue('server_guid')));
     }
 
+    public function testRequestArraySyntax()
+    {
+        $response = $this->_client->request([
+            'server' => [
+                'get' => [
+                    'gen_info' => '',
+                ],
+            ],
+        ]);
+        $this->assertGreaterThan(0, strlen($response->gen_info->server_name));
+    }
+
+    public function testOperatorArraySyntax()
+    {
+        $response = $this->_client->server()->request(['get' => ['gen_info' => '']]);
+        $this->assertGreaterThan(0, strlen($response->gen_info->server_name));
+    }
+
 }

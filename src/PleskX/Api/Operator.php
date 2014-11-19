@@ -20,7 +20,7 @@ class Operator
     /**
      * Perform plain API request
      *
-     * @param string $request
+     * @param string|array $request
      * @param int $mode
      * @return XmlResponse
      */
@@ -34,7 +34,9 @@ class Operator
             $wrapperTag = strtolower(preg_replace('/([a-z])([A-Z])/', '\1-\2', $wrapperTag));
         }
 
-        if (preg_match('/^[a-z]/', $request)) {
+        if (is_array($request)) {
+            $request = [$wrapperTag => $request];
+        } else if (preg_match('/^[a-z]/', $request)) {
             $request = "$wrapperTag.$request";
         } else {
             $request = "<$wrapperTag>$request</$wrapperTag>";

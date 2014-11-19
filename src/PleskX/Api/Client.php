@@ -88,7 +88,7 @@ class Client
     /**
      * Perform API request
      *
-     * @param string|SimpleXMLElement $request
+     * @param string|array|SimpleXMLElement $request
      * @param int $mode
      * @return XmlResponse
      */
@@ -96,6 +96,11 @@ class Client
     {
         if ($request instanceof SimpleXMLElement) {
             $request = $request->asXml();
+        }
+
+        if (is_array($request)) {
+            $xml = $this->getPacket();
+            $request = $this->_arrayToXml($request, $xml)->asXML();
         }
 
         if (preg_match('/^[a-z]/', $request)) {
@@ -209,6 +214,26 @@ class Client
         }
 
         return $xml->asXML();
+    }
+
+    /**
+     * Convert array to XML representation
+     *
+     * @param array $array
+     * @param SimpleXMLElement $xml
+     * @return SimpleXMLElement
+     */
+    private function _arrayToXml(array $array, SimpleXMLElement $xml)
+    {
+        foreach ($array as $key => $value) {
+            if (is_array($value)) {
+                $this->_arrayToXml($value, $xml->addChild($key));
+            } else {
+                $xml->addChild($key, $value);
+            }
+        }
+
+        return $xml;
     }
 
     /**
