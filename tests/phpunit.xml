@@ -12,6 +12,7 @@
             <file>ResellerTest.php</file>
             <file>SecretKeyTest.php</file>
             <file>ServerTest.php</file>
+            <file>UiTest.php</file>
             <file>WebspaceTest.php</file>
         </testsuite>
     </testsuites>
