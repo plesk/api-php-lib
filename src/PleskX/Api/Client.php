@@ -210,7 +210,8 @@ class Client
         $node = $xml;
 
         foreach ($parts as $part) {
-            $node = $node->addChild($part);
+            @list($name, $value) = explode('=', $part);
+            $node = $node->addChild($name, $value);
         }
 
         return $xml->asXML();

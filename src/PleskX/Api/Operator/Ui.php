@@ -42,7 +42,7 @@ class Ui extends \PleskX\Api\Operator
      */
     public function getCustomButton($id)
     {
-        $response = $this->request(['get-custombutton' => ['filter' => ['custombutton-id' => $id]]]);
+        $response = $this->request("get-custombutton.filter.custombutton-id=$id");
         return new Struct\CustomButton($response);
     }
 
@@ -52,7 +52,7 @@ class Ui extends \PleskX\Api\Operator
      */
     public function deleteCustomButton($id)
     {
-        $response = $this->request(['delete-custombutton' => ['filter' => ['custombutton-id' => $id]]]);
+        $response = $this->request("delete-custombutton.filter.custombutton-id=$id");
         return 'ok' === (string)$response->status;
     }
 
