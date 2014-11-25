@@ -25,7 +25,7 @@ abstract class Struct
                 $classPropertyName = current($property);
                 $value = $apiResponse->{key($property)};
             } else {
-                $classPropertyName = $this->_underToCamel($property);
+                $classPropertyName = $this->_underToCamel(str_replace('-', '_', $property));
                 $value = $apiResponse->$property;
             }
 

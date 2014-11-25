@@ -138,6 +138,24 @@ class Server extends \PleskX\Api\Operator
     }
 
     /**
+     * @param string $login
+     * @param string $clientIp
+     * @return string
+     */
+    public function createSession($login, $clientIp)
+    {
+        $packet = $this->_client->getPacket();
+        $sessionNode = $packet->addChild('server')->addChild('create_session');
+        $sessionNode->addChild('login', $login);
+        $dataNode = $sessionNode->addChild('data');
+        $dataNode->addChild('user_ip', base64_encode($clientIp));
+        $dataNode->addChild('source_server');
+        $response = $this->_client->request($packet);
+
+        return (string)$response->id;
+    }
+
+    /**
      * @param string $operation
      * @return \SimpleXMLElement
      */
