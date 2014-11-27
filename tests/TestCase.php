@@ -7,7 +7,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
     /** @var PleskX\Api\Client */
     protected $_client;
 
-    public function setUp()
+    protected function setUp()
     {
         $host = getenv('REMOTE_HOST');
         $login = getenv('REMOTE_LOGIN');
