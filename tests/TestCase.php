@@ -1,5 +1,5 @@
 <?php
-// Copyright 1999-2014. Parallels IP Holdings GmbH. All Rights Reserved.
+// Copyright 1999-2014. Parallels IP Holdings GmbH.
 
 abstract class TestCase extends PHPUnit_Framework_TestCase
 {
