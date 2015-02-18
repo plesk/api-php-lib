@@ -96,17 +96,30 @@ class Client
     {
         if ($request instanceof SimpleXMLElement) {
             $request = $request->asXml();
-        }
-
-        if (is_array($request)) {
+        } else {
             $xml = $this->getPacket();
-            $request = $this->_arrayToXml($request, $xml)->asXML();
+
+            if (is_array($request)) {
+                $request = $this->_arrayToXml($request, $xml)->asXML();
+            } else if (preg_match('/^[a-z]/', $request)) {
+                $request = $this->_expandRequestShortSyntax($request, $xml);
+            }
         }
 
-        if (preg_match('/^[a-z]/', $request)) {
-            $request = $this->_expandRequestShortSyntax($request);
-        }
+        $xml = $this->_performHttpRequest($request);
 
+        return (self::RESPONSE_FULL == $mode) ? $xml : $xml->xpath('//result')[0];
+    }
+
+    /**
+     * Perform HTTP request to end-point
+     *
+     * @param string $request
+     * @return XmlResponse
+     * @throws Exception
+     */
+    private function _performHttpRequest($request)
+    {
         $curl = curl_init();
 
         curl_setopt($curl, CURLOPT_URL, "$this->_protocol://$this->_host:$this->_port/enterprise/control/agent.php");
@@ -132,7 +145,50 @@ class Client
         $xml = new XmlResponse($result);
         $this->_verifyResponse($xml);
 
-        return (self::RESPONSE_FULL == $mode) ? $xml : $xml->xpath('//result')[0];
+        return $xml;
+    }
+
+    /**
+     * Perform multiple API requests using single HTTP request
+     *
+     * @param $requests
+     * @param int $mode
+     * @return array
+     */
+    public function multiRequest($requests, $mode = self::RESPONSE_SHORT)
+    {
+
+        $requestXml = $this->getPacket();
+
+        foreach ($requests as $request) {
+            if ($request instanceof SimpleXMLElement) {
+                // TODO: implement
+            } else {
+                if (is_array($request)) {
+                    $request = $this->_arrayToXml($request, $requestXml)->asXML();
+                } else if (preg_match('/^[a-z]/', $request)) {
+                    $this->_expandRequestShortSyntax($request, $requestXml);
+                }
+            }
+            $responses[] = $this->request($request);
+        }
+
+        $responseXml = $this->_performHttpRequest($requestXml->asXML());
+
+        $responses = [];
+        foreach ($responseXml->children() as $childNode) {
+            $xml = $this->getPacket();
+            $dom = dom_import_simplexml($xml)->ownerDocument;
+
+            $childDomNode = dom_import_simplexml($childNode);
+            $childDomNode = $dom->importNode($childDomNode, true);
+            $dom->documentElement->appendChild($childDomNode);
+
+            $response = simplexml_load_string($dom->saveXML());
+            $responses[] = (self::RESPONSE_FULL == $mode) ? $response : $response->xpath('//result')[0];
+        }
+
+        return $responses;
     }
 
     /**
@@ -200,12 +256,11 @@ class Client
      * Expand short syntax (some.method.call) into full XML representation
      *
      * @param string $request
+     * @param SimpleXMLElement $xml
      * @return string
      */
-    private function _expandRequestShortSyntax($request)
+    private function _expandRequestShortSyntax($request, SimpleXMLElement $xml)
     {
-        $xml = $this->getPacket();
-
         $parts = explode('.', $request);
         $node = $xml;
 

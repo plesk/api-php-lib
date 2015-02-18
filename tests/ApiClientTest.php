@@ -108,4 +108,20 @@ class ApiClientTest extends TestCase
         $this->assertGreaterThan(0, strlen($response->gen_info->server_name));
     }
 
+    public function testMultiRequest()
+    {
+        $responses = $this->_client->multiRequest([
+            'server.get_protos',
+            'server.get.gen_info',
+        ]);
+
+        $this->assertCount(2, $responses);
+
+        $protos = (array)$responses[0]->protos->proto;
+        $generalInfo = $responses[1];
+
+        $this->assertContains('1.6.6.0', $protos);
+        $this->assertGreaterThan(0, strlen($generalInfo->gen_info->server_name));
+    }
+
 }
