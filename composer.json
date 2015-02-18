@@ -1,0 +1,20 @@
+{
+    "name": "plesk/api-php-lib",
+    "description": "PHP object-oriented library for Plesk API-RPC",
+    "license": "Apache License, Version 2.0",
+    "authors": [
+        {
+            "name": "Alexei Yuzhakov",
+            "email": "sibprogrammer@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.3.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "PleskX\\Api\\": "src/"
+        }
+    }
+}
