@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 1999-2015. Parallels IP Holdings GmbH. -->
+<phpunit colors="true" bootstrap="tests/autoload.php">
+    <testsuites>
+        <testsuite>
+            <directory suffix="Test.php">tests/</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>

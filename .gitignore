@@ -1,2 +1,3 @@
 /php/tests/node_modules
 /vendor
+/phpunit.xml

@@ -4,18 +4,15 @@ module.exports = function(grunt) {
   grunt.initConfig({
     phpunit: {
       classes: {},
-      options: {
-        configuration: 'phpunit.xml'
-      }
+      options: {}
     },
     watch: {
       test: {
-        files: ['*Test.php', '../src/**/*.*'],
+        files: ['tests/*Test.php', 'src/**/*.*'],
         tasks: ['phpunit']
       }
     }
   });
-
 
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-phpunit');

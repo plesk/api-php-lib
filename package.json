@@ -1,5 +1,5 @@
 {
-  "name": "plesk-api-tests",
+  "name": "plesk-api-php-lib",
   "version": "1.0.0",
   "devDependencies": {
     "grunt": "~0.4.5",

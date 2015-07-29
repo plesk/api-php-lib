@@ -1,7 +1,7 @@
 <?php
 // Copyright 1999-2015. Parallels IP Holdings GmbH.
 
-set_include_path(get_include_path() . ':../src');
+set_include_path(get_include_path() . ':src');
 
 function autoload($className)
 {
