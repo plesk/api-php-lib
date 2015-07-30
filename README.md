@@ -1,4 +1,4 @@
-## Intro
+## PHP library for Plesk API-RPC
 
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/plesk/api-php-lib/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/plesk/api-php-lib/?branch=master)
 
