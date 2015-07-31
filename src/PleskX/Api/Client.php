@@ -23,7 +23,7 @@ class Client
     private static $_isExecutionsLogEnabled = false;
     private static $_executionLog = [];
 
-    private static $_operatorsCache = [];
+    private $_operatorsCache = [];
 
     /**
      * Create client
@@ -298,12 +298,12 @@ class Client
      */
     private function _getOperator($name)
     {
-        if (!isset(self::$_operatorsCache[$name])) {
+        if (!isset($this->_operatorsCache[$name])) {
             $className = '\\PleskX\\Api\\Operator\\' . $name;
-            self::$_operatorsCache[$name] = new $className($this);
+            $this->_operatorsCache[$name] = new $className($this);
         }
 
-        return self::$_operatorsCache[$name];
+        return $this->_operatorsCache[$name];
     }
 
     /**
