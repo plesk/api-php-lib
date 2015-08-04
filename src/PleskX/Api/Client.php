@@ -12,18 +12,18 @@ class Client
     const RESPONSE_SHORT = 1;
     const RESPONSE_FULL = 2;
 
-    private $_host;
-    private $_port;
-    private $_protocol;
-    private $_login;
-    private $_password;
-    private $_secretKey;
-    private $_version = '';
+    protected $_host;
+    protected $_port;
+    protected $_protocol;
+    protected $_login;
+    protected $_password;
+    protected $_secretKey;
+    protected $_version = '';
 
-    private static $_isExecutionsLogEnabled = false;
-    private static $_executionLog = [];
+    protected static $_isExecutionsLogEnabled = false;
+    protected static $_executionLog = [];
 
-    private $_operatorsCache = [];
+    protected $_operatorsCache = [];
 
     /**
      * Create client
@@ -118,7 +118,7 @@ class Client
      * @return XmlResponse
      * @throws Exception
      */
-    private function _performHttpRequest($request)
+    protected function _performHttpRequest($request)
     {
         $curl = curl_init();
 
@@ -196,7 +196,7 @@ class Client
      *
      * @return array
      */
-    private function _getHeaders()
+    protected function _getHeaders()
     {
         $headers = array(
             "Content-Type: text/xml",
@@ -239,7 +239,7 @@ class Client
      * @param XmlResponse $xml
      * @throws \Exception
      */
-    private function _verifyResponse($xml)
+    protected function _verifyResponse($xml)
     {
         if ($xml->system && $xml->system->status && 'error' == (string)$xml->system->status) {
             throw new Exception((string)$xml->system->errtext, (int)$xml->system->errcode);
@@ -259,7 +259,7 @@ class Client
      * @param SimpleXMLElement $xml
      * @return string
      */
-    private function _expandRequestShortSyntax($request, SimpleXMLElement $xml)
+    protected function _expandRequestShortSyntax($request, SimpleXMLElement $xml)
     {
         $parts = explode('.', $request);
         $node = $xml;
@@ -279,7 +279,7 @@ class Client
      * @param SimpleXMLElement $xml
      * @return SimpleXMLElement
      */
-    private function _arrayToXml(array $array, SimpleXMLElement $xml)
+    protected function _arrayToXml(array $array, SimpleXMLElement $xml)
     {
         foreach ($array as $key => $value) {
             if (is_array($value)) {
@@ -296,7 +296,7 @@ class Client
      * @param string $name
      * @return \PleskX\Api\Operator
      */
-    private function _getOperator($name)
+    protected function _getOperator($name)
     {
         if (!isset($this->_operatorsCache[$name])) {
             $className = '\\PleskX\\Api\\Operator\\' . $name;
