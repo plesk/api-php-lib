@@ -132,6 +132,10 @@ class Client
 
         $result = curl_exec($curl);
 
+        if (false === $result) {
+            throw new Client\Exception(curl_error($curl), curl_errno($curl));
+        }
+
         if (self::$_isExecutionsLogEnabled) {
             self::$_executionLog[] = [
                 'trace' => debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS),

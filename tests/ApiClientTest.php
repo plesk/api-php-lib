@@ -124,4 +124,13 @@ class ApiClientTest extends TestCase
         $this->assertGreaterThan(0, strlen($generalInfo->gen_info->server_name));
     }
 
+    /**
+     * @expectedException \PleskX\Api\Client\Exception
+     */
+    public function testConnectionError()
+    {
+        $client = new \PleskX\Api\Client('invalid-host.dom');
+        $client->server()->getProtos();
+    }
+
 }
