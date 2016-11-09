@@ -72,6 +72,36 @@ class Client
     }
 
     /**
+     * Retrieve host used for communication
+     *
+     * @return string
+     */
+    public function getHost()
+    {
+        return $this->_host;
+    }
+
+    /**
+     * Retrieve port used for communication
+     *
+     * @return int
+     */
+    public function getPort()
+    {
+        return $this->_port;
+    }
+
+    /**
+     * Retrieve name of the protocol (http or https) used for communication
+     *
+     * @return int
+     */
+    public function getProtocol()
+    {
+        return $this->_protocol;
+    }
+
+    /**
      * Retrieve XML template for packet
      *
      * @param string|null $version

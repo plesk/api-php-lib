@@ -41,8 +41,10 @@ class ApiClientTest extends TestCase
      */
     public function testInvalidCredentials()
     {
-        $host = getenv('REMOTE_HOST');
-        $client = new PleskX\Api\Client($host);
+        $host = $this->_client->getHost();
+        $port = $this->_client->getPort();
+        $protocol = $this->_client->getProtocol();
+        $client = new PleskX\Api\Client($host, $port, $protocol);
         $client->setCredentials('bad-login', 'bad-password');
         $packet = $this->_client->getPacket();
         $packet->addChild('server')->addChild('get_protos');
@@ -55,8 +57,10 @@ class ApiClientTest extends TestCase
      */
     public function testInvalidSecretKey()
     {
-        $host = getenv('REMOTE_HOST');
-        $client = new PleskX\Api\Client($host);
+        $host = $this->_client->getHost();
+        $port = $this->_client->getPort();
+        $protocol = $this->_client->getProtocol();
+        $client = new PleskX\Api\Client($host, $port, $protocol);
         $client->setSecretKey('bad-key');
         $packet = $this->_client->getPacket();
         $packet->addChild('server')->addChild('get_protos');

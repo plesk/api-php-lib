@@ -18,6 +18,10 @@ To run the unit tests use the following command:
 
 `REMOTE_HOST=your-plesk-host.dom REMOTE_PASSWORD=password phpunit`
 
+To use custom port one can provide a URL (e.g. for Docker container):
+
+`REMOTE_URL=https://your-plesk-host.dom:port REMOTE_PASSWORD=password phpunit`
+
 ## Using Grunt for Continuous Testing
 
 * Install Node.js
