@@ -27,10 +27,10 @@ class Webspace extends \PleskX\Api\Operator
 
     /**
      * @param array $properties // see https://docs.plesk.com/en-US/12.5/api-rpc/reference/managing-subscriptions-webspaces/subscription-settings/general-subscription-information/node-gen_setup.33858/
-	 * @param array $more_prop // see https://docs.plesk.com/en-US/12.5/api-rpc/reference/managing-subscriptions-webspaces/creating-a-subscription-webspace.33892/
-	 * @param string $ftp_login // ftp login
-	 * @param string $ftp_pass // ftp password
-	 * @param string $ip // IP address of webspace
+     * @param array $more_prop // see https://docs.plesk.com/en-US/12.5/api-rpc/reference/managing-subscriptions-webspaces/creating-a-subscription-webspace.33892/
+     * @param string $ftp_login // ftp login
+     * @param string $ftp_pass // ftp password
+     * @param string $ip // IP address of webspace
      * @return Struct\Info
      */
     public function create($properties, $more_prop = null, $ftp_login = "", $ftp_pass = "", $ip = "")
@@ -46,24 +46,24 @@ class Webspace extends \PleskX\Api\Operator
 
         $info_props = $info->addChild('hosting')->addChild('vrt_hst');
 
-		if($ftp_login != "" && $ftp_pass != "")
-		{
-			$prop_ftp_user = $info_props->addChild('property');
-			$prop_ftp_user->addChild("name", 'ftp_login');
-			$prop_ftp_user->addChild("value", $ftp_login);
+        if($ftp_login != "" && $ftp_pass != "")
+        {
+            $prop_ftp_user = $info_props->addChild('property');
+            $prop_ftp_user->addChild("name", 'ftp_login');
+            $prop_ftp_user->addChild("value", $ftp_login);
 
 
-			$prop_ftp_pass = $info_props->addChild('property');
-			$prop_ftp_pass->addChild("name", 'ftp_password');
-			$prop_ftp_pass->addChild("value", $ftp_pass);
-		}
+            $prop_ftp_pass = $info_props->addChild('property');
+            $prop_ftp_pass->addChild("name", 'ftp_password');
+            $prop_ftp_pass->addChild("value", $ftp_pass);
+        }
 		
         if($ip != "")
-			$info_props->addChild("ip_address", $ip);
+            $info_props->addChild("ip_address", $ip);
 
-		if($more_prop)
-			foreach ($more_prop as $name => $value)
-				$info->addChild($name, $value);
+        if($more_prop)
+            foreach ($more_prop as $name => $value)
+                $info->addChild($name, $value);
 
         $response = $this->_client->request($packet);
         return new Struct\Info($response);
