@@ -52,4 +52,23 @@ class Customer extends \PleskX\Api\Operator
         return new Struct\GeneralInfo($response->data->gen_info);
     }
 
+    /**
+     * @return Struct\GeneralInfo[]
+     */
+    public function find()
+    {
+        $packet = $this->_client->getPacket();
+        $getTag = $packet->addChild('customer')->addChild('get');
+        $getTag->addChild('filter');
+        $getTag->addChild('dataset')->addChild('gen_info');
+        $response = $this->_client->request($packet, \PleskX\Api\Client::RESPONSE_FULL);
+
+        $customers = [];
+        foreach ($response->xpath('//result') as $xmlResult) {
+            $customers[] = new Struct\GeneralInfo($xmlResult->data->gen_info);
+        }
+
+        return $customers;
+    }
+
 }

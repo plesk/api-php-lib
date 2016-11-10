@@ -36,4 +36,26 @@ class CustomerTest extends TestCase
         $this->_client->customer()->delete('id', $customer->id);
     }
 
+    public function testFind()
+    {
+        $this->_client->customer()->create([
+            'pname' => 'John Smith',
+            'login' => 'customer-a',
+            'passwd' => 'simple-password',
+        ]);
+        $this->_client->customer()->create([
+            'pname' => 'Mike Black',
+            'login' => 'customer-b',
+            'passwd' => 'simple-password',
+        ]);
+
+        $customersInfo = $this->_client->customer()->find();
+        $this->assertCount(2, $customersInfo);
+        $this->assertEquals('John Smith', $customersInfo[0]->personalName);
+        $this->assertEquals('customer-a', $customersInfo[0]->login);
+
+        $this->_client->customer()->delete('login', 'customer-a');
+        $this->_client->customer()->delete('login', 'customer-b');
+    }
+
 }

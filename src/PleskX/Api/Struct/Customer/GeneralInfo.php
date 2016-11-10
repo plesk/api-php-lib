@@ -11,11 +11,15 @@ class GeneralInfo extends \PleskX\Api\Struct
     /** @var string */
     public $login;
 
+    /** @var string */
+    public $guid;
+
     public function __construct($apiResponse)
     {
         $this->_initScalarProperties($apiResponse, [
             ['pname' => 'personalName'],
             'login',
+            'guid',
         ]);
     }
 }
