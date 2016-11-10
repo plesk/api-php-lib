@@ -41,7 +41,7 @@ class ServerTest extends TestCase
         $this->assertInternalType('array', $keyInfo);
         $this->assertGreaterThan(0, count($keyInfo));
         $this->assertArrayHasKey('plesk_key_id', $keyInfo);
-        $this->assertArrayHasKey('product_version', $keyInfo);
+        $this->assertArrayHasKey('lim_date', $keyInfo);
     }
 
     public function testGetComponents()
