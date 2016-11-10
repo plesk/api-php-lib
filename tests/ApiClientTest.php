@@ -137,4 +137,22 @@ class ApiClientTest extends TestCase
         $client->server()->getProtos();
     }
 
+    public function testGetHost()
+    {
+        $client = new \PleskX\Api\Client('example.dom');
+        $this->assertEquals('example.dom', $client->getHost());
+    }
+
+    public function testGetPort()
+    {
+        $client = new \PleskX\Api\Client('example.dom', 12345);
+        $this->assertEquals(12345, $client->getPort());
+    }
+
+    public function testGetProtocol()
+    {
+        $client = new \PleskX\Api\Client('example.dom', 8880, 'http');
+        $this->assertEquals('http', $client->getProtocol());
+    }
+
 }
