@@ -94,7 +94,7 @@ class Client
     /**
      * Retrieve name of the protocol (http or https) used for communication
      *
-     * @return int
+     * @return string
      */
     public function getProtocol()
     {
