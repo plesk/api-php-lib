@@ -27,15 +27,30 @@ class Webspace extends \PleskX\Api\Operator
 
     /**
      * @param array $properties
+     * @param array|null $hostingProperties
      * @return Struct\Info
      */
-    public function create($properties)
+    public function create(array $properties, array $hostingProperties = null)
     {
         $packet = $this->_client->getPacket();
-        $info = $packet->addChild('webspace')->addChild('add')->addChild('gen_setup');
+        $info = $packet->addChild('webspace')->addChild('add');
 
+        $infoGeneral = $info->addChild('gen_setup');
         foreach ($properties as $name => $value) {
-            $info->addChild($name, $value);
+            $infoGeneral->addChild($name, $value);
+        }
+
+        if ($hostingProperties) {
+            $infoHosting = $info->addChild('hosting')->addChild('vrt_hst');
+            foreach ($hostingProperties as $name => $value) {
+                $property = $infoHosting->addChild('property');
+                $property->addChild('name', $name);
+                $property->addChild('value', $value);
+            }
+
+            if (isset($properties['ip_address'])) {
+                $infoHosting->addChild("ip_address", $properties['ip_address']);
+            }
         }
 
         $response = $this->_client->request($packet);

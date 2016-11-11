@@ -7,14 +7,22 @@ class WebspaceTest extends TestCase
     /**
      * @return \PleskX\Api\Struct\Webspace\Info
      */
-    private function _createWebspace()
+    private function _createDomain()
+    {
+        return $this->_client->webspace()->create([
+            'name' => 'example-test.dom',
+            'ip_address' => $this->_getIpAddress(),
+        ]);
+    }
+
+    /**
+     * @return string
+     */
+    private function _getIpAddress()
     {
         $ips = $this->_client->ip()->get();
         $ipInfo = reset($ips);
-        return $this->_client->webspace()->create([
-            'name' => 'example-test.dom',
-            'ip_address' => $ipInfo->ipAddress,
-        ]);
+        return $ipInfo->ipAddress;
     }
 
     public function testGetPermissionDescriptor()
@@ -44,27 +52,40 @@ class WebspaceTest extends TestCase
 
     public function testCreate()
     {
-        $webspace = $this->_createWebspace();
-        $this->assertInternalType('integer', $webspace->id);
-        $this->assertGreaterThan(0, $webspace->id);
+        $domain = $this->_createDomain();
+        $this->assertInternalType('integer', $domain->id);
+        $this->assertGreaterThan(0, $domain->id);
 
-        $this->_client->webspace()->delete('id', $webspace->id);
+        $this->_client->webspace()->delete('id', $domain->id);
+    }
+
+    public function testCreateWebspace()
+    {
+        $webspace = $this->_client->webspace()->create([
+            'name' => 'example-test.dom',
+            'ip_address' => $this->_getIpAddress(),
+        ], [
+            'ftp_login' => 'test-login',
+            'ftp_password' => 'test-password',
+        ]);
+        $result = $this->_client->webspace()->delete('id', $webspace->id);
+        $this->assertTrue($result);
     }
 
     public function testDelete()
     {
-        $webspace = $this->_createWebspace();
-        $result = $this->_client->webspace()->delete('id', $webspace->id);
+        $domain = $this->_createDomain();
+        $result = $this->_client->webspace()->delete('id', $domain->id);
         $this->assertTrue($result);
     }
 
     public function testGet()
     {
-        $webspace = $this->_createWebspace();
-        $webspaceInfo = $this->_client->webspace()->get('id', $webspace->id);
-        $this->assertEquals('example-test.dom', $webspaceInfo->name);
+        $domain = $this->_createDomain();
+        $domainInfo = $this->_client->webspace()->get('id', $domain->id);
+        $this->assertEquals('example-test.dom', $domainInfo->name);
 
-        $this->_client->webspace()->delete('id', $webspace->id);
+        $this->_client->webspace()->delete('id', $domain->id);
     }
 
 }
