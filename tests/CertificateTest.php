@@ -11,9 +11,9 @@ class CertificateTest extends TestCase
             'country' => 'RU',
             'state' => 'NSO',
             'location' => 'Novosibirsk',
-            'company' => 'Parallels',
-            'email' => 'info@example.com',
-            'name' => 'example.com'
+            'company' => 'Plesk',
+            'email' => 'info@plesk.com',
+            'name' => 'plesk.com'
         ]);
         $this->assertGreaterThan(0, strlen($certificate->request));
         $this->assertStringStartsWith('-----BEGIN CERTIFICATE REQUEST-----', $certificate->request);
