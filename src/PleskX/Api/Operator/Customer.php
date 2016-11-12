@@ -44,23 +44,34 @@ class Customer extends \PleskX\Api\Operator
      */
     public function get($field, $value)
     {
-        $packet = $this->_client->getPacket();
-        $getTag = $packet->addChild('customer')->addChild('get');
-        $getTag->addChild('filter')->addChild($field, $value);
-        $getTag->addChild('dataset')->addChild('gen_info');
-        $response = $this->_client->request($packet);
-        return new Struct\GeneralInfo($response->data->gen_info);
+        return $this->_get($field, $value);
     }
 
     /**
      * @return Struct\GeneralInfo[]
      */
-    public function find()
+    public function getAll()
+    {
+        return $this->_get();
+    }
+
+    /**
+     * @param string|null $field
+     * @param integer|string|null $value
+     * @return Struct\GeneralInfo|Struct\GeneralInfo[]
+     */
+    private function _get($field = null, $value = null)
     {
         $packet = $this->_client->getPacket();
         $getTag = $packet->addChild('customer')->addChild('get');
-        $getTag->addChild('filter');
+
+        $filterTag = $getTag->addChild('filter');
+        if ($field) {
+            $filterTag->addChild($field, $value);
+        }
+
         $getTag->addChild('dataset')->addChild('gen_info');
+
         $response = $this->_client->request($packet, \PleskX\Api\Client::RESPONSE_FULL);
 
         $customers = [];
@@ -68,7 +79,7 @@ class Customer extends \PleskX\Api\Operator
             $customers[] = new Struct\GeneralInfo($xmlResult->data->gen_info);
         }
 
-        return $customers;
+        return $field ? reset($customers) : $customers;
     }
 
 }

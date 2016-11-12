@@ -36,7 +36,7 @@ class CustomerTest extends TestCase
         $this->_client->customer()->delete('id', $customer->id);
     }
 
-    public function testFind()
+    public function testGetAll()
     {
         $this->_client->customer()->create([
             'pname' => 'John Smith',
@@ -49,7 +49,7 @@ class CustomerTest extends TestCase
             'passwd' => 'simple-password',
         ]);
 
-        $customersInfo = $this->_client->customer()->find();
+        $customersInfo = $this->_client->customer()->getAll();
         $this->assertCount(2, $customersInfo);
         $this->assertEquals('John Smith', $customersInfo[0]->personalName);
         $this->assertEquals('customer-a', $customersInfo[0]->login);
