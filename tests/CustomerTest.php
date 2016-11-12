@@ -5,9 +5,13 @@ class CustomerTest extends TestCase
 {
 
     private $_customerProperties = [
+        'cname' => 'Plesk',
         'pname' => 'John Smith',
         'login' => 'john-unit-test',
         'passwd' => 'simple-password',
+        'email' => 'john@smith.com',
+        'external-id' => 'link:12345',
+        'description' => 'Good guy',
     ];
 
     public function testCreate()
@@ -30,8 +34,12 @@ class CustomerTest extends TestCase
     {
         $customer = $this->_client->customer()->create($this->_customerProperties);
         $customerInfo = $this->_client->customer()->get('id', $customer->id);
+        $this->assertEquals('Plesk', $customerInfo->company);
         $this->assertEquals('John Smith', $customerInfo->personalName);
         $this->assertEquals('john-unit-test', $customerInfo->login);
+        $this->assertEquals('john@smith.com', $customerInfo->email);
+        $this->assertEquals('Good guy', $customerInfo->description);
+        $this->assertEquals('link:12345', $customerInfo->externalId);
 
         $this->_client->customer()->delete('id', $customer->id);
     }
