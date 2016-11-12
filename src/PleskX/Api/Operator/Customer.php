@@ -44,7 +44,8 @@ class Customer extends \PleskX\Api\Operator
      */
     public function get($field, $value)
     {
-        return $this->_get($field, $value);
+        $customers = $this->_get($field, $value);
+        return reset($customers);
     }
 
     /**
@@ -66,7 +67,7 @@ class Customer extends \PleskX\Api\Operator
         $getTag = $packet->addChild('customer')->addChild('get');
 
         $filterTag = $getTag->addChild('filter');
-        if ($field) {
+        if (!is_null($field)) {
             $filterTag->addChild($field, $value);
         }
 
@@ -79,7 +80,7 @@ class Customer extends \PleskX\Api\Operator
             $customers[] = new Struct\GeneralInfo($xmlResult->data->gen_info);
         }
 
-        return $field ? reset($customers) : $customers;
+        return $customers;
     }
 
 }
