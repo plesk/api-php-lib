@@ -24,4 +24,14 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
         $this->_client->setCredentials($login, $password);
     }
 
+    /**
+     * @return string
+     */
+    protected function _getIpAddress()
+    {
+        $ips = $this->_client->ip()->get();
+        $ipInfo = reset($ips);
+        return $ipInfo->ipAddress;
+    }
+
 }

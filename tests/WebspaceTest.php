@@ -15,16 +15,6 @@ class WebspaceTest extends TestCase
         ]);
     }
 
-    /**
-     * @return string
-     */
-    private function _getIpAddress()
-    {
-        $ips = $this->_client->ip()->get();
-        $ipInfo = reset($ips);
-        return $ipInfo->ipAddress;
-    }
-
     public function testGetPermissionDescriptor()
     {
         $descriptor = $this->_client->webspace()->getPermissionDescriptor();
@@ -68,8 +58,7 @@ class WebspaceTest extends TestCase
             'ftp_login' => 'test-login',
             'ftp_password' => 'test-password',
         ]);
-        $result = $this->_client->webspace()->delete('id', $webspace->id);
-        $this->assertTrue($result);
+        $this->_client->webspace()->delete('id', $webspace->id);
     }
 
     public function testDelete()
