@@ -3,7 +3,7 @@
 
 namespace PleskX\Api\Struct\SecretKey;
 
-class KeyInfo extends \PleskX\Api\Struct
+class Info extends \PleskX\Api\Struct
 {
     /** @var string */
     public $key;

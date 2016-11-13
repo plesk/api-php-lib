@@ -23,23 +23,54 @@ class SecretKey extends \PleskX\Api\Operator
 
     /**
      * @param string $keyId
-     * @return Struct\KeyInfo
-     */
-    public function getInfo($keyId)
-    {
-        $packet = $this->_client->getPacket();
-        $packet->addChild($this->_wrapperTag)->addChild('get_info')->addChild('filter')->addChild('key', $keyId);
-        $response = $this->_client->request($packet);
-        return new Struct\KeyInfo($response->key_info);
-    }
-
-    /**
-     * @param string $keyId
      * @return bool
      */
     public function delete($keyId)
     {
         return $this->_delete('key', $keyId, 'delete');
+    }
+
+    /**
+     * @param string $keyId
+     * @return Struct\Info
+     */
+    public function get($keyId)
+    {
+        $items = $this->_get($keyId);
+        return reset($items);
+    }
+
+    /**
+     * @return Struct\Info[]
+     */
+    public function getAll()
+    {
+        return $this->_get();
+    }
+
+    /**
+     * @param string $field
+     * @param integer|string $value
+     * @return Struct\Info[]
+     */
+    public function _get($keyId = null)
+    {
+        $packet = $this->_client->getPacket();
+        $getTag = $packet->addChild($this->_wrapperTag)->addChild('get_info');
+
+        $filterTag = $getTag->addChild('filter');
+        if (!is_null($keyId)) {
+            $filterTag->addChild('key', $keyId);
+        }
+
+        $response = $this->_client->request($packet, \PleskX\Api\Client::RESPONSE_FULL);
+
+        $items = [];
+        foreach ($response->xpath('//result') as $xmlResult) {
+            $items[] = new Struct\Info($xmlResult->key_info);
+        }
+
+        return $items;
     }
 
 }
