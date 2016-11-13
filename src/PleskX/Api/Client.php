@@ -2,6 +2,7 @@
 // Copyright 1999-2016. Parallels IP Holdings GmbH.
 
 namespace PleskX\Api;
+use PleskX\Api\Client\Exception;
 use SimpleXMLElement;
 
 /**
@@ -136,7 +137,12 @@ class Client
             }
         }
 
-        $xml = $this->_performHttpRequest($request);
+        if ('sdk' == $this->_protocol) {
+            $requestXml = new SimpleXMLElement((string)$request);
+            $xml = \pm_ApiRpc::getService()->call($requestXml->children()[0]->asXml());
+        } else {
+            $xml = $this->_performHttpRequest($request);
+        }
 
         return (self::RESPONSE_FULL == $mode) ? $xml : $xml->xpath('//result')[0];
     }
@@ -148,7 +154,7 @@ class Client
      * @return XmlResponse
      * @throws Exception
      */
-    protected function _performHttpRequest($request)
+    private function _performHttpRequest($request)
     {
         $curl = curl_init();
 
@@ -196,7 +202,7 @@ class Client
 
         foreach ($requests as $request) {
             if ($request instanceof SimpleXMLElement) {
-                // TODO: implement
+                throw new Exception('SimpleXML type of request is not supported for multi requests.');
             } else {
                 if (is_array($request)) {
                     $request = $this->_arrayToXml($request, $requestXml)->asXML();
@@ -207,7 +213,11 @@ class Client
             $responses[] = $this->request($request);
         }
 
-        $responseXml = $this->_performHttpRequest($requestXml->asXML());
+        if ('sdk' == $this->_protocol) {
+            throw new Exception('Multi requests are not supported via SDK.');
+        } else {
+            $responseXml = $this->_performHttpRequest($requestXml->asXML());
+        }
 
         $responses = [];
         foreach ($responseXml->children() as $childNode) {
