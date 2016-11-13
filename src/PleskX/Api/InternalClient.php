@@ -4,7 +4,7 @@
 namespace PleskX\Api;
 
 /**
- * Internal client for Plesk API-RPC (via SDK)
+ * Internal client for Plesk XML-RPC API (via SDK)
  */
 class InternalClient extends Client
 {

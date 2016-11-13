@@ -5,7 +5,7 @@ namespace PleskX\Api;
 use SimpleXMLElement;
 
 /**
- * Client for Plesk API-RPC
+ * Client for Plesk XML-RPC API
  */
 class Client
 {

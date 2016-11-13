@@ -4,7 +4,7 @@
 namespace PleskX\Api;
 
 /**
- * Exceptions for API-RPC client
+ * Exceptions for XML-RPC API client
  */
 class Exception extends \Exception
 {

@@ -1,6 +1,6 @@
 {
     "name": "plesk/api-php-lib",
-    "description": "PHP object-oriented library for Plesk API-RPC",
+    "description": "PHP object-oriented library for Plesk XML-RPC API",
     "license": "Apache-2.0",
     "authors": [
         {
