@@ -35,7 +35,7 @@ class ServicePlan extends \PleskX\Api\Operator
     private function _get($field = null, $value = null)
     {
         $packet = $this->_client->getPacket();
-        $getTag = $packet->addChild('service-plan')->addChild('get');
+        $getTag = $packet->addChild($this->_wrapperTag)->addChild('get');
 
         $filterTag = $getTag->addChild('filter');
         if (!is_null($field)) {

@@ -14,7 +14,7 @@ class Customer extends \PleskX\Api\Operator
     public function create($properties)
     {
         $packet = $this->_client->getPacket();
-        $info = $packet->addChild('customer')->addChild('add')->addChild('gen_info');
+        $info = $packet->addChild($this->_wrapperTag)->addChild('add')->addChild('gen_info');
 
         foreach ($properties as $name => $value) {
             $info->addChild($name, $value);
@@ -61,7 +61,7 @@ class Customer extends \PleskX\Api\Operator
     private function _get($field = null, $value = null)
     {
         $packet = $this->_client->getPacket();
-        $getTag = $packet->addChild('customer')->addChild('get');
+        $getTag = $packet->addChild($this->_wrapperTag)->addChild('get');
 
         $filterTag = $getTag->addChild('filter');
         if (!is_null($field)) {

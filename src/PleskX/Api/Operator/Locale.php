@@ -15,7 +15,7 @@ class Locale extends \PleskX\Api\Operator
     {
         $locales = [];
         $packet = $this->_client->getPacket();
-        $filter = $packet->addChild('locale')->addChild('get')->addChild('filter');
+        $filter = $packet->addChild($this->_wrapperTag)->addChild('get')->addChild('filter');
 
         if (!is_null($id)) {
             $filter->addChild('id', $id);

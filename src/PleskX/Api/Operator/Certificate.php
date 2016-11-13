@@ -14,7 +14,7 @@ class Certificate extends \PleskX\Api\Operator
     public function generate($properties)
     {
         $packet = $this->_client->getPacket();
-        $info = $packet->addChild('certificate')->addChild('generate')->addChild('info');
+        $info = $packet->addChild($this->_wrapperTag)->addChild('generate')->addChild('info');
 
         foreach ($properties as $name => $value) {
             $info->addChild($name, $value);

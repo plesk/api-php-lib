@@ -13,7 +13,7 @@ class Server extends \PleskX\Api\Operator
     public function getProtos()
     {
         $packet = $this->_client->getPacket();
-        $packet->addChild('server')->addChild('get_protos');
+        $packet->addChild($this->_wrapperTag)->addChild('get_protos');
         $response = $this->_client->request($packet);
 
         return (array)$response->protos->proto;
@@ -145,7 +145,7 @@ class Server extends \PleskX\Api\Operator
     public function createSession($login, $clientIp)
     {
         $packet = $this->_client->getPacket();
-        $sessionNode = $packet->addChild('server')->addChild('create_session');
+        $sessionNode = $packet->addChild($this->_wrapperTag)->addChild('create_session');
         $sessionNode->addChild('login', $login);
         $dataNode = $sessionNode->addChild('data');
         $dataNode->addChild('user_ip', base64_encode($clientIp));
@@ -162,7 +162,7 @@ class Server extends \PleskX\Api\Operator
     private function _getInfo($operation)
     {
         $packet = $this->_client->getPacket();
-        $packet->addChild('server')->addChild('get')->addChild($operation);
+        $packet->addChild($this->_wrapperTag)->addChild('get')->addChild($operation);
         $response = $this->_client->request($packet);
 
         return $response->$operation;

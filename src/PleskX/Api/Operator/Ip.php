@@ -14,7 +14,7 @@ class Ip extends \PleskX\Api\Operator
     {
         $ips = [];
         $packet = $this->_client->getPacket();
-        $packet->addChild('ip')->addChild('get');
+        $packet->addChild($this->_wrapperTag)->addChild('get');
         $response = $this->_client->request($packet);
 
         foreach ($response->addresses->ip_info as $ipInfo) {

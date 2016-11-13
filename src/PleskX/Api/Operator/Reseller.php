@@ -14,7 +14,7 @@ class Reseller extends \PleskX\Api\Operator
     public function create($properties)
     {
         $packet = $this->_client->getPacket();
-        $info = $packet->addChild('reseller')->addChild('add')->addChild('gen-info');
+        $info = $packet->addChild($this->_wrapperTag)->addChild('add')->addChild('gen-info');
 
         foreach ($properties as $name => $value) {
             $info->addChild($name, $value);
@@ -42,7 +42,7 @@ class Reseller extends \PleskX\Api\Operator
     public function get($field, $value)
     {
         $packet = $this->_client->getPacket();
-        $getTag = $packet->addChild('reseller')->addChild('get');
+        $getTag = $packet->addChild($this->_wrapperTag)->addChild('get');
         $getTag->addChild('filter')->addChild($field, $value);
         $getTag->addChild('dataset')->addChild('gen-info');
         $response = $this->_client->request($packet);

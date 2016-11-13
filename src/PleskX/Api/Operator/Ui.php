@@ -24,7 +24,7 @@ class Ui extends \PleskX\Api\Operator
     public function createCustomButton($owner, $properties)
     {
         $packet = $this->_client->getPacket();
-        $buttonNode = $packet->addChild('ui')->addChild('create-custombutton');
+        $buttonNode = $packet->addChild($this->_wrapperTag)->addChild('create-custombutton');
         $buttonNode->addChild('owner')->addChild($owner);
         $propertiesNode = $buttonNode->addChild('properties');
 

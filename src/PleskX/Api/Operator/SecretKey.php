@@ -16,7 +16,7 @@ class SecretKey extends \PleskX\Api\Operator
     public function create($ipAddress)
     {
         $packet = $this->_client->getPacket();
-        $packet->addChild('secret_key')->addChild('create')->addChild('ip_address', $ipAddress);
+        $packet->addChild($this->_wrapperTag)->addChild('create')->addChild('ip_address', $ipAddress);
         $response = $this->_client->request($packet);
         return (string)$response->key;
     }
@@ -28,7 +28,7 @@ class SecretKey extends \PleskX\Api\Operator
     public function getInfo($keyId)
     {
         $packet = $this->_client->getPacket();
-        $packet->addChild('secret_key')->addChild('get_info')->addChild('filter')->addChild('key', $keyId);
+        $packet->addChild($this->_wrapperTag)->addChild('get_info')->addChild('filter')->addChild('key', $keyId);
         $response = $this->_client->request($packet);
         return new Struct\KeyInfo($response->key_info);
     }

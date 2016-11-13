@@ -14,7 +14,7 @@ class Site extends \PleskX\Api\Operator
     public function create(array $properties)
     {
         $packet = $this->_client->getPacket();
-        $info = $packet->addChild('site')->addChild('add');
+        $info = $packet->addChild($this->_wrapperTag)->addChild('add');
 
         $infoGeneral = $info->addChild('gen_setup');
         foreach ($properties as $name => $value) {
@@ -54,7 +54,7 @@ class Site extends \PleskX\Api\Operator
     public function getAll($field = null, $value = null)
     {
         $packet = $this->_client->getPacket();
-        $getTag = $packet->addChild('site')->addChild('get');
+        $getTag = $packet->addChild($this->_wrapperTag)->addChild('get');
 
         $filterTag = $getTag->addChild('filter');
         if (!is_null($field)) {

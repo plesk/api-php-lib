@@ -15,7 +15,7 @@ class User extends \PleskX\Api\Operator
     public function create($role, $properties)
     {
         $packet = $this->_client->getPacket();
-        $addNode = $packet->addChild('user')->addChild('add');
+        $addNode = $packet->addChild($this->_wrapperTag)->addChild('add');
         $info = $addNode->addChild('gen-info');
 
         foreach ($properties as $name => $value) {
@@ -46,7 +46,7 @@ class User extends \PleskX\Api\Operator
     public function get($field, $value)
     {
         $packet = $this->_client->getPacket();
-        $getTag = $packet->addChild('user')->addChild('get');
+        $getTag = $packet->addChild($this->_wrapperTag)->addChild('get');
         $getTag->addChild('filter')->addChild($field, $value);
         $getTag->addChild('dataset')->addChild('gen-info');
         $response = $this->_client->request($packet);

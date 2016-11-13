@@ -33,7 +33,7 @@ class Webspace extends \PleskX\Api\Operator
     public function create(array $properties, array $hostingProperties = null)
     {
         $packet = $this->_client->getPacket();
-        $info = $packet->addChild('webspace')->addChild('add');
+        $info = $packet->addChild($this->_wrapperTag)->addChild('add');
 
         $infoGeneral = $info->addChild('gen_setup');
         foreach ($properties as $name => $value) {
@@ -75,7 +75,7 @@ class Webspace extends \PleskX\Api\Operator
     public function get($field, $value)
     {
         $packet = $this->_client->getPacket();
-        $getTag = $packet->addChild('webspace')->addChild('get');
+        $getTag = $packet->addChild($this->_wrapperTag)->addChild('get');
         $getTag->addChild('filter')->addChild($field, $value);
         $getTag->addChild('dataset')->addChild('gen_info');
         $response = $this->_client->request($packet);
