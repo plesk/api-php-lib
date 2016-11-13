@@ -49,8 +49,7 @@ class SecretKey extends \PleskX\Api\Operator
     }
 
     /**
-     * @param string $field
-     * @param integer|string $value
+     * @param string|null $keyId
      * @return Struct\Info[]
      */
     public function _get($keyId = null)
