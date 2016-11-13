@@ -15,8 +15,8 @@ class ServicePlan extends \PleskX\Api\Operator
      */
     public function get($field, $value)
     {
-        $customers = $this->_get($field, $value);
-        return reset($customers);
+        $items = $this->_get($field, $value);
+        return reset($items);
     }
 
     /**
