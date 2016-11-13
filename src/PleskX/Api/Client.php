@@ -2,7 +2,6 @@
 // Copyright 1999-2016. Parallels IP Holdings GmbH.
 
 namespace PleskX\Api;
-use PleskX\Api\Client\Exception;
 use SimpleXMLElement;
 
 /**
@@ -152,7 +151,7 @@ class Client
      *
      * @param string $request
      * @return XmlResponse
-     * @throws Exception
+     * @throws Client\Exception
      */
     private function _performHttpRequest($request)
     {
@@ -194,6 +193,7 @@ class Client
      * @param $requests
      * @param int $mode
      * @return array
+     * @throws Client\Exception
      */
     public function multiRequest($requests, $mode = self::RESPONSE_SHORT)
     {
@@ -202,7 +202,7 @@ class Client
 
         foreach ($requests as $request) {
             if ($request instanceof SimpleXMLElement) {
-                throw new Exception('SimpleXML type of request is not supported for multi requests.');
+                throw new Client\Exception('SimpleXML type of request is not supported for multi requests.');
             } else {
                 if (is_array($request)) {
                     $request = $this->_arrayToXml($request, $requestXml)->asXML();
@@ -214,7 +214,7 @@ class Client
         }
 
         if ('sdk' == $this->_protocol) {
-            throw new Exception('Multi requests are not supported via SDK.');
+            throw new Client\Exception('Multi requests are not supported via SDK.');
         } else {
             $responseXml = $this->_performHttpRequest($requestXml->asXML());
         }
@@ -281,7 +281,7 @@ class Client
      * Verify that response does not contain errors
      *
      * @param XmlResponse $xml
-     * @throws \Exception
+     * @throws Exception
      */
     protected function _verifyResponse($xml)
     {
