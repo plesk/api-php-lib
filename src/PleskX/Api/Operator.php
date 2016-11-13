@@ -15,6 +15,12 @@ class Operator
     public function __construct($client)
     {
         $this->_client = $client;
+
+        if (is_null($this->_wrapperTag)) {
+            $classNameParts = explode('\\', get_class($this));
+            $this->_wrapperTag = end($classNameParts);
+            $this->_wrapperTag = strtolower(preg_replace('/([a-z])([A-Z])/', '\1-\2', $this->_wrapperTag));
+        }
     }
 
     /**
@@ -28,12 +34,6 @@ class Operator
     {
         $wrapperTag = $this->_wrapperTag;
 
-        if (is_null($wrapperTag)) {
-            $classNameParts = explode('\\', get_class($this));
-            $wrapperTag = end($classNameParts);
-            $wrapperTag = strtolower(preg_replace('/([a-z])([A-Z])/', '\1-\2', $wrapperTag));
-        }
-
         if (is_array($request)) {
             $request = [$wrapperTag => $request];
         } else if (preg_match('/^[a-z]/', $request)) {
@@ -43,6 +43,18 @@ class Operator
         }
 
         return $this->_client->request($request, $mode);
+    }
+
+    /**
+     * @param string $field
+     * @param integer|string $value
+     * @param string $deleteMethodName
+     * @return bool
+     */
+    public function _delete($field, $value, $deleteMethodName = 'del')
+    {
+        $response = $this->request("$deleteMethodName.filter.$field=$value");
+        return 'ok' === (string)$response->status;
     }
 
 }

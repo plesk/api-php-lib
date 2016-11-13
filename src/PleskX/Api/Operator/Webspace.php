@@ -64,10 +64,7 @@ class Webspace extends \PleskX\Api\Operator
      */
     public function delete($field, $value)
     {
-        $packet = $this->_client->getPacket();
-        $packet->addChild('webspace')->addChild('del')->addChild('filter')->addChild($field, $value);
-        $response = $this->_client->request($packet);
-        return 'ok' === (string)$response->status;
+        return $this->_delete($field, $value);
     }
 
     /**

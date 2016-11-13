@@ -52,8 +52,7 @@ class Ui extends \PleskX\Api\Operator
      */
     public function deleteCustomButton($id)
     {
-        $response = $this->request("delete-custombutton.filter.custombutton-id=$id");
-        return 'ok' === (string)$response->status;
+        return $this->_delete('custombutton-id', $id, 'delete-custombutton');
     }
 
 }

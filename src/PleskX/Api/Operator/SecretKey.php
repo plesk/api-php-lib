@@ -39,10 +39,7 @@ class SecretKey extends \PleskX\Api\Operator
      */
     public function delete($keyId)
     {
-        $packet = $this->_client->getPacket();
-        $packet->addChild('secret_key')->addChild('delete')->addChild('filter')->addChild('key', $keyId);
-        $response = $this->_client->request($packet);
-        return 'ok' === (string)$response->status;
+        return $this->_delete('key', $keyId, 'delete');
     }
 
 }
