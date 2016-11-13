@@ -50,6 +50,8 @@ class Site extends \PleskX\Api\Operator
     }
 
     /**
+     * @param string $field
+     * @param integer|string $value
      * @return Struct\GeneralInfo[]
      */
     public function getAll($field = null, $value = null)
