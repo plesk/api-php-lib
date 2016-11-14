@@ -21,6 +21,27 @@ class GeneralInfo extends \PleskX\Api\Struct
     public $email;
 
     /** @var string */
+    public $phone;
+
+    /** @var string */
+    public $fax;
+
+    /** @var string */
+    public $address;
+
+    /** @var string */
+    public $pcode;
+
+    /** @var string */
+    public $city;
+
+    /** @var string */
+    public $state;
+
+    /** @var string */
+    public $country;
+
+    /** @var string */
     public $description;
 
     /** @var string */
@@ -34,6 +55,13 @@ class GeneralInfo extends \PleskX\Api\Struct
             'login',
             'guid',
             'email',
+            'phone',
+            'fax',
+            'address',
+            'pcode',
+            'city',
+            'state',
+            'country',
             'external-id',
             'description',
         ]);
