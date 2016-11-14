@@ -10,6 +10,10 @@ PHP object-oriented library for Plesk XML-RPC API.
 
 `composer require plesk/api-php-lib:@dev`
 
+## Examples
+
+To get started you can find examples in the 'examples' folder or open [index.html](index.html)
+
 ## How to Run Unit Tests
 
 One the possible ways to become familiar with the library is to check the unit tests.
