@@ -1,0 +1,27 @@
+body{
+  font-family: 'Lato', sans-serif;
+}
+
+.pleskbg {
+  height: 66px;
+    background-color: #304658;
+    color: #eee;
+}
+
+.pleskbg img{
+ margin-top: 12px;
+ height: 45px;
+}
+
+.pleskbg .pull-right a{
+    color: #eee;
+    line-height: 5
+  }
+
+a:hover {
+  color: #bc1313;
+}
+
+ul{
+  padding-bottom: 10px;
+  }
