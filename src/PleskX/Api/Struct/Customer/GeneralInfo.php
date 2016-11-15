@@ -30,7 +30,7 @@ class GeneralInfo extends \PleskX\Api\Struct
     public $address;
 
     /** @var string */
-    public $pcode;
+    public $postalCode;
 
     /** @var string */
     public $city;
@@ -58,7 +58,7 @@ class GeneralInfo extends \PleskX\Api\Struct
             'phone',
             'fax',
             'address',
-            'pcode',
+            ['pcode' => 'postalCode'],
             'city',
             'state',
             'country',
