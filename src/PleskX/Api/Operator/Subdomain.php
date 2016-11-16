@@ -22,4 +22,14 @@ class Subdomain extends \PleskX\Api\Operator
         $response = $this->_client->request($packet);
         return new Struct\Info($response);
     }
+
+    /**
+     * @param string $field
+     * @param integer|string $value
+     * @return bool
+     */
+    public function delete($field, $value)
+    {
+        return $this->_delete($field, $value);
+    }
 }

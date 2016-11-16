@@ -43,4 +43,15 @@ class SubdomainTest extends TestCase
 
         $this->_client->webspace()->delete('id', $webspace->id);
     }
+
+    public function testDelete()
+    {
+        $webspaceName = 'example.tld';
+        $webspace = $this->_createWebspace($webspaceName);
+        $subdomain = $this->_createSubdomain('sub', $webspaceName);
+
+        $result = $this->_client->subdomain()->delete('id', $subdomain->id);
+        $this->assertTrue($result);
+        $this->_client->webspace()->delete('id', $webspace->id);
+    }
 }
