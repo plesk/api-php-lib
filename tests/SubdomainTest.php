@@ -6,21 +6,6 @@ class SubdomainTest extends TestCase
 
     /**
      * @param string $name
-     * @return \PleskX\Api\Struct\Webspace\Info
-     */
-    private function _createWebspace($name)
-    {
-        return $this->_client->webspace()->create([
-            'name' => $name,
-            'ip_address' => $this->_getIpAddress(),
-        ], [
-            'ftp_login' => 'test-login',
-            'ftp_password' => 'test-password',
-        ]);
-    }
-
-    /**
-     * @param string $name
      * @param string $webspaceName
      * @return \PleskX\Api\Struct\Subdomain\Info
      */
