@@ -142,6 +142,7 @@ class Client
         } else {
             $xml = $this->_performHttpRequest($request);
         }
+        $this->_verifyResponse($xml);
 
         return (self::RESPONSE_FULL == $mode) ? $xml : $xml->xpath('//result')[0];
     }
@@ -182,8 +183,6 @@ class Client
         curl_close($curl);
 
         $xml = new XmlResponse($result);
-        $this->_verifyResponse($xml);
-
         return $xml;
     }
 
