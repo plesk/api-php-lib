@@ -57,7 +57,9 @@ class DatabaseServer extends \PleskX\Api\Operator
 
         $items = [];
         foreach ($response->xpath('//result') as $xmlResult) {
-            $items[] = new Struct\Info($xmlResult->data);
+            $item = new Struct\Info($xmlResult->data);
+            $item->id = (int)$xmlResult->id;
+            $items[] = $item;
         }
 
         return $items;
