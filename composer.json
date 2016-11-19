@@ -17,6 +17,9 @@
         "phpunit/php-invoker": "*",
         "phpunit/dbunit": ">=1.2"
     },
+    "config": {
+        "process-timeout": 0
+    },
     "scripts": {
         "test": "phpunit"
     },
