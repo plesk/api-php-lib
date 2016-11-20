@@ -6,8 +6,8 @@ class SessionTest extends TestCase
 
     public function testGet()
     {
-        $sessionId = $this->_client->server()->createSession('admin', '127.0.0.1');
-        $sessions = $this->_client->session()->get();
+        $sessionId = static::$_client->server()->createSession('admin', '127.0.0.1');
+        $sessions = static::$_client->session()->get();
         $this->assertArrayHasKey($sessionId, $sessions);
 
         $sessionInfo = $sessions[$sessionId];
@@ -18,9 +18,9 @@ class SessionTest extends TestCase
 
     public function testTerminate()
     {
-        $sessionId = $this->_client->server()->createSession('admin', '127.0.0.1');
-        $this->_client->session()->terminate($sessionId);
-        $sessions = $this->_client->session()->get();
+        $sessionId = static::$_client->server()->createSession('admin', '127.0.0.1');
+        static::$_client->session()->terminate($sessionId);
+        $sessions = static::$_client->session()->get();
         $this->assertArrayNotHasKey($sessionId, $sessions);
     }
 

@@ -3,59 +3,71 @@
 
 class SiteTest extends TestCase
 {
+    /**
+     * @var \PleskX\Api\Struct\Webspace\Info
+     */
+    private static $_webspace;
 
-    private function _createSite($name, $webspace)
+    public static function setUpBeforeClass()
     {
-        return $this->_client->site()->create([
+        parent::setUpBeforeClass();
+        static::$_webspace = static::_createWebspace('example.dom');
+    }
+
+    public static function tearDownAfterClass()
+    {
+        parent::tearDownAfterClass();
+        static::$_client->webspace()->delete('id', static::$_webspace->id);
+    }
+
+    private function _createSite($name)
+    {
+        return static::$_client->site()->create([
             'name' => $name,
-            'webspace-id' => $webspace->id,
+            'webspace-id' => static::$_webspace->id,
         ]);
     }
 
     public function testCreate()
     {
-        $webspace = $this->_createWebspace('example.dom');
-        $site = $this->_createSite('addon.dom', $webspace);
+        $site = $this->_createSite('addon.dom');
 
         $this->assertInternalType('integer', $site->id);
         $this->assertGreaterThan(0, $site->id);
 
-        $this->_client->webspace()->delete('id', $webspace->id);
+        static::$_client->site()->delete('id', $site->id);
     }
 
     public function testDelete()
     {
-        $webspace = $this->_createWebspace('example.dom');
-        $site = $this->_createSite('addon.dom', $webspace);
+        $site = $this->_createSite('addon.dom');
 
-        $result = $this->_client->site()->delete('id', $site->id);
+        $result = static::$_client->site()->delete('id', $site->id);
         $this->assertTrue($result);
-        $this->_client->webspace()->delete('id', $webspace->id);
     }
 
     public function testGet()
     {
-        $webspace = $this->_createWebspace('example.dom');
-        $site = $this->_createSite('addon.dom', $webspace);
+        $site = $this->_createSite('addon.dom');
 
-        $siteInfo = $this->_client->site()->get('id', $site->id);
+        $siteInfo = static::$_client->site()->get('id', $site->id);
         $this->assertEquals('addon.dom', $siteInfo->name);
 
-        $this->_client->webspace()->delete('id', $webspace->id);
+        static::$_client->site()->delete('id', $site->id);
     }
 
     public function testGetAll()
     {
-        $webspace = $this->_createWebspace('example.dom');
-        $this->_createSite('addon.dom', $webspace);
-        $this->_createSite('addon2.dom', $webspace);
+        $site = $this->_createSite('addon.dom');
+        $site2 = $this->_createSite('addon2.dom');
 
-        $sitesInfo = $this->_client->site()->getAll();
+        $sitesInfo = static::$_client->site()->getAll();
         $this->assertCount(2, $sitesInfo);
         $this->assertEquals('addon.dom', $sitesInfo[0]->name);
         $this->assertEquals('addon.dom', $sitesInfo[0]->asciiName);
 
-        $this->_client->webspace()->delete('id', $webspace->id);
+        static::$_client->site()->delete('id', $site->id);
+        static::$_client->site()->delete('id', $site2->id);
     }
 
 }

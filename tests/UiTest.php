@@ -12,7 +12,7 @@ class UiTest extends TestCase
 
     public function testGetNavigation()
     {
-        $navigation = $this->_client->ui()->getNavigation();
+        $navigation = static::$_client->ui()->getNavigation();
         $this->assertInternalType('array', $navigation);
         $this->assertGreaterThan(0, count($navigation));
         $this->assertArrayHasKey('general', $navigation);
@@ -26,26 +26,26 @@ class UiTest extends TestCase
 
     public function testCreateCustomButton()
     {
-        $buttonId = $this->_client->ui()->createCustomButton('admin', $this->_customButtonProperties);
+        $buttonId = static::$_client->ui()->createCustomButton('admin', $this->_customButtonProperties);
         $this->assertGreaterThan(0, $buttonId);
 
-        $this->_client->ui()->deleteCustomButton($buttonId);
+        static::$_client->ui()->deleteCustomButton($buttonId);
     }
 
     public function testGetCustomButton()
     {
-        $buttonId = $this->_client->ui()->createCustomButton('admin', $this->_customButtonProperties);
-        $customButtonInfo = $this->_client->ui()->getCustomButton($buttonId);
+        $buttonId = static::$_client->ui()->createCustomButton('admin', $this->_customButtonProperties);
+        $customButtonInfo = static::$_client->ui()->getCustomButton($buttonId);
         $this->assertEquals('http://example.com', $customButtonInfo->url);
         $this->assertEquals('Example site', $customButtonInfo->text);
 
-        $this->_client->ui()->deleteCustomButton($buttonId);
+        static::$_client->ui()->deleteCustomButton($buttonId);
     }
 
     public function testDeleteCustomButton()
     {
-        $buttonId = $this->_client->ui()->createCustomButton('admin', $this->_customButtonProperties);
-        $result = $this->_client->ui()->deleteCustomButton($buttonId);
+        $buttonId = static::$_client->ui()->createCustomButton('admin', $this->_customButtonProperties);
+        $result = static::$_client->ui()->deleteCustomButton($buttonId);
         $this->assertTrue($result);
     }
 

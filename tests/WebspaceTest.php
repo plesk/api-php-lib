@@ -9,29 +9,29 @@ class WebspaceTest extends TestCase
      */
     private function _createDomain()
     {
-        return $this->_client->webspace()->create([
+        return static::$_client->webspace()->create([
             'name' => 'example-test.dom',
-            'ip_address' => $this->_getIpAddress(),
+            'ip_address' => static::_getIpAddress(),
         ]);
     }
 
     public function testGetPermissionDescriptor()
     {
-        $descriptor = $this->_client->webspace()->getPermissionDescriptor();
+        $descriptor = static::$_client->webspace()->getPermissionDescriptor();
         $this->assertInternalType('array', $descriptor->permissions);
         $this->assertGreaterThan(0, count($descriptor->permissions));
     }
 
     public function testGetLimitDescriptor()
     {
-        $descriptor = $this->_client->webspace()->getLimitDescriptor();
+        $descriptor = static::$_client->webspace()->getLimitDescriptor();
         $this->assertInternalType('array', $descriptor->limits);
         $this->assertGreaterThan(0, count($descriptor->limits));
     }
 
     public function testGetPhysicalHostingDescriptor()
     {
-        $descriptor = $this->_client->webspace()->getPhysicalHostingDescriptor();
+        $descriptor = static::$_client->webspace()->getPhysicalHostingDescriptor();
         $this->assertInternalType('array', $descriptor->properties);
         $this->assertGreaterThan(0, count($descriptor->properties));
 
@@ -46,35 +46,35 @@ class WebspaceTest extends TestCase
         $this->assertInternalType('integer', $domain->id);
         $this->assertGreaterThan(0, $domain->id);
 
-        $this->_client->webspace()->delete('id', $domain->id);
+        static::$_client->webspace()->delete('id', $domain->id);
     }
 
     public function testCreateWebspace()
     {
-        $webspace = $this->_client->webspace()->create([
+        $webspace = static::$_client->webspace()->create([
             'name' => 'example-test.dom',
-            'ip_address' => $this->_getIpAddress(),
+            'ip_address' => static::_getIpAddress(),
         ], [
             'ftp_login' => 'test-login',
             'ftp_password' => 'test-password',
         ]);
-        $this->_client->webspace()->delete('id', $webspace->id);
+        static::$_client->webspace()->delete('id', $webspace->id);
     }
 
     public function testDelete()
     {
         $domain = $this->_createDomain();
-        $result = $this->_client->webspace()->delete('id', $domain->id);
+        $result = static::$_client->webspace()->delete('id', $domain->id);
         $this->assertTrue($result);
     }
 
     public function testGet()
     {
         $domain = $this->_createDomain();
-        $domainInfo = $this->_client->webspace()->get('id', $domain->id);
+        $domainInfo = static::$_client->webspace()->get('id', $domain->id);
         $this->assertEquals('example-test.dom', $domainInfo->name);
 
-        $this->_client->webspace()->delete('id', $domain->id);
+        static::$_client->webspace()->delete('id', $domain->id);
     }
 
 }

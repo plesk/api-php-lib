@@ -4,26 +4,40 @@
 class MailTest extends TestCase
 {
 
+    /**
+     * @var \PleskX\Api\Struct\Webspace\Info
+     */
+    private static $_webspace;
+
+    public static function setUpBeforeClass()
+    {
+        parent::setUpBeforeClass();
+        static::$_webspace = static::_createWebspace('example.dom');
+    }
+
+    public static function tearDownAfterClass()
+    {
+        parent::tearDownAfterClass();
+        static::$_client->webspace()->delete('id', static::$_webspace->id);
+    }
+
     public function testCreate()
     {
-        $webspace = $this->_createWebspace('example.dom');
-        $mailname = $this->_client->mail()->create('test', $webspace->id, true, 'secret');
+        $mailname = static::$_client->mail()->create('test', static::$_webspace->id, true, 'secret');
 
         $this->assertInternalType('integer', $mailname->id);
         $this->assertGreaterThan(0, $mailname->id);
         $this->assertEquals('test', $mailname->name);
 
-        $this->_client->webspace()->delete('id', $webspace->id);
+        static::$_client->mail()->delete('name', $mailname->name, static::$_webspace->id);
     }
 
     public function testDelete()
     {
-        $webspace = $this->_createWebspace('example.dom');
-        $mailname = $this->_client->mail()->create('test', $webspace->id);
+        $mailname = static::$_client->mail()->create('test', static::$_webspace->id);
 
-        $result = $this->_client->mail()->delete('name', $mailname->name, $webspace->id);
+        $result = static::$_client->mail()->delete('name', $mailname->name, static::$_webspace->id);
         $this->assertTrue($result);
-        $this->_client->webspace()->delete('id', $webspace->id);
     }
 
 }

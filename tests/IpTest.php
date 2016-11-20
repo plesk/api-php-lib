@@ -6,7 +6,7 @@ class IpTest extends TestCase
 
     public function testGet()
     {
-        $ips = $this->_client->ip()->get();
+        $ips = static::$_client->ip()->get();
         $this->assertGreaterThan(0, count($ips));
 
         $ip = reset($ips);

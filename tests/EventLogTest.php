@@ -6,7 +6,7 @@ class EventLogTest extends TestCase
 
     public function testGet()
     {
-        $events = $this->_client->eventLog()->get();
+        $events = static::$_client->eventLog()->get();
         $this->assertGreaterThan(0, $events);
 
         $event = reset($events);
@@ -15,7 +15,7 @@ class EventLogTest extends TestCase
 
     public function testGetDetailedLog()
     {
-        $events = $this->_client->eventLog()->getDetailedLog();
+        $events = static::$_client->eventLog()->getDetailedLog();
         $this->assertGreaterThan(0, $events);
 
         $event = reset($events);
@@ -25,7 +25,7 @@ class EventLogTest extends TestCase
 
     public function testGetLastId()
     {
-        $lastId = $this->_client->eventLog()->getLastId();
+        $lastId = static::$_client->eventLog()->getLastId();
         $this->assertGreaterThan(0, $lastId);
     }
 

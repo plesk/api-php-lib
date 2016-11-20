@@ -5,9 +5,9 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
 {
 
     /** @var PleskX\Api\Client */
-    protected $_client;
+    protected static $_client;
 
-    protected function setUp()
+    public static function setUpBeforeClass()
     {
         $login = getenv('REMOTE_LOGIN');
         $password = getenv('REMOTE_PASSWORD');
@@ -20,16 +20,16 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
             list($host, $port, $scheme) = [$parsedUrl['host'], $parsedUrl['port'], $parsedUrl['scheme']];
         }
 
-        $this->_client = new PleskX\Api\Client($host, $port, $scheme);
-        $this->_client->setCredentials($login, $password);
+        static::$_client = new PleskX\Api\Client($host, $port, $scheme);
+        static::$_client->setCredentials($login, $password);
     }
 
     /**
      * @return string
      */
-    protected function _getIpAddress()
+    protected static function _getIpAddress()
     {
-        $ips = $this->_client->ip()->get();
+        $ips = static::$_client->ip()->get();
         $ipInfo = reset($ips);
         return $ipInfo->ipAddress;
     }
@@ -38,11 +38,11 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
      * @param string $name
      * @return \PleskX\Api\Struct\Webspace\Info
      */
-    protected function _createWebspace($name)
+    protected static function _createWebspace($name)
     {
-        return $this->_client->webspace()->create([
+        return static::$_client->webspace()->create([
             'name' => $name,
-            'ip_address' => $this->_getIpAddress(),
+            'ip_address' => static::_getIpAddress(),
         ], [
             'ftp_login' => 'test-login',
             'ftp_password' => 'test-password',

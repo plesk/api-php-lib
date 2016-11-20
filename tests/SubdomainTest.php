@@ -3,40 +3,51 @@
 
 class SubdomainTest extends TestCase
 {
+    /**
+     * @var \PleskX\Api\Struct\Webspace\Info
+     */
+    private static $_webspace;
+
+    public static function setUpBeforeClass()
+    {
+        parent::setUpBeforeClass();
+        static::$_webspace = static::_createWebspace('example.dom');
+    }
+
+    public static function tearDownAfterClass()
+    {
+        parent::tearDownAfterClass();
+        static::$_client->webspace()->delete('id', static::$_webspace->id);
+    }
 
     /**
      * @param string $name
      * @param string $webspaceName
      * @return \PleskX\Api\Struct\Subdomain\Info
      */
-    private function _createSubdomain($name, $webspaceName)
+    private function _createSubdomain($name)
     {
-        return $this->_client->subdomain()->create([
-            'parent' => $webspaceName,
+        return static::$_client->subdomain()->create([
+            'parent' => 'example.dom',
             'name' => $name,
         ]);
     }
 
     public function testCreate()
     {
-        $webspaceName = 'example.tld';
-        $webspace = $this->_createWebspace($webspaceName);
-        $subdomain = $this->_createSubdomain('sub', $webspaceName);
+        $subdomain = $this->_createSubdomain('sub');
 
         $this->assertInternalType('integer', $subdomain->id);
         $this->assertGreaterThan(0, $subdomain->id);
 
-        $this->_client->webspace()->delete('id', $webspace->id);
+        static::$_client->subdomain()->delete('id', $subdomain->id);
     }
 
     public function testDelete()
     {
-        $webspaceName = 'example.tld';
-        $webspace = $this->_createWebspace($webspaceName);
-        $subdomain = $this->_createSubdomain('sub', $webspaceName);
+        $subdomain = $this->_createSubdomain('sub');
 
-        $result = $this->_client->subdomain()->delete('id', $subdomain->id);
+        $result = static::$_client->subdomain()->delete('id', $subdomain->id);
         $this->assertTrue($result);
-        $this->_client->webspace()->delete('id', $webspace->id);
     }
 }

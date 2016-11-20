@@ -6,7 +6,7 @@ class CertificateTest extends TestCase
 
     public function testGenerate()
     {
-        $certificate = $this->_client->certificate()->generate([
+        $certificate = static::$_client->certificate()->generate([
             'bits' => 2048,
             'country' => 'RU',
             'state' => 'NSO',

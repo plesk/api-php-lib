@@ -18,7 +18,7 @@ class UserTest extends TestCase
     {
         parent::setUp();
 
-        $this->_customer = $this->_client->customer()->create([
+        $this->_customer = static::$_client->customer()->create([
             'pname' => 'John Smith',
             'login' => 'john-unit-test',
             'passwd' => 'simple-password',
@@ -28,35 +28,35 @@ class UserTest extends TestCase
 
     protected function tearDown()
     {
-        $this->_client->customer()->delete('id', $this->_customer->id);
+        static::$_client->customer()->delete('id', $this->_customer->id);
     }
 
     public function testCreate()
     {
-        $user = $this->_client->user()->create('Application User', $this->_userProperties);
+        $user = static::$_client->user()->create('Application User', $this->_userProperties);
         $this->assertInternalType('integer', $user->id);
         $this->assertGreaterThan(0, $user->id);
 
-        $this->_client->user()->delete('guid', $user->guid);
+        static::$_client->user()->delete('guid', $user->guid);
     }
 
     public function testDelete()
     {
-        $user = $this->_client->user()->create('Application User', $this->_userProperties);
-        $result = $this->_client->user()->delete('guid', $user->guid);
+        $user = static::$_client->user()->create('Application User', $this->_userProperties);
+        $result = static::$_client->user()->delete('guid', $user->guid);
         $this->assertTrue($result);
     }
 
     public function testGet()
     {
-        $user = $this->_client->user()->create('Application User', $this->_userProperties);
-        $userInfo = $this->_client->user()->get('guid', $user->guid);
+        $user = static::$_client->user()->create('Application User', $this->_userProperties);
+        $userInfo = static::$_client->user()->get('guid', $user->guid);
         $this->assertEquals('mike-test', $userInfo->login);
         $this->assertEquals('Mike Black', $userInfo->name);
         $this->assertEquals('mike@example.com', $userInfo->email);
         $this->assertEquals($user->guid, $userInfo->guid);
 
-        $this->_client->user()->delete('guid', $user->guid);
+        static::$_client->user()->delete('guid', $user->guid);
     }
 
 }

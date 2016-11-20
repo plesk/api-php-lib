@@ -16,24 +16,24 @@ class CustomerTest extends TestCase
 
     public function testCreate()
     {
-        $customer = $this->_client->customer()->create($this->_customerProperties);
+        $customer = static::$_client->customer()->create($this->_customerProperties);
         $this->assertInternalType('integer', $customer->id);
         $this->assertGreaterThan(0, $customer->id);
 
-        $this->_client->customer()->delete('id', $customer->id);
+        static::$_client->customer()->delete('id', $customer->id);
     }
 
     public function testDelete()
     {
-        $customer = $this->_client->customer()->create($this->_customerProperties);
-        $result = $this->_client->customer()->delete('id', $customer->id);
+        $customer = static::$_client->customer()->create($this->_customerProperties);
+        $result = static::$_client->customer()->delete('id', $customer->id);
         $this->assertTrue($result);
     }
 
     public function testGet()
     {
-        $customer = $this->_client->customer()->create($this->_customerProperties);
-        $customerInfo = $this->_client->customer()->get('id', $customer->id);
+        $customer = static::$_client->customer()->create($this->_customerProperties);
+        $customerInfo = static::$_client->customer()->get('id', $customer->id);
         $this->assertEquals('Plesk', $customerInfo->company);
         $this->assertEquals('John Smith', $customerInfo->personalName);
         $this->assertEquals('john-unit-test', $customerInfo->login);
@@ -41,29 +41,29 @@ class CustomerTest extends TestCase
         $this->assertEquals('Good guy', $customerInfo->description);
         $this->assertEquals('link:12345', $customerInfo->externalId);
 
-        $this->_client->customer()->delete('id', $customer->id);
+        static::$_client->customer()->delete('id', $customer->id);
     }
 
     public function testGetAll()
     {
-        $this->_client->customer()->create([
+        static::$_client->customer()->create([
             'pname' => 'John Smith',
             'login' => 'customer-a',
             'passwd' => 'simple-password',
         ]);
-        $this->_client->customer()->create([
+        static::$_client->customer()->create([
             'pname' => 'Mike Black',
             'login' => 'customer-b',
             'passwd' => 'simple-password',
         ]);
 
-        $customersInfo = $this->_client->customer()->getAll();
+        $customersInfo = static::$_client->customer()->getAll();
         $this->assertCount(2, $customersInfo);
         $this->assertEquals('John Smith', $customersInfo[0]->personalName);
         $this->assertEquals('customer-a', $customersInfo[0]->login);
 
-        $this->_client->customer()->delete('login', 'customer-a');
-        $this->_client->customer()->delete('login', 'customer-b');
+        static::$_client->customer()->delete('login', 'customer-a');
+        static::$_client->customer()->delete('login', 'customer-b');
     }
 
 }
