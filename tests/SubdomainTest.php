@@ -50,4 +50,34 @@ class SubdomainTest extends TestCase
         $result = static::$_client->subdomain()->delete('id', $subdomain->id);
         $this->assertTrue($result);
     }
+
+    public function testGet()
+    {
+        $subdomain = $this->_createSubdomain('sub');
+
+        $subdomainInfo = static::$_client->subdomain()->get('id', $subdomain->id);
+        $name = explode('.', $subdomainInfo->name);
+        $parent = explode('.', $subdomainInfo->parent);
+        $this->assertEquals('sub', reset(array_diff($name, $parent)));
+
+        static::$_client->subdomain()->delete('id', $subdomain->id);
+    }
+
+    public function testGetAll()
+    {
+        $subdomain = $this->_createSubdomain('sub');
+        $subdomain2 = $this->_createSubdomain('sub2');
+
+        $subdomainInfo = static::$_client->subdomain()->getAll();
+        $this->assertCount(2, $subdomainInfo);
+        $name = explode('.', $subdomainInfo[0]->name);
+        $parent = explode('.', $subdomainInfo[0]->parent);
+        $name2 = explode('.', $subdomainInfo[1]->name);
+        $parent2 = explode('.', $subdomainInfo[1]->parent);
+        $this->assertEquals('sub', reset(array_diff($name, $parent)));
+        $this->assertEquals('sub2', reset(array_diff($name2, $parent2)));
+
+        static::$_client->subdomain()->delete('id', $subdomain->id);
+        static::$_client->subdomain()->delete('id', $subdomain2->id);
+    }
 }
