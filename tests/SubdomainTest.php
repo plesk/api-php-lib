@@ -56,9 +56,7 @@ class SubdomainTest extends TestCase
         $subdomain = $this->_createSubdomain('sub');
 
         $subdomainInfo = static::$_client->subdomain()->get('id', $subdomain->id);
-        $name = explode('.', $subdomainInfo->name);
-        $parent = explode('.', $subdomainInfo->parent);
-        $this->assertEquals('sub', reset(array_diff($name, $parent)));
+        $this->assertEquals('sub.' . $subdomainInfo->parent, $subdomainInfo->name);
 
         static::$_client->subdomain()->delete('id', $subdomain->id);
     }
@@ -68,14 +66,10 @@ class SubdomainTest extends TestCase
         $subdomain = $this->_createSubdomain('sub');
         $subdomain2 = $this->_createSubdomain('sub2');
 
-        $subdomainInfo = static::$_client->subdomain()->getAll();
-        $this->assertCount(2, $subdomainInfo);
-        $name = explode('.', $subdomainInfo[0]->name);
-        $parent = explode('.', $subdomainInfo[0]->parent);
-        $name2 = explode('.', $subdomainInfo[1]->name);
-        $parent2 = explode('.', $subdomainInfo[1]->parent);
-        $this->assertEquals('sub', reset(array_diff($name, $parent)));
-        $this->assertEquals('sub2', reset(array_diff($name2, $parent2)));
+        $subdomainsInfo = static::$_client->subdomain()->getAll();
+        $this->assertCount(2, $subdomainsInfo);
+        $this->assertEquals('sub.' . $subdomainsInfo[0]->parent, $subdomainsInfo[0]->name);
+        $this->assertEquals('sub2.' . $subdomainsInfo[1]->parent, $subdomainsInfo[1]->name);
 
         static::$_client->subdomain()->delete('id', $subdomain->id);
         static::$_client->subdomain()->delete('id', $subdomain2->id);
