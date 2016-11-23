@@ -9,9 +9,18 @@ class MailTest extends TestCase
      */
     private static $_webspace;
 
+    /**
+     * @var bool
+     */
+    private static $_isMailSupported;
+
     public static function setUpBeforeClass()
     {
         parent::setUpBeforeClass();
+
+        $serviceStates = static::$_client->server()->getServiceStates();
+        static::$_isMailSupported = $serviceStates['smtp'] && ('running' == $serviceStates['smtp']['state']);
+
         static::$_webspace = static::_createWebspace('example.dom');
     }
 
@@ -19,6 +28,15 @@ class MailTest extends TestCase
     {
         parent::tearDownAfterClass();
         static::$_client->webspace()->delete('id', static::$_webspace->id);
+    }
+
+    protected function setUp()
+    {
+        parent::setUp();
+
+        if (!static::$_isMailSupported) {
+            $this->markTestSkipped('Mail system is not supported.');
+        }
     }
 
     public function testCreate()
