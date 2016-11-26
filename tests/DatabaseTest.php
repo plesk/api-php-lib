@@ -46,7 +46,29 @@ class DatabaseTest extends TestCase
         ]);
         static::$_client->database()->deleteUser('id', $user->id);
         static::$_client->database()->delete('id', $database->id);
+    }
 
+    public function testUpdateUser()
+    {
+        $database = $this->_createDatabase([
+            'webspace-id' => static::$_webspace->id,
+            'name' => 'test1',
+            'type' => 'mysql',
+            'db-server-id' => 1
+        ]);
+        $user = $this->_createUser([
+            'db-id' => $database->id,
+            'login' => 'test_user1',
+            'password' => 'setup1Q',
+        ]);
+        $updatedUser = static::$_client->database()->updateUser([
+            'id' => $user->id,
+            'login' => 'test_user2',
+            'password' => 'setup2Q'
+        ]);
+        $this->assertEquals(true, $updatedUser);
+        static::$_client->database()->deleteUser('id', $user->id);
+        static::$_client->database()->delete('id', $database->id);
     }
 
     public function testGetById()

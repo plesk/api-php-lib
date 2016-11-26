@@ -12,7 +12,7 @@ class Database extends \PleskX\Api\Operator
      */
     public function create($properties)
     {
-        return new Struct\Info($this->_create('add-db', $properties));
+        return new Struct\Info($this->_process('add-db', $properties));
     }
 
     /**
@@ -21,7 +21,7 @@ class Database extends \PleskX\Api\Operator
      */
     public function createUser($properties)
     {
-        return new Struct\UserInfo($this->_create('add-db-user', $properties));
+        return new Struct\UserInfo($this->_process('add-db-user', $properties));
     }
 
     /**
@@ -29,16 +29,30 @@ class Database extends \PleskX\Api\Operator
      * @param array $properties
      * @return \PleskX\Api\XmlResponse
      */
-    private function _create($command, array $properties)
+    private function _process($command, array $properties)
     {
         $packet = $this->_client->getPacket();
         $info = $packet->addChild($this->_wrapperTag)->addChild($command);
 
         foreach ($properties as $name => $value) {
+            if (false !== strpos($value, '&')) {
+                $info->$name = $value;
+                continue;
+            }
             $info->addChild($name, $value);
         }
 
         return $this->_client->request($packet);
+    }
+
+    /**
+     * @param array $properties
+     * @return bool
+     */
+    public function updateUser(array $properties)
+    {
+        $response = $this->_process('set-db-user', $properties);
+        return 'ok' === (string)$response->status;
     }
 
     /**
