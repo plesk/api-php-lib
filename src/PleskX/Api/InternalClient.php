@@ -12,4 +12,14 @@ class InternalClient extends Client
     {
         parent::__construct('localhost', 0, 'sdk');
     }
+
+    /**
+     * Setup login to execute requests under certain user
+     *
+     * @param $login
+     */
+    public function setLogin($login)
+    {
+        $this->_login = $login;
+    }
 }
