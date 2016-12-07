@@ -57,4 +57,33 @@ class Operator
         return 'ok' === (string)$response->status;
     }
 
+    /**
+     * @param string $structClass
+     * @param string $infoTag
+     * @param string|null $field
+     * @param integer|string|null $value
+     * @return mixed
+     */
+    protected function _getItems($structClass, $infoTag, $field = null, $value = null)
+    {
+        $packet = $this->_client->getPacket();
+        $getTag = $packet->addChild($this->_wrapperTag)->addChild('get');
+
+        $filterTag = $getTag->addChild('filter');
+        if (!is_null($field)) {
+            $filterTag->addChild($field, $value);
+        }
+
+        $getTag->addChild('dataset')->addChild($infoTag);
+
+        $response = $this->_client->request($packet, \PleskX\Api\Client::RESPONSE_FULL);
+
+        $items = [];
+        foreach ($response->xpath('//result') as $xmlResult) {
+            $items[] = new $structClass($xmlResult->data->$infoTag);
+        }
+
+        return $items;
+    }
+
 }

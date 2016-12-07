@@ -34,6 +34,7 @@ class Reseller extends \PleskX\Api\Operator
         return $this->_delete($field, $value);
     }
 
+
     /**
      * @param string $field
      * @param integer|string $value
@@ -41,12 +42,18 @@ class Reseller extends \PleskX\Api\Operator
      */
     public function get($field, $value)
     {
-        $packet = $this->_client->getPacket();
-        $getTag = $packet->addChild($this->_wrapperTag)->addChild('get');
-        $getTag->addChild('filter')->addChild($field, $value);
-        $getTag->addChild('dataset')->addChild('gen-info');
-        $response = $this->_client->request($packet);
-        return new Struct\GeneralInfo($response->data->{'gen-info'});
+        $items = $this->_getItems(Struct\GeneralInfo::class, 'gen-info', $field, $value);
+        return reset($items);
     }
+
+    /**
+     * @return Struct\GeneralInfo[]
+     */
+    public function getAll()
+    {
+        return $this->_getItems(Struct\GeneralInfo::class, 'gen-info');
+    }
+
+
 
 }

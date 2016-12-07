@@ -41,7 +41,7 @@ class Customer extends \PleskX\Api\Operator
      */
     public function get($field, $value)
     {
-        $items = $this->_get($field, $value);
+        $items = $this->_getItems(Struct\GeneralInfo::class, 'gen_info', $field, $value);
         return reset($items);
     }
 
@@ -50,34 +50,7 @@ class Customer extends \PleskX\Api\Operator
      */
     public function getAll()
     {
-        return $this->_get();
-    }
-
-    /**
-     * @param string|null $field
-     * @param integer|string|null $value
-     * @return Struct\GeneralInfo|Struct\GeneralInfo[]
-     */
-    private function _get($field = null, $value = null)
-    {
-        $packet = $this->_client->getPacket();
-        $getTag = $packet->addChild($this->_wrapperTag)->addChild('get');
-
-        $filterTag = $getTag->addChild('filter');
-        if (!is_null($field)) {
-            $filterTag->addChild($field, $value);
-        }
-
-        $getTag->addChild('dataset')->addChild('gen_info');
-
-        $response = $this->_client->request($packet, \PleskX\Api\Client::RESPONSE_FULL);
-
-        $customers = [];
-        foreach ($response->xpath('//result') as $xmlResult) {
-            $customers[] = new Struct\GeneralInfo($xmlResult->data->gen_info);
-        }
-
-        return $customers;
+        return $this->_getItems(Struct\GeneralInfo::class, 'gen_info');
     }
 
 }

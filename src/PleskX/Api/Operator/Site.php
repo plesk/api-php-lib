@@ -42,35 +42,16 @@ class Site extends \PleskX\Api\Operator
      */
     public function get($field, $value)
     {
-        $items = $this->getAll($field, $value);
+        $items = $this->_getItems(Struct\GeneralInfo::class, 'gen_info', $field, $value);
         return reset($items);
     }
 
     /**
-     * @param string $field
-     * @param integer|string $value
      * @return Struct\GeneralInfo[]
      */
-    public function getAll($field = null, $value = null)
+    public function getAll()
     {
-        $packet = $this->_client->getPacket();
-        $getTag = $packet->addChild($this->_wrapperTag)->addChild('get');
-
-        $filterTag = $getTag->addChild('filter');
-        if (!is_null($field)) {
-            $filterTag->addChild($field, $value);
-        }
-
-        $getTag->addChild('dataset')->addChild('gen_info');
-
-        $response = $this->_client->request($packet, \PleskX\Api\Client::RESPONSE_FULL);
-
-        $items = [];
-        foreach ($response->xpath('//result') as $xmlResult) {
-            $items[] = new Struct\GeneralInfo($xmlResult->data->gen_info);
-        }
-
-        return $items;
+        return $this->_getItems(Struct\GeneralInfo::class, 'gen_info');
     }
 
 }

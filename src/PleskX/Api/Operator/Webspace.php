@@ -74,12 +74,16 @@ class Webspace extends \PleskX\Api\Operator
      */
     public function get($field, $value)
     {
-        $packet = $this->_client->getPacket();
-        $getTag = $packet->addChild($this->_wrapperTag)->addChild('get');
-        $getTag->addChild('filter')->addChild($field, $value);
-        $getTag->addChild('dataset')->addChild('gen_info');
-        $response = $this->_client->request($packet);
-        return new Struct\GeneralInfo($response->data->gen_info);
+        $items = $this->_getItems(Struct\GeneralInfo::class, 'gen_info', $field, $value);
+        return reset($items);
+    }
+
+    /**
+     * @return Struct\GeneralInfo[]
+     */
+    public function getAll()
+    {
+        return $this->_getItems(Struct\GeneralInfo::class, 'gen_info');
     }
 
 }
