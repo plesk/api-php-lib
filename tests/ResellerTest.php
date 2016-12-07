@@ -36,4 +36,26 @@ class ResellerTest extends TestCase
         static::$_client->reseller()->delete('id', $reseller->id);
     }
 
+    public function testGetAll()
+    {
+        static::$_client->reseller()->create([
+            'pname' => 'John Reseller',
+            'login' => 'reseller-a',
+            'passwd' => 'simple-password',
+        ]);
+        static::$_client->reseller()->create([
+            'pname' => 'Mike Reseller',
+            'login' => 'reseller-b',
+            'passwd' => 'simple-password',
+        ]);
+
+        $resellersInfo = static::$_client->reseller()->getAll();
+        $this->assertCount(2, $resellersInfo);
+        $this->assertEquals('John Reseller', $resellersInfo[0]->personalName);
+        $this->assertEquals('reseller-a', $resellersInfo[0]->login);
+
+        static::$_client->reseller()->delete('login', 'reseller-a');
+        static::$_client->reseller()->delete('login', 'reseller-b');
+    }
+
 }
