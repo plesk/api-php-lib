@@ -51,4 +51,14 @@ class SecretKeyTest extends TestCase
         }
     }
 
+    public function testListEmpty()
+    {
+        $keys = $this->_client->secretKey()->getAll();
+        foreach ($keys as $key) {
+            $this->_client->secretKey()->delete($key->key);
+        }
+
+        $keys = $this->_client->secretKey()->getAll();
+        $this->assertEquals(0, count($keys));
+    }
 }
