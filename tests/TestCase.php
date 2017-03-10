@@ -45,7 +45,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
             'ip_address' => static::_getIpAddress(),
         ], [
             'ftp_login' => 'test-login',
-            'ftp_password' => 'test-password',
+            'ftp_password' => 'TEST-password',
         ]);
     }
 
