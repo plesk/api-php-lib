@@ -16,6 +16,14 @@ class Subdomain extends \PleskX\Api\Operator
         $info = $packet->addChild($this->_wrapperTag)->addChild('add');
 
         foreach ($properties as $name => $value) {
+            if (is_array($value)) {
+                foreach ($value as $propertyName => $propertyValue) {
+                    $property = $info->addChild($name);
+                    $property->addChild('name', $propertyName);
+                    $property->addChild('value', $propertyValue);
+                }
+                continue;
+            }
             $info->addChild($name, $value);
         }
 

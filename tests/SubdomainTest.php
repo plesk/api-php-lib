@@ -30,6 +30,9 @@ class SubdomainTest extends TestCase
         return static::$_client->subdomain()->create([
             'parent' => 'example.dom',
             'name' => $name,
+            'property' => [
+                'www_root' => $name,
+            ]
         ]);
     }
 
@@ -53,23 +56,29 @@ class SubdomainTest extends TestCase
 
     public function testGet()
     {
-        $subdomain = $this->_createSubdomain('sub');
+        $name = 'sub';
+        $subdomain = $this->_createSubdomain($name);
 
         $subdomainInfo = static::$_client->subdomain()->get('id', $subdomain->id);
-        $this->assertEquals('sub.' . $subdomainInfo->parent, $subdomainInfo->name);
+        $this->assertEquals($name . '.' . $subdomainInfo->parent, $subdomainInfo->name);
+        $this->assertTrue(false !== strpos($subdomainInfo->properties['www_root'], $name));
 
         static::$_client->subdomain()->delete('id', $subdomain->id);
     }
 
     public function testGetAll()
     {
-        $subdomain = $this->_createSubdomain('sub');
-        $subdomain2 = $this->_createSubdomain('sub2');
+        $name = 'sub';
+        $name2 = 'sub2';
+        $subdomain = $this->_createSubdomain($name);
+        $subdomain2 = $this->_createSubdomain($name2);
 
         $subdomainsInfo = static::$_client->subdomain()->getAll();
         $this->assertCount(2, $subdomainsInfo);
-        $this->assertEquals('sub.' . $subdomainsInfo[0]->parent, $subdomainsInfo[0]->name);
-        $this->assertEquals('sub2.' . $subdomainsInfo[1]->parent, $subdomainsInfo[1]->name);
+        $this->assertEquals($name . '.' . $subdomainsInfo[0]->parent, $subdomainsInfo[0]->name);
+        $this->assertTrue(false !== strpos($subdomainsInfo[0]->properties['www_root'], $name));
+        $this->assertEquals($name2 . '.' . $subdomainsInfo[1]->parent, $subdomainsInfo[1]->name);
+        $this->assertTrue(false !== strpos($subdomainsInfo[1]->properties['www_root'], $name2));
 
         static::$_client->subdomain()->delete('id', $subdomain->id);
         static::$_client->subdomain()->delete('id', $subdomain2->id);
