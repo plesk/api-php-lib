@@ -137,8 +137,9 @@ class Client
         }
 
         if ('sdk' == $this->_protocol) {
+            $version = ('' == $this->_version) ? null : $this->_version;
             $requestXml = new SimpleXMLElement((string)$request);
-            $xml = \pm_ApiRpc::getService()->call($requestXml->children()[0]->asXml(), $this->_login);
+            $xml = \pm_ApiRpc::getService($version)->call($requestXml->children()[0]->asXml(), $this->_login);
         } else {
             $xml = $this->_performHttpRequest($request);
         }
