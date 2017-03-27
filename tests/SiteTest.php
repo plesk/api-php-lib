@@ -20,12 +20,13 @@ class SiteTest extends TestCase
         static::$_client->webspace()->delete('id', static::$_webspace->id);
     }
 
-    private function _createSite($name)
+    private function _createSite($name, array $properties = [])
     {
-        return static::$_client->site()->create([
+        $properties = array_merge([
             'name' => $name,
             'webspace-id' => static::$_webspace->id,
-        ]);
+        ], $properties);
+        return static::$_client->site()->create($properties);
     }
 
     public function testCreate()
@@ -52,6 +53,32 @@ class SiteTest extends TestCase
 
         $siteInfo = static::$_client->site()->get('id', $site->id);
         $this->assertEquals('addon.dom', $siteInfo->name);
+
+        static::$_client->site()->delete('id', $site->id);
+    }
+
+    public function testGetHostingWoHosting()
+    {
+        $site = $this->_createSite('addon.dom');
+
+        $siteHosting = static::$_client->site()->getHosting('id', $site->id);
+        $this->assertNull($siteHosting);
+
+        static::$_client->site()->delete('id', $site->id);
+    }
+
+    public function testGetHostingWithHosting()
+    {
+        $properties =  [
+            'hosting' => [
+                'www_root' => 'addon.dom'
+            ]
+        ];
+        $site = $this->_createSite('addon.dom', $properties);
+
+        $siteHosting = static::$_client->site()->getHosting('id', $site->id);
+        $this->assertArrayHasKey('www_root', $siteHosting->properties);
+        $this->assertEquals('addon.dom', basename($siteHosting->properties['www_root']));
 
         static::$_client->site()->delete('id', $site->id);
     }

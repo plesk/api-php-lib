@@ -62,9 +62,10 @@ class Operator
      * @param string $infoTag
      * @param string|null $field
      * @param integer|string|null $value
+     * @param callable|null $filter
      * @return mixed
      */
-    protected function _getItems($structClass, $infoTag, $field = null, $value = null)
+    protected function _getItems($structClass, $infoTag, $field = null, $value = null, callable $filter = null)
     {
         $packet = $this->_client->getPacket();
         $getTag = $packet->addChild($this->_wrapperTag)->addChild('get');
@@ -80,6 +81,9 @@ class Operator
 
         $items = [];
         foreach ($response->xpath('//result') as $xmlResult) {
+            if (!is_null($filter) && !$filter($xmlResult->data->$infoTag)) {
+                continue;
+            }
             $items[] = new $structClass($xmlResult->data->$infoTag);
         }
 
