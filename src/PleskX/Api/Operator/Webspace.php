@@ -6,19 +6,27 @@ use PleskX\Api\Struct\Webspace as Struct;
 
 class Webspace extends \PleskX\Api\Operator
 {
-
+    /**
+     * @return Struct\PermissionDescriptor
+     */
     public function getPermissionDescriptor()
     {
         $response = $this->request('get-permission-descriptor.filter');
         return new Struct\PermissionDescriptor($response);
     }
 
+    /**
+     * @return Struct\LimitDescriptor
+     */
     public function getLimitDescriptor()
     {
         $response = $this->request('get-limit-descriptor.filter');
         return new Struct\LimitDescriptor($response);
     }
 
+    /**
+     * @return Struct\PhysicalHostingDescriptor
+     */
     public function getPhysicalHostingDescriptor()
     {
         $response = $this->request('get-physical-hosting-descriptor.filter');
@@ -28,9 +36,10 @@ class Webspace extends \PleskX\Api\Operator
     /**
      * @param array $properties
      * @param array|null $hostingProperties
+     * @param string|null $planName
      * @return Struct\Info
      */
-    public function create(array $properties, array $hostingProperties = null)
+    public function create(array $properties, array $hostingProperties = null, $planName = null)
     {
         $packet = $this->_client->getPacket();
         $info = $packet->addChild($this->_wrapperTag)->addChild('add');
@@ -51,6 +60,10 @@ class Webspace extends \PleskX\Api\Operator
             if (isset($properties['ip_address'])) {
                 $infoHosting->addChild("ip_address", $properties['ip_address']);
             }
+        }
+
+        if ($planName) {
+            $info->addChild('plan-name', $planName);
         }
 
         $response = $this->_client->request($packet);
