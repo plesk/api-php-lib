@@ -28,9 +28,10 @@ class Webspace extends \PleskX\Api\Operator
     /**
      * @param array $properties
      * @param array|null $hostingProperties
+     * @param $planName
      * @return Struct\Info
      */
-    public function create(array $properties, array $hostingProperties = null)
+    public function create(array $properties, array $hostingProperties = null, $planName = null)
     {
         $packet = $this->_client->getPacket();
         $info = $packet->addChild($this->_wrapperTag)->addChild('add');
@@ -51,6 +52,10 @@ class Webspace extends \PleskX\Api\Operator
             if (isset($properties['ip_address'])) {
                 $infoHosting->addChild("ip_address", $properties['ip_address']);
             }
+        }
+
+        if ($planName) {
+            $info->addChild('plan-name', $planName);
         }
 
         $response = $this->_client->request($packet);
