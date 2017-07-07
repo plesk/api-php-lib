@@ -26,6 +26,11 @@ class Client
     protected $_operatorsCache = [];
 
     /**
+     * @var callable
+     */
+    protected $_verifyResponseCallback;
+
+    /**
      * Create client
      *
      * @param string $host
@@ -69,6 +74,16 @@ class Client
     public function setVersion($version)
     {
         $this->_version = $version;
+    }
+
+    /**
+     * Set custom function to verify response of API call according your own needs. Default verifying will be used if it is not specified
+     *
+     * @param callable|null $function
+     */
+    public function setVerifyResponse(callable $function = null)
+    {
+        $this->_verifyResponseCallback = $function;
     }
 
     /**
@@ -143,7 +158,10 @@ class Client
         } else {
             $xml = $this->_performHttpRequest($request);
         }
-        $this->_verifyResponse($xml);
+
+        $this->_verifyResponseCallback
+            ? call_user_func($this->_verifyResponseCallback, $xml)
+            : $this->_verifyResponse($xml);
 
         return (self::RESPONSE_FULL == $mode) ? $xml : $xml->xpath('//result')[0];
     }
