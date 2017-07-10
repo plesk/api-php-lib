@@ -1,5 +1,6 @@
 <?php
 // Copyright 1999-2016. Parallels IP Holdings GmbH.
+use \PleskX\Api\Client\Exception;
 
 class ApiClientTest extends TestCase
 {
@@ -155,4 +156,19 @@ class ApiClientTest extends TestCase
         $this->assertEquals('http', $client->getProtocol());
     }
 
+    public function testSetVerifyResponse()
+    {
+        static::$_client->setVerifyResponse(function ($xml) {
+            if ($xml->xpath('//proto')) {
+                throw new Exception('proto');
+            }
+        });
+        try {
+            static::$_client->server()->getProtos();
+        } catch (Exception $e) {
+            $this->assertEquals('proto', $e->getMessage());
+        } finally {
+            static::$_client->setVerifyResponse();
+        }
+    }
 }
