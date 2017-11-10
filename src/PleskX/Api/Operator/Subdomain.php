@@ -71,6 +71,9 @@ class Subdomain extends \PleskX\Api\Operator
 
         $items = [];
         foreach ($response->xpath('//result') as $xmlResult) {
+            if (empty($xmlResult->data)) {
+                continue;
+            }
             $item = new Struct\Info($xmlResult->data);
             $item->id = (int)$xmlResult->id;
             $items[] = $item;
