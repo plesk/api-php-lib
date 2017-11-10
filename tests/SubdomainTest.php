@@ -82,5 +82,8 @@ class SubdomainTest extends TestCase
 
         static::$_client->subdomain()->delete('id', $subdomain->id);
         static::$_client->subdomain()->delete('id', $subdomain2->id);
+
+        $subdomainsInfo = static::$_client->subdomain()->getAll();
+        $this->assertEmpty($subdomainsInfo);
     }
 }
