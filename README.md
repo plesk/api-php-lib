@@ -8,7 +8,16 @@ PHP object-oriented library for Plesk XML-RPC API.
 
 [Composer](https://getcomposer.org/) is a preferable way to install the library:
 
-`composer require plesk/api-php-lib:@dev`
+```
+"repositories": [
+    {
+        "type": "vcs",
+        "url": "https://github.com/emnlmn/plesk-php-api"
+    }
+],
+```
+
+`composer require ShellrentSrl/api-php-lib:@dev`
 
 ## Usage Examples
 
