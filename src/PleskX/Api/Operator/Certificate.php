@@ -24,4 +24,31 @@ class Certificate extends \PleskX\Api\Operator
         return new Struct\Info($response);
     }
 
+
+	/**
+	 * @param $properties
+	 * @return Struct\InstallInfo
+	 */
+	public function install($properties)
+	{
+		$packet = $this->_client->getPacket();
+		$install = $packet->addChild($this->_wrapperTag)->addChild('install');
+
+		foreach ($properties as $name => $value) {
+			if ($name == 'content') {
+				$content = $install->addChild('content');
+
+				foreach ($value as $contentKey => $contentValue) {
+					$content->addChild($contentKey, $contentValue);
+				}
+
+				continue;
+			}
+
+			$install->addChild($name, $value);
+		}
+
+		$response = $this->_client->request($packet);
+		return new Struct\InstallInfo($response);
+	}
 }
