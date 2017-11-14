@@ -12,7 +12,7 @@ PHP object-oriented library for Plesk XML-RPC API.
 "repositories": [
     {
         "type": "vcs",
-        "url": "https://github.com/emnlmn/plesk-php-api"
+        "url": "git@github.com:ShellrentSrl/api-php-lib.git"
     }
 ],
 ```
