@@ -328,10 +328,10 @@ class Client
 
         foreach ($parts as $part) {
         	if ( strpos( $part, '=') !== false ) {
-				$node = $node->addChild($part);
-			} else {
 				list($name, $value) = explode('=', $part);
 				$node = $node->addChild($name, $value);
+			} else {
+				$node = $node->addChild($part);
 			}
         }
 
