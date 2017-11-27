@@ -96,16 +96,6 @@ class Webspace extends \PleskX\Api\Operator
     /**
      * @param string $field
      * @param integer|string $value
-     * @return bool
-     */
-    public function delete($field, $value)
-    {
-        return $this->_delete($field, $value);
-    }
-
-    /**
-     * @param string $field
-     * @param integer|string $value
      * @return Struct\GeneralInfo
      */
     public function get($field, $value)
