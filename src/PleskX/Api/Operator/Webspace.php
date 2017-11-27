@@ -62,6 +62,37 @@ class Webspace extends \PleskX\Api\Operator
         return new Struct\Info($response);
     }
 
+	/**
+	 * Imposta lo stato di sospensione al webhosting
+	 * @param array $filters
+	 * @param int $status
+	 * @return bool
+	 */
+	public function setStatus( array $filters, $status ) {
+		$packet = $this->_client->getPacket();
+		$setterTag = $packet->addChild( $this->_wrapperTag )->addChild( 'set' );
+		if ( !empty( $filters ) ) {
+			$filterTag = $setterTag->addChild( 'filter' );
+			foreach ( $filters as $key => $value ) {
+				$filterTag->addChild( $key, $value );
+			}
+		}
+		$valuesTag = $setterTag->addChild( 'values' );
+		$valuesTag->addChild( 'gen_setup' )->addChild( 'status', $status );
+		$response = $this->_client->request( $packet );
+
+		return 'ok' === (string)$response->status;
+	}
+
+	/**
+	 * @param string $field
+	 * @param integer|string $value
+	 * @return bool
+	 */
+	public function delete( $field, $value ) {
+		return $this->_delete( $field, $value );
+	}
+
     /**
      * @param string $field
      * @param integer|string $value
