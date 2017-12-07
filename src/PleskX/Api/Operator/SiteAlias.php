@@ -32,4 +32,20 @@ class SiteAlias extends \PleskX\Api\Operator
         return new Struct\Info($response);
     }
 
+	/**
+	 * @param string $siteName
+	 * @return Struct\Info
+	 */
+	public function delete(string $siteName)
+	{
+		$packet = $this->_client->getPacket();
+		$packet->addChild($this->_wrapperTag)
+		       ->addChild('delete')
+		       ->addChild('filter')
+		       ->addChild('name', $siteName);
+
+		$response = $this->_client->request($packet);
+		return new Struct\Info($response);
+	}
+
 }
