@@ -345,13 +345,26 @@ class Client
     {
         foreach ($array as $key => $value) {
             if (is_array($value)) {
-                $this->_arrayToXml($value, $xml->addChild($key));
+                if ($this->_isAssoc($value)){ //assoc
+                  $this->_arrayToXml($value, $xml->addChild($key));
+                }
+                else{ //indexed
+                  foreach ($value as $sub_value){
+                    $xml->addChild($key, $sub_value);
+                  }
+                }
             } else {
                 $xml->addChild($key, $value);
             }
         }
 
         return $xml;
+    }
+    
+    protected function _isAssoc(array $arr)
+    {
+        if (array() === $arr) return false;
+        return array_keys($arr) !== range(0, count($arr) - 1);
     }
 
     /**
