@@ -339,19 +339,30 @@ class Client
      *
      * @param array $array
      * @param SimpleXMLElement $xml
+     * @param string $parentEl
      * @return SimpleXMLElement
      */
-    protected function _arrayToXml(array $array, SimpleXMLElement $xml)
+    protected function _arrayToXml(array $array, SimpleXMLElement $xml, $parentEl = null)
     {
         foreach ($array as $key => $value) {
+            $el = is_int($key) && $parentEl ? $parentEl : $key;
             if (is_array($value)) {
-                $this->_arrayToXml($value, $xml->addChild($key));
+                $this->_arrayToXml($value, $this->_isAssocArray($value) ? $xml->addChild($el) : $xml, $el);
             } else {
-                $xml->addChild($key, $value);
+                $xml->addChild($el, $value);
             }
         }
 
         return $xml;
+    }
+
+    /**
+     * @param array $array
+     * @return bool
+     */
+    protected function _isAssocArray(array $array)
+    {
+        return $array && array_keys($array) !== range(0, count($array) - 1);
     }
 
     /**
