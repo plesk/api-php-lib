@@ -61,6 +61,78 @@ class WebspaceTest extends TestCase
         static::$_client->webspace()->delete('id', $webspace->id);
     }
 
+    public function testRequestCreateWebspace()
+    {
+        $webspace = static::$_client->webspace()->request([
+            'add' => [
+                'gen_setup' => [
+                    'name' => 'example-second-test.dom',
+                    'htype' => 'vrt_hst',
+                    'status' => '0',
+                    'ip_address' => [static::_getIpAddress()],
+                ],
+                'hosting' => [
+                    'vrt_hst' => [
+                        'property' => [
+                            [
+                                'name' => 'php_handler_id',
+                                'value' => 'fastcgi',
+                            ],
+                            [
+                                'name' => 'ftp_login',
+                                'value' => 'ftp-login-test-1',
+                            ],
+                            [
+                                'name' => 'ftp_password',
+                                'value' => 'ftp-password-test-1',
+                            ],
+                        ],
+                        'ip_address' => static::_getIpAddress(),
+                    ],
+                ],
+                'limits' => [
+                    'overuse' => 'block',
+                    'limit' => [
+                        [
+                            'name' => 'mbox_quota',
+                            'value' => 100,
+                        ],
+                    ],
+                ],
+                'prefs' => [
+                    'www' => 'false',
+                    'stat_ttl' => 6,
+                ],
+                'performance' => [
+                    'bandwidth' => 120,
+                    'max_connections' => 10000,
+                ],
+                'permissions' => [
+                    'permission' => [
+                        [
+                            'name' => 'manage_sh_access',
+                            'value' => 'true',
+                        ],
+                    ],
+                ],
+                'php-settings' => [
+                    'setting' => [
+                        [
+                            'name' => 'memory_limit',
+                            'value' => '128M',
+                        ],
+                        [
+                            'name' => 'safe_mode',
+                            'value' => 'false',
+                        ],
+                    ],
+                ],
+                'plan-name' => 'Unlimited',
+            ],
+        ]);
+        static::$_client->webspace()->delete('id', $webspace->id);
+    }
+
     public function testDelete()
     {
         $domain = $this->_createDomain();
