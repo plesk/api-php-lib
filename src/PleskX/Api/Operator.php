@@ -105,9 +105,9 @@ class Operator
         if (!is_null($field)) {
             $filterTag->addChild($field, $value);
         }
-
-        $getTag->addChild('dataset')->addChild($infoTag);
-
+		
+		$getTag->addChild('dataset');
+		
         $response = $this->_client->request($packet, \PleskX\Api\Client::RESPONSE_FULL);
 		
 		$ids = [];
