@@ -103,7 +103,23 @@ class Webspace extends \PleskX\Api\Operator
         $items = $this->_getItems(Struct\GeneralInfo::class, 'gen_info', $field, $value);
         return reset($items);
     }
-
+	
+	
+	/**
+	 * @param string $name
+	 * @return string
+	 */
+	public function getIdByName( $name ) {
+		$result = $this->_getId( 'name', $name );
+		
+		if( isset( $result[0] ) ) {
+			return $result[0];
+		}
+		
+		return null;
+	}
+	
+	
     /**
      * @return Struct\GeneralInfo[]
      */

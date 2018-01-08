@@ -90,4 +90,32 @@ class Operator
         return $items;
     }
 
+	
+	/**
+     * @param string|null $field
+     * @param integer|string|null $value
+	 * @return string[]
+	 */
+	protected function _getId( $field = null, $value = null ) 
+	{
+		$packet = $this->_client->getPacket();
+        $getTag = $packet->addChild($this->_wrapperTag)->addChild('get');
+
+        $filterTag = $getTag->addChild('filter');
+        if (!is_null($field)) {
+            $filterTag->addChild($field, $value);
+        }
+
+        $getTag->addChild('dataset')->addChild($infoTag);
+
+        $response = $this->_client->request($packet, \PleskX\Api\Client::RESPONSE_FULL);
+		
+		$ids = [];
+        foreach ($response->xpath('//result') as $xmlResult) {
+            $ids[] = (string) $xmlResult->id;
+        }
+
+        return $ids;
+		
+	}
 }
