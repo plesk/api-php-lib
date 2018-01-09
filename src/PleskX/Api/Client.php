@@ -436,14 +436,6 @@ class Client
     }
 
     /**
-     * @return Operator\Migration
-     */
-    public function migration()
-    {
-        return $this->_getOperator('Migration');
-    }
-
-    /**
      * @return Operator\Certificate
      */
     public function certificate()
@@ -476,14 +468,6 @@ class Client
     }
 
     /**
-     * @return Operator\SpamFilter
-     */
-    public function spamFilter()
-    {
-        return $this->_getOperator('SpamFilter');
-    }
-
-    /**
      * @return Operator\SecretKey
      */
     public function secretKey()
@@ -508,22 +492,6 @@ class Client
     }
 
     /**
-     * @return Operator\WebUser
-     */
-    public function webUser()
-    {
-        return $this->_getOperator('WebUser');
-    }
-
-    /**
-     * @return Operator\MailList
-     */
-    public function mailList()
-    {
-        return $this->_getOperator('MailList');
-    }
-
-    /**
      * @return Operator\VirtualDirectory
      */
     public function virtualDirectory()
@@ -540,27 +508,11 @@ class Client
     }
 
     /**
-     * @return Operator\FtpUser
-     */
-    public function ftpUser()
-    {
-        return $this->_getOperator('FtpUser');
-    }
-
-    /**
      * @return Operator\Session
      */
     public function session()
     {
         return $this->_getOperator('Session');
-    }
-
-    /**
-     * @return Operator\Updater
-     */
-    public function updater()
-    {
-        return $this->_getOperator('Updater');
     }
 
     /**
@@ -577,22 +529,6 @@ class Client
     public function logRotation()
     {
         return $this->_getOperator('LogRotation');
-    }
-
-    /**
-     * @return Operator\BackupManager
-     */
-    public function backupManager()
-    {
-        return $this->_getOperator('BackupManager');
-    }
-
-    /**
-     * @return Operator\Sso
-     */
-    public function sso()
-    {
-        return $this->_getOperator('Sso');
     }
 
     /**
@@ -642,77 +578,4 @@ class Client
     {
         return $this->_getOperator('Site');
     }
-
-    /**
-     * @return Operator\User
-     */
-    public function user()
-    {
-        return $this->_getOperator('User');
-    }
-
-    /**
-     * @return Operator\Role
-     */
-    public function role()
-    {
-        return $this->_getOperator('Role');
-    }
-
-    /**
-     * @return Operator\BusinessLogicUpgrade
-     */
-    public function businessLogicUpgrade()
-    {
-        return $this->_getOperator('BusinessLogicUpgrade');
-    }
-
-    /**
-     * @return Operator\Webmail
-     */
-    public function webmail()
-    {
-        return $this->_getOperator('Webmail');
-    }
-
-    /**
-     * @return Operator\PlanItem
-     */
-    public function planItem()
-    {
-        return $this->_getOperator('PlanItem');
-    }
-
-    /**
-     * @return Operator\Sitebuilder
-     */
-    public function sitebuilder()
-    {
-        return $this->_getOperator('Sitebuilder');
-    }
-
-    /**
-     * @return Operator\ServiceNode
-     */
-    public function serviceNode()
-    {
-        return $this->_getOperator('ServiceNode');
-    }
-
-    /**
-     * @return Operator\IpBan
-     */
-    public function ipBan()
-    {
-        return $this->_getOperator('IpBan');
-    }
-
-    /**
-     * @return Operator\WpInstance
-     */
-    public function wpInstance()
-    {
-        return $this->_getOperator('WpInstance');
-    }
-
 }
