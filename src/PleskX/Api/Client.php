@@ -20,9 +20,6 @@ class Client
     protected $_secretKey;
     protected $_version = '';
 
-    protected static $_isExecutionsLogEnabled = false;
-    protected static $_executionLog = [];
-
     protected $_operatorsCache = [];
 
     /**
@@ -191,14 +188,6 @@ class Client
             throw new Client\Exception(curl_error($curl), curl_errno($curl));
         }
 
-        if (self::$_isExecutionsLogEnabled) {
-            self::$_executionLog[] = [
-                'trace' => debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS),
-                'request' => $request,
-                'response' => $result,
-            ];
-        }
-
         curl_close($curl);
 
         $xml = new XmlResponse($result);
@@ -273,26 +262,6 @@ class Client
         }
 
         return $headers;
-    }
-
-    /**
-     * Enable or disable execution log
-     *
-     * @param bool $enable
-     */
-    public static function enableExecutionLog($enable = true)
-    {
-        self::$_isExecutionsLogEnabled = $enable;
-    }
-
-    /**
-     * Retrieve execution log
-     *
-     * @return array
-     */
-    public static function getExecutionLog()
-    {
-        return self::$_executionLog;
     }
 
     /**

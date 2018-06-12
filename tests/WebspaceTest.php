@@ -58,6 +58,7 @@ class WebspaceTest extends TestCase
             'ftp_login' => 'test-login',
             'ftp_password' => 'test-password',
         ]);
+        $this->assertGreaterThan(0, $webspace->id);
         static::$_client->webspace()->delete('id', $webspace->id);
     }
 
@@ -130,6 +131,7 @@ class WebspaceTest extends TestCase
                 'plan-name' => 'Unlimited',
             ],
         ]);
+        $this->assertGreaterThan(0, $webspace->id);
         static::$_client->webspace()->delete('id', $webspace->id);
     }
 

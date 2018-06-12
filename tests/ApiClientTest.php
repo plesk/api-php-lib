@@ -72,14 +72,16 @@ class ApiClientTest extends TestCase
     {
         $packet = static::$_client->getPacket('1.6');
         $packet->addChild('server')->addChild('get_protos');
-        static::$_client->request($packet);
+        $result = static::$_client->request($packet);
+        $this->assertEquals('ok', $result->status);
     }
 
     public function testLatestMinorProtocol()
     {
         $packet = static::$_client->getPacket('1.6.5');
         $packet->addChild('server')->addChild('get_protos');
-        static::$_client->request($packet);
+        $result = static::$_client->request($packet);
+        $this->assertEquals('ok', $result->status);
     }
 
     public function testRequestShortSyntax()
