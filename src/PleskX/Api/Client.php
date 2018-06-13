@@ -420,6 +420,14 @@ class Client
     }
 
     /**
+     * @return Operator\DnsTemplate
+     */
+    public function dnsTemplate()
+    {
+        return $this->_getOperator('DnsTemplate');
+    }
+
+    /**
      * @return Operator\DatabaseServer
      */
     public function databaseServer()
