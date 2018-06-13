@@ -1,9 +1,11 @@
 version: '2'
 services:
   plesk:
-    image: plesk/plesk:17.0
+    image: plesk/plesk:17.8
     logging:
       driver: none
+    ports:
+      ["8443:8443"]
   tests:
     build: .
     environment:

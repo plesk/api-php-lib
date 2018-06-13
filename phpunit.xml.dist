@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Copyright 1999-2016. Parallels IP Holdings GmbH. -->
-<phpunit colors="true" bootstrap="tests/autoload.php">
+<phpunit>
     <testsuites>
-        <testsuite>
+        <testsuite name="E2E">
             <directory suffix="Test.php">tests/</directory>
         </testsuite>
     </testsuites>

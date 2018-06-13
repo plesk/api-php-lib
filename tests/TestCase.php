@@ -1,7 +1,7 @@
 <?php
 // Copyright 1999-2016. Parallels IP Holdings GmbH.
 
-abstract class TestCase extends PHPUnit_Framework_TestCase
+abstract class TestCase extends PHPUnit\Framework\TestCase
 {
 
     /** @var PleskX\Api\Client */
