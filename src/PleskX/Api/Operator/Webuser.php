@@ -55,7 +55,7 @@ class Webuser extends \PleskX\Api\Operator {
         $response = $this->_get('get', $field, $value);
         $items = [];
         foreach ($response->xpath('//result') as $xmlResult) {
-            $items[] = new Struct\Info($xmlResult);
+            $items[] = new Info($xmlResult);
         }
         return $items;
     }
