@@ -555,4 +555,12 @@ class Client
     {
         return $this->_getOperator('Site');
     }
+
+    /**
+     * @return Operator\PhpHandler
+     */
+    public function phpHandler()
+    {
+        return $this->_getOperator('PhpHandler');
+    }
 }
