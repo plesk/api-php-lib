@@ -30,7 +30,6 @@ class FtpUser extends \PleskX\Api\Operator {
 	/**
 	 * @param string $ftpUser
 	 * @param string $newPassword
-	 * @return \PleskX\Api\Struct\FtpUser\Info
 	 */
 	public function updateFtpPassword( $ftpUser, $newPassword ) {
 		$packet = $this->_client->getPacket();
@@ -42,9 +41,7 @@ class FtpUser extends \PleskX\Api\Operator {
 		$values = $set->addChild( 'values' );
 		$values->addChild( 'password', $newPassword );
 		
-		$response = $this->_client->request($packet);
-		
-		return new Info( $response );
+		$this->_client->request($packet);
 	}
 	
 	

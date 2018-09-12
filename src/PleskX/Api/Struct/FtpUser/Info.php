@@ -5,29 +5,16 @@ namespace PleskX\Api\Struct\FtpUser;
 class Info extends \PleskX\Api\Struct
 {
 
-    /**
-	 * @var int
-	 */
+    /** @var integer */
     public $id;
 
-    /**
-	 * @var int
-	 */
+    /** @var string */
     public $name;
 
-    /**
-	 * @var int
-	 */
+    /** @var string */
     public $home;
 
-    /**
-	 * @var int
-	 */
-    public $quota;
-
-    /**
-	 * @var int
-	 */
+    /** @var integer */
     public $webspaceId;
 	
 	
@@ -36,7 +23,6 @@ class Info extends \PleskX\Api\Struct
             'id',
             'name',
             'home',
-            'quota',
             'webspace_id',
         ]);
     }
