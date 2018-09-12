@@ -83,6 +83,35 @@ class Webspace extends \PleskX\Api\Operator
 
 		return 'ok' === (string)$response->status;
 	}
+	
+
+	/**
+	 * @param array $filters
+	 * @param string $newPassword
+	 * @return bool
+	 */
+	public function updateFtpPassword( array $filters, $newPassword ) {
+		$packet = $this->_client->getPacket();
+		$setterTag = $packet->addChild( $this->_wrapperTag )->addChild( 'set' );
+		if ( !empty( $filters ) ) {
+			$filterTag = $setterTag->addChild( 'filter' );
+			foreach ( $filters as $key => $value ) {
+				$filterTag->addChild( $key, $value );
+			}
+		}
+		
+		$valuesTag = $setterTag->addChild( 'values' );
+		$infoHosting = $valuesTag->addChild('hosting')->addChild('vrt_hst');
+		$property = $infoHosting->addChild('property');
+		
+		$property->addChild('name', 'ftp_password');
+		$property->addChild('value', $newPassword);
+		
+		$response = $this->_client->request( $packet );
+
+		return 'ok' === (string)$response->status;
+	}
+	
 
 	/**
 	 * @param string $field
