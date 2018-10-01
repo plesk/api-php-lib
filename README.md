@@ -10,6 +10,14 @@ PHP object-oriented library for Plesk XML-RPC API.
 
 `composer require plesk/api-php-lib:@dev`
 
+## Install Via Composer (through the Plesk Interface)
+
+Navigate to your site > Applications
+
+Click the Scan Button. This process may take some time. Click the application, then install dependencies. This should add all the files the API requires to your website.
+
+For more info regarding this subject, please see [the help article](https://support.plesk.com/hc/en-us/articles/115004023153-How-to-install-PHP-dependencies-using-Composer-in-Plesk-12-5-or-Plesk-Onyx-).
+
 ## Usage Examples
 
 Here is an example on how to use the library and create a customer with desired properties:
