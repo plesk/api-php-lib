@@ -1,19 +1,25 @@
 {
     "name": "plesk/api-php-lib",
+    "type": "library",
     "description": "PHP object-oriented library for Plesk XML-RPC API",
     "license": "Apache-2.0",
     "authors": [
         {
             "name": "Alexei Yuzhakov",
             "email": "sibprogrammer@gmail.com"
+        },
+        {
+            "name": "Plesk",
+            "email": "plesk-dev-leads@plesk.com"
         }
     ],
-    "minimum-stability": "dev",
     "require": {
-        "php": "^5.6|^7.1|^7.0"
+        "php": "^5.6 | ^7.0",
+        "ext-curl": "*",
+        "ext-xml": "*"
     },
     "require-dev": {
-        "phpunit/phpunit": "^7"
+        "phpunit/phpunit": "^7.0"
     },
     "config": {
         "process-timeout": 0
@@ -31,7 +37,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "0.1.x-dev"
+            "dev-master": "1.0.x-dev"
         }
     }
 }
