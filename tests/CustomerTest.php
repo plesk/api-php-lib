@@ -1,9 +1,9 @@
 <?php
-// Copyright 1999-2016. Parallels IP Holdings GmbH.
+// Copyright 1999-2019. Plesk International GmbH.
+namespace PleskXTest;
 
 class CustomerTest extends TestCase
 {
-
     private $_customerProperties = [
         'cname' => 'Plesk',
         'pname' => 'John Smith',
@@ -65,5 +65,4 @@ class CustomerTest extends TestCase
         static::$_client->customer()->delete('login', 'customer-a');
         static::$_client->customer()->delete('login', 'customer-b');
     }
-
 }

@@ -1,9 +1,9 @@
 <?php
-// Copyright 1999-2016. Parallels IP Holdings GmbH.
+// Copyright 1999-2019. Plesk International GmbH.
+namespace PleskXTest;
 
 class UiTest extends TestCase
 {
-
     private $_customButtonProperties = [
         'place' => 'admin',
         'url' => 'http://example.com',
@@ -48,5 +48,4 @@ class UiTest extends TestCase
         $result = static::$_client->ui()->deleteCustomButton($buttonId);
         $this->assertTrue($result);
     }
-
 }

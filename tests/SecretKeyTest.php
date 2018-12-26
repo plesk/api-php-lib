@@ -1,9 +1,11 @@
 <?php
-// Copyright 1999-2016. Parallels IP Holdings GmbH.
+// Copyright 1999-2019. Plesk International GmbH.
+namespace PleskXTest;
+
+use PleskX\Api\Exception;
 
 class SecretKeyTest extends TestCase
 {
-
     public function testCreate()
     {
         $keyId = static::$_client->secretKey()->create('192.168.0.1');

@@ -1,5 +1,6 @@
 <?php
-// Copyright 1999-2016. Parallels IP Holdings GmbH.
+// Copyright 1999-2019. Plesk International GmbH.
+namespace PleskXTest;
 
 class SubdomainTest extends TestCase
 {
@@ -22,7 +23,6 @@ class SubdomainTest extends TestCase
 
     /**
      * @param string $name
-     * @param string $webspaceName
      * @return \PleskX\Api\Struct\Subdomain\Info
      */
     private function _createSubdomain($name)

@@ -1,9 +1,9 @@
 <?php
-// Copyright 1999-2016. Parallels IP Holdings GmbH.
+// Copyright 1999-2019. Plesk International GmbH.
+namespace PleskXTest;
 
 class MailTest extends TestCase
 {
-
     /**
      * @var \PleskX\Api\Struct\Webspace\Info
      */
@@ -57,5 +57,4 @@ class MailTest extends TestCase
         $result = static::$_client->mail()->delete('name', $mailname->name, static::$_webspace->id);
         $this->assertTrue($result);
     }
-
 }

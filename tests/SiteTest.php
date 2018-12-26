@@ -1,5 +1,6 @@
 <?php
-// Copyright 1999-2016. Parallels IP Holdings GmbH.
+// Copyright 1999-2019. Plesk International GmbH.
+namespace PleskXTest;
 
 class SiteTest extends TestCase
 {
@@ -69,10 +70,10 @@ class SiteTest extends TestCase
 
     public function testGetHostingWithHosting()
     {
-        $properties =  [
+        $properties = [
             'hosting' => [
-                'www_root' => 'addon.dom'
-            ]
+                'www_root' => 'addon.dom',
+            ],
         ];
         $site = $this->_createSite('addon.dom', $properties);
 
@@ -96,5 +97,4 @@ class SiteTest extends TestCase
         static::$_client->site()->delete('id', $site->id);
         static::$_client->site()->delete('id', $site2->id);
     }
-
 }

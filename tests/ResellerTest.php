@@ -1,9 +1,9 @@
 <?php
-// Copyright 1999-2016. Parallels IP Holdings GmbH.
+// Copyright 1999-2019. Plesk International GmbH.
+namespace PleskXTest;
 
 class ResellerTest extends TestCase
 {
-
     private $_resellerProperties = [
         'pname' => 'John Reseller',
         'login' => 'reseller-unit-test',
@@ -58,5 +58,4 @@ class ResellerTest extends TestCase
         static::$_client->reseller()->delete('login', 'reseller-a');
         static::$_client->reseller()->delete('login', 'reseller-b');
     }
-
 }
