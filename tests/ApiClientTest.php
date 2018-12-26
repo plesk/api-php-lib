@@ -1,10 +1,11 @@
 <?php
-// Copyright 1999-2016. Parallels IP Holdings GmbH.
+// Copyright 1999-2019. Plesk International GmbH.
+namespace PleskXTest;
+
 use \PleskX\Api\Client\Exception;
 
 class ApiClientTest extends TestCase
 {
-
     /**
      * @expectedException \PleskX\Api\Exception
      * @expectedExceptionCode 1005
@@ -45,7 +46,7 @@ class ApiClientTest extends TestCase
         $host = static::$_client->getHost();
         $port = static::$_client->getPort();
         $protocol = static::$_client->getProtocol();
-        $client = new PleskX\Api\Client($host, $port, $protocol);
+        $client = new \PleskX\Api\Client($host, $port, $protocol);
         $client->setCredentials('bad-login', 'bad-password');
         $packet = static::$_client->getPacket();
         $packet->addChild('server')->addChild('get_protos');
@@ -61,7 +62,7 @@ class ApiClientTest extends TestCase
         $host = static::$_client->getHost();
         $port = static::$_client->getPort();
         $protocol = static::$_client->getProtocol();
-        $client = new PleskX\Api\Client($host, $port, $protocol);
+        $client = new \PleskX\Api\Client($host, $port, $protocol);
         $client->setSecretKey('bad-key');
         $packet = static::$_client->getPacket();
         $packet->addChild('server')->addChild('get_protos');

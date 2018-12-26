@@ -1,10 +1,10 @@
 <?php
-// Copyright 1999-2016. Parallels IP Holdings GmbH.
+// Copyright 1999-2019. Plesk International GmbH.
+namespace PleskXTest;
 
-abstract class TestCase extends PHPUnit\Framework\TestCase
+abstract class TestCase extends \PHPUnit\Framework\TestCase
 {
-
-    /** @var PleskX\Api\Client */
+    /** @var \PleskX\Api\Client */
     protected static $_client;
 
     public static function setUpBeforeClass()
@@ -20,7 +20,7 @@ abstract class TestCase extends PHPUnit\Framework\TestCase
             list($host, $port, $scheme) = [$parsedUrl['host'], $parsedUrl['port'], $parsedUrl['scheme']];
         }
 
-        static::$_client = new PleskX\Api\Client($host, $port, $scheme);
+        static::$_client = new \PleskX\Api\Client($host, $port, $scheme);
         static::$_client->setCredentials($login, $password);
     }
 
@@ -45,8 +45,7 @@ abstract class TestCase extends PHPUnit\Framework\TestCase
             'ip_address' => static::_getIpAddress(),
         ], [
             'ftp_login' => 'test-login',
-            'ftp_password' => 'TEST-password',
+            'ftp_password' => 'TEST1-password',
         ]);
     }
-
 }

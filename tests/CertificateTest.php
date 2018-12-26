@@ -1,9 +1,9 @@
 <?php
-// Copyright 1999-2016. Parallels IP Holdings GmbH.
+// Copyright 1999-2019. Plesk International GmbH.
+namespace PleskXTest;
 
 class CertificateTest extends TestCase
 {
-
     public function testGenerate()
     {
         $certificate = static::$_client->certificate()->generate([
@@ -20,5 +20,4 @@ class CertificateTest extends TestCase
         $this->assertGreaterThan(0, strlen($certificate->privateKey));
         $this->assertStringStartsWith('-----BEGIN PRIVATE KEY-----', $certificate->privateKey);
     }
-
 }

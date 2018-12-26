@@ -1,5 +1,6 @@
 <?php
-// Copyright 1999-2018. Plesk International GmbH.
+// Copyright 1999-2019. Plesk International GmbH.
+namespace PleskXTest;
 
 class DnsTemplateTest extends TestCase
 {

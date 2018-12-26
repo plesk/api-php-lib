@@ -1,9 +1,9 @@
 <?php
-// Copyright 1999-2016. Parallels IP Holdings GmbH.
+// Copyright 1999-2019. Plesk International GmbH.
+namespace PleskXTest;
 
 class WebspaceTest extends TestCase
 {
-
     /**
      * @return \PleskX\Api\Struct\Webspace\Info
      */
@@ -150,5 +150,4 @@ class WebspaceTest extends TestCase
 
         static::$_client->webspace()->delete('id', $domain->id);
     }
-
 }

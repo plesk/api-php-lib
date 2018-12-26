@@ -1,9 +1,9 @@
 <?php
-// Copyright 1999-2016. Parallels IP Holdings GmbH.
+// Copyright 1999-2019. Plesk International GmbH.
+namespace PleskXTest;
 
 class ServerTest extends TestCase
 {
-
     public function testGetProtos()
     {
         $protos = static::$_client->server()->getProtos();
@@ -112,5 +112,4 @@ class ServerTest extends TestCase
         $updatesInfo = static::$_client->server()->getUpdatesInfo();
         $this->assertInternalType('boolean', $updatesInfo->installUpdatesAutomatically);
     }
-
 }
