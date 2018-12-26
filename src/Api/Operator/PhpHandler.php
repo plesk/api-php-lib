@@ -29,4 +29,29 @@ class PhpHandler extends Operator
 
         return new Info($xmlResult);
     }
+
+    /**
+     * @param string|null $field
+     * @param integer|string $value
+     * @return Info[]
+     */
+    public function getAll($field = null, $value = null)
+    {
+        $packet = $this->_client->getPacket();
+        $getTag = $packet->addChild($this->_wrapperTag)->addChild('get');
+
+        $filterTag = $getTag->addChild('filter');
+        if (!is_null($field)) {
+            $filterTag->addChild($field, $value);
+        }
+
+        $response = $this->_client->request($packet, Client::RESPONSE_FULL);
+        $items = [];
+        foreach ($response->xpath('//result') as $xmlResult) {
+            $item = new Info($xmlResult);
+            $items[] = $item;
+        }
+
+        return $items;
+    }
 }

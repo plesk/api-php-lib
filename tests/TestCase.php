@@ -7,6 +7,8 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
     /** @var \PleskX\Api\Client */
     protected static $_client;
 
+    private static $webspaces = [];
+
     public static function setUpBeforeClass()
     {
         $login = getenv('REMOTE_LOGIN');
@@ -24,6 +26,16 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
         static::$_client->setCredentials($login, $password);
     }
 
+    public static function tearDownAfterClass()
+    {
+        foreach (self::$webspaces as $webspace) {
+            try {
+                static::$_client->webspace()->delete('id', $webspace->id);
+            } catch (\Exception $e) {
+            }
+        }
+    }
+
     /**
      * @return string
      */
@@ -35,17 +47,24 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @param string $name
      * @return \PleskX\Api\Struct\Webspace\Info
      */
-    protected static function _createWebspace($name)
+    protected static function _createWebspace()
     {
-        return static::$_client->webspace()->create([
-            'name' => $name,
-            'ip_address' => static::_getIpAddress(),
-        ], [
-            'ftp_login' => 'test-login',
-            'ftp_password' => 'TEST1-password',
-        ]);
+        $id = uniqid();
+        $password = base64_encode(time());
+
+        $webspace = static::$_client->webspace()->create(
+            [
+                'name' => "test{$id}.test",
+                'ip_address' => static::_getIpAddress(),
+            ], [
+                'ftp_login' => "u{$id}",
+                'ftp_password' => $password,
+            ]
+        );
+        self::$webspaces[] = $webspace;
+
+        return $webspace;
     }
 }

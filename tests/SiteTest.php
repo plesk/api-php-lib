@@ -4,28 +4,20 @@ namespace PleskXTest;
 
 class SiteTest extends TestCase
 {
-    /**
-     * @var \PleskX\Api\Struct\Webspace\Info
-     */
-    private static $_webspace;
+    /** @var \PleskX\Api\Struct\Webspace\Info */
+    private static $webspace;
 
     public static function setUpBeforeClass()
     {
         parent::setUpBeforeClass();
-        static::$_webspace = static::_createWebspace('example.dom');
-    }
-
-    public static function tearDownAfterClass()
-    {
-        parent::tearDownAfterClass();
-        static::$_client->webspace()->delete('id', static::$_webspace->id);
+        static::$webspace = static::_createWebspace();
     }
 
     private function _createSite($name, array $properties = [])
     {
         $properties = array_merge([
             'name' => $name,
-            'webspace-id' => static::$_webspace->id,
+            'webspace-id' => static::$webspace->id,
         ], $properties);
         return static::$_client->site()->create($properties);
     }

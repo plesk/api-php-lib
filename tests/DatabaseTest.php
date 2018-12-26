@@ -4,30 +4,22 @@ namespace PleskXTest;
 
 class DatabaseTest extends TestCase
 {
-    /**
-     * @var \PleskX\Api\Struct\Webspace\Info
-     */
-    private static $_webspace;
+    /** @var \PleskX\Api\Struct\Webspace\Info */
+    private static $webspace;
 
     public static function setUpBeforeClass()
     {
         parent::setUpBeforeClass();
-        static::$_webspace = static::_createWebspace('example.dom');
-    }
-
-    public static function tearDownAfterClass()
-    {
-        parent::tearDownAfterClass();
-        static::$_client->webspace()->delete('id', static::$_webspace->id);
+        static::$webspace = static::_createWebspace();
     }
 
     public function testCreate()
     {
         $database = $this->_createDatabase([
-            'webspace-id' => static::$_webspace->id,
+            'webspace-id' => static::$webspace->id,
             'name' => 'test1',
             'type' => 'mysql',
-            'db-server-id' => 1
+            'db-server-id' => 1,
         ]);
         static::$_client->database()->delete('id', $database->id);
     }
@@ -35,10 +27,10 @@ class DatabaseTest extends TestCase
     public function testCreateUser()
     {
         $database = $this->_createDatabase([
-            'webspace-id' => static::$_webspace->id,
+            'webspace-id' => static::$webspace->id,
             'name' => 'test1',
             'type' => 'mysql',
-            'db-server-id' => 1
+            'db-server-id' => 1,
         ]);
         $user = $this->_createUser([
             'db-id' => $database->id,
@@ -52,10 +44,10 @@ class DatabaseTest extends TestCase
     public function testUpdateUser()
     {
         $database = $this->_createDatabase([
-            'webspace-id' => static::$_webspace->id,
+            'webspace-id' => static::$webspace->id,
             'name' => 'test1',
             'type' => 'mysql',
-            'db-server-id' => 1
+            'db-server-id' => 1,
         ]);
         $user = $this->_createUser([
             'db-id' => $database->id,
@@ -65,7 +57,7 @@ class DatabaseTest extends TestCase
         $updatedUser = static::$_client->database()->updateUser([
             'id' => $user->id,
             'login' => 'test_user2',
-            'password' => 'setup2Q'
+            'password' => 'setup2Q',
         ]);
         $this->assertEquals(true, $updatedUser);
         static::$_client->database()->deleteUser('id', $user->id);
@@ -75,16 +67,16 @@ class DatabaseTest extends TestCase
     public function testGetById()
     {
         $database = $this->_createDatabase([
-            'webspace-id' => static::$_webspace->id,
+            'webspace-id' => static::$webspace->id,
             'name' => 'test1',
             'type' => 'mysql',
-            'db-server-id' => 1
+            'db-server-id' => 1,
         ]);
 
         $db = static::$_client->database()->get('id', $database->id);
         $this->assertEquals('test1', $db->name);
         $this->assertEquals('mysql', $db->type);
-        $this->assertEquals(static::$_webspace->id, $db->webspaceId);
+        $this->assertEquals(static::$webspace->id, $db->webspaceId);
         $this->assertEquals(1, $db->dbServerId);
 
         static::$_client->database()->delete('id', $database->id);
@@ -93,21 +85,21 @@ class DatabaseTest extends TestCase
     public function testGetAllByWebspaceId()
     {
         $db1 = $this->_createDatabase([
-            'webspace-id' => static::$_webspace->id,
+            'webspace-id' => static::$webspace->id,
             'name' => 'test1',
             'type' => 'mysql',
-            'db-server-id' => 1
+            'db-server-id' => 1,
         ]);
         $db2 = $this->_createDatabase([
-            'webspace-id' => static::$_webspace->id,
+            'webspace-id' => static::$webspace->id,
             'name' => 'test2',
             'type' => 'mysql',
-            'db-server-id' => 1
+            'db-server-id' => 1,
         ]);
-        $databases = static::$_client->database()->getAll('webspace-id', static::$_webspace->id);
+        $databases = static::$_client->database()->getAll('webspace-id', static::$webspace->id);
         $this->assertEquals('test1', $databases[0]->name);
         $this->assertEquals('test2', $databases[1]->name);
-        $this->assertEquals(static::$_webspace->id, $databases[0]->webspaceId);
+        $this->assertEquals(static::$webspace->id, $databases[0]->webspaceId);
         $this->assertEquals(1, $databases[1]->dbServerId);
 
         static::$_client->database()->delete('id', $db1->id);
@@ -117,10 +109,10 @@ class DatabaseTest extends TestCase
     public function testGetUserById()
     {
         $database = $this->_createDatabase([
-            'webspace-id' => static::$_webspace->id,
+            'webspace-id' => static::$webspace->id,
             'name' => 'test1',
             'type' => 'mysql',
-            'db-server-id' => 1
+            'db-server-id' => 1,
         ]);
 
         $user = $this->_createUser([
@@ -140,16 +132,16 @@ class DatabaseTest extends TestCase
     public function testGetAllUsersByDbId()
     {
         $db1 = $this->_createDatabase([
-            'webspace-id' => static::$_webspace->id,
+            'webspace-id' => static::$webspace->id,
             'name' => 'test1',
             'type' => 'mysql',
-            'db-server-id' => 1
+            'db-server-id' => 1,
         ]);
         $db2 = $this->_createDatabase([
-            'webspace-id' => static::$_webspace->id,
+            'webspace-id' => static::$webspace->id,
             'name' => 'test2',
             'type' => 'mysql',
-            'db-server-id' => 1
+            'db-server-id' => 1,
         ]);
         $user1 = $this->_createUser([
             'db-id' => $db1->id,
@@ -184,10 +176,10 @@ class DatabaseTest extends TestCase
     public function testDelete()
     {
         $database = $this->_createDatabase([
-            'webspace-id' => static::$_webspace->id,
+            'webspace-id' => static::$webspace->id,
             'name' => 'test1',
             'type' => 'mysql',
-            'db-server-id' => 1
+            'db-server-id' => 1,
         ]);
         $result = static::$_client->database()->delete('id', $database->id);
         $this->assertTrue($result);
@@ -196,10 +188,10 @@ class DatabaseTest extends TestCase
     public function testDeleteUser()
     {
         $database = $this->_createDatabase([
-            'webspace-id' => static::$_webspace->id,
+            'webspace-id' => static::$webspace->id,
             'name' => 'test1',
             'type' => 'mysql',
-            'db-server-id' => 1
+            'db-server-id' => 1,
         ]);
         $user = $this->_createUser([
             'db-id' => $database->id,
@@ -219,8 +211,9 @@ class DatabaseTest extends TestCase
     private function _createDatabase(array $params)
     {
         $database = static::$_client->database()->create($params);
-        $this->assertInternalType('integer', $database->id);
+        $this->assertIsInt($database->id);
         $this->assertGreaterThan(0, $database->id);
+
         return $database;
     }
 
@@ -231,8 +224,9 @@ class DatabaseTest extends TestCase
     private function _createUser(array $params)
     {
         $user = static::$_client->database()->createUser($params);
-        $this->assertInternalType('integer', $user->id);
+        $this->assertIsInt($user->id);
         $this->assertGreaterThan(0, $user->id);
+
         return $user;
     }
 }
