@@ -34,7 +34,7 @@ class SiteTest extends TestCase
     {
         $site = $this->_createSite('addon.dom');
 
-        $this->assertInternalType('integer', $site->id);
+        $this->assertIsNumeric($site->id);
         $this->assertGreaterThan(0, $site->id);
 
         static::$_client->site()->delete('id', $site->id);
@@ -79,7 +79,7 @@ class SiteTest extends TestCase
 
         $siteHosting = static::$_client->site()->getHosting('id', $site->id);
         $this->assertArrayHasKey('www_root', $siteHosting->properties);
-        $this->assertEquals('addon.dom', basename($siteHosting->properties['www_root']));
+        $this->assertStringEndsWith('addon.dom', $siteHosting->properties['www_root']);
 
         static::$_client->site()->delete('id', $site->id);
     }
