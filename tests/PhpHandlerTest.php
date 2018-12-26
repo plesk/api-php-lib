@@ -2,15 +2,26 @@
 // Copyright 1999-2019. Plesk International GmbH.
 namespace PleskXTest;
 
+use PleskX\Api\Struct\PhpHandler\Info;
+
 class PhpHandlerTest extends TestCase
 {
-    const PHP_HANDLER_ID = 'fpm';
-
     public function testGet()
     {
-        $handler = static::$_client->phpHandler()->get('id', self::PHP_HANDLER_ID);
+        $handler = static::$_client->phpHandler()->get(null, null);
 
-        $this->assertSame(self::PHP_HANDLER_ID, $handler->id);
+        $this->assertInstanceOf(Info::class, $handler);
+    }
+
+    public function testGetAll()
+    {
+        $handlers = static::$_client->phpHandler()->getAll();
+
+        $this->assertIsArray($handlers);
+        $this->assertNotEmpty($handlers);
+
+        $handler = current($handlers);
+        $this->assertInstanceOf(Info::class, $handler);
     }
 
     /**

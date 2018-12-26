@@ -4,70 +4,58 @@ namespace PleskXTest;
 
 class WebspaceTest extends TestCase
 {
-    /**
-     * @return \PleskX\Api\Struct\Webspace\Info
-     */
-    private function _createDomain()
-    {
-        return static::$_client->webspace()->create([
-            'name' => 'example-test.dom',
-            'ip_address' => static::_getIpAddress(),
-        ]);
-    }
-
     public function testGetPermissionDescriptor()
     {
         $descriptor = static::$_client->webspace()->getPermissionDescriptor();
-        $this->assertInternalType('array', $descriptor->permissions);
-        $this->assertGreaterThan(0, count($descriptor->permissions));
+        $this->assertIsArray($descriptor->permissions);
+        $this->assertNotEmpty($descriptor->permissions);
     }
 
     public function testGetLimitDescriptor()
     {
         $descriptor = static::$_client->webspace()->getLimitDescriptor();
-        $this->assertInternalType('array', $descriptor->limits);
-        $this->assertGreaterThan(0, count($descriptor->limits));
+        $this->assertIsArray($descriptor->limits);
+        $this->assertNotEmpty($descriptor->limits);
     }
 
     public function testGetPhysicalHostingDescriptor()
     {
         $descriptor = static::$_client->webspace()->getPhysicalHostingDescriptor();
-        $this->assertInternalType('array', $descriptor->properties);
-        $this->assertGreaterThan(0, count($descriptor->properties));
+        $this->assertIsArray($descriptor->properties);
+        $this->assertNotEmpty($descriptor->properties);
 
         $ftpLoginProperty = $descriptor->properties['ftp_login'];
         $this->assertEquals('ftp_login', $ftpLoginProperty->name);
         $this->assertEquals('string', $ftpLoginProperty->type);
     }
 
-    public function testCreate()
-    {
-        $domain = $this->_createDomain();
-        $this->assertInternalType('integer', $domain->id);
-        $this->assertGreaterThan(0, $domain->id);
-
-        static::$_client->webspace()->delete('id', $domain->id);
-    }
-
     public function testCreateWebspace()
     {
-        $webspace = static::$_client->webspace()->create([
-            'name' => 'example-test.dom',
-            'ip_address' => static::_getIpAddress(),
-        ], [
-            'ftp_login' => 'test-login',
-            'ftp_password' => 'test-password',
-        ]);
+        $webspace = static::_createWebspace();
+
         $this->assertGreaterThan(0, $webspace->id);
-        static::$_client->webspace()->delete('id', $webspace->id);
+    }
+
+    public function testDelete()
+    {
+        $webspace = static::_createWebspace();
+        $result = static::$_client->webspace()->delete('id', $webspace->id);
+
+        $this->assertTrue($result);
     }
 
     public function testRequestCreateWebspace()
     {
-        $webspace = static::$_client->webspace()->request([
+        $id = uniqid();
+        $password = base64_encode(time());
+        $name = "d{$id}.test";
+
+        $handler = static::$_client->phpHandler()->get(null, null);
+
+        $request = [
             'add' => [
                 'gen_setup' => [
-                    'name' => 'example-second-test.dom',
+                    'name' => $name,
                     'htype' => 'vrt_hst',
                     'status' => '0',
                     'ip_address' => [static::_getIpAddress()],
@@ -77,15 +65,15 @@ class WebspaceTest extends TestCase
                         'property' => [
                             [
                                 'name' => 'php_handler_id',
-                                'value' => 'fastcgi',
+                                'value' => $handler->id,
                             ],
                             [
                                 'name' => 'ftp_login',
-                                'value' => 'ftp-login-test-1',
+                                'value' => "u{$id}",
                             ],
                             [
                                 'name' => 'ftp_password',
-                                'value' => 'ftp-password-test-1',
+                                'value' => $password,
                             ],
                         ],
                         'ip_address' => static::_getIpAddress(),
@@ -130,24 +118,30 @@ class WebspaceTest extends TestCase
                 ],
                 'plan-name' => 'Unlimited',
             ],
-        ]);
-        $this->assertGreaterThan(0, $webspace->id);
-        static::$_client->webspace()->delete('id', $webspace->id);
-    }
+        ];
 
-    public function testDelete()
-    {
-        $domain = $this->_createDomain();
-        $result = static::$_client->webspace()->delete('id', $domain->id);
-        $this->assertTrue($result);
+        try {
+            $webspace = static::$_client->webspace()->request($request);
+        } catch (\Exception $e) {
+            try {
+                $webspaceInfo = static::$_client->webspace()->get('name', $name);
+                static::$_client->webspace()->delete('guid', $webspaceInfo->guid);
+            } catch (\Exception $e) {
+            }
+
+            $this->fail($e->getMessage());
+        }
+
+        $this->assertGreaterThan(0, $webspace->id);
+
+        static::$_client->webspace()->delete('id', $webspace->id);
     }
 
     public function testGet()
     {
-        $domain = $this->_createDomain();
-        $domainInfo = static::$_client->webspace()->get('id', $domain->id);
-        $this->assertEquals('example-test.dom', $domainInfo->name);
+        $webspace = static::_createWebspace();
+        $webspaceInfo = static::$_client->webspace()->get('id', $webspace->id);
 
-        static::$_client->webspace()->delete('id', $domain->id);
+        $this->assertInstanceOf(\PleskX\Api\Struct\Webspace\GeneralInfo::class, $webspaceInfo);
     }
 }
