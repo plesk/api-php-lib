@@ -149,6 +149,26 @@ class Webspace extends \PleskX\Api\Operator
 	}
 	
 	
+	/**
+	 * Esegue il cambio piano di un hosting
+	 * @param int $webspaceId
+	 * @param string $subscriptionGuid
+	 * @return XmlResponse
+	 */
+	public function switchSubscription( $webspaceId, $subscriptionGuid ) {
+		$packet = $this->_client->getPacket();
+		
+		$switchSubscriptionTag = $packet->addChild( $this->_wrapperTag )->addChild( 'switch-subscription' );
+		
+		$switchSubscriptionTag->addChild( 'filter' )->addChild( 'id', $webspaceId );
+		$switchSubscriptionTag->addChild( 'plan-guid', $subscriptionGuid );
+		
+		$response = $this->_client->request( $packet );
+		
+		return $response;
+	}
+	
+	
     /**
      * @return Struct\GeneralInfo[]
      */
@@ -156,5 +176,5 @@ class Webspace extends \PleskX\Api\Operator
     {
         return $this->_getItems(Struct\GeneralInfo::class, 'gen_info');
     }
-
+	
 }
