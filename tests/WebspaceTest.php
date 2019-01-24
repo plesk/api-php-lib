@@ -46,16 +46,17 @@ class WebspaceTest extends TestCase
 
     public function testRequestCreateWebspace()
     {
-        $id = uniqid();
-        $password = base64_encode(time());
-        $name = "d{$id}.test";
-
-        $handler = static::$_client->phpHandler()->get(null, null);
+        $handlers = static::$_client->phpHandler()->getAll();
+        $enabledHandlers = array_filter($handlers, function ($handler) {
+            return $handler->handlerStatus !== 'disabled';
+        });
+        $this->assertGreaterThan(0, count($enabledHandlers));
+        $handler = current($enabledHandlers);
 
         $request = [
             'add' => [
                 'gen_setup' => [
-                    'name' => $name,
+                    'name' => 'webspace-test-full.test',
                     'htype' => 'vrt_hst',
                     'status' => '0',
                     'ip_address' => [static::_getIpAddress()],
@@ -69,11 +70,11 @@ class WebspaceTest extends TestCase
                             ],
                             [
                                 'name' => 'ftp_login',
-                                'value' => "u{$id}",
+                                'value' => 'testuser',
                             ],
                             [
                                 'name' => 'ftp_password',
-                                'value' => $password,
+                                'value' => 'test-PWD*1',
                             ],
                         ],
                         'ip_address' => static::_getIpAddress(),
@@ -120,17 +121,7 @@ class WebspaceTest extends TestCase
             ],
         ];
 
-        try {
-            $webspace = static::$_client->webspace()->request($request);
-        } catch (\Exception $e) {
-            try {
-                $webspaceInfo = static::$_client->webspace()->get('name', $name);
-                static::$_client->webspace()->delete('guid', $webspaceInfo->guid);
-            } catch (\Exception $e) {
-            }
-
-            $this->fail($e->getMessage());
-        }
+        $webspace = static::$_client->webspace()->request($request);
 
         $this->assertGreaterThan(0, $webspace->id);
 
@@ -142,8 +133,8 @@ class WebspaceTest extends TestCase
         $webspace = static::_createWebspace();
         $webspaceInfo = static::$_client->webspace()->get('id', $webspace->id);
 
+        $this->assertInstanceOf(\PleskX\Api\Struct\Webspace\GeneralInfo::class, $webspaceInfo);
         $this->assertNotEmpty($webspaceInfo->name);
         $this->assertEquals(0, $webspaceInfo->realSize);
-
     }
 }

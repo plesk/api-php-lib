@@ -58,9 +58,12 @@ class CustomerTest extends TestCase
         ]);
 
         $customersInfo = static::$_client->customer()->getAll();
-        $this->assertCount(2, $customersInfo);
-        $this->assertEquals('John Smith', $customersInfo[0]->personalName);
-        $this->assertEquals('customer-a', $customersInfo[0]->login);
+        $this->assertIsArray($customersInfo);
+
+        $customersCheck = array_filter($customersInfo, function ($value) {
+            return $value->personalName === 'John Smith' || $value->personalName === 'Mike Black';
+        });
+        $this->assertCount(2, $customersCheck);
 
         static::$_client->customer()->delete('login', 'customer-a');
         static::$_client->customer()->delete('login', 'customer-b');
