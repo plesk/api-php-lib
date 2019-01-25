@@ -133,7 +133,6 @@ class WebspaceTest extends TestCase
         $webspace = static::_createWebspace();
         $webspaceInfo = static::$_client->webspace()->get('id', $webspace->id);
 
-        $this->assertInstanceOf(\PleskX\Api\Struct\Webspace\GeneralInfo::class, $webspaceInfo);
         $this->assertNotEmpty($webspaceInfo->name);
         $this->assertEquals(0, $webspaceInfo->realSize);
     }
