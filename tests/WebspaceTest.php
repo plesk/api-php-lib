@@ -18,6 +18,13 @@ class WebspaceTest extends TestCase
         $this->assertNotEmpty($descriptor->limits);
     }
 
+    public function testGetDiskUsage()
+    {
+        $diskusage = static::$_client->webspace()->getDiskUsage();
+        $this->assertNotEmpty($diskusage->name);
+        $this->assertNotEmpty($diskusage->guid);
+    }
+
     public function testGetPhysicalHostingDescriptor()
     {
         $descriptor = static::$_client->webspace()->getPhysicalHostingDescriptor();

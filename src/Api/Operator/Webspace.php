@@ -2,6 +2,7 @@
 // Copyright 1999-2019. Plesk International GmbH.
 
 namespace PleskX\Api\Operator;
+
 use PleskX\Api\Struct\Webspace as Struct;
 
 class Webspace extends \PleskX\Api\Operator
@@ -34,7 +35,7 @@ class Webspace extends \PleskX\Api\Operator
     public function create(array $properties, array $hostingProperties = null, $planName = null)
     {
         $packet = $this->_client->getPacket();
-        $info = $packet->addChild($this->_wrapperTag)->addChild('add');
+        $info   = $packet->addChild($this->_wrapperTag)->addChild('add');
 
         $infoGeneral = $info->addChild('gen_setup');
         foreach ($properties as $name => $value) {
@@ -89,6 +90,17 @@ class Webspace extends \PleskX\Api\Operator
     public function getAll()
     {
         return $this->_getItems(Struct\GeneralInfo::class, 'gen_info');
+    }
+
+    /**
+     * @param string $field
+     * @param integer|string $value
+     * @return Struct\DiskUsage
+     */
+    public function getDiskUsage($field, $value)
+    {
+        $items = $this->_getItems(Struct\DiskUsage::class, 'disk_usage', $field, $value);
+        return reset($items);
     }
 
 }
