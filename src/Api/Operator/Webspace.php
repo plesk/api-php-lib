@@ -2,7 +2,6 @@
 // Copyright 1999-2019. Plesk International GmbH.
 
 namespace PleskX\Api\Operator;
-
 use PleskX\Api\Struct\Webspace as Struct;
 
 class Webspace extends \PleskX\Api\Operator
@@ -35,7 +34,7 @@ class Webspace extends \PleskX\Api\Operator
     public function create(array $properties, array $hostingProperties = null, $planName = null)
     {
         $packet = $this->_client->getPacket();
-        $info   = $packet->addChild($this->_wrapperTag)->addChild('add');
+        $info = $packet->addChild($this->_wrapperTag)->addChild('add');
 
         $infoGeneral = $info->addChild('gen_setup');
         foreach ($properties as $name => $value) {
