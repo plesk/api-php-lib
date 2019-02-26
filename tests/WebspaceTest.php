@@ -20,9 +20,10 @@ class WebspaceTest extends TestCase
 
     public function testGetDiskUsage()
     {
-        $diskusage = static::$_client->webspace()->getDiskUsage();
-        $this->assertNotEmpty($diskusage->name);
-        $this->assertNotEmpty($diskusage->guid);
+        $webspace = static::_createWebspace();
+        $diskusage = static::$_client->webspace()->getDiskUsage('id', $webspace->id);
+
+        $this->assertObjectHasAttribute('httpdocs', $diskusage);
     }
 
     public function testGetPhysicalHostingDescriptor()

@@ -6,12 +6,6 @@ namespace PleskX\Api\Struct\Webspace;
 
 class DiskUsage extends \PleskX\Api\Struct
 {
-    /** @var string */
-    public $name;
-
-    /** @var string */
-    public $guid;
-
     /** @var integer */
     public $httpdocs;
 
@@ -48,8 +42,6 @@ class DiskUsage extends \PleskX\Api\Struct
     public function __construct($apiResponse)
     {
         $this->_initScalarProperties($apiResponse, [
-            'name',
-            'guid',
             'httpdocs',
             'httpsdocs',
             'subdomains',
