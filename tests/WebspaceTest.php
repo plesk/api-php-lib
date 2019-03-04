@@ -18,6 +18,14 @@ class WebspaceTest extends TestCase
         $this->assertNotEmpty($descriptor->limits);
     }
 
+    public function testGetDiskUsage()
+    {
+        $webspace = static::_createWebspace();
+        $diskusage = static::$_client->webspace()->getDiskUsage('id', $webspace->id);
+
+        $this->assertObjectHasAttribute('httpdocs', $diskusage);
+    }
+
     public function testGetPhysicalHostingDescriptor()
     {
         $descriptor = static::$_client->webspace()->getPhysicalHostingDescriptor();

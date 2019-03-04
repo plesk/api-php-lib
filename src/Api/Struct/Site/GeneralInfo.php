@@ -15,6 +15,9 @@ class GeneralInfo extends \PleskX\Api\Struct
     public $guid;
 
     /** @var string */
+    public $status;
+
+    /** @var string */
     public $description;
 
     public function __construct($apiResponse)
@@ -22,6 +25,7 @@ class GeneralInfo extends \PleskX\Api\Struct
         $this->_initScalarProperties($apiResponse, [
             'name',
             'ascii-name',
+            'status',
             'guid',
             'description',
         ]);

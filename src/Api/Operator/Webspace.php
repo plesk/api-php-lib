@@ -91,4 +91,15 @@ class Webspace extends \PleskX\Api\Operator
         return $this->_getItems(Struct\GeneralInfo::class, 'gen_info');
     }
 
+    /**
+     * @param string $field
+     * @param integer|string $value
+     * @return Struct\DiskUsage
+     */
+    public function getDiskUsage($field, $value)
+    {
+        $items = $this->_getItems(Struct\DiskUsage::class, 'disk_usage', $field, $value);
+        return reset($items);
+    }
+
 }
