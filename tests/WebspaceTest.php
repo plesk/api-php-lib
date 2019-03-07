@@ -37,6 +37,14 @@ class WebspaceTest extends TestCase
         $this->assertEquals('string', $ftpLoginProperty->type);
     }
 
+    public function testGetPhpSettings()
+    {
+        $webspace = static::_createWebspace();
+        $info = static::$_client->webspace()->getPhpSettings($webspace->id);
+
+        $this->assertArrayHasKey('open_basedir', $info->properties);
+    }
+
     public function testCreateWebspace()
     {
         $webspace = static::_createWebspace();
