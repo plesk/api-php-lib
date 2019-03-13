@@ -40,7 +40,7 @@ class WebspaceTest extends TestCase
     public function testGetPhpSettings()
     {
         $webspace = static::_createWebspace();
-        $info = static::$_client->webspace()->getPhpSettings($webspace->id);
+        $info = static::$_client->webspace()->getPhpSettings('id', $webspace->id);
 
         $this->assertArrayHasKey('open_basedir', $info->properties);
     }

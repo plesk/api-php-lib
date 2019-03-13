@@ -26,15 +26,16 @@ class Webspace extends \PleskX\Api\Operator
     }
 
     /**
-     * @param int $webspaceId
+     * @param string $field
+     * @param integer|string $value
      * @return Struct\PhpSettings
      */
-    public function getPhpSettings($webspaceId)
+    public function getPhpSettings($field, $value)
     {
         $packet = $this->_client->getPacket();
         $getTag = $packet->addChild($this->_wrapperTag)->addChild('get');
 
-        $getTag->addChild('filter')->addChild('id', $webspaceId);
+        $getTag->addChild('filter')->addChild($field, $value);
         $getTag->addChild('dataset')->addChild('php-settings');
 
         $response = $this->_client->request($packet, \PleskX\Api\Client::RESPONSE_FULL);
