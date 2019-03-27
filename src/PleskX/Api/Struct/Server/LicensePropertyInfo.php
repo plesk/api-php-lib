@@ -8,16 +8,10 @@ namespace PleskX\Api\Struct\Server;
  */
 class LicensePropertyInfo extends \PleskX\Api\Struct {
 	
-    /**
-	 * Nome della proprietà
-	 * @var string 
-	 */
+    /** @var string Nome della proprietà */
     public $name;
 	
-    /**
-	 * Valore della proprietà
-	 * @var string 
-	 */
+    /** @var string Valore della proprietà */
     public $value;
 
 	

@@ -10,34 +10,19 @@ use PleskX\Api\Struct\Server\LicensePropertyInfo;
  */
 class keyAdditionalInfo extends \PleskX\Api\Struct {
 	
-    /**
-	 * Numero completo della licenza
-	 * @var string 
-	 */
+    /** @var string Numero completo della licenza */
     public $key_number;
 	
-    /**
-	 * Nome completo della licenza
-	 * @var string
-	 */
+    /** @var string Nome completo della licenza */
     public $full_name;
 	
-    /**
-	 * Indica se la licenza è installata e funzionante. False se scaduta
-	 * @var bool
-	 */
+    /** @var bool Indica se la licenza è installata e funzionante. False se scaduta */
     public $active;
 	
-    /**
-	 * Data di scadenza licenza in formato YYYYMMDD
-	 * @var string
-	 */
+    /** @var string Data di scadenza licenza in formato YYYYMMDD */
     public $date_expiry;
 	
-    /**
-	 * Collezione di proprietà della licenza
-	 * @var \PleskX\Api\Struct\Server\LicensePropertyInfo[] 
-	 */
+    /** @var \PleskX\Api\Struct\Server\LicensePropertyInfo[] Collezione di proprietà della licenza */
     public $properties;
 
 	

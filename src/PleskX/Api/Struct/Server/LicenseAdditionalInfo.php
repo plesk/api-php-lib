@@ -10,29 +10,16 @@ use PleskX\Api\Struct\Server\LicenseAdditional\keyAdditionalInfo;
  */
 class LicenseAdditionalInfo extends \PleskX\Api\Struct {
 	
-    /**
-	 * Stato della licenza
-	 * @var string 
-	 */
+    /** @var string Stato della licenza */
     public $status;
 
-    /**
-	 * Codice di errore in caso di fallimento della richiesta
-	 * NULL se la richiesta è andata a buon fine
-	 * @var int
-	 */
+    /**  @var int Codice di errore in caso di fallimento della richiesta (NULL se la richiesta è andata a buon fine) */
     public $error_code;
 
-    /**
-	 * Messaggio di errore in caso di fallimento della richiesta
-	 * @var string
-	 */
+    /** @var string Messaggio di errore in caso di fallimento della richiesta */
     public $error_message;
 	
-    /**
-	 * Licenza aggiuntiva
-	 * @var \PleskX\Api\Struct\Server\License\keyAdditionalInfo
-	 */
+    /** @var \PleskX\Api\Struct\Server\License\keyAdditionalInfo Licenza aggiuntiva */
     public $key;
 
 	

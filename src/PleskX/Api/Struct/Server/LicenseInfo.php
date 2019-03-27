@@ -10,16 +10,10 @@ use PleskX\Api\Struct\Server\License\keyInfo;
  */
 class LicenseInfo extends \PleskX\Api\Struct {
 	
-    /**
-	 * Stato della licenza
-	 * @var string 
-	 */
+    /** @var string Stato della licenza */
     public $status;
 
-    /**
-	 * Licenza
-	 * @var \PleskX\Api\Struct\Server\License\keyInfo
-	 */
+    /** @var \PleskX\Api\Struct\Server\License\keyInfo Licenza */
     public $key;
 
 	

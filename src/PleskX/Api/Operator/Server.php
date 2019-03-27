@@ -194,13 +194,13 @@ class Server extends \PleskX\Api\Operator
         $packet = $this->_client->getPacket();
 		$packet->addChild( $this->_wrapperTag )->addChild( 'get_additional_key' );
 		
-		$response = $this->_client->request( $packet );
+		$response = new Struct\LicenseAdditionalInfo( $this->_client->request( $packet ) );
 		
 		if( !is_null( $response->error_code ) or !empty( $response->error_message ) ) {
 			throw new Exception( $response->error_message, $response->error_code );
 		}
 		
-		return new Struct\LicenseAdditionalInfo( $response );
+		return $response;
 	}
 
 	

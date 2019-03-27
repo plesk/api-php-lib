@@ -10,10 +10,7 @@ use PleskX\Api\Struct\Server\LicensePropertyInfo;
  */
 class keyInfo extends \PleskX\Api\Struct {
 	
-    /**
-	 * Collezione di proprietà della licenza
-	 * @var \PleskX\Api\Struct\Server\LicensePropertyInfo[] 
-	 */
+    /** @var \PleskX\Api\Struct\Server\LicensePropertyInfo[] Collezione di proprietà della licenza */
     public $properties;
 
 	
