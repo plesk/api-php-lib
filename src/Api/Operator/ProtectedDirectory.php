@@ -41,7 +41,7 @@ class ProtectedDirectory extends \PleskX\Api\Operator
     /**
      * @param string $field
      * @param integer|string $value
-     * @return Struct\Info
+     * @return Struct\DataInfo|false
      */
     public function get($field, $value)
     {
@@ -52,7 +52,7 @@ class ProtectedDirectory extends \PleskX\Api\Operator
     /**
      * @param string $field
      * @param integer|string $value
-     * @return Struct\Info[]
+     * @return Struct\DataInfo[]
      */
     public function getAll($field, $value)
     {
