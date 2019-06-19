@@ -13,6 +13,17 @@ class SiteTest extends TestCase
         static::$webspace = static::_createWebspace();
     }
 
+    protected function setUp()
+    {
+        parent::setUp();
+
+        $keyInfo = static::$_client->server()->getKeyInfo();
+
+        if ((int)$keyInfo['lim_dom'] < 2) {
+            $this->markTestSkipped('License does not allow to create more than 1 domain.');
+        }
+    }
+
     private function _createSite($name, array $properties = [])
     {
         $properties = array_merge([

@@ -39,6 +39,12 @@ class ResellerTest extends TestCase
 
     public function testGetAll()
     {
+        $keyInfo = static::$_client->server()->getKeyInfo();
+
+        if ((int)$keyInfo['lim_cl'] < 2) {
+            $this->markTestSkipped('License does not allow to create more than 1 reseller.');
+        }
+
         static::$_client->reseller()->create([
             'pname' => 'John Reseller',
             'login' => 'reseller-a',

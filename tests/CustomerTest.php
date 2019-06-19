@@ -46,6 +46,12 @@ class CustomerTest extends TestCase
 
     public function testGetAll()
     {
+        $keyInfo = static::$_client->server()->getKeyInfo();
+
+        if ((int)$keyInfo['lim_cl'] < 2) {
+            $this->markTestSkipped('License does not allow to create more than 1 customer.');
+        }
+
         static::$_client->customer()->create([
             'pname' => 'John Smith',
             'login' => 'customer-a',

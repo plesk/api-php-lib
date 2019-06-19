@@ -24,6 +24,8 @@ class WebspaceTest extends TestCase
         $diskusage = static::$_client->webspace()->getDiskUsage('id', $webspace->id);
 
         $this->assertObjectHasAttribute('httpdocs', $diskusage);
+
+        static::$_client->webspace()->delete('id', $webspace->id);
     }
 
     public function testGetPhysicalHostingDescriptor()
@@ -43,6 +45,8 @@ class WebspaceTest extends TestCase
         $info = static::$_client->webspace()->getPhpSettings('id', $webspace->id);
 
         $this->assertArrayHasKey('open_basedir', $info->properties);
+
+        static::$_client->webspace()->delete('id', $webspace->id);
     }
 
     public function testCreateWebspace()
@@ -50,6 +54,8 @@ class WebspaceTest extends TestCase
         $webspace = static::_createWebspace();
 
         $this->assertGreaterThan(0, $webspace->id);
+
+        static::$_client->webspace()->delete('id', $webspace->id);
     }
 
     public function testDelete()
@@ -151,5 +157,7 @@ class WebspaceTest extends TestCase
 
         $this->assertNotEmpty($webspaceInfo->name);
         $this->assertEquals(0, $webspaceInfo->realSize);
+
+        static::$_client->webspace()->delete('id', $webspace->id);
     }
 }
