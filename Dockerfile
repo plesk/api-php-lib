@@ -1,4 +1,4 @@
-FROM php:7.2-cli
+FROM php:7.3-cli
 
 RUN mkdir /opt/api-php-lib
 RUN docker-php-ext-install pcntl \
