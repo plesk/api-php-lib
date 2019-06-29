@@ -54,6 +54,10 @@ To use custom port one can provide a URL (e.g. for Docker container):
 
 `REMOTE_URL=https://your-plesk-host.dom:port REMOTE_PASSWORD=password ./vendor/bin/phpunit`
 
+One more way to run tests is to use Docker:
+
+`docker-compose run tests`
+
 ## Using Grunt for Continuous Testing
 
 * Install Node.js
