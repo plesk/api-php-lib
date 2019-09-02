@@ -1,6 +1,5 @@
 
 # vendor
-/composer.lock
 /vendor/
 
 # tests
