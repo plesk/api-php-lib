@@ -1,6 +1,6 @@
 ## PHP library for Plesk XML-RPC API
 
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/plesk/api-php-lib/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/plesk/api-php-lib/?branch=master)
+[![Build Status](https://travis-ci.com/plesk/api-php-lib.svg?branch=master)](https://travis-ci.com/plesk/api-php-lib) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/plesk/api-php-lib/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/plesk/api-php-lib/?branch=master)
 
 PHP object-oriented library for Plesk XML-RPC API.
 
