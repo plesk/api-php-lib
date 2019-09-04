@@ -33,7 +33,10 @@ class SecretKeyTest extends TestCase
 
         $keys = static::$_client->secretKey()->getAll();
         $this->assertGreaterThanOrEqual(2, count($keys));
-        $this->assertEquals('192.168.0.1', $keys[0]->ipAddress);
+
+        $keyIpAddresses = array_map(function($key) { return $key->ipAddress; }, $keys);
+        $this->assertContains('192.168.0.1', $keyIpAddresses);
+        $this->assertContains('192.168.0.2', $keyIpAddresses);
 
         foreach ($keyIds as $keyId) {
             static::$_client->secretKey()->delete($keyId);
