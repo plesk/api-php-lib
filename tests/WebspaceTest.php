@@ -2,6 +2,8 @@
 // Copyright 1999-2019. Plesk International GmbH.
 namespace PleskXTest;
 
+use PleskXTest\Utility\PasswordProvider;
+
 class WebspaceTest extends TestCase
 {
     public function testGetPermissionDescriptor()
@@ -96,7 +98,7 @@ class WebspaceTest extends TestCase
                             ],
                             [
                                 'name' => 'ftp_password',
-                                'value' => 'test-PWD*1',
+                                'value' => PasswordProvider::STRONG_PASSWORD,
                             ],
                         ],
                         'ip_address' => static::_getIpAddress(),
