@@ -2,6 +2,8 @@
 // Copyright 1999-2019. Plesk International GmbH.
 namespace PleskXTest;
 
+use PleskXTest\Utility\KeyLimitChecker;
+
 class SiteTest extends TestCase
 {
     /** @var \PleskX\Api\Struct\Webspace\Info */
@@ -19,7 +21,7 @@ class SiteTest extends TestCase
 
         $keyInfo = static::$_client->server()->getKeyInfo();
 
-        if ((int)$keyInfo['lim_dom'] < 2) {
+        if (!KeyLimitChecker::checkByType($keyInfo, KeyLimitChecker::LIMIT_DOMAINS, 2)) {
             $this->markTestSkipped('License does not allow to create more than 1 domain.');
         }
     }
