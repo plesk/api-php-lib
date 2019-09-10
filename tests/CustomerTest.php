@@ -2,6 +2,7 @@
 // Copyright 1999-2019. Plesk International GmbH.
 namespace PleskXTest;
 
+use PleskXTest\Utility\KeyLimitChecker;
 use PleskXTest\Utility\PasswordProvider;
 
 class CustomerTest extends TestCase
@@ -55,7 +56,7 @@ class CustomerTest extends TestCase
     {
         $keyInfo = static::$_client->server()->getKeyInfo();
 
-        if ((int)$keyInfo['lim_cl'] < 2) {
+        if (!KeyLimitChecker::checkByType($keyInfo, KeyLimitChecker::LIMIT_CLIENTS, 2)) {
             $this->markTestSkipped('License does not allow to create more than 1 customer.');
         }
 
