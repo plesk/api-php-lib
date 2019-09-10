@@ -2,17 +2,24 @@
 // Copyright 1999-2019. Plesk International GmbH.
 namespace PleskXTest;
 
+use PleskXTest\Utility\PasswordProvider;
+
 class CustomerTest extends TestCase
 {
-    private $_customerProperties = [
-        'cname' => 'Plesk',
-        'pname' => 'John Smith',
-        'login' => 'john-unit-test',
-        'passwd' => 'simple-password',
-        'email' => 'john@smith.com',
-        'external-id' => 'link:12345',
-        'description' => 'Good guy',
-    ];
+    private $_customerProperties;
+
+    public function setUp()
+    {
+        $this->_customerProperties = [
+            'cname' => 'Plesk',
+            'pname' => 'John Smith',
+            'login' => 'john-unit-test',
+            'passwd' => PasswordProvider::STRONG_PASSWORD,
+            'email' => 'john@smith.com',
+            'external-id' => 'link:12345',
+            'description' => 'Good guy',
+        ];
+    }
 
     public function testCreate()
     {
@@ -55,12 +62,12 @@ class CustomerTest extends TestCase
         static::$_client->customer()->create([
             'pname' => 'John Smith',
             'login' => 'customer-a',
-            'passwd' => 'simple-password',
+            'passwd' => PasswordProvider::STRONG_PASSWORD,
         ]);
         static::$_client->customer()->create([
             'pname' => 'Mike Black',
             'login' => 'customer-b',
-            'passwd' => 'simple-password',
+            'passwd' => PasswordProvider::STRONG_PASSWORD,
         ]);
 
         $customersInfo = static::$_client->customer()->getAll();

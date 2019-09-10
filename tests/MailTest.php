@@ -2,6 +2,8 @@
 // Copyright 1999-2019. Plesk International GmbH.
 namespace PleskXTest;
 
+use PleskXTest\Utility\PasswordProvider;
+
 class MailTest extends TestCase
 {
     /** @var \PleskX\Api\Struct\Webspace\Info */
@@ -35,7 +37,7 @@ class MailTest extends TestCase
 
     public function testCreate()
     {
-        $mailname = static::$_client->mail()->create('test', static::$webspace->id, true, 'secret');
+        $mailname = static::$_client->mail()->create('test', static::$webspace->id, true, PasswordProvider::STRONG_PASSWORD);
 
         $this->assertIsInt($mailname->id);
         $this->assertGreaterThan(0, $mailname->id);

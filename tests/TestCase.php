@@ -2,6 +2,8 @@
 // Copyright 1999-2019. Plesk International GmbH.
 namespace PleskXTest;
 
+use PleskXTest\Utility\PasswordProvider;
+
 abstract class TestCase extends \PHPUnit\Framework\TestCase
 {
     /** @var \PleskX\Api\Client */
@@ -52,15 +54,13 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
     protected static function _createWebspace()
     {
         $id = uniqid();
-        $password = base64_encode(time());
-
         $webspace = static::$_client->webspace()->create(
             [
                 'name' => "test{$id}.test",
                 'ip_address' => static::_getIpAddress(),
             ], [
                 'ftp_login' => "u{$id}",
-                'ftp_password' => $password,
+                'ftp_password' => PasswordProvider::STRONG_PASSWORD,
             ]
         );
         self::$webspaces[] = $webspace;

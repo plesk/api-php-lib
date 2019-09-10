@@ -2,6 +2,8 @@
 // Copyright 1999-2019. Plesk International GmbH.
 namespace PleskXTest;
 
+use PleskXTest\Utility\PasswordProvider;
+
 class ProtectedDirectoryTest extends TestCase
 {
     /** @var \PleskX\Api\Struct\Webspace\Info */
@@ -64,7 +66,7 @@ class ProtectedDirectoryTest extends TestCase
     {
         $protectedDirectory = static::$_client->protectedDirectory()->add('/', static::$webspace->id);
 
-        $user = static::$_client->protectedDirectory()->addUser($protectedDirectory, 'john', 'secret');
+        $user = static::$_client->protectedDirectory()->addUser($protectedDirectory, 'john', PasswordProvider::STRONG_PASSWORD);
         $this->assertGreaterThan(0, $user->id);
 
         static::$_client->protectedDirectory()->delete('id', $protectedDirectory->id);
@@ -74,7 +76,7 @@ class ProtectedDirectoryTest extends TestCase
     {
         $protectedDirectory = static::$_client->protectedDirectory()->add('/', static::$webspace->id);
 
-        $user = static::$_client->protectedDirectory()->addUser($protectedDirectory, 'john', 'secret');
+        $user = static::$_client->protectedDirectory()->addUser($protectedDirectory, 'john', PasswordProvider::STRONG_PASSWORD);
         $result = static::$_client->protectedDirectory()->deleteUser('id', $user->id);
         $this->assertTrue($result);
 

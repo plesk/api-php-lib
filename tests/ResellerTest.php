@@ -2,13 +2,20 @@
 // Copyright 1999-2019. Plesk International GmbH.
 namespace PleskXTest;
 
+use PleskXTest\Utility\PasswordProvider;
+
 class ResellerTest extends TestCase
 {
-    private $_resellerProperties = [
-        'pname' => 'John Reseller',
-        'login' => 'reseller-unit-test',
-        'passwd' => 'simple-password',
-    ];
+    private $_resellerProperties;
+
+    public function setUp()
+    {
+        $this->_resellerProperties = [
+            'pname' => 'John Reseller',
+            'login' => 'reseller-unit-test',
+            'passwd' => PasswordProvider::STRONG_PASSWORD,
+        ];
+    }
 
     public function testCreate()
     {
@@ -48,12 +55,12 @@ class ResellerTest extends TestCase
         static::$_client->reseller()->create([
             'pname' => 'John Reseller',
             'login' => 'reseller-a',
-            'passwd' => 'simple-password',
+            'passwd' => PasswordProvider::STRONG_PASSWORD,
         ]);
         static::$_client->reseller()->create([
             'pname' => 'Mike Reseller',
             'login' => 'reseller-b',
-            'passwd' => 'simple-password',
+            'passwd' => PasswordProvider::STRONG_PASSWORD,
         ]);
 
         $resellersInfo = static::$_client->reseller()->getAll();
