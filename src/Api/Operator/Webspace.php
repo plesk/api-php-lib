@@ -44,6 +44,17 @@ class Webspace extends \PleskX\Api\Operator
     }
 
     /**
+     * @param string $field
+     * @param integer|string $value
+     * @return Struct\Limits
+     */
+    public function getLimits($field, $value)
+    {
+        $items = $this->_getItems(Struct\Limits::class, 'limits', $field, $value);
+        return reset($items);
+    }
+
+    /**
      * @param array $properties
      * @param array|null $hostingProperties
      * @param $planName
@@ -119,5 +130,4 @@ class Webspace extends \PleskX\Api\Operator
         $items = $this->_getItems(Struct\DiskUsage::class, 'disk_usage', $field, $value);
         return reset($items);
     }
-
 }

@@ -51,6 +51,17 @@ class WebspaceTest extends TestCase
         static::$_client->webspace()->delete('id', $webspace->id);
     }
 
+    public function testGetLimits()
+    {
+        $webspace = static::_createWebspace();
+        $limits = static::$_client->webspace()->getLimits('id', $webspace->id);
+
+        $this->assertIsArray($limits->limits);
+        $this->assertNotEmpty($limits->limits);
+
+        static::$_client->webspace()->delete('id', $webspace->id);
+    }
+
     public function testCreateWebspace()
     {
         $webspace = static::_createWebspace();
