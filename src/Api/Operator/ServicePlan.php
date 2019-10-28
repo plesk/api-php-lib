@@ -52,4 +52,27 @@ class ServicePlan extends \PleskX\Api\Operator
         return $items;
     }
 
+    /**
+     * @param string $planName
+     * @return Struct\Info
+     */
+    public function create($planName)
+    {
+        $packet = $this->_client->getPacket();
+        $info = $packet->addChild($this->_wrapperTag)->addChild('add');
+        $info->addChild('name', $planName);
+
+        $response = $this->_client->request($packet);
+        return new Struct\Info($response);
+    }
+
+    /**
+     * @param string $field
+     * @param integer|string $value
+     * @return bool
+     */
+    public function delete($field, $value)
+    {
+        return $this->_delete($field, $value);
+    }
 }
