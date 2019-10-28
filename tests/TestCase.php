@@ -11,6 +11,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
     protected static $_client;
 
     private static $webspaces = [];
+    private static $servicePlans = [];
 
     public static function setUpBeforeClass(): void
     {
@@ -38,6 +39,13 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
         foreach (self::$webspaces as $webspace) {
             try {
                 static::$_client->webspace()->delete('id', $webspace->id);
+            } catch (\Exception $e) {
+            }
+        }
+
+        foreach (self::$servicePlans as $servicePlan) {
+            try {
+                static::$_client->servicePlan()->delete('id', $servicePlan->id);
             } catch (\Exception $e) {
             }
         }
@@ -73,5 +81,15 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
         self::$webspaces[] = $webspace;
 
         return $webspace;
+    }
+
+    protected static function _createServicePlan()
+    {
+        $id = uniqid();
+        $servicePlan = static::$_client->servicePlan()->create("test{$id}plan");
+
+        self::$servicePlans[] = $servicePlan;
+
+        return $servicePlan;
     }
 }
