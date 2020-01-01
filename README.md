@@ -58,8 +58,8 @@ One more way to run tests is to use Docker:
 
 `docker-compose run tests`
 
-## Using Grunt for Continuous Testing
+## Continuous Testing
 
-* Install Node.js
-* Install dependencies via `npm install` command
-* Run `REMOTE_HOST=your-plesk-host.dom REMOTE_PASSWORD=password grunt watch:test`
+During active development it could be more convenient to run tests in continuous manner. Here is the way how to achieve it:
+
+`REMOTE_URL=https://your-plesk-host.dom:port REMOTE_PASSWORD=password composer test:watch`
