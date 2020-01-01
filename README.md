@@ -48,11 +48,11 @@ One the possible ways to become familiar with the library is to check the unit t
 
 To run the unit tests use the following command:
 
-`REMOTE_HOST=your-plesk-host.dom REMOTE_PASSWORD=password ./vendor/bin/phpunit`
+`REMOTE_HOST=your-plesk-host.dom REMOTE_PASSWORD=password composer test`
 
 To use custom port one can provide a URL (e.g. for Docker container):
 
-`REMOTE_URL=https://your-plesk-host.dom:port REMOTE_PASSWORD=password ./vendor/bin/phpunit`
+`REMOTE_URL=https://your-plesk-host.dom:port REMOTE_PASSWORD=password composer test`
 
 One more way to run tests is to use Docker:
 
