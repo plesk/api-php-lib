@@ -10,7 +10,7 @@ class SubdomainTest extends TestCase
     /** @var string */
     private static $webspaceName;
 
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();
         static::$webspace = static::_createWebspace();

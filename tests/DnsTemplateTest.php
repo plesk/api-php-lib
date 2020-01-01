@@ -9,7 +9,7 @@ class DnsTemplateTest extends TestCase
      */
     private static $_isDnsSupported;
 
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();
 
@@ -17,7 +17,7 @@ class DnsTemplateTest extends TestCase
         static::$_isDnsSupported = $serviceStates['dns'] && ('running' == $serviceStates['dns']['state']);
     }
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

@@ -11,7 +11,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
 
     private static $webspaces = [];
 
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         $login = getenv('REMOTE_LOGIN');
         $password = getenv('REMOTE_PASSWORD');
@@ -28,7 +28,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
         static::$_client->setCredentials($login, $password);
     }
 
-    public static function tearDownAfterClass()
+    public static function tearDownAfterClass(): void
     {
         foreach (self::$webspaces as $webspace) {
             try {

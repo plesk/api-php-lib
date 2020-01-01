@@ -21,7 +21,7 @@ class DatabaseServerTest extends TestCase
     public function testGetAll()
     {
         $dbServers = static::$_client->databaseServer()->getAll();
-        $this->assertInternalType('array', $dbServers);
+        $this->assertIsArray($dbServers);
         $this->assertGreaterThan(0, count($dbServers));
         $this->assertEquals('localhost', $dbServers[0]->host);
     }

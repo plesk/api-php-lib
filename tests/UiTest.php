@@ -13,7 +13,7 @@ class UiTest extends TestCase
     public function testGetNavigation()
     {
         $navigation = static::$_client->ui()->getNavigation();
-        $this->assertInternalType('array', $navigation);
+        $this->assertIsArray($navigation);
         $this->assertGreaterThan(0, count($navigation));
         $this->assertArrayHasKey('general', $navigation);
         $this->assertArrayHasKey('hosting', $navigation);

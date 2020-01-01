@@ -9,7 +9,7 @@ class CustomerTest extends TestCase
 {
     private $_customerProperties;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->_customerProperties = [
             'cname' => 'Plesk',
@@ -25,7 +25,7 @@ class CustomerTest extends TestCase
     public function testCreate()
     {
         $customer = static::$_client->customer()->create($this->_customerProperties);
-        $this->assertInternalType('integer', $customer->id);
+        $this->assertIsInt($customer->id);
         $this->assertGreaterThan(0, $customer->id);
 
         static::$_client->customer()->delete('id', $customer->id);

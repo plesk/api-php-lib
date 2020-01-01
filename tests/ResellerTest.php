@@ -9,7 +9,7 @@ class ResellerTest extends TestCase
 {
     private $_resellerProperties;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->_resellerProperties = [
             'pname' => 'John Reseller',
@@ -21,7 +21,7 @@ class ResellerTest extends TestCase
     public function testCreate()
     {
         $reseller = static::$_client->reseller()->create($this->_resellerProperties);
-        $this->assertInternalType('integer', $reseller->id);
+        $this->assertIsInt($reseller->id);
         $this->assertGreaterThan(0, $reseller->id);
 
         static::$_client->reseller()->delete('id', $reseller->id);

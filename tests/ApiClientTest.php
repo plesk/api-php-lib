@@ -6,43 +6,39 @@ use \PleskX\Api\Client\Exception;
 
 class ApiClientTest extends TestCase
 {
-    /**
-     * @expectedException \PleskX\Api\Exception
-     * @expectedExceptionCode 1005
-     */
     public function testWrongProtocol()
     {
+        $this->expectException(\PleskX\Api\Exception::class);
+        $this->expectExceptionCode(1005);
+
         $packet = static::$_client->getPacket('100.0.0');
         $packet->addChild('server')->addChild('get_protos');
         static::$_client->request($packet);
     }
 
-    /**
-     * @expectedException \PleskX\Api\Exception
-     * @expectedExceptionCode 1014
-     */
     public function testUnknownOperator()
     {
+        $this->expectException(\PleskX\Api\Exception::class);
+        $this->expectExceptionCode(1014);
+
         $packet = static::$_client->getPacket();
         $packet->addChild('unknown');
         static::$_client->request($packet);
     }
 
-    /**
-     * @expectedException \PleskX\Api\Exception
-     * @expectedExceptionCode 1014
-     */
     public function testInvalidXmlRequest()
     {
+        $this->expectException(\PleskX\Api\Exception::class);
+        $this->expectExceptionCode(1014);
+
         static::$_client->request('<packet><wrongly formatted xml</packet>');
     }
 
-    /**
-     * @expectedException \PleskX\Api\Exception
-     * @expectedExceptionCode 1001
-     */
     public function testInvalidCredentials()
     {
+        $this->expectException(\PleskX\Api\Exception::class);
+        $this->expectExceptionCode(1001);
+
         $host = static::$_client->getHost();
         $port = static::$_client->getPort();
         $protocol = static::$_client->getProtocol();
@@ -53,12 +49,11 @@ class ApiClientTest extends TestCase
         $client->request($packet);
     }
 
-    /**
-     * @expectedException \PleskX\Api\Exception
-     * @expectedExceptionCode 11003
-     */
     public function testInvalidSecretKey()
     {
+        $this->expectException(\PleskX\Api\Exception::class);
+        $this->expectExceptionCode(11003);
+
         $host = static::$_client->getHost();
         $port = static::$_client->getPort();
         $protocol = static::$_client->getProtocol();
@@ -132,11 +127,10 @@ class ApiClientTest extends TestCase
         $this->assertGreaterThan(0, strlen($generalInfo->gen_info->server_name));
     }
 
-    /**
-     * @expectedException \PleskX\Api\Client\Exception
-     */
     public function testConnectionError()
     {
+        $this->expectException(\PleskX\Api\Client\Exception::class);
+
         $client = new \PleskX\Api\Client('invalid-host.dom');
         $client->server()->getProtos();
     }

@@ -14,7 +14,7 @@ class ServicePlanTest extends TestCase
     public function testGetAll()
     {
         $servicePlans = static::$_client->servicePlan()->getAll();
-        $this->assertInternalType('array', $servicePlans);
+        $this->assertIsArray($servicePlans);
         $this->assertGreaterThan(0, count($servicePlans));
         $this->assertNotEmpty($servicePlans[0]->name);
     }

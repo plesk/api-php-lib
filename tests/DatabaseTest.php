@@ -9,7 +9,7 @@ class DatabaseTest extends TestCase
     /** @var \PleskX\Api\Struct\Webspace\Info */
     private static $webspace;
 
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();
         static::$webspace = static::_createWebspace();

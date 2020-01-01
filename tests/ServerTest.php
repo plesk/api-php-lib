@@ -31,7 +31,7 @@ class ServerTest extends TestCase
     {
         $admin = static::$_client->server()->getAdmin();
         $this->assertGreaterThan(0, strlen($admin->name));
-        $this->assertContains('@', $admin->email);
+        $this->assertStringContainsString('@', $admin->email);
     }
 
     public function testGetKeyInfo()

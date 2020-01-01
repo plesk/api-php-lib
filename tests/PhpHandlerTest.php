@@ -25,12 +25,11 @@ class PhpHandlerTest extends TestCase
         $this->assertObjectHasAttribute('type', $handler);
     }
 
-    /**
-     * @expectedException \PleskX\Api\Exception
-     * @expectedExceptionMessage Php handler does not exists
-     */
     public function testGetUnknownHandlerThrowsException()
     {
+        $this->expectException(\PleskX\Api\Exception::class);
+        $this->expectExceptionMessage('Php handler does not exists');
+
         static::$_client->phpHandler()->get('id', 'this-handler-does-not-exist');
     }
 }
