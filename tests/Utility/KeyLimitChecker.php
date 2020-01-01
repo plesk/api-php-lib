@@ -1,5 +1,5 @@
 <?php
-
+// Copyright 1999-2020. Plesk International GmbH.
 namespace PleskXTest\Utility;
 
 class KeyLimitChecker

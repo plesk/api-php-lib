@@ -1,5 +1,5 @@
 <?php
-// Copyright 1999-2019. Parallels IP Holdings GmbH.
+// Copyright 1999-2020. Plesk International GmbH.
 
 namespace PleskX\Api\Struct\Webspace;
 

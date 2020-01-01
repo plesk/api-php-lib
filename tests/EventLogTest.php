@@ -1,5 +1,5 @@
 <?php
-// Copyright 1999-2019. Plesk International GmbH.
+// Copyright 1999-2020. Plesk International GmbH.
 namespace PleskXTest;
 
 class EventLogTest extends TestCase
