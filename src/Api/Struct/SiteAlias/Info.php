@@ -8,7 +8,7 @@ class Info extends \PleskX\Api\Struct
     /** @var string */
     public $status;
 
-    /** @var integer */
+    /** @var int */
     public $id;
 
     public function __construct($apiResponse)

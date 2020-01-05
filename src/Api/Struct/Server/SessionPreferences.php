@@ -5,7 +5,7 @@ namespace PleskX\Api\Struct\Server;
 
 class SessionPreferences extends \PleskX\Api\Struct
 {
-    /** @var integer */
+    /** @var int */
     public $loginTimeout;
 
     public function __construct($apiResponse)

@@ -5,13 +5,13 @@ namespace PleskX\Api\Struct\Database;
 
 class UserInfo extends \PleskX\Api\Struct
 {
-    /** @var integer */
+    /** @var int */
     public $id;
 
     /** @var string */
     public $login;
 
-    /** @var integer */
+    /** @var int */
     public $dbId;
 
     public function __construct($apiResponse)

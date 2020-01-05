@@ -13,7 +13,7 @@ class LimitDescriptor extends \PleskX\Api\Struct
         $this->limits = [];
 
         foreach ($apiResponse->descriptor->property as $propertyInfo) {
-            $this->limits[(string)$propertyInfo->name] = new LimitInfo($propertyInfo);
+            $this->limits[(string) $propertyInfo->name] = new LimitInfo($propertyInfo);
         }
     }
 }

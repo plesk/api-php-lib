@@ -8,7 +8,7 @@ class UpdatesInfo extends \PleskX\Api\Struct
     /** @var string */
     public $lastInstalledUpdate;
 
-    /** @var boolean */
+    /** @var bool */
     public $installUpdatesAutomatically;
 
     public function __construct($apiResponse)

@@ -5,5 +5,4 @@ namespace PleskX\Api\Operator;
 
 class ServicePlanAddon extends \PleskX\Api\Operator
 {
-
 }

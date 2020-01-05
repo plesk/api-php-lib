@@ -13,7 +13,7 @@ class PermissionDescriptor extends \PleskX\Api\Struct
         $this->permissions = [];
 
         foreach ($apiResponse->descriptor->property as $propertyInfo) {
-            $this->permissions[(string)$propertyInfo->name] = new PermissionInfo($propertyInfo);
+            $this->permissions[(string) $propertyInfo->name] = new PermissionInfo($propertyInfo);
         }
     }
 }

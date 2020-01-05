@@ -2,20 +2,21 @@
 // Copyright 1999-2020. Plesk International GmbH.
 
 namespace PleskX\Api\Operator;
-use PleskX\Api\Struct\ServicePlan as Struct;
 
+use PleskX\Api\Struct\ServicePlan as Struct;
 
 class ServicePlan extends \PleskX\Api\Operator
 {
-
     /**
      * @param string $field
-     * @param integer|string $value
+     * @param int|string $value
+     *
      * @return Struct\Info
      */
     public function get($field, $value)
     {
         $items = $this->_get($field, $value);
+
         return reset($items);
     }
 
@@ -29,7 +30,8 @@ class ServicePlan extends \PleskX\Api\Operator
 
     /**
      * @param string|null $field
-     * @param integer|string|null $value
+     * @param int|string|null $value
+     *
      * @return Struct\Info|Struct\Info[]
      */
     private function _get($field = null, $value = null)
@@ -51,5 +53,4 @@ class ServicePlan extends \PleskX\Api\Operator
 
         return $items;
     }
-
 }

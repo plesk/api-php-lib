@@ -1,5 +1,6 @@
 <?php
 // Copyright 1999-2020. Plesk International GmbH.
+
 namespace PleskXTest;
 
 class SubdomainTest extends TestCase
@@ -20,6 +21,7 @@ class SubdomainTest extends TestCase
 
     /**
      * @param string $name
+     *
      * @return \PleskX\Api\Struct\Subdomain\Info
      */
     private function _createSubdomain($name)
@@ -57,7 +59,7 @@ class SubdomainTest extends TestCase
         $subdomain = $this->_createSubdomain($name);
 
         $subdomainInfo = static::$_client->subdomain()->get('id', $subdomain->id);
-        $this->assertEquals($name . '.' . $subdomainInfo->parent, $subdomainInfo->name);
+        $this->assertEquals($name.'.'.$subdomainInfo->parent, $subdomainInfo->name);
         $this->assertTrue(false !== strpos($subdomainInfo->properties['www_root'], $name));
 
         static::$_client->subdomain()->delete('id', $subdomain->id);
@@ -72,9 +74,9 @@ class SubdomainTest extends TestCase
 
         $subdomainsInfo = static::$_client->subdomain()->getAll();
         $this->assertCount(2, $subdomainsInfo);
-        $this->assertEquals($name . '.' . $subdomainsInfo[0]->parent, $subdomainsInfo[0]->name);
+        $this->assertEquals($name.'.'.$subdomainsInfo[0]->parent, $subdomainsInfo[0]->name);
         $this->assertTrue(false !== strpos($subdomainsInfo[0]->properties['www_root'], $name));
-        $this->assertEquals($name2 . '.' . $subdomainsInfo[1]->parent, $subdomainsInfo[1]->name);
+        $this->assertEquals($name2.'.'.$subdomainsInfo[1]->parent, $subdomainsInfo[1]->name);
         $this->assertTrue(false !== strpos($subdomainsInfo[1]->properties['www_root'], $name2));
 
         static::$_client->subdomain()->delete('id', $subdomain->id);
