@@ -1,12 +1,13 @@
 <?php
+
 // Copyright 1999-2020. Plesk International GmbH.
 
 namespace PleskX\Api\Operator;
+
 use PleskX\Api\Struct\Ip as Struct;
 
 class Ip extends \PleskX\Api\Operator
 {
-
     /**
      * @return Struct\Info[]
      */
@@ -23,5 +24,4 @@ class Ip extends \PleskX\Api\Operator
 
         return $ips;
     }
-
 }

@@ -1,4 +1,5 @@
 <?php
+
 // Copyright 1999-2020. Plesk International GmbH.
 
 namespace PleskX\Api\Struct\Ui;
@@ -8,16 +9,16 @@ class CustomButton extends \PleskX\Api\Struct
     /** @var string */
     public $id;
 
-    /** @var integer */
+    /** @var int */
     public $sortKey;
 
-    /** @var boolean */
+    /** @var bool */
     public $public;
 
-    /** @var boolean */
+    /** @var bool */
     public $internal;
 
-    /** @var boolean */
+    /** @var bool */
     public $noFrame;
 
     /** @var string */

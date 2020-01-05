@@ -1,4 +1,5 @@
 <?php
+
 // Copyright 1999-2020. Plesk International GmbH.
 
 namespace PleskX\Api\Operator;
@@ -11,7 +12,8 @@ class PhpHandler extends Operator
 {
     /**
      * @param string $field
-     * @param integer|string $value
+     * @param int|string $value
+     *
      * @return Info
      */
     public function get($field, $value)
@@ -32,7 +34,8 @@ class PhpHandler extends Operator
 
     /**
      * @param string|null $field
-     * @param integer|string $value
+     * @param int|string $value
+     *
      * @return Info[]
      */
     public function getAll($field = null, $value = null)

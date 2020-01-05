@@ -1,4 +1,5 @@
 <?php
+
 // Copyright 1999-2020. Plesk International GmbH.
 
 namespace PleskX\Api\Struct\SecretKey;

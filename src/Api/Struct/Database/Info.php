@@ -1,11 +1,12 @@
 <?php
+
 // Copyright 1999-2020. Plesk International GmbH.
 
 namespace PleskX\Api\Struct\Database;
 
 class Info extends \PleskX\Api\Struct
 {
-    /** @var integer */
+    /** @var int */
     public $id;
 
     /** @var string */
@@ -14,13 +15,13 @@ class Info extends \PleskX\Api\Struct
     /** @var string */
     public $type;
 
-    /** @var integer */
+    /** @var int */
     public $webspaceId;
 
-    /** @var integer */
+    /** @var int */
     public $dbServerId;
 
-    /** @var integer */
+    /** @var int */
     public $defaultUserId;
 
     public function __construct($apiResponse)

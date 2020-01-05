@@ -1,5 +1,7 @@
 <?php
+
 // Copyright 1999-2020. Plesk International GmbH.
+
 namespace PleskXTest;
 
 use PleskX\Api\Exception;
@@ -34,7 +36,9 @@ class SecretKeyTest extends TestCase
         $keys = static::$_client->secretKey()->getAll();
         $this->assertGreaterThanOrEqual(2, count($keys));
 
-        $keyIpAddresses = array_map(function($key) { return $key->ipAddress; }, $keys);
+        $keyIpAddresses = array_map(function ($key) {
+            return $key->ipAddress;
+        }, $keys);
         $this->assertContains('192.168.0.1', $keyIpAddresses);
         $this->assertContains('192.168.0.2', $keyIpAddresses);
 

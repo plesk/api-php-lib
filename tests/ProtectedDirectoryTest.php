@@ -1,5 +1,7 @@
 <?php
+
 // Copyright 1999-2020. Plesk International GmbH.
+
 namespace PleskXTest;
 
 use PleskXTest\Utility\PasswordProvider;
@@ -80,5 +82,4 @@ class ProtectedDirectoryTest extends TestCase
 
         static::$_client->protectedDirectory()->delete('id', $protectedDirectory->id);
     }
-
 }

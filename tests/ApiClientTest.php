@@ -1,8 +1,10 @@
 <?php
+
 // Copyright 1999-2020. Plesk International GmbH.
+
 namespace PleskXTest;
 
-use \PleskX\Api\Client\Exception;
+use PleskX\Api\Client\Exception;
 
 class ApiClientTest extends TestCase
 {
@@ -120,7 +122,7 @@ class ApiClientTest extends TestCase
 
         $this->assertCount(2, $responses);
 
-        $protos = (array)$responses[0]->protos->proto;
+        $protos = (array) $responses[0]->protos->proto;
         $generalInfo = $responses[1];
 
         $this->assertContains('1.6.6.0', $protos);
@@ -160,6 +162,7 @@ class ApiClientTest extends TestCase
                 throw new Exception('proto');
             }
         });
+
         try {
             static::$_client->server()->getProtos();
         } catch (Exception $e) {

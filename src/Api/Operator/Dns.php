@@ -1,12 +1,16 @@
 <?php
+
 // Copyright 1999-2020. Plesk International GmbH.
+
 namespace PleskX\Api\Operator;
+
 use PleskX\Api\Struct\Dns as Struct;
 
 class Dns extends \PleskX\Api\Operator
 {
     /**
      * @param array $properties
+     *
      * @return Struct\Info
      */
     public function create($properties)
@@ -23,18 +27,21 @@ class Dns extends \PleskX\Api\Operator
 
     /**
      * @param string $field
-     * @param integer|string $value
+     * @param int|string $value
+     *
      * @return Struct\Info
      */
     public function get($field, $value)
     {
         $items = $this->getAll($field, $value);
+
         return reset($items);
     }
 
     /**
      * @param string $field
-     * @param integer|string $value
+     * @param int|string $value
+     *
      * @return Struct\Info[]
      */
     public function getAll($field, $value)
@@ -51,15 +58,17 @@ class Dns extends \PleskX\Api\Operator
         $items = [];
         foreach ($response->xpath('//result') as $xmlResult) {
             $item = new Struct\Info($xmlResult->data);
-            $item->id = (int)$xmlResult->id;
+            $item->id = (int) $xmlResult->id;
             $items[] = $item;
         }
+
         return $items;
     }
 
     /**
      * @param string $field
-     * @param integer|string $value
+     * @param int|string $value
+     *
      * @return bool
      */
     public function delete($field, $value)

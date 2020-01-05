@@ -1,11 +1,12 @@
 <?php
+
 // Copyright 1999-2020. Plesk International GmbH.
 
 namespace PleskX\Api\Struct\Subdomain;
 
 class Info extends \PleskX\Api\Struct
 {
-    /** @var integer */
+    /** @var int */
     public $id;
 
     /** @var string */
@@ -23,10 +24,10 @@ class Info extends \PleskX\Api\Struct
         $this->_initScalarProperties($apiResponse, [
             'id',
             'parent',
-            'name'
+            'name',
         ]);
         foreach ($apiResponse->property as $propertyInfo) {
-            $this->properties[(string)$propertyInfo->name] = (string)$propertyInfo->value;
+            $this->properties[(string) $propertyInfo->name] = (string) $propertyInfo->value;
         }
     }
 }

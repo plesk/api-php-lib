@@ -1,14 +1,16 @@
 <?php
+
 // Copyright 1999-2020. Plesk International GmbH.
 
 namespace PleskX\Api\Operator;
+
 use PleskX\Api\Struct\Customer as Struct;
 
 class Customer extends \PleskX\Api\Operator
 {
-
     /**
      * @param array $properties
+     *
      * @return Struct\Info
      */
     public function create($properties)
@@ -21,12 +23,14 @@ class Customer extends \PleskX\Api\Operator
         }
 
         $response = $this->_client->request($packet);
+
         return new Struct\Info($response);
     }
 
     /**
      * @param string $field
-     * @param integer|string $value
+     * @param int|string $value
+     *
      * @return bool
      */
     public function delete($field, $value)
@@ -36,12 +40,14 @@ class Customer extends \PleskX\Api\Operator
 
     /**
      * @param string $field
-     * @param integer|string $value
+     * @param int|string $value
+     *
      * @return Struct\GeneralInfo
      */
     public function get($field, $value)
     {
         $items = $this->_getItems(Struct\GeneralInfo::class, 'gen_info', $field, $value);
+
         return reset($items);
     }
 
@@ -52,5 +58,4 @@ class Customer extends \PleskX\Api\Operator
     {
         return $this->_getItems(Struct\GeneralInfo::class, 'gen_info');
     }
-
 }

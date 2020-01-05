@@ -1,10 +1,11 @@
 <?php
+
 // Copyright 1999-2020. Plesk International GmbH.
 
 namespace PleskX\Api;
 
 /**
- * Internal client for Plesk XML-RPC API (via SDK)
+ * Internal client for Plesk XML-RPC API (via SDK).
  */
 class InternalClient extends Client
 {
@@ -14,7 +15,7 @@ class InternalClient extends Client
     }
 
     /**
-     * Setup login to execute requests under certain user
+     * Setup login to execute requests under certain user.
      *
      * @param $login
      */

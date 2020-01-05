@@ -1,4 +1,5 @@
 <?php
+
 // Copyright 1999-2020. Plesk International GmbH.
 
 namespace PleskX\Api\Operator;
@@ -10,6 +11,7 @@ class SiteAlias extends \PleskX\Api\Operator
     /**
      * @param array $properties
      * @param array $preferences
+     *
      * @return Struct\Info
      */
     public function create(array $properties, array $preferences = [])
@@ -29,23 +31,27 @@ class SiteAlias extends \PleskX\Api\Operator
         $info->addChild('name', $properties['name']);
 
         $response = $this->_client->request($packet);
+
         return new Struct\Info($response);
     }
 
     /**
      * @param string $field
-     * @param integer|string $value
+     * @param int|string $value
+     *
      * @return Struct\Info
      */
     public function get($field, $value)
     {
         $items = $this->getAll($field, $value);
+
         return reset($items);
     }
 
     /**
      * @param string $field
-     * @param integer|string $value
+     * @param int|string $value
+     *
      * @return Struct\Info[]
      */
     public function getAll($field = null, $value = null)
@@ -64,6 +70,7 @@ class SiteAlias extends \PleskX\Api\Operator
             $item = new Struct\GeneralInfo($xmlResult->info);
             $items[] = $item;
         }
+
         return $items;
     }
 }

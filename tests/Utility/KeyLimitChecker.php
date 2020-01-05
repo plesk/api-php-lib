@@ -1,5 +1,7 @@
 <?php
+
 // Copyright 1999-2020. Plesk International GmbH.
+
 namespace PleskXTest\Utility;
 
 class KeyLimitChecker
@@ -9,11 +11,12 @@ class KeyLimitChecker
     const LIMIT_DOMAINS = 'limit_domains';
 
     /**
-     * Checks whether limit is within the required constraint
+     * Checks whether limit is within the required constraint.
      *
      * @param (string|int)[] $keyInfo  Structure returned by the getKeyInfo call
      * @param string $type             Type of the object that should be checked
      * @param int $minimalRequirement  Minimal value that should satisfy the limit
+     *
      * @return bool  if license satisfies set limits
      */
     public static function checkByType(array $keyInfo, $type, $minimalRequirement)
@@ -38,6 +41,7 @@ class KeyLimitChecker
             default:
                 return false;
         }
+
         return intval($keyInfo[$field]) === -1 || intval($keyInfo[$field]) > $minimalRequirement;
     }
 }
