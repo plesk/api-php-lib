@@ -1,5 +1,6 @@
 <?php
 // Copyright 1999-2020. Plesk International GmbH.
+
 namespace PleskXTest;
 
 use PleskXTest\Utility\PasswordProvider;
@@ -45,6 +46,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
     {
         $ips = static::$_client->ip()->get();
         $ipInfo = reset($ips);
+
         return $ipInfo->ipAddress;
     }
 

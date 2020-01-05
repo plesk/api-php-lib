@@ -19,7 +19,7 @@ class Info extends \PleskX\Api\Struct
         $this->_initScalarProperties($apiResponse, [
             'id',
             ['lang' => 'language'],
-            'country'
+            'country',
         ]);
     }
 }

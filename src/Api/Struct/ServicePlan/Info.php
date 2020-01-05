@@ -5,7 +5,7 @@ namespace PleskX\Api\Struct\ServicePlan;
 
 class Info extends \PleskX\Api\Struct
 {
-    /** @var integer */
+    /** @var int */
     public $id;
 
     /** @var string */

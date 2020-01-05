@@ -5,7 +5,6 @@ namespace PleskX\Api\Struct\Server;
 
 class Statistics extends \PleskX\Api\Struct
 {
-
     /** @var Statistics\Objects */
     public $objects;
 

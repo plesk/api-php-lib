@@ -5,7 +5,7 @@ namespace PleskX\Api\Struct\ProtectedDirectory;
 
 class UserInfo extends \PleskX\Api\Struct
 {
-    /** @var integer */
+    /** @var int */
     public $id;
 
     public function __construct($apiResponse)

@@ -11,7 +11,7 @@ class GeneralInfo extends \PleskX\Api\Struct
     /** @var string */
     public $guid;
 
-    /** @var integer */
+    /** @var int */
     public $realSize;
 
     public function __construct($apiResponse)

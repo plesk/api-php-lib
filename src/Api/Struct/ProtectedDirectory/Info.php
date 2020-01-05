@@ -7,7 +7,7 @@ use PleskX\Api\Struct;
 
 class Info extends Struct
 {
-    /** @var integer */
+    /** @var int */
     public $id;
 
     public function __construct($apiResponse)

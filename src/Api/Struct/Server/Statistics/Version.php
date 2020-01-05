@@ -5,7 +5,6 @@ namespace PleskX\Api\Struct\Server\Statistics;
 
 class Version extends \PleskX\Api\Struct
 {
-
     /** @var string */
     public $internalName;
 

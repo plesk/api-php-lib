@@ -8,7 +8,7 @@ class Event extends \PleskX\Api\Struct
     /** @var string */
     public $type;
 
-    /** @var integer */
+    /** @var int */
     public $time;
 
     /** @var string */

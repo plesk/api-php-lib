@@ -4,7 +4,7 @@
 namespace PleskX\Api\Client;
 
 /**
- * Transport layer exception
+ * Transport layer exception.
  */
 class Exception extends \Exception
 {

@@ -5,5 +5,4 @@ namespace PleskX\Api\Operator;
 
 class ResellerPlan extends \PleskX\Api\Operator
 {
-
 }
