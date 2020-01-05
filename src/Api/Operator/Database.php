@@ -18,7 +18,7 @@ class Database extends \PleskX\Api\Operator
     }
 
     /**
-     * @param $properties
+     * @param array $properties
      *
      * @return Struct\UserInfo
      */
@@ -28,7 +28,7 @@ class Database extends \PleskX\Api\Operator
     }
 
     /**
-     * @param $command
+     * @param string $command
      * @param array $properties
      *
      * @return \PleskX\Api\XmlResponse
@@ -122,9 +122,9 @@ class Database extends \PleskX\Api\Operator
     }
 
     /**
-     * @param $command
-     * @param $field
-     * @param $value
+     * @param string $command
+     * @param string $field
+     * @param int|string $value
      *
      * @return \PleskX\Api\XmlResponse
      */
