@@ -35,9 +35,9 @@ abstract class Struct
 
             if ('string' == $propertyType) {
                 $value = (string) $value;
-            } elseif ('integer' == $propertyType) {
+            } elseif ('int' == $propertyType) {
                 $value = (int) $value;
-            } elseif ('boolean' == $propertyType) {
+            } elseif ('bool' == $propertyType) {
                 $value = in_array((string) $value, ['true', 'on', 'enabled']);
             } else {
                 throw new \Exception("Unknown property type '$propertyType'.");
