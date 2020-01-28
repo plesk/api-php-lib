@@ -2,7 +2,10 @@
 // Copyright 1999-2016. Parallels IP Holdings GmbH.
 
 namespace PleskX\Api\Operator;
+
 use PleskX\Api\Struct\Server as Struct;
+use PleskX\Api\Exception;
+
 
 class Server extends \PleskX\Api\Operator
 {
@@ -168,4 +171,62 @@ class Server extends \PleskX\Api\Operator
         return $response->$operation;
     }
 
+	
+	/**
+	 * Restituisce i dati della licenza eventualmente installata sul server
+     * @return Struct\LicenseInfo
+	 */
+	public function getLicenseInfo() {
+        $packet = $this->_client->getPacket();
+		$packet->addChild( $this->_wrapperTag )->addChild( 'get' )->addChild( 'key' );
+		
+		$response = $this->_client->request( $packet );
+		
+		return new Struct\LicenseInfo( $response );
+	}
+
+	
+	/**
+	 * Restituisce i dati della licenze aggiuntive eventualmente installate sul server
+     * @return Struct\LicenseAdditionalInfo
+	 */
+	public function getAdditionalLicensesInfo() {
+        $packet = $this->_client->getPacket();
+		$packet->addChild( $this->_wrapperTag )->addChild( 'get_additional_key' );
+		
+		$response = new Struct\LicenseAdditionalInfo( $this->_client->request( $packet ) );
+		
+		if( !is_null( $response->error_code ) or !empty( $response->error_message ) ) {
+			throw new Exception( $response->error_message, $response->error_code );
+		}
+		
+		return $response;
+	}
+
+	
+	/**
+	 * Installa una licenza principale o aggiuntiva
+	 * @param string $activationCode
+	 * @param bool $isAdditionalLicense
+     * @return Struct\LicenseInstall
+	 */
+	public function installLicense( $activationCode, $isAdditionalLicense = false ) {
+        $packet = $this->_client->getPacket();
+		$server = $packet->addChild( $this->_wrapperTag );
+		$licInstall = $server->addChild( 'lic_install' );
+		
+		$licInstall->addChild( 'activation-code', $activationCode );
+		
+		if( $isAdditionalLicense ) {
+			$licInstall->addChild( 'additional_key' );
+		}
+		
+		$response = new Struct\LicenseInstall( $this->_client->request( $packet ) );
+		
+		if( !is_null( $response->error_code ) or !empty( $response->error_message ) ) {
+			throw new Exception( $response->error_message, $response->error_code );
+		}
+		
+		return $response;
+	}
 }
