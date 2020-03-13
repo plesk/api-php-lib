@@ -11,6 +11,10 @@ class Limit extends \PleskX\Api\Struct
     {
         $this->properties = [];
 
+		if( !isset( $apiResponse->vrt_hst->property ) ) {
+			return;
+		}
+		
         foreach ($apiResponse->limit as $propertyInfo) {
             $this->properties[reset( $propertyInfo->name)] = reset( $propertyInfo->value );
         }

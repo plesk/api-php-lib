@@ -183,9 +183,12 @@ class Webspace extends \PleskX\Api\Operator
 		$response = $this->_client->request( $packet );
 		
 		$guidPropertyName = 'plan-guid';
-		$planGuidNode = $response->data->subscriptions->subscription->plan->$guidPropertyName;
 		
-		return trim( reset( $planGuidNode ) );
+		if( !isset( $response->data->subscriptions->subscription->plan->$guidPropertyName ) ) {
+			return null;
+		}
+		
+		return trim( reset( $response->data->subscriptions->subscription->plan->$guidPropertyName ) );
     }
 	
 	

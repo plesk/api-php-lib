@@ -54,14 +54,29 @@ class CompleteGeneralInfo extends \PleskX\Api\Struct
 	 */
     public function __construct( $apiResponse )
     {
-		$this->Guid = $apiResponse->guid;
-		$this->Name = $apiResponse->name;
-		$this->CreationDate = $apiResponse->cr_date;
+		if( isset( $apiResponse->guid ) ) {
+			$this->Guid = $apiResponse->guid;
+		}
+		
+		if( isset( $apiResponse->name ) ) {
+			$this->Name = $apiResponse->name;
+		}
+		
+		if( isset( $apiResponse->cr_date ) ) {
+			$this->CreationDate = $apiResponse->cr_date;
+		}
 		
 		$asciiPropertyName = 'ascii-name';
-		$this->AsciiName = $apiResponse->$asciiPropertyName;
+		if( isset( $apiResponse->$asciiPropertyName ) ) {
+			$this->AsciiName = $apiResponse->$asciiPropertyName;
+		}
 		
-		$this->Status = (string) $apiResponse->status;
-		$this->RealSize = (string) $apiResponse->real_size;
+		if( isset( $apiResponse->status ) ) {
+			$this->Status = (string) $apiResponse->status;
+		}
+		
+		if( isset( $apiResponse->real_size ) ) {
+			$this->RealSize = (string) $apiResponse->real_size;
+		}
     }
 }
