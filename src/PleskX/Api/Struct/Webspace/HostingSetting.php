@@ -2,7 +2,7 @@
 
 namespace PleskX\Api\Struct\Webspace;
 
-class Limit extends \PleskX\Api\Struct
+class HostingSetting extends \PleskX\Api\Struct
 {
     /** @var array */
     public $properties;
