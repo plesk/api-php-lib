@@ -11,7 +11,7 @@ class Limit extends \PleskX\Api\Struct
     {
         $this->properties = [];
 
-		if( !isset( $apiResponse->vrt_hst->property ) ) {
+		if( !isset( $apiResponse->limit ) ) {
 			return;
 		}
 		
