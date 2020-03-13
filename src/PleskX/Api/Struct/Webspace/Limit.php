@@ -12,7 +12,7 @@ class Limit extends \PleskX\Api\Struct
         $this->properties = [];
 
         foreach ($apiResponse->limit as $propertyInfo) {
-            $this->properties[(string)$propertyInfo->name] = $propertyInfo->value;
+            $this->properties[reset( $propertyInfo->name)] = reset( $propertyInfo->value );
         }
     }
 }

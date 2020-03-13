@@ -12,7 +12,7 @@ class HostingSetting extends \PleskX\Api\Struct
         $this->properties = [];
 
         foreach ($apiResponse->vrt_hst->property as $propertyInfo) {
-            $this->properties[(string)$propertyInfo->name] = $propertyInfo->value;
+            $this->properties[reset( $propertyInfo->name)] = reset( $propertyInfo->value );
         }
     }
 }

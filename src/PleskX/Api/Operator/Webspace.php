@@ -149,7 +149,7 @@ class Webspace extends \PleskX\Api\Operator
     public function getLimits( $guid )
     {
         $items = $this->_getItems(Struct\Limit::class, 'limits', 'guid', $guid );
-        return $items;
+        return reset($items);
     }
 	
 	
@@ -161,7 +161,7 @@ class Webspace extends \PleskX\Api\Operator
     public function getHostingSettings( $guid )
     {
         $items = $this->_getItems(Struct\HostingSetting::class, 'hosting', 'guid', $guid );
-        return $items;
+        return reset($items);
     }
 	
 	
