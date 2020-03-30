@@ -397,6 +397,14 @@ class Client
     }
 
     /**
+     * @return Operator\PhpHandler
+     */
+    public function phpHandler()
+    {
+        return $this->_getOperator('PhpHandler');
+    }
+
+    /**
      * @return Operator\Subdomain
      */
     public function subdomain()
