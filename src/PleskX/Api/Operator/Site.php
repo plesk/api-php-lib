@@ -81,4 +81,12 @@ class Site extends \PleskX\Api\Operator
         return $this->_getItems(Struct\GeneralInfo::class, 'gen_info');
     }
 
+    /**
+     * @return Struct\CompleteGeneralInfo[]
+     */
+    public function getAllWebspaceInfos()
+    {
+        return $this->_getItems(Struct\CompleteGeneralInfo::class, 'gen_info');
+    }
+
 }
