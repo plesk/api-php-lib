@@ -12,7 +12,14 @@ class Webspace extends \PleskX\Api\Operator
         $response = $this->request('get-permission-descriptor.filter');
         return new Struct\PermissionDescriptor($response);
     }
-
+	
+	
+	/**
+	 * Restituisce i dettagli dei parametri che indicano i limiti di un server
+	 * Ad esempio per il parametro che indica il numero di cpu verranno restituite
+	 * informazioni come il codice del parametro, il data type, i permessi di scrittura, ...
+	 * @return \PleskX\Api\Struct\Webspace\LimitDescriptor
+	 */
     public function getLimitDescriptor()
     {
         $response = $this->request('get-limit-descriptor.filter');
@@ -134,7 +141,59 @@ class Webspace extends \PleskX\Api\Operator
     }
 	
 	
+    /**
+	 * Restituisce i limiti massimi per una subscription
+     * @param int $guid L'identificativo universale della subscription
+     * @return Struct\Limit
+     */
+    public function getLimits( $guid )
+    {
+        $items = $this->_getItems(Struct\Limit::class, 'limits', 'guid', $guid );
+        return reset($items);
+    }
+	
+	
+    /**
+	 * Restituisce le impostazioni di tipo hosting per una subscription
+     * @param int $guid L'identificativo universale della subscription
+     * @return Struct\HostingSetting
+     */
+    public function getHostingSettings( $guid )
+    {
+        $items = $this->_getItems(Struct\HostingSetting::class, 'hosting', 'guid', $guid );
+        return reset($items);
+    }
+	
+	
+    /**
+	 * Restituisce l'identificativo univoco del servizio a listino associato ad una subscription
+     * @param int $guid L'identificativo universale della subscription
+     * @return string
+     */
+    public function getPlanGuid( $guid )
+    {
+		$packet = $this->_client->getPacket();
+		$getterTag = $packet->addChild( $this->_wrapperTag )->addChild( 'get' );
+		
+		$filterTag = $getterTag->addChild( 'filter' );
+        $filterTag->addChild( 'guid', $guid );
+		
+		$getterTag->addChild( 'dataset' )->addChild( 'subscriptions' );
+		
+		$response = $this->_client->request( $packet );
+		
+		$guidPropertyName = 'plan-guid';
+		
+		if( !isset( $response->data->subscriptions->subscription->plan->$guidPropertyName ) ) {
+			return null;
+		}
+		
+		return trim( reset( $response->data->subscriptions->subscription->plan->$guidPropertyName ) );
+    }
+	
+	
 	/**
+	 * Restituisce l'ID della subscription (diverso dal GUID)
 	 * @param string $name
 	 * @return string
 	 */
@@ -151,17 +210,17 @@ class Webspace extends \PleskX\Api\Operator
 	
 	/**
 	 * Esegue il cambio piano di un hosting
-	 * @param int $webspaceId
-	 * @param string $subscriptionGuid
+	 * @param int $webspaceId Id della Subscription
+	 * @param string $planGuid
 	 * @return XmlResponse
 	 */
-	public function switchSubscription( $webspaceId, $subscriptionGuid ) {
+	public function switchSubscription( $webspaceId, $planGuid ) {
 		$packet = $this->_client->getPacket();
 		
 		$switchSubscriptionTag = $packet->addChild( $this->_wrapperTag )->addChild( 'switch-subscription' );
 		
 		$switchSubscriptionTag->addChild( 'filter' )->addChild( 'id', $webspaceId );
-		$switchSubscriptionTag->addChild( 'plan-guid', $subscriptionGuid );
+		$switchSubscriptionTag->addChild( 'plan-guid', $planGuid );
 		
 		$response = $this->_client->request( $packet );
 		
@@ -170,6 +229,8 @@ class Webspace extends \PleskX\Api\Operator
 	
 	
     /**
+	 * Restituisce tutte le subscriptions (servizi attivati) presenti sul server.
+	 * Tali subscription potrebbero anche essere in uno stato non attivo
      * @return Struct\GeneralInfo[]
      */
     public function getAll()
@@ -177,4 +238,14 @@ class Webspace extends \PleskX\Api\Operator
         return $this->_getItems(Struct\GeneralInfo::class, 'gen_info');
     }
 	
+	
+    /**
+	 * Restituisce tutte le subscriptions (servizi attivati) presenti sul server.
+	 * Tali subscription potrebbero anche essere in uno stato non attivo
+     * @return Struct\CompleteGeneralInfo[]
+     */
+    public function getCompleteList()
+    {
+        return $this->_getItems( Struct\CompleteGeneralInfo::class, 'gen_info' );
+    }
 }

@@ -9,6 +9,7 @@ class ServicePlan extends \PleskX\Api\Operator
 {
 
     /**
+	 * Restituisce i dettagli di un servizio a listino
      * @param string $field
      * @param integer|string $value
      * @return Struct\Info
