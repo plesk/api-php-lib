@@ -21,7 +21,6 @@ class EventLogTest extends TestCase
 
         $event = reset($events);
         $this->assertGreaterThan(0, $event->time);
-        $this->assertGreaterThan(0, strlen($event->user));
     }
 
     public function testGetLastId()
