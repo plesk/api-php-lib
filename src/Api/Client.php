@@ -188,6 +188,14 @@ class Client
         curl_setopt($curl, CURLOPT_HTTPHEADER, $this->_getHeaders());
         curl_setopt($curl, CURLOPT_POSTFIELDS, $request);
 
+        $proxy_var_name = $this->_protocol . '_proxy';
+
+        foreach (array(strtoupper($proxy_var_name), $proxy_var_name) as $var) {
+          if (false !== ($proxy = getenv($var))) {
+            curl_setopt($curl, CURLOPT_PROXY, $proxy);
+          }
+        }
+
         $result = curl_exec($curl);
 
         if (false === $result) {
