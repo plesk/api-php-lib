@@ -5,71 +5,20 @@
 
 PHP object-oriented library for Plesk XML-RPC API.
 
-## Install Via Composer
+See: [plesk/api-php-lib](https://github.com/plesk/api-php-lib)
 
-[Composer](https://getcomposer.org/) is a preferable way to install the library:
+# Added by Shellrent
 
-```
-"repositories": [
-    {
-        "type": "vcs",
-        "url": "git@github.com:shellrent/plesk-api-php-lib.git"
-    }
-],
-```
+See Pull Requests:
 
-`composer require shellrent/plesk-api-php-lib:@dev`
+- https://github.com/shellrent/plesk-api-php-lib/pull/1/files
+- https://github.com/shellrent/plesk-api-php-lib/pull/2/files
+- https://github.com/shellrent/plesk-api-php-lib/pull/3/files
+- https://github.com/shellrent/plesk-api-php-lib/pull/4/files
 
-## Usage Examples
+Methods in Operators and new Struct for:
 
-Here is an example on how to use the library and create a customer with desired properties:
-```php
-$client = new \PleskX\Api\Client($host);
-$client->setCredentials($login, $password);
-
-$client->customer()->create([
-    'cname' => 'Plesk',
-    'pname' => 'John Smith',
-    'login' => 'john',
-    'passwd' => 'secret',
-    'email' => 'john@smith.com',
-]);
-```
-
-It is possible to use a secret key instead of password for authentication.
-
-```php
-$client = new \PleskX\Api\Client($host);
-$client->setSecretKey($secretKey)
-```
-
-In case of Plesk extension creation one can use an internal mechanism to access XML-RPC API. It does not require to pass authentication because the extension works in the context of Plesk.
-
-```php
-$client = new \PleskX\Api\InternalClient();
-$protocols = $client->server()->getProtos();
-```
-
-For additional examples see tests/ directory.
-
-## How to Run Unit Tests
-
-One the possible ways to become familiar with the library is to check the unit tests.
-
-To run the unit tests use the following command:
-
-`REMOTE_HOST=your-plesk-host.dom REMOTE_PASSWORD=password composer test`
-
-To use custom port one can provide a URL (e.g. for Docker container):
-
-`REMOTE_URL=https://your-plesk-host.dom:port REMOTE_PASSWORD=password composer test`
-
-One more way to run tests is to use Docker:
-
-`docker-compose run tests`
-
-## Continuous Testing
-
-During active development it could be more convenient to run tests in continuous manner. Here is the way how to achieve it:
-
-`REMOTE_URL=https://your-plesk-host.dom:port REMOTE_PASSWORD=password composer test:watch`
+- Managing SSL Certificates (installing, removing...)
+- Changing Service Plans and Subscriptions
+- Managing Licenses
+- Information about Domains, Subscriptions, Limits
