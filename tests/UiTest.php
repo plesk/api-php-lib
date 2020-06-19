@@ -1,9 +1,10 @@
 <?php
-// Copyright 1999-2016. Parallels IP Holdings GmbH.
+// Copyright 1999-2020. Plesk International GmbH.
+
+namespace PleskXTest;
 
 class UiTest extends TestCase
 {
-
     private $_customButtonProperties = [
         'place' => 'admin',
         'url' => 'http://example.com',
@@ -13,7 +14,7 @@ class UiTest extends TestCase
     public function testGetNavigation()
     {
         $navigation = static::$_client->ui()->getNavigation();
-        $this->assertInternalType('array', $navigation);
+        $this->assertIsArray($navigation);
         $this->assertGreaterThan(0, count($navigation));
         $this->assertArrayHasKey('general', $navigation);
         $this->assertArrayHasKey('hosting', $navigation);
@@ -48,5 +49,4 @@ class UiTest extends TestCase
         $result = static::$_client->ui()->deleteCustomButton($buttonId);
         $this->assertTrue($result);
     }
-
 }

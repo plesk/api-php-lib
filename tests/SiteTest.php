@@ -1,31 +1,39 @@
 <?php
-// Copyright 1999-2016. Parallels IP Holdings GmbH.
+// Copyright 1999-2020. Plesk International GmbH.
+
+namespace PleskXTest;
+
+use PleskXTest\Utility\KeyLimitChecker;
 
 class SiteTest extends TestCase
 {
-    /**
-     * @var \PleskX\Api\Struct\Webspace\Info
-     */
-    private static $_webspace;
+    /** @var \PleskX\Api\Struct\Webspace\Info */
+    private static $webspace;
 
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();
-        static::$_webspace = static::_createWebspace('example.dom');
+        static::$webspace = static::_createWebspace();
     }
 
-    public static function tearDownAfterClass()
+    protected function setUp(): void
     {
-        parent::tearDownAfterClass();
-        static::$_client->webspace()->delete('id', static::$_webspace->id);
+        parent::setUp();
+
+        $keyInfo = static::$_client->server()->getKeyInfo();
+
+        if (!KeyLimitChecker::checkByType($keyInfo, KeyLimitChecker::LIMIT_DOMAINS, 2)) {
+            $this->markTestSkipped('License does not allow to create more than 1 domain.');
+        }
     }
 
     private function _createSite($name, array $properties = [])
     {
         $properties = array_merge([
             'name' => $name,
-            'webspace-id' => static::$_webspace->id,
+            'webspace-id' => static::$webspace->id,
         ], $properties);
+
         return static::$_client->site()->create($properties);
     }
 
@@ -33,7 +41,7 @@ class SiteTest extends TestCase
     {
         $site = $this->_createSite('addon.dom');
 
-        $this->assertInternalType('integer', $site->id);
+        $this->assertIsNumeric($site->id);
         $this->assertGreaterThan(0, $site->id);
 
         static::$_client->site()->delete('id', $site->id);
@@ -69,16 +77,16 @@ class SiteTest extends TestCase
 
     public function testGetHostingWithHosting()
     {
-        $properties =  [
+        $properties = [
             'hosting' => [
-                'www_root' => 'addon.dom'
-            ]
+                'www_root' => 'addon.dom',
+            ],
         ];
         $site = $this->_createSite('addon.dom', $properties);
 
         $siteHosting = static::$_client->site()->getHosting('id', $site->id);
         $this->assertArrayHasKey('www_root', $siteHosting->properties);
-        $this->assertEquals('addon.dom', basename($siteHosting->properties['www_root']));
+        $this->assertStringEndsWith('addon.dom', $siteHosting->properties['www_root']);
 
         static::$_client->site()->delete('id', $site->id);
     }
@@ -96,5 +104,4 @@ class SiteTest extends TestCase
         static::$_client->site()->delete('id', $site->id);
         static::$_client->site()->delete('id', $site2->id);
     }
-
 }

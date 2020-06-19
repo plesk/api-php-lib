@@ -1,9 +1,10 @@
 <?php
-// Copyright 1999-2016. Parallels IP Holdings GmbH.
+// Copyright 1999-2020. Plesk International GmbH.
+
+namespace PleskXTest;
 
 class SessionTest extends TestCase
 {
-
     public function testGet()
     {
         $sessionId = static::$_client->server()->createSession('admin', '127.0.0.1');
@@ -23,5 +24,4 @@ class SessionTest extends TestCase
         $sessions = static::$_client->session()->get();
         $this->assertArrayNotHasKey($sessionId, $sessions);
     }
-
 }

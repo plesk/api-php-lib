@@ -1,9 +1,10 @@
 <?php
-// Copyright 1999-2016. Parallels IP Holdings GmbH.
+// Copyright 1999-2020. Plesk International GmbH.
+
+namespace PleskXTest;
 
 class EventLogTest extends TestCase
 {
-
     public function testGet()
     {
         $events = static::$_client->eventLog()->get();
@@ -20,7 +21,6 @@ class EventLogTest extends TestCase
 
         $event = reset($events);
         $this->assertGreaterThan(0, $event->time);
-        $this->assertGreaterThan(0, strlen($event->user));
     }
 
     public function testGetLastId()
@@ -28,5 +28,4 @@ class EventLogTest extends TestCase
         $lastId = static::$_client->eventLog()->getLastId();
         $this->assertGreaterThan(0, $lastId);
     }
-
 }

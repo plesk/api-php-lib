@@ -1,5 +1,6 @@
-/php/tests/node_modules
-/vendor
+/vendor/
 /phpunit.xml
 .idea
-/nbproject
+/nbproject/
+/.phpunit.result.cache
+/php/tests/node_modules/

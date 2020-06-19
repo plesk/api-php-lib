@@ -1,9 +1,12 @@
 <?php
-// Copyright 1999-2016. Parallels IP Holdings GmbH.
+// Copyright 1999-2020. Plesk International GmbH.
+
+namespace PleskXTest;
+
+use PleskX\Api\Exception;
 
 class SecretKeyTest extends TestCase
 {
-
     public function testCreate()
     {
         $keyId = static::$_client->secretKey()->create('192.168.0.1');
@@ -31,7 +34,12 @@ class SecretKeyTest extends TestCase
 
         $keys = static::$_client->secretKey()->getAll();
         $this->assertGreaterThanOrEqual(2, count($keys));
-        $this->assertEquals('192.168.0.1', $keys[0]->ipAddress);
+
+        $keyIpAddresses = array_map(function ($key) {
+            return $key->ipAddress;
+        }, $keys);
+        $this->assertContains('192.168.0.1', $keyIpAddresses);
+        $this->assertContains('192.168.0.2', $keyIpAddresses);
 
         foreach ($keyIds as $keyId) {
             static::$_client->secretKey()->delete($keyId);

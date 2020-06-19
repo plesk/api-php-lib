@@ -1,9 +1,10 @@
 <?php
-// Copyright 1999-2016. Parallels IP Holdings GmbH.
+// Copyright 1999-2020. Plesk International GmbH.
+
+namespace PleskXTest;
 
 class LocaleTest extends TestCase
 {
-
     public function testGet()
     {
         $locales = static::$_client->locale()->get();
@@ -18,5 +19,4 @@ class LocaleTest extends TestCase
         $locale = static::$_client->locale()->get('en-US');
         $this->assertEquals('en-US', $locale->id);
     }
-
 }

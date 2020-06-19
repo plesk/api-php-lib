@@ -1,19 +1,28 @@
 <?php
-// Copyright 1999-2016. Parallels IP Holdings GmbH.
+// Copyright 1999-2020. Plesk International GmbH.
+
+namespace PleskXTest;
+
+use PleskXTest\Utility\KeyLimitChecker;
+use PleskXTest\Utility\PasswordProvider;
 
 class ResellerTest extends TestCase
 {
+    private $_resellerProperties;
 
-    private $_resellerProperties = [
-        'pname' => 'John Reseller',
-        'login' => 'reseller-unit-test',
-        'passwd' => 'simple-password',
-    ];
+    public function setUp(): void
+    {
+        $this->_resellerProperties = [
+            'pname' => 'John Reseller',
+            'login' => 'reseller-unit-test',
+            'passwd' => PasswordProvider::STRONG_PASSWORD,
+        ];
+    }
 
     public function testCreate()
     {
         $reseller = static::$_client->reseller()->create($this->_resellerProperties);
-        $this->assertInternalType('integer', $reseller->id);
+        $this->assertIsInt($reseller->id);
         $this->assertGreaterThan(0, $reseller->id);
 
         static::$_client->reseller()->delete('id', $reseller->id);
@@ -39,15 +48,21 @@ class ResellerTest extends TestCase
 
     public function testGetAll()
     {
+        $keyInfo = static::$_client->server()->getKeyInfo();
+
+        if (!KeyLimitChecker::checkByType($keyInfo, KeyLimitChecker::LIMIT_RESELLERS, 2)) {
+            $this->markTestSkipped('License does not allow to create more than 1 reseller.');
+        }
+
         static::$_client->reseller()->create([
             'pname' => 'John Reseller',
             'login' => 'reseller-a',
-            'passwd' => 'simple-password',
+            'passwd' => PasswordProvider::STRONG_PASSWORD,
         ]);
         static::$_client->reseller()->create([
             'pname' => 'Mike Reseller',
             'login' => 'reseller-b',
-            'passwd' => 'simple-password',
+            'passwd' => PasswordProvider::STRONG_PASSWORD,
         ]);
 
         $resellersInfo = static::$_client->reseller()->getAll();
@@ -58,5 +73,4 @@ class ResellerTest extends TestCase
         static::$_client->reseller()->delete('login', 'reseller-a');
         static::$_client->reseller()->delete('login', 'reseller-b');
     }
-
 }
