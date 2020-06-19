@@ -1,15 +1,11 @@
 {
-    "name": "shellrentsrl/api-php-lib",
+    "name": "shellrent/plesk-api-php-lib",
     "description": "PHP object-oriented library for Plesk XML-RPC API",
     "license": "Apache-2.0",
     "authors": [
         {
             "name": "Alexei Yuzhakov",
             "email": "sibprogrammer@gmail.com"
-        },
-        {
-            "name": "Emanuele Menon",
-            "email": "emnlmn@gmail.com"
         }
     ],
     "minimum-stability": "dev",
