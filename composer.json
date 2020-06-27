@@ -1,5 +1,5 @@
 {
-    "name": "PuhHosting/plesk-api-php-lib",
+    "name": "puhhosting/plesk-api-php-lib",
     "type": "library",
     "description": "PHP object-oriented library for Plesk XML-RPC API",
     "license": "Apache-2.0",
