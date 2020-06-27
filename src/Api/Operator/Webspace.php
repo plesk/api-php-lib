@@ -84,9 +84,14 @@ class Webspace extends \PleskX\Api\Operator
                 $property->addChild('name', $name);
                 $property->addChild('value', $value);
             }
-
             if (isset($properties['ip_address'])) {
-                $infoHosting->addChild('ip_address', $properties['ip_address']);
+                if (is_array($properties['ip_address'])) {
+                    foreach ($properties['ip_address'] as $value) {
+                        $infoHosting->addChild("ip_address", $value);
+                    }
+                } else {
+                    $infoHosting->addChild("ip_address", $properties['ip_address']);
+                }
             }
         }
 
