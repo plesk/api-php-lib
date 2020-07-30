@@ -10,7 +10,7 @@ class SecretKeyTest extends TestCase
     public function testCreate()
     {
         $keyId = static::$_client->secretKey()->create('192.168.0.1');
-        $this->assertRegExp('/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/', $keyId);
+        $this->assertMatchesRegularExpression('/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/', $keyId);
         static::$_client->secretKey()->delete($keyId);
     }
 
