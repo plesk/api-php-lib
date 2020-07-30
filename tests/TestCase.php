@@ -60,7 +60,8 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
             [
                 'name' => "test{$id}.test",
                 'ip_address' => static::_getIpAddress(),
-            ], [
+            ],
+            [
                 'ftp_login' => "u{$id}",
                 'ftp_password' => PasswordProvider::STRONG_PASSWORD,
             ]
