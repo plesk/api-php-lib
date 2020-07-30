@@ -10,7 +10,7 @@ services:
     build: .
     environment:
       REMOTE_URL: https://plesk:8443
-      REMOTE_PASSWORD: changeme
+      REMOTE_PASSWORD: changeme1Q**
     command: bash -c "cd /opt/api-php-lib && composer install && ./wait-for-plesk.sh && composer test -- --testdox"
     depends_on:
       - plesk
