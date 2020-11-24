@@ -54,9 +54,14 @@ class Operator
      */
     protected function _delete($field, $value, $deleteMethodName = 'del')
     {
-        $response = $this->request("$deleteMethodName.filter.$field=$value");
-
-        return 'ok' === (string) $response->status;
+        $response = $this->request([
+            $deleteMethodName=>[
+                'filter'=>[
+                    $field=>$value
+                ]
+            ]
+        ]);
+        return 'ok' === (string)$response->status;
     }
 
     /**
