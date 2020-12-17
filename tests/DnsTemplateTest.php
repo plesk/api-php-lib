@@ -34,7 +34,7 @@ class DnsTemplateTest extends TestCase
             'host' => 'test.create',
             'value' => 'value',
         ]);
-        $this->assertInternalType('integer', $dns->id);
+        $this->assertIsInt($dns->id);
         $this->assertGreaterThan(0, $dns->id);
         $this->assertEquals(0, $dns->siteId);
         $this->assertEquals(0, $dns->siteAliasId);
