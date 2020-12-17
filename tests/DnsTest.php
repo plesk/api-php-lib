@@ -44,6 +44,64 @@ class DnsTest extends TestCase
         static::$_client->dns()->delete('id', $dns->id);
     }
 
+    /**
+     * @return \PleskX\Api\XmlResponse[]
+     */
+    public function testBulkCreate()
+    {
+        $response = static::$_client->dns()->bulkCreate([
+            [
+                'site-id' => static::$webspace->id,
+                'type' => 'TXT',
+                'host' => 'host',
+                'value' => 'value',
+            ],
+            [
+                'site-id' => static::$webspace->id,
+                'type' => 'A',
+                'host' => 'host',
+                'value' => '1.1.1.1',
+            ],
+            [
+                'site-id' => static::$webspace->id,
+                'type' => 'MX',
+                'host' => 'custom-mail',
+                'value' => '1.1.1.1',
+                'opt' => '10',
+            ],
+        ]);
+
+        $this->assertCount(3, $response);
+
+        foreach ($response as $xml) {
+            $this->assertEquals('ok', (string) $xml->status);
+            $this->assertGreaterThan(0, (int) $xml->id);
+        }
+
+        return $response;
+    }
+
+    /**
+     * @depends testBulkCreate
+     *
+     * @param \PleskX\Api\XmlResponse[] $createdRecords
+     */
+    public function testBulkDelete(array $createdRecords)
+    {
+        $createdRecordIds = array_map(function ($record) {
+            return (int) $record->id;
+        }, $createdRecords);
+
+        $response = static::$_client->dns()->bulkDelete($createdRecordIds);
+
+        $this->assertCount(3, $response);
+
+        foreach ($response as $xml) {
+            $this->assertEquals('ok', (string) $xml->status);
+            $this->assertGreaterThan(0, (int) $xml->id);
+        }
+    }
+
     public function testGetById()
     {
         $dns = static::$_client->dns()->create([
