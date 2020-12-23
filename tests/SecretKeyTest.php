@@ -19,7 +19,7 @@ class SecretKeyTest extends TestCase
         $keyId = static::$_client->secretKey()->create('192.168.0.1');
         $keyInfo = static::$_client->secretKey()->get($keyId);
 
-        $this->assertEquals($keyId, $keyInfo->key);
+        $this->assertNotEmpty($keyInfo->key);
         $this->assertEquals('192.168.0.1', $keyInfo->ipAddress);
         $this->assertEquals('admin', $keyInfo->login);
 
