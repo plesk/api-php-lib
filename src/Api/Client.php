@@ -66,7 +66,7 @@ class Client
     }
 
     /**
-     * Set proxy server for requests
+     * Set proxy server for requests.
      *
      * @param string $proxy
      */
