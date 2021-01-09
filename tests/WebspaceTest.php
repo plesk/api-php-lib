@@ -80,6 +80,14 @@ class WebspaceTest extends TestCase
         $this->assertTrue($result);
     }
 
+    public function testDeleteByName()
+    {
+        $webspace = static::_createWebspace();
+        $result = static::$_client->webspace()->delete('name', $webspace->name);
+
+        $this->assertTrue($result);
+    }
+
     public function testRequestCreateWebspace()
     {
         $handlers = static::$_client->phpHandler()->getAll();

@@ -96,7 +96,7 @@ class Webspace extends \PleskX\Api\Operator
 
         $response = $this->_client->request($packet);
 
-        return new Struct\Info($response);
+        return new Struct\Info($response, $properties['name'] ?? '');
     }
 
     /**
