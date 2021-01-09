@@ -27,6 +27,10 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
 
         static::$_client = new \PleskX\Api\Client($host, $port, $scheme);
         static::$_client->setCredentials($login, $password);
+
+        if ($proxy = getenv('REMOTE_PROXY')) {
+            static::$_client->setProxy($proxy);
+        }
     }
 
     public static function tearDownAfterClass(): void

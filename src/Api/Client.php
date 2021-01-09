@@ -18,6 +18,7 @@ class Client
     protected $_protocol;
     protected $_login;
     protected $_password;
+    protected $_proxy = '';
     protected $_secretKey;
     protected $_version = '';
 
@@ -62,6 +63,16 @@ class Client
     public function setSecretKey($secretKey)
     {
         $this->_secretKey = $secretKey;
+    }
+
+    /**
+     * Set proxy server for requests
+     *
+     * @param string $proxy
+     */
+    public function setProxy($proxy)
+    {
+        $this->_proxy = $proxy;
     }
 
     /**
@@ -187,6 +198,10 @@ class Client
         curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
         curl_setopt($curl, CURLOPT_HTTPHEADER, $this->_getHeaders());
         curl_setopt($curl, CURLOPT_POSTFIELDS, $request);
+
+        if ('' !== $this->_proxy) {
+            curl_setopt($curl, CURLOPT_PROXY, $this->_proxy);
+        }
 
         $result = curl_exec($curl);
 
