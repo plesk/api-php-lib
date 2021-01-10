@@ -43,38 +43,36 @@ class ServicePlanTest extends TestCase
         $this->assertTrue($result);
     }
 
-    public function testRequestCreateServicePlan()
+    public function testCreateComplexServicePlan()
     {
-        $request = [
-            'add' => [
-                'name' => 'Service Plan Full Test',
-                'limits' => [
-                    'overuse' => 'block',
+        $properties = [
+            'name' => 'Complex Service Plan',
+            'limits' => [
+                'overuse' => 'block',
+                'limit' => [
+                    'name' => 'disk_space',
+                    'value' => 1024*1024*1024, // 1 GB
                 ],
-                'preferences' => [
-                    'stat' => 6,
-                    'maillists' => 'true',
-                ],
-                'hosting' => [
-                    'property' => [
-                        [
-                            'name' => 'ftp_quota',
-                            'value' => '-1',
-                        ],
-                        [
-                            'name' => 'ssl',
-                            'value' => 'true',
-                        ],
+            ],
+            'preferences' => [
+                'stat' => 6,
+                'maillists' => 'true',
+            ],
+            'hosting' => [
+                'property' => [
+                    [
+                        'name' => 'ftp_quota',
+                        'value' => '-1',
                     ],
-                ],
-                'performance' => [
-                    'bandwidth' => 1000,
-                    'max_connections' => 20,
+                    [
+                        'name' => 'ssl',
+                        'value' => 'true',
+                    ],
                 ],
             ],
         ];
 
-        $servicePlan = static::$_client->servicePlan()->request($request);
+        $servicePlan = static::$_client->servicePlan()->create($properties);
         $this->assertGreaterThan(0, $servicePlan->id);
 
         static::$_client->servicePlan()->delete('id', $servicePlan->id);

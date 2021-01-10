@@ -86,7 +86,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
     protected static function _createServicePlan()
     {
         $id = uniqid();
-        $servicePlan = static::$_client->servicePlan()->create("test{$id}plan");
+        $servicePlan = static::$_client->servicePlan()->create(['name' => "test{$id}plan"]);
 
         self::$servicePlans[] = $servicePlan;
 

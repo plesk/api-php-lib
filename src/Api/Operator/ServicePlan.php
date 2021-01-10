@@ -8,6 +8,26 @@ use PleskX\Api\Struct\ServicePlan as Struct;
 class ServicePlan extends \PleskX\Api\Operator
 {
     /**
+     * @param array $properties
+     * @return Struct\Info
+     */
+    public function create($properties)
+    {
+        $response = $this->request(['add' => $properties]);
+        return new Struct\Info($response);
+    }
+
+    /**
+     * @param string $field
+     * @param int|string $value
+     * @return bool
+     */
+    public function delete($field, $value)
+    {
+        return $this->_delete($field, $value);
+    }
+
+    /**
      * @param string $field
      * @param int|string $value
      *
@@ -26,30 +46,6 @@ class ServicePlan extends \PleskX\Api\Operator
     public function getAll()
     {
         return $this->_get();
-    }
-
-    /**
-     * @param string $planName
-     * @return Struct\Info
-     */
-    public function create($planName)
-    {
-        $packet = $this->_client->getPacket();
-        $info = $packet->addChild($this->_wrapperTag)->addChild('add');
-        $info->addChild('name', $planName);
-
-        $response = $this->_client->request($packet);
-        return new Struct\Info($response);
-    }
-
-    /**
-     * @param string $field
-     * @param int|string $value
-     * @return bool
-     */
-    public function delete($field, $value)
-    {
-        return $this->_delete($field, $value);
     }
 
     /**
