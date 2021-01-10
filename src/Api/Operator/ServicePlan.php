@@ -9,6 +9,7 @@ class ServicePlan extends \PleskX\Api\Operator
 {
     /**
      * @param array $properties
+     *
      * @return Struct\Info
      */
     public function create($properties)
@@ -20,6 +21,7 @@ class ServicePlan extends \PleskX\Api\Operator
     /**
      * @param string $field
      * @param int|string $value
+     *
      * @return bool
      */
     public function delete($field, $value)

@@ -51,7 +51,7 @@ class ServicePlanTest extends TestCase
                 'overuse' => 'block',
                 'limit' => [
                     'name' => 'disk_space',
-                    'value' => 1024*1024*1024, // 1 GB
+                    'value' => 1024 * 1024 * 1024, // 1 GB
                 ],
             ],
             'preferences' => [
