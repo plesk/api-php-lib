@@ -4,3 +4,4 @@
 # tests
 /phpunit.xml
 /.phpunit.result.cache
+/coverage.xml
