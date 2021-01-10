@@ -44,7 +44,7 @@ class ServicePlan extends \PleskX\Api\Operator
 
     /**
      * @param string $field
-     * @param integer|string $value
+     * @param int|string $value
      * @return bool
      */
     public function delete($field, $value)
