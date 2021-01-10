@@ -1,5 +1,5 @@
 <?php
-// Copyright 1999-2020. Plesk International GmbH.
+// Copyright 1999-2021. Plesk International GmbH.
 // Author: Frederic Leclercq
 
 namespace PleskX\Api\Struct\Webspace;
