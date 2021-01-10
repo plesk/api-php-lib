@@ -15,6 +15,7 @@ class ServicePlan extends \PleskX\Api\Operator
     public function create($properties)
     {
         $response = $this->request(['add' => $properties]);
+
         return new Struct\Info($response);
     }
 
