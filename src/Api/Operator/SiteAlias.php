@@ -38,7 +38,18 @@ class SiteAlias extends \PleskX\Api\Operator
      * @param string $field
      * @param int|string $value
      *
-     * @return Struct\Info
+     * @return bool
+     */
+    public function delete($field, $value)
+    {
+        return $this->_delete($field, $value, 'delete');
+    }
+
+    /**
+     * @param string $field
+     * @param int|string $value
+     *
+     * @return Struct\GeneralInfo
      */
     public function get($field, $value)
     {
@@ -51,7 +62,7 @@ class SiteAlias extends \PleskX\Api\Operator
      * @param string $field
      * @param int|string $value
      *
-     * @return Struct\Info[]
+     * @return Struct\GeneralInfo[]
      */
     public function getAll($field = null, $value = null)
     {
