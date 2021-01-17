@@ -53,4 +53,47 @@ class Mail extends \PleskX\Api\Operator
 
         return 'ok' === (string) $response->status;
     }
+
+    /**
+     * @param string $name
+     * @param int $siteId
+     *
+     * @return Struct\GeneralInfo
+     */
+    public function get($name, $siteId)
+    {
+        $items = $this->getAll($siteId, $name);
+
+        return reset($items);
+    }
+
+    /**
+     * @param int $siteId
+     * @param string|null $name
+     *
+     * @return Struct\GeneralInfo[]
+     */
+    public function getAll($siteId, $name = null)
+    {
+        $packet = $this->_client->getPacket();
+        $getTag = $packet->addChild($this->_wrapperTag)->addChild('get_info');
+
+        $filterTag = $getTag->addChild('filter');
+        $filterTag->addChild('site-id', $siteId);
+        if (!is_null($name)) {
+            $filterTag->addChild('name', $name);
+        }
+
+        $response = $this->_client->request($packet, \PleskX\Api\Client::RESPONSE_FULL);
+        $items = [];
+        foreach ($response->xpath('//result') as $xmlResult) {
+            if (!isset($xmlResult->mailname)) {
+                continue;
+            }
+            $item = new Struct\GeneralInfo($xmlResult->mailname);
+            $items[] = $item;
+        }
+
+        return $items;
+    }
 }

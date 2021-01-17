@@ -54,4 +54,31 @@ class MailTest extends TestCase
         $result = static::$_client->mail()->delete('name', $mailname->name, static::$webspace->id);
         $this->assertTrue($result);
     }
+
+    public function testGet()
+    {
+        $mailname = static::$_client->mail()->create('test', static::$webspace->id);
+
+        $mailnameInfo = static::$_client->mail()->get('test', static::$webspace->id);
+        $this->assertEquals('test', $mailnameInfo->name);
+
+        static::$_client->mail()->delete('name', $mailname->name, static::$webspace->id);
+    }
+
+    public function testGetAll()
+    {
+        $mailname = static::$_client->mail()->create('test', static::$webspace->id);
+
+        $mailnamesInfo = static::$_client->mail()->getAll(static::$webspace->id);
+        $this->assertCount(1, $mailnamesInfo);
+        $this->assertEquals('test', $mailnamesInfo[0]->name);
+
+        static::$_client->mail()->delete('name', $mailname->name, static::$webspace->id);
+    }
+
+    public function testGetAllWithoutMailnames()
+    {
+        $mailnamesInfo = static::$_client->mail()->getAll(static::$webspace->id);
+        $this->assertCount(0, $mailnamesInfo);
+    }
 }
