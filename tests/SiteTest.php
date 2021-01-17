@@ -104,4 +104,10 @@ class SiteTest extends TestCase
         static::$_client->site()->delete('id', $site->id);
         static::$_client->site()->delete('id', $site2->id);
     }
+
+    public function testGetAllWithoutSites()
+    {
+        $sitesInfo = static::$_client->site()->getAll();
+        $this->assertEmpty($sitesInfo);
+    }
 }

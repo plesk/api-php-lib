@@ -93,6 +93,9 @@ class Operator
             if (!is_null($filter) && !$filter($xmlResult->data->$infoTag)) {
                 continue;
             }
+            if (!isset($xmlResult->data) || !isset($xmlResult->data->$infoTag)) {
+                continue;
+            }
             $items[] = new $structClass($xmlResult->data->$infoTag);
         }
 
