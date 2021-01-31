@@ -93,6 +93,8 @@ class ServerTest extends TestCase
         $stats = static::$_client->server()->getStatistics();
         $this->assertIsNumeric($stats->objects->clients);
         $this->assertEquals('psa', $stats->version->internalName);
+        $this->assertNotEmpty($stats->version->osName);
+        $this->assertNotEmpty($stats->version->osVersion);
     }
 
     public function testGetSiteIsolationConfig()
