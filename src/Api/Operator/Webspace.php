@@ -293,6 +293,22 @@ class Webspace extends \PleskX\Api\Operator
     }
 	
 	
+	/**
+	 * @return string
+	 */
+	public function getSubscriptionStatus()
+	{
+		$items = $this->_getItems( Struct\CompleteGeneralInfo::class, 'gen_info' );
+		$item = reset($items );
+		
+		if( !isset( $item->Status ) or is_null( $item->Status ) or $item->Status === '' ) {
+			return null;
+		}
+		
+		return $item->Status;
+	}
+	
+	
     /**
      * @param string $field
      * @param int|string $value
