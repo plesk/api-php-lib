@@ -305,4 +305,64 @@ class Webspace extends \PleskX\Api\Operator
 
         return reset($items);
     }
+	
+	
+	/**
+	 * @param array $filters
+	 * @param string $newPassword
+	 * @return bool
+	 */
+	public function setCurrentCertificate( $filters, $certificateName ) {
+		$packet = $this->_client->getPacket();
+		$setterTag = $packet->addChild( $this->_wrapperTag )->addChild( 'set' );
+		if ( !empty( $filters ) ) {
+			$filterTag = $setterTag->addChild( 'filter' );
+			foreach ( $filters as $key => $value ) {
+				$filterTag->addChild( $key, $value );
+			}
+		}
+		
+		$valuesTag = $setterTag->addChild( 'values' );
+		$infoHosting = $valuesTag->addChild('hosting')->addChild('vrt_hst');
+		$property = $infoHosting->addChild('property');
+		
+		$property->addChild('name', 'certificate_name');
+		$property->addChild('value', $certificateName);
+		
+		$response = $this->_client->request( $packet );
+		
+		return 'ok' === (string)$response->status;
+	}
+	
+	
+	/**
+	 * Restituisce l'identificativo univoco del servizio a listino associato ad una subscription
+	 * @param int $guid L'identificativo universale della subscription
+	 * @return string|null
+	 */
+	public function getCurrentCertificate( $filters ) {
+		$packet = $this->_client->getPacket();
+		$getterTag = $packet->addChild( $this->_wrapperTag )->addChild( 'get' );
+		
+		if ( !empty( $filters ) ) {
+			$filterTag = $getterTag->addChild( 'filter' );
+			
+			foreach( $filters as $key => $value ) {
+				$filterTag->addChild( $key, $value );
+			}
+		}
+		
+		$getterTag->addChild( 'dataset' )->addChild( 'hosting' );
+		
+		$response = $this->_client->request( $packet );
+		$responseProperties = $response->data->hosting->vrt_hst->property;
+		
+		foreach( $responseProperties as $property ) {
+			if( $property->name == 'certificate_name' ) {
+				return trim( reset( $property->value ) );
+			}
+		}
+		
+		return null;
+	}
 }
