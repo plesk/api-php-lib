@@ -309,7 +309,7 @@ class Webspace extends \PleskX\Api\Operator
 	
 	/**
 	 * @param array $filters
-	 * @param string $newPassword
+	 * @param string|null $certificateName
 	 * @return bool
 	 */
 	public function setCurrentCertificate( $filters, $certificateName ) {
@@ -336,8 +336,7 @@ class Webspace extends \PleskX\Api\Operator
 	
 	
 	/**
-	 * Restituisce l'identificativo univoco del servizio a listino associato ad una subscription
-	 * @param int $guid L'identificativo universale della subscription
+	 * @param array $filters
 	 * @return string|null
 	 */
 	public function getCurrentCertificate( $filters ) {
