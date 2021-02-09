@@ -118,6 +118,32 @@ class Webspace extends \PleskX\Api\Operator
 
         return new Struct\Info($response);
     }
+    
+    
+	/**
+	 * @param $webspaceId
+	 *
+	 * @return string|null
+	 */
+	public function getStatus( $webspaceId )
+	{
+		$packet = $this->_client->getPacket();
+		$getterTag = $packet->addChild( $this->_wrapperTag )->addChild( 'get' );
+		
+		$filterTag = $getterTag->addChild( 'filter' );
+		$filterTag->addChild( 'id', $webspaceId );
+		
+		$getterTag->addChild( 'dataset' )->addChild( 'gen_info' );
+		
+		$response = $this->_client->request( $packet );
+		
+		if( !isset( $response->data->gen_info->status ) ) {
+			return null;
+		}
+		
+		return trim( reset( $response->data->gen_info->status ) );
+	}
+	
 	
 	/**
 	 * Imposta lo stato di sospensione al webhosting
@@ -291,22 +317,6 @@ class Webspace extends \PleskX\Api\Operator
     {
         return $this->_getItems( Struct\CompleteGeneralInfo::class, 'gen_info' );
     }
-	
-	
-	/**
-	 * @return string
-	 */
-	public function getSubscriptionStatus()
-	{
-		$items = $this->_getItems( Struct\CompleteGeneralInfo::class, 'gen_info' );
-		$item = reset($items );
-		
-		if( !isset( $item->Status ) or is_null( $item->Status ) or $item->Status === '' ) {
-			return null;
-		}
-		
-		return $item->Status;
-	}
 	
 	
     /**
