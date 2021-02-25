@@ -14,6 +14,23 @@ class SecretKeyTest extends TestCase
         static::$_client->secretKey()->delete($keyId);
     }
 
+    public function testCreateAutoIp()
+    {
+        $keyId = static::$_client->secretKey()->create();
+        $this->assertNotEmpty($keyId);
+        static::$_client->secretKey()->delete($keyId);
+    }
+
+    public function testCreateWithDescription()
+    {
+        $keyId = static::$_client->secretKey()->create('192.168.0.1', 'test key');
+        $keyInfo = static::$_client->secretKey()->get($keyId);
+
+        $this->assertEquals('test key', $keyInfo->description);
+
+        static::$_client->secretKey()->delete($keyId);
+    }
+
     public function testGet()
     {
         $keyId = static::$_client->secretKey()->create('192.168.0.1');
