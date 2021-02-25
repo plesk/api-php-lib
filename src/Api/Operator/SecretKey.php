@@ -11,19 +11,22 @@ class SecretKey extends \PleskX\Api\Operator
 
     /**
      * @param string $ipAddress
-     * @param string $keyDescription
+     * @param string $description
      *
      * @return string
      */
-    public function create($ipAddress = '', $keyDescription = '')
+    public function create($ipAddress = '', $description = '')
     {
         $packet = $this->_client->getPacket();
-        $creator = $packet->addChild($this->_wrapperTag)->addChild('create');
+        $createTag = $packet->addChild($this->_wrapperTag)->addChild('create');
 
-        if ($ipAddress != '') {
-            $creator->addChild('ip_address', $ipAddress);
+        if ('' !== $ipAddress) {
+            $createTag->addChild('ip_address', $ipAddress);
         }
-        $creator->addChild('description', $keyDescription);
+
+        if ('' !== $description) {
+            $createTag->addChild('description', $description);
+        }
 
         $response = $this->_client->request($packet);
 
