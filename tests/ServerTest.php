@@ -92,9 +92,19 @@ class ServerTest extends TestCase
     {
         $stats = static::$_client->server()->getStatistics();
         $this->assertIsNumeric($stats->objects->clients);
+        $this->assertIsNumeric($stats->objects->domains);
+        $this->assertIsNumeric($stats->objects->databases);
         $this->assertEquals('psa', $stats->version->internalName);
         $this->assertNotEmpty($stats->version->osName);
         $this->assertNotEmpty($stats->version->osVersion);
+        $this->assertGreaterThan(0, $stats->other->uptime);
+        $this->assertGreaterThan(0, strlen($stats->other->cpu));
+        $this->assertIsFloat($stats->loadAverage->load1min);
+        $this->assertGreaterThan(0, $stats->memory->total);
+        $this->assertGreaterThan($stats->memory->free, $stats->memory->total);
+        $this->assertIsNumeric($stats->swap->total);
+        $this->assertIsArray($stats->diskSpace);
+        $this->assertGreaterThan(0, array_pop($stats->diskSpace)->total);
     }
 
     public function testGetSiteIsolationConfig()
