@@ -50,12 +50,11 @@ class GeneralInfo extends \PleskX\Api\Struct
             'guid',
             'vendor-guid',
             'description',
-            'admin-description'
+            'admin-description',
         ]);
 
-        foreach($apiResponse->dns_ip_address as $ip)
-        {
-            $this->ipAddresses[] = (string)$ip;
+        foreach($apiResponse->dns_ip_address as $ip) {
+            $this->ipAddresses[] = (string) $ip;
         }
     }
 }
