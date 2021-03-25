@@ -53,7 +53,7 @@ class GeneralInfo extends \PleskX\Api\Struct
             'admin-description',
         ]);
 
-        foreach($apiResponse->dns_ip_address as $ip) {
+        foreach ($apiResponse->dns_ip_address as $ip) {
             $this->ipAddresses[] = (string) $ip;
         }
     }
