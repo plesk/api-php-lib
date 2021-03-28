@@ -179,6 +179,9 @@ class WebspaceTest extends TestCase
 
         $this->assertNotEmpty($webspaceInfo->name);
         $this->assertEquals(0, $webspaceInfo->realSize);
+        $this->assertEquals($webspaceInfo->name, $webspaceInfo->asciiName);
+        $this->assertIsArray($webspaceInfo->ipAddresses);
+        $this->assertEquals(36, strlen($webspaceInfo->guid));
 
         static::$_client->webspace()->delete('id', $webspace->id);
     }
