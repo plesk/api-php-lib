@@ -1,11 +1,17 @@
 version: '2'
 services:
   plesk:
-    image: plesk/plesk:tests
+    image: plesk/plesk:latest
     logging:
       driver: none
     ports:
       ["8443:8443"]
+    tmpfs:
+      - /tmp
+      - /run
+      - /run/lock
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
   tests:
     build: .
     environment:
@@ -18,4 +24,3 @@ services:
       - plesk
     volumes:
       - .:/opt/api-php-lib
-
