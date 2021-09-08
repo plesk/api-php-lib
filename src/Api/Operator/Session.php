@@ -8,6 +8,29 @@ use PleskX\Api\Struct\Session as Struct;
 class Session extends \PleskX\Api\Operator
 {
     /**
+     * @param string $username
+     * @param string $userIp
+     * @param string $sourceServer
+     *
+     * @return string
+     */
+    public function create($username, $userIp, $sourceServer = '')
+    {
+        $packet = $this->_client->getPacket();
+        $creator = $packet->addChild('server')->addChild('create_session');
+
+        $creator->addChild('login', $username);
+        $loginData = $creator->addChild('data');
+
+        $loginData->addChild('user_ip', base64_encode($userIp));
+        $loginData->addChild('source_server', $sourceServer);
+
+        $response = $this->_client->request($packet);
+
+        return (string) $response->id;
+    }
+    
+    /**
      * @return Struct\Info[]
      */
     public function get()
