@@ -23,7 +23,7 @@ class Session extends \PleskX\Api\Operator
         $loginData = $creator->addChild('data');
 
         $loginData->addChild('user_ip', base64_encode($userIp));
-        $loginData->addChild('source_server', $sourceServer);
+        $loginData->addChild('source_server', base64_encode($sourceServer));
 
         $response = $this->_client->request($packet);
 
