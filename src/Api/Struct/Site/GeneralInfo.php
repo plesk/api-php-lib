@@ -6,7 +6,7 @@ namespace PleskX\Api\Struct\Site;
 class GeneralInfo extends \PleskX\Api\Struct
 {
     /** @var string */
-    public $crDate;
+    public $creationDate;
 
     /** @var string */
     public $name;
@@ -38,7 +38,7 @@ class GeneralInfo extends \PleskX\Api\Struct
     public function __construct($apiResponse)
     {
         $this->_initScalarProperties($apiResponse, [
-            'cr_date',
+            ['cr_date' => 'creationDate'],
             'name',
             'ascii-name',
             'status',

@@ -61,6 +61,8 @@ class SiteTest extends TestCase
 
         $siteInfo = static::$_client->site()->get('id', $site->id);
         $this->assertEquals('addon.dom', $siteInfo->name);
+        $this->assertMatchesRegularExpression("/^\d{4}-\d{2}-\d{2}$/", $siteInfo->creationDate);
+        $this->assertEquals(36, strlen($siteInfo->guid));
 
         static::$_client->site()->delete('id', $site->id);
     }
