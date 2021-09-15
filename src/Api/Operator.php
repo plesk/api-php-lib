@@ -97,7 +97,7 @@ class Operator
                 continue;
             }
             if (isset($xmlResult->id)) {
-                $items[(integer) $xmlResult->id] = new $structClass($xmlResult->data->$infoTag);
+                $items[(int) $xmlResult->id] = new $structClass($xmlResult->data->$infoTag);
             } else {
                 $items[] = new $structClass($xmlResult->data->$infoTag);
             }
