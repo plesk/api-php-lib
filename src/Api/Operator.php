@@ -96,7 +96,11 @@ class Operator
             if (!isset($xmlResult->data) || !isset($xmlResult->data->$infoTag)) {
                 continue;
             }
-            $items[] = new $structClass($xmlResult->data->$infoTag);
+            if (isset($xmlResult->id)) {
+                $items[(integer) $xmlResult->id] = new $structClass($xmlResult->data->$infoTag);
+            } else {
+                $items[] = new $structClass($xmlResult->data->$infoTag);
+            }
         }
 
         return $items;
