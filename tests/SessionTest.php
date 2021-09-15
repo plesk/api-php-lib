@@ -8,9 +8,10 @@ class SessionTest extends TestCase
 
     public function testCreate()
     {
-        $sessionToken = static::$_client->session()->create('admin', '127.0.0.1', '');
+        $sessionToken = static::$_client->session()->create('admin', '127.0.0.1');
 
         $this->assertIsString($sessionToken);
+        $this->assertGreaterThan(10, strlen($sessionToken));
     }
 
     public function testGet()
