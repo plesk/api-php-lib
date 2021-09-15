@@ -29,7 +29,7 @@ class Session extends \PleskX\Api\Operator
 
         return (string) $response->id;
     }
-    
+
     /**
      * @return Struct\Info[]
      */
