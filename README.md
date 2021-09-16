@@ -1,6 +1,6 @@
 ## PHP library for Plesk XML-RPC API
 
-[![Build Status](https://travis-ci.com/plesk/api-php-lib.svg?branch=master)](https://travis-ci.com/plesk/api-php-lib)
+[![Test Status](https://github.com/plesk/api-php-lib/actions/workflows/test.yml/badge.svg)](https://github.com/plesk/api-php-lib/actions/workflows/test.yml)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/plesk/api-php-lib/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/plesk/api-php-lib/?branch=master)
 [![StyleCI](https://styleci.io/repos/26514840/shield?branch=master)](https://styleci.io/repos/26514840)
 [![codecov](https://codecov.io/gh/plesk/api-php-lib/branch/master/graph/badge.svg?token=5Kwbddpdeb)](https://codecov.io/gh/plesk/api-php-lib)
