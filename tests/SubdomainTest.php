@@ -61,6 +61,7 @@ class SubdomainTest extends TestCase
         $subdomainInfo = static::$_client->subdomain()->get('id', $subdomain->id);
         $this->assertEquals($name.'.'.$subdomainInfo->parent, $subdomainInfo->name);
         $this->assertTrue(false !== strpos($subdomainInfo->properties['www_root'], $name));
+        $this->assertEquals($subdomain->id, $subdomainInfo->id);
 
         static::$_client->subdomain()->delete('id', $subdomain->id);
     }

@@ -61,6 +61,7 @@ class MailTest extends TestCase
 
         $mailnameInfo = static::$_client->mail()->get('test', static::$webspace->id);
         $this->assertEquals('test', $mailnameInfo->name);
+        $this->assertEquals($mailname->id, $mailnameInfo->id);
 
         static::$_client->mail()->delete('name', $mailname->name, static::$webspace->id);
     }

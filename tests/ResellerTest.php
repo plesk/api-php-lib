@@ -42,6 +42,7 @@ class ResellerTest extends TestCase
         $this->assertEquals('John Reseller', $resellerInfo->personalName);
         $this->assertEquals('reseller-unit-test', $resellerInfo->login);
         $this->assertGreaterThan(0, count($resellerInfo->permissions));
+        $this->assertEquals($reseller->id, $resellerInfo->id);
 
         static::$_client->reseller()->delete('id', $reseller->id);
     }

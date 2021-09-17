@@ -64,6 +64,10 @@ class SiteTest extends TestCase
         $this->assertMatchesRegularExpression("/^\d{4}-\d{2}-\d{2}$/", $siteInfo->creationDate);
         $this->assertEquals(36, strlen($siteInfo->guid));
 
+        $siteGuid = $siteInfo->guid;
+        $siteInfo = static::$_client->site()->get('guid', $siteGuid);
+        $this->assertEquals($site->id, $siteInfo->id);
+
         static::$_client->site()->delete('id', $site->id);
     }
 
@@ -102,6 +106,7 @@ class SiteTest extends TestCase
         $this->assertCount(2, $sitesInfo);
         $this->assertEquals('addon.dom', $sitesInfo[0]->name);
         $this->assertEquals('addon.dom', $sitesInfo[0]->asciiName);
+        $this->assertEquals($site->id, $sitesInfo[0]->id);
 
         static::$_client->site()->delete('id', $site->id);
         static::$_client->site()->delete('id', $site2->id);

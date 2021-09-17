@@ -49,6 +49,7 @@ class CustomerTest extends TestCase
         $this->assertEquals('john@smith.com', $customerInfo->email);
         $this->assertEquals('Good guy', $customerInfo->description);
         $this->assertEquals('link:12345', $customerInfo->externalId);
+        $this->assertEquals($customer->id, $customerInfo->id);
 
         static::$_client->customer()->delete('id', $customer->id);
     }

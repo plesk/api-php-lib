@@ -5,6 +5,9 @@ namespace PleskX\Api\Struct\Customer;
 
 class GeneralInfo extends \PleskX\Api\Struct
 {
+    /** @var int */
+    public $id;
+
     /** @var string */
     public $company;
 

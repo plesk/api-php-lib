@@ -182,6 +182,8 @@ class WebspaceTest extends TestCase
         $this->assertEquals($webspaceInfo->name, $webspaceInfo->asciiName);
         $this->assertIsArray($webspaceInfo->ipAddresses);
         $this->assertEquals(36, strlen($webspaceInfo->guid));
+        $this->assertMatchesRegularExpression("/^\d{4}-\d{2}-\d{2}$/", $webspaceInfo->creationDate);
+        $this->assertEquals($webspace->id, $webspaceInfo->id);
 
         static::$_client->webspace()->delete('id', $webspace->id);
     }
