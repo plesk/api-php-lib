@@ -3,12 +3,14 @@
 
 namespace PleskX\Api\Struct\Webspace;
 
-class PhysicalHostingDescriptor extends \PleskX\Api\Struct
-{
-    /** @var array */
-    public $properties;
+use PleskX\Api\Struct;
+use PleskX\Api\XmlResponse;
 
-    public function __construct($apiResponse)
+class PhysicalHostingDescriptor extends Struct
+{
+    public array $properties;
+
+    public function __construct(XmlResponse $apiResponse)
     {
         $this->properties = [];
 

@@ -3,18 +3,16 @@
 
 namespace PleskX\Api\Struct\Server;
 
-class GeneralInfo extends \PleskX\Api\Struct
+use PleskX\Api\Struct;
+use PleskX\Api\XmlResponse;
+
+class GeneralInfo extends Struct
 {
-    /** @var string */
-    public $serverName;
+    public string $serverName;
+    public string $serverGuid;
+    public string $mode;
 
-    /** @var string */
-    public $serverGuid;
-
-    /** @var string */
-    public $mode;
-
-    public function __construct($apiResponse)
+    public function __construct(XmlResponse $apiResponse)
     {
         $this->_initScalarProperties($apiResponse, [
             'server_name',

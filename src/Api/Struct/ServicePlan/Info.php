@@ -3,21 +3,17 @@
 
 namespace PleskX\Api\Struct\ServicePlan;
 
-class Info extends \PleskX\Api\Struct
+use PleskX\Api\Struct;
+use PleskX\Api\XmlResponse;
+
+class Info extends Struct
 {
-    /** @var int */
-    public $id;
+    public int $id;
+    public string $name;
+    public string $guid;
+    public string $externalId;
 
-    /** @var string */
-    public $name;
-
-    /** @var string */
-    public $guid;
-
-    /** @var string */
-    public $externalId;
-
-    public function __construct($apiResponse)
+    public function __construct(XmlResponse $apiResponse)
     {
         $this->_initScalarProperties($apiResponse, [
             'id',

@@ -3,12 +3,14 @@
 
 namespace PleskX\Api\Struct\Webspace;
 
-class PermissionDescriptor extends \PleskX\Api\Struct
-{
-    /** @var array */
-    public $permissions;
+use PleskX\Api\Struct;
+use PleskX\Api\XmlResponse;
 
-    public function __construct($apiResponse)
+class PermissionDescriptor extends Struct
+{
+    public array $permissions;
+
+    public function __construct(XmlResponse $apiResponse)
     {
         $this->permissions = [];
 

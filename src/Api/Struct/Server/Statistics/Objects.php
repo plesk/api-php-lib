@@ -3,42 +3,24 @@
 
 namespace PleskX\Api\Struct\Server\Statistics;
 
-class Objects extends \PleskX\Api\Struct
+use PleskX\Api\Struct;
+use PleskX\Api\XmlResponse;
+
+class Objects extends Struct
 {
-    /** @var int */
-    public $clients;
+    public int $clients;
+    public int $domains;
+    public int $databases;
+    public int $activeDomains;
+    public int $mailBoxes;
+    public int $mailRedirects;
+    public int $mailGroups;
+    public int $mailResponders;
+    public int $databaseUsers;
+    public int $problemClients;
+    public int $problemDomains;
 
-    /** @var int */
-    public $domains;
-
-    /** @var int */
-    public $databases;
-
-    /** @var int */
-    public $activeDomains;
-
-    /** @var int */
-    public $mailBoxes;
-
-    /** @var int */
-    public $mailRedirects;
-
-    /** @var int */
-    public $mailGroups;
-
-    /** @var int */
-    public $mailResponders;
-
-    /** @var int */
-    public $databaseUsers;
-
-    /** @var int */
-    public $problemClients;
-
-    /** @var int */
-    public $problemDomains;
-
-    public function __construct($apiResponse)
+    public function __construct(XmlResponse $apiResponse)
     {
         $this->_initScalarProperties($apiResponse, [
             'clients',

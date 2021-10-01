@@ -4,16 +4,14 @@
 namespace PleskX\Api\Struct\ProtectedDirectory;
 
 use PleskX\Api\Struct;
+use PleskX\Api\XmlResponse;
 
 class DataInfo extends Struct
 {
-    /** @var string */
-    public $name;
+    public string $name;
+    public string $header;
 
-    /** @var string */
-    public $header;
-
-    public function __construct($apiResponse)
+    public function __construct(XmlResponse $apiResponse)
     {
         $this->_initScalarProperties($apiResponse, [
             'name',

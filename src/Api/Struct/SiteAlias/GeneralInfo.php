@@ -3,18 +3,16 @@
 
 namespace PleskX\Api\Struct\SiteAlias;
 
-class GeneralInfo extends \PleskX\Api\Struct
+use PleskX\Api\Struct;
+use PleskX\Api\XmlResponse;
+
+class GeneralInfo extends Struct
 {
-    /** @var string */
-    public $name;
+    public string $name;
+    public string $asciiName;
+    public string $status;
 
-    /** @var string */
-    public $asciiName;
-
-    /** @var string */
-    public $status;
-
-    public function __construct($apiResponse)
+    public function __construct(XmlResponse $apiResponse)
     {
         $this->_initScalarProperties($apiResponse, [
             'name',

@@ -3,27 +3,19 @@
 
 namespace PleskX\Api\Struct\Server\Statistics;
 
-class Version extends \PleskX\Api\Struct
+use PleskX\Api\Struct;
+use PleskX\Api\XmlResponse;
+
+class Version extends Struct
 {
-    /** @var string */
-    public $internalName;
+    public string $internalName;
+    public string $version;
+    public string $build;
+    public string $osName;
+    public string $osVersion;
+    public string $osRelease;
 
-    /** @var string */
-    public $version;
-
-    /** @var string */
-    public $build;
-
-    /** @var string */
-    public $osName;
-
-    /** @var string */
-    public $osVersion;
-
-    /** @var string */
-    public $osRelease;
-
-    public function __construct($apiResponse)
+    public function __construct(XmlResponse $apiResponse)
     {
         $this->_initScalarProperties($apiResponse, [
             ['plesk_name' => 'internalName'],

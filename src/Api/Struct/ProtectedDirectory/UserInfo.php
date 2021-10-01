@@ -3,12 +3,14 @@
 
 namespace PleskX\Api\Struct\ProtectedDirectory;
 
-class UserInfo extends \PleskX\Api\Struct
-{
-    /** @var int */
-    public $id;
+use PleskX\Api\Struct;
+use PleskX\Api\XmlResponse;
 
-    public function __construct($apiResponse)
+class UserInfo extends Struct
+{
+    public int $id;
+
+    public function __construct(XmlResponse $apiResponse)
     {
         $this->_initScalarProperties($apiResponse, [
             'id',

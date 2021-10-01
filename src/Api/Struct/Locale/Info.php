@@ -3,18 +3,16 @@
 
 namespace PleskX\Api\Struct\Locale;
 
-class Info extends \PleskX\Api\Struct
+use PleskX\Api\Struct;
+use PleskX\Api\XmlResponse;
+
+class Info extends Struct
 {
-    /** @var string */
-    public $id;
+    public string $id;
+    public string $language;
+    public string $country;
 
-    /** @var string */
-    public $language;
-
-    /** @var string */
-    public $country;
-
-    public function __construct($apiResponse)
+    public function __construct(XmlResponse $apiResponse)
     {
         $this->_initScalarProperties($apiResponse, [
             'id',

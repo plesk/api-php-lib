@@ -3,42 +3,24 @@
 
 namespace PleskX\Api\Struct\Site;
 
-class GeneralInfo extends \PleskX\Api\Struct
+use PleskX\Api\Struct;
+use PleskX\Api\XmlResponse;
+
+class GeneralInfo extends Struct
 {
-    /** @var int */
-    public $id;
+    public int $id;
+    public string $creationDate;
+    public string $name;
+    public string $asciiName;
+    public string $guid;
+    public string $status;
+    public int $realSize;
+    public array $ipAddresses = [];
+    public string $description;
+    public string $webspaceGuid;
+    public int $webspaceId;
 
-    /** @var string */
-    public $creationDate;
-
-    /** @var string */
-    public $name;
-
-    /** @var string */
-    public $asciiName;
-
-    /** @var string */
-    public $guid;
-
-    /** @var string */
-    public $status;
-
-    /** @var int */
-    public $realSize;
-
-    /** @var array */
-    public $ipAddresses = [];
-
-    /** @var string */
-    public $description;
-
-    /** @var string */
-    public $webspaceGuid;
-
-    /** @var int */
-    public $webspaceId;
-
-    public function __construct($apiResponse)
+    public function __construct(XmlResponse $apiResponse)
     {
         $this->_initScalarProperties($apiResponse, [
             ['cr_date' => 'creationDate'],

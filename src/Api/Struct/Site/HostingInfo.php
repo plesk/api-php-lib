@@ -3,15 +3,15 @@
 
 namespace PleskX\Api\Struct\Site;
 
-class HostingInfo extends \PleskX\Api\Struct
+use PleskX\Api\Struct;
+use PleskX\Api\XmlResponse;
+
+class HostingInfo extends Struct
 {
-    /** @var array */
-    public $properties = [];
+    public array $properties = [];
+    public string $ipAddress;
 
-    /** @var string */
-    public $ipAddress;
-
-    public function __construct($apiResponse)
+    public function __construct(XmlResponse $apiResponse)
     {
         foreach ($apiResponse->vrt_hst->property as $property) {
             $this->properties[(string) $property->name] = (string) $property->value;

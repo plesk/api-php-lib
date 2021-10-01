@@ -3,18 +3,16 @@
 
 namespace PleskX\Api\Struct\Server\Statistics;
 
-class Swap extends \PleskX\Api\Struct
+use PleskX\Api\Struct;
+use PleskX\Api\XmlResponse;
+
+class Swap extends Struct
 {
-    /** @var int */
-    public $total;
+    public int $total;
+    public int $used;
+    public int $free;
 
-    /** @var int */
-    public $used;
-
-    /** @var int */
-    public $free;
-
-    public function __construct($apiResponse)
+    public function __construct(XmlResponse $apiResponse)
     {
         $this->_initScalarProperties($apiResponse, [
             'total',

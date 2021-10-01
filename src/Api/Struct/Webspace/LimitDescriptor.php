@@ -3,12 +3,14 @@
 
 namespace PleskX\Api\Struct\Webspace;
 
-class LimitDescriptor extends \PleskX\Api\Struct
-{
-    /** @var array */
-    public $limits;
+use PleskX\Api\Struct;
+use PleskX\Api\XmlResponse;
 
-    public function __construct($apiResponse)
+class LimitDescriptor extends Struct
+{
+    public array $limits;
+
+    public function __construct(XmlResponse $apiResponse)
     {
         $this->limits = [];
 

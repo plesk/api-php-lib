@@ -3,27 +3,19 @@
 
 namespace PleskX\Api\Struct\Session;
 
-class Info extends \PleskX\Api\Struct
+use PleskX\Api\Struct;
+use PleskX\Api\XmlResponse;
+
+class Info extends Struct
 {
-    /** @var string */
-    public $id;
+    public string $id;
+    public string $type;
+    public string $ipAddress;
+    public string $login;
+    public string $loginTime;
+    public string $idle;
 
-    /** @var string */
-    public $type;
-
-    /** @var string */
-    public $ipAddress;
-
-    /** @var string */
-    public $login;
-
-    /** @var string */
-    public $loginTime;
-
-    /** @var string */
-    public $idle;
-
-    public function __construct($apiResponse)
+    public function __construct(XmlResponse $apiResponse)
     {
         $this->_initScalarProperties($apiResponse, [
             'id',

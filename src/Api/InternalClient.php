@@ -16,9 +16,9 @@ class InternalClient extends Client
     /**
      * Setup login to execute requests under certain user.
      *
-     * @param $login
+     * @param string $login
      */
-    public function setLogin($login)
+    public function setLogin(string $login): void
     {
         $this->_login = $login;
     }

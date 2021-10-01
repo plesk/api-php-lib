@@ -3,15 +3,15 @@
 
 namespace PleskX\Api\Struct\Webspace;
 
-class Limit extends \PleskX\Api\Struct
+use PleskX\Api\Struct;
+use PleskX\Api\XmlResponse;
+
+class Limit extends Struct
 {
-    /** @var string */
-    public $name;
+    public string $name;
+    public string $value;
 
-    /** @var string */
-    public $value;
-
-    public function __construct($apiResponse)
+    public function __construct(XmlResponse $apiResponse)
     {
         $this->_initScalarProperties($apiResponse, [
             'name',

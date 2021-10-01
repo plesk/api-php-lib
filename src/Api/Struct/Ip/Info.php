@@ -3,21 +3,17 @@
 
 namespace PleskX\Api\Struct\Ip;
 
-class Info extends \PleskX\Api\Struct
+use PleskX\Api\Struct;
+use PleskX\Api\XmlResponse;
+
+class Info extends Struct
 {
-    /** @var string */
-    public $ipAddress;
+    public string $ipAddress;
+    public string $netmask;
+    public string $type;
+    public string $interface;
 
-    /** @var string */
-    public $netmask;
-
-    /** @var string */
-    public $type;
-
-    /** @var string */
-    public $interface;
-
-    public function __construct($apiResponse)
+    public function __construct(XmlResponse $apiResponse)
     {
         $this->_initScalarProperties($apiResponse, [
             'ip_address',

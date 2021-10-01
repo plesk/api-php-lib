@@ -5,7 +5,13 @@ namespace PleskX\Api;
 
 abstract class Struct
 {
-    public function __set($property, $value)
+    /**
+     * @param string $property
+     * @param mixed $value
+     *
+     * @throws \Exception
+     */
+    public function __set(string $property, $value)
     {
         throw new \Exception("Try to set an undeclared property '$property'.");
     }
@@ -18,20 +24,26 @@ abstract class Struct
      *
      * @throws \Exception
      */
-    protected function _initScalarProperties($apiResponse, array $properties)
+    protected function _initScalarProperties($apiResponse, array $properties): void
     {
         foreach ($properties as $property) {
             if (is_array($property)) {
                 $classPropertyName = current($property);
                 $value = $apiResponse->{key($property)};
             } else {
-                $classPropertyName = $this->_underToCamel(str_replace('-', '_', $property));
+                $classPropertyName = $this->underToCamel(str_replace('-', '_', $property));
                 $value = $apiResponse->$property;
             }
 
             $reflectionProperty = new \ReflectionProperty($this, $classPropertyName);
-            $docBlock = $reflectionProperty->getDocComment();
-            $propertyType = preg_replace('/^.+ @var ([a-z]+) .+$/', '\1', $docBlock);
+            $propertyType = $reflectionProperty->getType();
+            if (is_null($propertyType)) {
+                $docBlock = $reflectionProperty->getDocComment();
+                $propertyType = preg_replace('/^.+ @var ([a-z]+) .+$/', '\1', $docBlock);
+            } else {
+                /** @psalm-suppress UndefinedMethod */
+                $propertyType = $propertyType->getName();
+            }
 
             if ('string' == $propertyType) {
                 $value = (string) $value;
@@ -54,7 +66,7 @@ abstract class Struct
      *
      * @return string
      */
-    private function _underToCamel($under)
+    private function underToCamel(string $under): string
     {
         $under = '_'.str_replace('_', ' ', strtolower($under));
 

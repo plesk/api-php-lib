@@ -7,7 +7,7 @@ use PleskX\Api\Struct\SecretKey as Struct;
 
 class SecretKey extends \PleskX\Api\Operator
 {
-    protected $_wrapperTag = 'secret_key';
+    protected string $_wrapperTag = 'secret_key';
 
     /**
      * @param string $ipAddress

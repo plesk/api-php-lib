@@ -3,18 +3,16 @@
 
 namespace PleskX\Api\Struct\Server\Statistics;
 
-class LoadAverage extends \PleskX\Api\Struct
+use PleskX\Api\Struct;
+use PleskX\Api\XmlResponse;
+
+class LoadAverage extends Struct
 {
-    /** @var float */
-    public $load1min;
+    public float $load1min;
+    public float $load5min;
+    public float $load15min;
 
-    /** @var float */
-    public $load5min;
-
-    /** @var float */
-    public $load15min;
-
-    public function __construct($apiResponse)
+    public function __construct(XmlResponse $apiResponse)
     {
         $this->load1min = $apiResponse->l1 / 100.0;
         $this->load5min = $apiResponse->l5 / 100.0;

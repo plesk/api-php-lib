@@ -7,7 +7,7 @@ use PleskX\Api\Struct\DatabaseServer as Struct;
 
 class DatabaseServer extends \PleskX\Api\Operator
 {
-    protected $_wrapperTag = 'db_server';
+    protected string $_wrapperTag = 'db_server';
 
     /**
      * @return array

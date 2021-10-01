@@ -4,13 +4,11 @@
 namespace PleskX\Api\Operator;
 
 use PleskX\Api\Struct\Server as Struct;
+use PleskX\Api\XmlResponse;
 
 class Server extends \PleskX\Api\Operator
 {
-    /**
-     * @return array
-     */
-    public function getProtos()
+    public function getProtos(): array
     {
         $packet = $this->_client->getPacket();
         $packet->addChild($this->_wrapperTag)->addChild('get_protos');
@@ -19,25 +17,22 @@ class Server extends \PleskX\Api\Operator
         return (array) $response->protos->proto;
     }
 
-    public function getGeneralInfo()
+    public function getGeneralInfo(): Struct\GeneralInfo
     {
         return new Struct\GeneralInfo($this->_getInfo('gen_info'));
     }
 
-    public function getPreferences()
+    public function getPreferences(): Struct\Preferences
     {
         return new Struct\Preferences($this->_getInfo('prefs'));
     }
 
-    public function getAdmin()
+    public function getAdmin(): Struct\Admin
     {
         return new Struct\Admin($this->_getInfo('admin'));
     }
 
-    /**
-     * @return array
-     */
-    public function getKeyInfo()
+    public function getKeyInfo(): array
     {
         $keyInfo = [];
         $keyInfoXml = $this->_getInfo('key');
@@ -49,10 +44,7 @@ class Server extends \PleskX\Api\Operator
         return $keyInfo;
     }
 
-    /**
-     * @return array
-     */
-    public function getComponents()
+    public function getComponents(): array
     {
         $components = [];
         $componentsXml = $this->_getInfo('components');
@@ -64,10 +56,7 @@ class Server extends \PleskX\Api\Operator
         return $components;
     }
 
-    /**
-     * @return array
-     */
-    public function getServiceStates()
+    public function getServiceStates(): array
     {
         $states = [];
         $statesXml = $this->_getInfo('services_state');
@@ -83,15 +72,12 @@ class Server extends \PleskX\Api\Operator
         return $states;
     }
 
-    public function getSessionPreferences()
+    public function getSessionPreferences(): Struct\SessionPreferences
     {
         return new Struct\SessionPreferences($this->_getInfo('session_setup'));
     }
 
-    /**
-     * @return array
-     */
-    public function getShells()
+    public function getShells(): array
     {
         $shells = [];
         $shellsXml = $this->_getInfo('shells');
@@ -103,25 +89,19 @@ class Server extends \PleskX\Api\Operator
         return $shells;
     }
 
-    /**
-     * @return array
-     */
-    public function getNetworkInterfaces()
+    public function getNetworkInterfaces(): array
     {
         $interfacesXml = $this->_getInfo('interfaces');
 
         return (array) $interfacesXml->interface;
     }
 
-    public function getStatistics()
+    public function getStatistics(): Struct\Statistics
     {
         return new Struct\Statistics($this->_getInfo('stat'));
     }
 
-    /**
-     * @return array
-     */
-    public function getSiteIsolationConfig()
+    public function getSiteIsolationConfig(): array
     {
         $config = [];
         $configXml = $this->_getInfo('site-isolation-config');
@@ -133,7 +113,7 @@ class Server extends \PleskX\Api\Operator
         return $config;
     }
 
-    public function getUpdatesInfo()
+    public function getUpdatesInfo(): Struct\UpdatesInfo
     {
         return new Struct\UpdatesInfo($this->_getInfo('updates'));
     }
@@ -144,7 +124,7 @@ class Server extends \PleskX\Api\Operator
      *
      * @return string
      */
-    public function createSession($login, $clientIp)
+    public function createSession(string $login, string $clientIp): string
     {
         $packet = $this->_client->getPacket();
         $sessionNode = $packet->addChild($this->_wrapperTag)->addChild('create_session');
@@ -157,12 +137,7 @@ class Server extends \PleskX\Api\Operator
         return (string) $response->id;
     }
 
-    /**
-     * @param string $operation
-     *
-     * @return \SimpleXMLElement
-     */
-    private function _getInfo($operation)
+    private function _getInfo(string $operation): XmlResponse
     {
         $packet = $this->_client->getPacket();
         $packet->addChild($this->_wrapperTag)->addChild('get')->addChild($operation);

@@ -13,16 +13,16 @@ class Client
     const RESPONSE_SHORT = 1;
     const RESPONSE_FULL = 2;
 
-    protected $_host;
-    protected $_port;
-    protected $_protocol;
-    protected $_login;
-    protected $_password;
-    protected $_proxy = '';
-    protected $_secretKey;
-    protected $_version = '';
+    protected string $_host;
+    protected int $_port;
+    protected string $_protocol;
+    protected string $_login = '';
+    protected string $_password = '';
+    protected string $_proxy = '';
+    protected string $_secretKey = '';
+    protected string $_version = '';
 
-    protected $_operatorsCache = [];
+    protected array $_operatorsCache = [];
 
     /**
      * @var callable
@@ -36,7 +36,7 @@ class Client
      * @param int $port
      * @param string $protocol
      */
-    public function __construct($host, $port = 8443, $protocol = 'https')
+    public function __construct(string $host, int $port = 8443, string $protocol = 'https')
     {
         $this->_host = $host;
         $this->_port = $port;
@@ -49,7 +49,7 @@ class Client
      * @param string $login
      * @param string $password
      */
-    public function setCredentials($login, $password)
+    public function setCredentials(string $login, string $password): void
     {
         $this->_login = $login;
         $this->_password = $password;
@@ -60,7 +60,7 @@ class Client
      *
      * @param string $secretKey
      */
-    public function setSecretKey($secretKey)
+    public function setSecretKey(string $secretKey): void
     {
         $this->_secretKey = $secretKey;
     }
@@ -70,7 +70,7 @@ class Client
      *
      * @param string $proxy
      */
-    public function setProxy($proxy)
+    public function setProxy(string $proxy): void
     {
         $this->_proxy = $proxy;
     }
@@ -80,7 +80,7 @@ class Client
      *
      * @param string $version
      */
-    public function setVersion($version)
+    public function setVersion(string $version): void
     {
         $this->_version = $version;
     }
@@ -90,7 +90,7 @@ class Client
      *
      * @param callable|null $function
      */
-    public function setVerifyResponse(callable $function = null)
+    public function setVerifyResponse(callable $function = null): void
     {
         $this->_verifyResponseCallback = $function;
     }
@@ -100,7 +100,7 @@ class Client
      *
      * @return string
      */
-    public function getHost()
+    public function getHost(): string
     {
         return $this->_host;
     }
@@ -110,7 +110,7 @@ class Client
      *
      * @return int
      */
-    public function getPort()
+    public function getPort(): int
     {
         return $this->_port;
     }
@@ -120,7 +120,7 @@ class Client
      *
      * @return string
      */
-    public function getProtocol()
+    public function getProtocol(): string
     {
         return $this->_protocol;
     }
@@ -132,7 +132,7 @@ class Client
      *
      * @return SimpleXMLElement
      */
-    public function getPacket($version = null)
+    public function getPacket($version = null): SimpleXMLElement
     {
         $protocolVersion = !is_null($version) ? $version : $this->_version;
         $content = "<?xml version='1.0' encoding='UTF-8' ?>";
@@ -295,7 +295,7 @@ class Client
      *
      * @throws Exception
      */
-    protected function _verifyResponse($xml)
+    protected function _verifyResponse($xml): void
     {
         if ($xml->system && $xml->system->status && 'error' == (string) $xml->system->status) {
             throw new Exception((string) $xml->system->errtext, (int) $xml->system->errcode);
@@ -315,7 +315,7 @@ class Client
      * @param string $request
      * @param SimpleXMLElement $xml
      *
-     * @return string
+     * @return false|string
      */
     protected function _expandRequestShortSyntax($request, SimpleXMLElement $xml)
     {

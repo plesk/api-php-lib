@@ -3,25 +3,26 @@
 
 namespace PleskX\Api\Operator;
 
+use PleskX\Api\Operator;
 use PleskX\Api\Struct\Webspace as Struct;
 
-class Webspace extends \PleskX\Api\Operator
+class Webspace extends Operator
 {
-    public function getPermissionDescriptor()
+    public function getPermissionDescriptor(): Struct\PermissionDescriptor
     {
         $response = $this->request('get-permission-descriptor.filter');
 
         return new Struct\PermissionDescriptor($response);
     }
 
-    public function getLimitDescriptor()
+    public function getLimitDescriptor(): Struct\LimitDescriptor
     {
         $response = $this->request('get-limit-descriptor.filter');
 
         return new Struct\LimitDescriptor($response);
     }
 
-    public function getPhysicalHostingDescriptor()
+    public function getPhysicalHostingDescriptor(): Struct\PhysicalHostingDescriptor
     {
         $response = $this->request('get-physical-hosting-descriptor.filter');
 
@@ -34,7 +35,7 @@ class Webspace extends \PleskX\Api\Operator
      *
      * @return Struct\PhpSettings
      */
-    public function getPhpSettings($field, $value)
+    public function getPhpSettings(string $field, $value): Struct\PhpSettings
     {
         $packet = $this->_client->getPacket();
         $getTag = $packet->addChild($this->_wrapperTag)->addChild('get');
@@ -53,7 +54,7 @@ class Webspace extends \PleskX\Api\Operator
      *
      * @return Struct\Limits
      */
-    public function getLimits($field, $value)
+    public function getLimits(string $field, $value): Struct\Limits
     {
         $items = $this->_getItems(Struct\Limits::class, 'limits', $field, $value);
 
@@ -63,11 +64,11 @@ class Webspace extends \PleskX\Api\Operator
     /**
      * @param array $properties
      * @param array|null $hostingProperties
-     * @param $planName
+     * @param string $planName
      *
      * @return Struct\Info
      */
-    public function create(array $properties, array $hostingProperties = null, $planName = null)
+    public function create(array $properties, array $hostingProperties = null, string $planName = ''): Struct\Info
     {
         $packet = $this->_client->getPacket();
         $info = $packet->addChild($this->_wrapperTag)->addChild('add');
@@ -90,7 +91,7 @@ class Webspace extends \PleskX\Api\Operator
             }
         }
 
-        if ($planName) {
+        if ('' !== $planName) {
             $info->addChild('plan-name', $planName);
         }
 
@@ -105,7 +106,7 @@ class Webspace extends \PleskX\Api\Operator
      *
      * @return bool
      */
-    public function delete($field, $value)
+    public function delete(string $field, $value): bool
     {
         return $this->_delete($field, $value);
     }
@@ -116,7 +117,7 @@ class Webspace extends \PleskX\Api\Operator
      *
      * @return Struct\GeneralInfo
      */
-    public function get($field, $value)
+    public function get(string $field, $value): Struct\GeneralInfo
     {
         $items = $this->_getItems(Struct\GeneralInfo::class, 'gen_info', $field, $value);
 
@@ -126,7 +127,7 @@ class Webspace extends \PleskX\Api\Operator
     /**
      * @return Struct\GeneralInfo[]
      */
-    public function getAll()
+    public function getAll(): array
     {
         return $this->_getItems(Struct\GeneralInfo::class, 'gen_info');
     }
@@ -137,7 +138,7 @@ class Webspace extends \PleskX\Api\Operator
      *
      * @return Struct\DiskUsage
      */
-    public function getDiskUsage($field, $value)
+    public function getDiskUsage(string $field, $value): Struct\DiskUsage
     {
         $items = $this->_getItems(Struct\DiskUsage::class, 'disk_usage', $field, $value);
 

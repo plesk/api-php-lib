@@ -7,7 +7,7 @@ use PleskX\Api\Struct\ProtectedDirectory as Struct;
 
 class ProtectedDirectory extends \PleskX\Api\Operator
 {
-    protected $_wrapperTag = 'protected-dir';
+    protected string $_wrapperTag = 'protected-dir';
 
     /**
      * @param string $name

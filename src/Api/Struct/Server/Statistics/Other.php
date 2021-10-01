@@ -3,18 +3,16 @@
 
 namespace PleskX\Api\Struct\Server\Statistics;
 
-class Other extends \PleskX\Api\Struct
+use PleskX\Api\Struct;
+use PleskX\Api\XmlResponse;
+
+class Other extends Struct
 {
-    /** @var string */
-    public $cpu;
+    public string $cpu;
+    public int $uptime;
+    public bool $insideVz;
 
-    /** @var int */
-    public $uptime;
-
-    /** @var bool */
-    public $insideVz;
-
-    public function __construct($apiResponse)
+    public function __construct(XmlResponse $apiResponse)
     {
         $this->_initScalarProperties($apiResponse, [
             'cpu',

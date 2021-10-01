@@ -7,7 +7,7 @@ use PleskX\Api\Struct\Dns as Struct;
 
 class DnsTemplate extends \PleskX\Api\Operator
 {
-    protected $_wrapperTag = 'dns';
+    protected string $_wrapperTag = 'dns';
 
     /**
      * @param array $properties

@@ -3,15 +3,15 @@
 
 namespace PleskX\Api\Struct\Server;
 
-class UpdatesInfo extends \PleskX\Api\Struct
+use PleskX\Api\Struct;
+use PleskX\Api\XmlResponse;
+
+class UpdatesInfo extends Struct
 {
-    /** @var string */
-    public $lastInstalledUpdate;
+    public string $lastInstalledUpdate;
+    public bool $installUpdatesAutomatically;
 
-    /** @var bool */
-    public $installUpdatesAutomatically;
-
-    public function __construct($apiResponse)
+    public function __construct(XmlResponse $apiResponse)
     {
         $this->_initScalarProperties($apiResponse, [
             'last_installed_update',

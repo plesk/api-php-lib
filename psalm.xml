@@ -12,4 +12,9 @@
             <directory name="vendor" />
         </ignoreFiles>
     </projectFiles>
+
+    <issueHandlers>
+        <PropertyNotSetInConstructor errorLevel="suppress" />
+        <UndefinedPropertyFetch errorLevel="suppress" />
+    </issueHandlers>
 </psalm>

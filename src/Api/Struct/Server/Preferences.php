@@ -3,18 +3,16 @@
 
 namespace PleskX\Api\Struct\Server;
 
-class Preferences extends \PleskX\Api\Struct
+use PleskX\Api\Struct;
+use PleskX\Api\XmlResponse;
+
+class Preferences extends Struct
 {
-    /** @var int */
-    public $statTtl;
+    public int $statTtl;
+    public int $trafficAccounting;
+    public int $restartApacheInterval;
 
-    /** @var int */
-    public $trafficAccounting;
-
-    /** @var int */
-    public $restartApacheInterval;
-
-    public function __construct($apiResponse)
+    public function __construct(XmlResponse $apiResponse)
     {
         $this->_initScalarProperties($apiResponse, [
             'stat_ttl',

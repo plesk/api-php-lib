@@ -3,54 +3,28 @@
 
 namespace PleskX\Api\Struct\Customer;
 
-class GeneralInfo extends \PleskX\Api\Struct
+use PleskX\Api\Struct;
+use PleskX\Api\XmlResponse;
+
+class GeneralInfo extends Struct
 {
-    /** @var int */
-    public $id;
+    public int $id;
+    public string $company;
+    public string $personalName;
+    public string $login;
+    public string $guid;
+    public string $email;
+    public string $phone;
+    public string $fax;
+    public string $address;
+    public string $postalCode;
+    public string $city;
+    public string $state;
+    public string $country;
+    public string $description;
+    public string $externalId;
 
-    /** @var string */
-    public $company;
-
-    /** @var string */
-    public $personalName;
-
-    /** @var string */
-    public $login;
-
-    /** @var string */
-    public $guid;
-
-    /** @var string */
-    public $email;
-
-    /** @var string */
-    public $phone;
-
-    /** @var string */
-    public $fax;
-
-    /** @var string */
-    public $address;
-
-    /** @var string */
-    public $postalCode;
-
-    /** @var string */
-    public $city;
-
-    /** @var string */
-    public $state;
-
-    /** @var string */
-    public $country;
-
-    /** @var string */
-    public $description;
-
-    /** @var string */
-    public $externalId;
-
-    public function __construct($apiResponse)
+    public function __construct(XmlResponse $apiResponse)
     {
         $this->_initScalarProperties($apiResponse, [
             ['cname' => 'company'],

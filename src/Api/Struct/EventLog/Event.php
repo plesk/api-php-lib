@@ -3,21 +3,17 @@
 
 namespace PleskX\Api\Struct\EventLog;
 
-class Event extends \PleskX\Api\Struct
+use PleskX\Api\Struct;
+use PleskX\Api\XmlResponse;
+
+class Event extends Struct
 {
-    /** @var string */
-    public $type;
+    public string $type;
+    public int $time;
+    public string $class;
+    public string $id;
 
-    /** @var int */
-    public $time;
-
-    /** @var string */
-    public $class;
-
-    /** @var string */
-    public $id;
-
-    public function __construct($apiResponse)
+    public function __construct(XmlResponse $apiResponse)
     {
         $this->_initScalarProperties($apiResponse, [
             'type',

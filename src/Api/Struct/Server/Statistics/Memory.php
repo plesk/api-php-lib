@@ -3,27 +3,19 @@
 
 namespace PleskX\Api\Struct\Server\Statistics;
 
-class Memory extends \PleskX\Api\Struct
+use PleskX\Api\Struct;
+use PleskX\Api\XmlResponse;
+
+class Memory extends Struct
 {
-    /** @var int */
-    public $total;
+    public int $total;
+    public int $used;
+    public int $free;
+    public int $shared;
+    public int $buffer;
+    public int $cached;
 
-    /** @var int */
-    public $used;
-
-    /** @var int */
-    public $free;
-
-    /** @var int */
-    public $shared;
-
-    /** @var int */
-    public $buffer;
-
-    /** @var int */
-    public $cached;
-
-    public function __construct($apiResponse)
+    public function __construct(XmlResponse $apiResponse)
     {
         $this->_initScalarProperties($apiResponse, [
             'total',

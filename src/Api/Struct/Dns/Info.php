@@ -3,30 +3,20 @@
 
 namespace PleskX\Api\Struct\Dns;
 
-class Info extends \PleskX\Api\Struct
+use PleskX\Api\Struct;
+use PleskX\Api\XmlResponse;
+
+class Info extends Struct
 {
-    /** @var int */
-    public $id;
+    public int $id;
+    public int $siteId;
+    public int $siteAliasId;
+    public string $type;
+    public string $host;
+    public string $value;
+    public string $opt;
 
-    /** @var int */
-    public $siteId;
-
-    /** @var int */
-    public $siteAliasId;
-
-    /** @var string */
-    public $type;
-
-    /** @var string */
-    public $host;
-
-    /** @var string */
-    public $value;
-
-    /** @var string */
-    public $opt;
-
-    public function __construct($apiResponse)
+    public function __construct(XmlResponse $apiResponse)
     {
         $this->_initScalarProperties($apiResponse, [
             'id',

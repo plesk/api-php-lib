@@ -3,15 +3,15 @@
 
 namespace PleskX\Api\Struct\Certificate;
 
-class Info extends \PleskX\Api\Struct
+use PleskX\Api\Struct;
+use PleskX\Api\XmlResponse;
+
+class Info extends Struct
 {
-    /** @var string */
-    public $request;
+    public string $request;
+    public string $privateKey;
 
-    /** @var string */
-    public $privateKey;
-
-    public function __construct($apiResponse)
+    public function __construct(XmlResponse $apiResponse)
     {
         $this->_initScalarProperties($apiResponse, [
             ['csr' => 'request'],

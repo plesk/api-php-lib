@@ -5,17 +5,14 @@ namespace PleskX\Api;
 
 class Operator
 {
-    /** @var string|null */
-    protected $_wrapperTag = null;
-
-    /** @var \PleskX\Api\Client */
-    protected $_client;
+    protected string $_wrapperTag = '';
+    protected Client $_client;
 
     public function __construct($client)
     {
         $this->_client = $client;
 
-        if (is_null($this->_wrapperTag)) {
+        if ('' === $this->_wrapperTag) {
             $classNameParts = explode('\\', get_class($this));
             $this->_wrapperTag = end($classNameParts);
             $this->_wrapperTag = strtolower(preg_replace('/([a-z])([A-Z])/', '\1-\2', $this->_wrapperTag));

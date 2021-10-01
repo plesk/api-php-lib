@@ -3,21 +3,17 @@
 
 namespace PleskX\Api\Struct\Subdomain;
 
-class Info extends \PleskX\Api\Struct
+use PleskX\Api\Struct;
+use PleskX\Api\XmlResponse;
+
+class Info extends Struct
 {
-    /** @var int */
-    public $id;
+    public int $id;
+    public string $parent;
+    public string $name;
+    public array $properties;
 
-    /** @var string */
-    public $parent;
-
-    /** @var string */
-    public $name;
-
-    /** @var array */
-    public $properties;
-
-    public function __construct($apiResponse)
+    public function __construct(XmlResponse $apiResponse)
     {
         $this->properties = [];
         $this->_initScalarProperties($apiResponse, [
