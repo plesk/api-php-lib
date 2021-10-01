@@ -21,14 +21,16 @@
     },
     "require-dev": {
         "phpunit/phpunit": "^9",
-        "spatie/phpunit-watcher": "^1.22"
+        "spatie/phpunit-watcher": "^1.22",
+        "vimeo/psalm": "^4.10"
     },
     "config": {
         "process-timeout": 0
     },
     "scripts": {
         "test": "phpunit",
-        "test:watch": "phpunit-watcher watch"
+        "test:watch": "phpunit-watcher watch",
+        "lint": "psalm"
     },
     "autoload": {
         "psr-4": {
