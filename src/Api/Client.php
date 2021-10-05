@@ -321,10 +321,15 @@ class Client
     {
         $parts = explode('.', $request);
         $node = $xml;
+        $lastParts = end($parts);
 
         foreach ($parts as $part) {
             @list($name, $value) = explode('=', $part);
-            $node = $node->addChild($name, $value);
+            if ($part !== $lastParts) {
+                $node = $node->addChild($name);
+            } else {
+                $node->{$name} = (string) $value;
+            }
         }
 
         return $xml->asXML();
@@ -346,7 +351,7 @@ class Client
             if (is_array($value)) {
                 $this->_arrayToXml($value, $this->_isAssocArray($value) ? $xml->addChild($el) : $xml, $el);
             } else {
-                $xml->addChild($el, $value);
+                $xml->{$el} = (string) $value;
             }
         }
 

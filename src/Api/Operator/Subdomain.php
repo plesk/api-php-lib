@@ -21,12 +21,12 @@ class Subdomain extends \PleskX\Api\Operator
             if (is_array($value)) {
                 foreach ($value as $propertyName => $propertyValue) {
                     $property = $info->addChild($name);
-                    $property->addChild('name', $propertyName);
-                    $property->addChild('value', $propertyValue);
+                    $property->name = $propertyName;
+                    $property->value = $propertyValue;
                 }
                 continue;
             }
-            $info->addChild($name, $value);
+            $info->{$name} = $value;
         }
 
         $response = $this->_client->request($packet);
