@@ -18,7 +18,7 @@ class Reseller extends \PleskX\Api\Operator
         $info = $packet->addChild($this->_wrapperTag)->addChild('add')->addChild('gen-info');
 
         foreach ($properties as $name => $value) {
-            $info->addChild($name, $value);
+            $info->{$name} = $value;
         }
 
         $response = $this->_client->request($packet);

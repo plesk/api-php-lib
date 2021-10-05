@@ -31,7 +31,7 @@ class Ui extends \PleskX\Api\Operator
         $propertiesNode = $buttonNode->addChild('properties');
 
         foreach ($properties as $name => $value) {
-            $propertiesNode->addChild($name, $value);
+            $propertiesNode->{$name} = $value;
         }
 
         $response = $this->_client->request($packet);

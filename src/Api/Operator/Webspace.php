@@ -81,8 +81,8 @@ class Webspace extends \PleskX\Api\Operator
             $infoHosting = $info->addChild('hosting')->addChild('vrt_hst');
             foreach ($hostingProperties as $name => $value) {
                 $property = $infoHosting->addChild('property');
-                $property->addChild('name', $name);
-                $property->addChild('value', $value);
+                $property->name = $name;
+                $property->value = $value;
             }
 
             if (isset($properties['ip_address'])) {

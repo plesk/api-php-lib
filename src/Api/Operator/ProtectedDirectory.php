@@ -81,9 +81,9 @@ class ProtectedDirectory extends \PleskX\Api\Operator
         $packet = $this->_client->getPacket();
         $info = $packet->addChild($this->_wrapperTag)->addChild('add-user');
 
-        $info->addChild('pd-id', $protectedDirectory->id);
-        $info->addChild('login', $login);
-        $info->addChild('password', $password);
+        $info->{'pd-id'} = $protectedDirectory->id;
+        $info->login = $login;
+        $info->password = $password;
 
         return new Struct\UserInfo($this->_client->request($packet));
     }
@@ -113,7 +113,7 @@ class ProtectedDirectory extends \PleskX\Api\Operator
 
         $filterTag = $getTag->addChild('filter');
         if (!is_null($field)) {
-            $filterTag->addChild($field, $value);
+            $filterTag->{$field} = $value;
         }
 
         $response = $this->_client->request($packet, \PleskX\Api\Client::RESPONSE_FULL);

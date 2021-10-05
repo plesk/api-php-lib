@@ -53,7 +53,7 @@ class DatabaseServer extends \PleskX\Api\Operator
 
         $filterTag = $getTag->addChild('filter');
         if (!is_null($field)) {
-            $filterTag->addChild($field, $value);
+            $filterTag->{$field} = $value;
         }
 
         $response = $this->_client->request($packet, \PleskX\Api\Client::RESPONSE_FULL);

@@ -28,7 +28,7 @@ class Mail extends \PleskX\Api\Operator
             $mailname->addChild('mailbox')->addChild('enabled', 'true');
         }
         if (!empty($password)) {
-            $mailname->addChild('password')->addChild('value', $password);
+            $mailname->addChild('password')->value = $password;
         }
 
         $response = $this->_client->request($packet);
@@ -48,7 +48,7 @@ class Mail extends \PleskX\Api\Operator
         $packet = $this->_client->getPacket();
         $filter = $packet->addChild($this->_wrapperTag)->addChild('remove')->addChild('filter');
         $filter->addChild('site-id', $siteId);
-        $filter->addChild($field, $value);
+        $filter->{$field} = $value;
         $response = $this->_client->request($packet);
 
         return 'ok' === (string) $response->status;

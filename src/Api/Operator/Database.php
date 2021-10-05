@@ -43,7 +43,7 @@ class Database extends \PleskX\Api\Operator
                 $info->$name = $value;
                 continue;
             }
-            $info->addChild($name, $value);
+            $info->{$name} = $value;
         }
 
         return $this->_client->request($packet);
@@ -135,7 +135,7 @@ class Database extends \PleskX\Api\Operator
 
         $filterTag = $getTag->addChild('filter');
         if (!is_null($field)) {
-            $filterTag->addChild($field, $value);
+            $filterTag->{$field} = $value;
         }
 
         $response = $this->_client->request($packet, \PleskX\Api\Client::RESPONSE_FULL);

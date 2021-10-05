@@ -21,7 +21,7 @@ class DnsTemplate extends \PleskX\Api\Operator
 
         unset($properties['site-id'], $properties['site-alias-id']);
         foreach ($properties as $name => $value) {
-            $info->addChild($name, $value);
+            $info->{$name} = $value;
         }
 
         return new Struct\Info($this->_client->request($packet));
@@ -53,7 +53,7 @@ class DnsTemplate extends \PleskX\Api\Operator
 
         $filterTag = $getTag->addChild('filter');
         if (!is_null($field)) {
-            $filterTag->addChild($field, $value);
+            $filterTag->{$field} = $value;
         }
         $getTag->addChild('template');
 
