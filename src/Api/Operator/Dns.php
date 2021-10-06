@@ -18,7 +18,7 @@ class Dns extends \PleskX\Api\Operator
         $info = $packet->addChild($this->_wrapperTag)->addChild('add_rec');
 
         foreach ($properties as $name => $value) {
-            $info->addChild($name, $value);
+            $info->{$name} = $value;
         }
 
         return new Struct\Info($this->_client->request($packet));
@@ -39,7 +39,7 @@ class Dns extends \PleskX\Api\Operator
             $info = $packet->addChild($this->_wrapperTag)->addChild('add_rec');
 
             foreach ($properties as $name => $value) {
-                $info->addChild($name, $value);
+                $info->{$name} = $value;
             }
         }
 

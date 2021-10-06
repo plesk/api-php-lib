@@ -24,7 +24,7 @@ class Site extends \PleskX\Api\Operator
             if (!is_scalar($value)) {
                 continue;
             }
-            $infoGeneral->addChild($name, $value);
+            $infoGeneral->{$name} = $value;
         }
 
         // set hosting properties
@@ -32,8 +32,8 @@ class Site extends \PleskX\Api\Operator
             $hostingNode = $info->addChild('hosting')->addChild('vrt_hst');
             foreach ($properties[static::PROPERTIES_HOSTING] as $name => $value) {
                 $propertyNode = $hostingNode->addChild('property');
-                $propertyNode->addChild('name', $name);
-                $propertyNode->addChild('value', $value);
+                $propertyNode->name = $name;
+                $propertyNode->value = $value;
             }
         }
 

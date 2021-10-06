@@ -78,7 +78,7 @@ class Operator
 
         $filterTag = $getTag->addChild('filter');
         if (!is_null($field)) {
-            $filterTag->addChild($field, $value);
+            $filterTag->{$field} = $value;
         }
 
         $getTag->addChild('dataset')->addChild($infoTag);
