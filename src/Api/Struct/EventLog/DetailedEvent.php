@@ -4,7 +4,6 @@
 namespace PleskX\Api\Struct\EventLog;
 
 use PleskX\Api\Struct;
-use PleskX\Api\XmlResponse;
 
 class DetailedEvent extends Struct
 {
@@ -16,7 +15,7 @@ class DetailedEvent extends Struct
     public string $user;
     public string $host;
 
-    public function __construct(XmlResponse $apiResponse)
+    public function __construct(\SimpleXMLElement $apiResponse)
     {
         $this->_initScalarProperties($apiResponse, [
             'id',

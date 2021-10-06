@@ -4,7 +4,6 @@
 namespace PleskX\Api\Struct\Subdomain;
 
 use PleskX\Api\Struct;
-use PleskX\Api\XmlResponse;
 
 class Info extends Struct
 {
@@ -13,7 +12,7 @@ class Info extends Struct
     public string $name;
     public array $properties;
 
-    public function __construct(XmlResponse $apiResponse)
+    public function __construct(\SimpleXMLElement $apiResponse)
     {
         $this->properties = [];
         $this->_initScalarProperties($apiResponse, [

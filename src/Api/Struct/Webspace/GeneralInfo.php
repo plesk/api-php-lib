@@ -4,7 +4,6 @@
 namespace PleskX\Api\Struct\Webspace;
 
 use PleskX\Api\Struct;
-use PleskX\Api\XmlResponse;
 
 class GeneralInfo extends Struct
 {
@@ -23,7 +22,7 @@ class GeneralInfo extends Struct
     /** @var string */
     public string $adminDescription;
 
-    public function __construct(XmlResponse $apiResponse)
+    public function __construct(\SimpleXMLElement $apiResponse)
     {
         $this->_initScalarProperties($apiResponse, [
             ['cr_date' => 'creationDate'],

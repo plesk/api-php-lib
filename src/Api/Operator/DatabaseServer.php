@@ -25,7 +25,7 @@ class DatabaseServer extends \PleskX\Api\Operator
      *
      * @return Struct\Info
      */
-    public function get($field, $value)
+    public function get(string $field, $value)
     {
         $items = $this->_get($field, $value);
 
@@ -44,7 +44,7 @@ class DatabaseServer extends \PleskX\Api\Operator
      * @param string|null $field
      * @param int|string|null $value
      *
-     * @return Struct\Info|Struct\Info[]
+     * @return Struct\Info[]
      */
     private function _get($field = null, $value = null)
     {
@@ -53,7 +53,7 @@ class DatabaseServer extends \PleskX\Api\Operator
 
         $filterTag = $getTag->addChild('filter');
         if (!is_null($field)) {
-            $filterTag->{$field} = $value;
+            $filterTag->{$field} = (string) $value;
         }
 
         $response = $this->_client->request($packet, \PleskX\Api\Client::RESPONSE_FULL);

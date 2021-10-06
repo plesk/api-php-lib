@@ -29,9 +29,9 @@ class Dns extends \PleskX\Api\Operator
      *
      * @param array $records
      *
-     * @return \PleskX\Api\XmlResponse[]
+     * @return \SimpleXMLElement[]
      */
-    public function bulkCreate(array $records)
+    public function bulkCreate(array $records): array
     {
         $packet = $this->_client->getPacket();
 
@@ -58,7 +58,7 @@ class Dns extends \PleskX\Api\Operator
      *
      * @return Struct\Info
      */
-    public function get($field, $value)
+    public function get(string $field, $value)
     {
         $items = $this->getAll($field, $value);
 
@@ -71,15 +71,13 @@ class Dns extends \PleskX\Api\Operator
      *
      * @return Struct\Info[]
      */
-    public function getAll($field, $value)
+    public function getAll(string $field, $value): array
     {
         $packet = $this->_client->getPacket();
         $getTag = $packet->addChild($this->_wrapperTag)->addChild('get_rec');
 
         $filterTag = $getTag->addChild('filter');
-        if (!is_null($field)) {
-            $filterTag->addChild($field, $value);
-        }
+        $filterTag->addChild($field, (string) $value);
 
         $response = $this->_client->request($packet, \PleskX\Api\Client::RESPONSE_FULL);
         $items = [];
@@ -98,7 +96,7 @@ class Dns extends \PleskX\Api\Operator
      *
      * @return bool
      */
-    public function delete($field, $value)
+    public function delete(string $field, $value): bool
     {
         return $this->_delete($field, $value, 'del_rec');
     }
@@ -108,9 +106,9 @@ class Dns extends \PleskX\Api\Operator
      *
      * @param array $recordIds
      *
-     * @return \PleskX\Api\XmlResponse[]
+     * @return \SimpleXMLElement[]
      */
-    public function bulkDelete(array $recordIds)
+    public function bulkDelete(array $recordIds): array
     {
         $packet = $this->_client->getPacket();
 

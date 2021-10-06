@@ -4,7 +4,6 @@
 namespace PleskX\Api\Struct\Reseller;
 
 use PleskX\Api\Struct;
-use PleskX\Api\XmlResponse;
 
 class GeneralInfo extends Struct
 {
@@ -13,7 +12,7 @@ class GeneralInfo extends Struct
     public string $login;
     public array $permissions;
 
-    public function __construct(XmlResponse $apiResponse)
+    public function __construct(\SimpleXMLElement $apiResponse)
     {
         $this->_initScalarProperties($apiResponse->{'gen-info'}, [
             ['pname' => 'personalName'],

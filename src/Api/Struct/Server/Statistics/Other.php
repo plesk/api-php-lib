@@ -4,7 +4,6 @@
 namespace PleskX\Api\Struct\Server\Statistics;
 
 use PleskX\Api\Struct;
-use PleskX\Api\XmlResponse;
 
 class Other extends Struct
 {
@@ -12,7 +11,7 @@ class Other extends Struct
     public int $uptime;
     public bool $insideVz;
 
-    public function __construct(XmlResponse $apiResponse)
+    public function __construct(\SimpleXMLElement $apiResponse)
     {
         $this->_initScalarProperties($apiResponse, [
             'cpu',

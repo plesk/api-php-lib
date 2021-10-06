@@ -4,7 +4,6 @@
 namespace PleskX\Api\Struct\Dns;
 
 use PleskX\Api\Struct;
-use PleskX\Api\XmlResponse;
 
 class Info extends Struct
 {
@@ -16,7 +15,7 @@ class Info extends Struct
     public string $value;
     public string $opt;
 
-    public function __construct(XmlResponse $apiResponse)
+    public function __construct(\SimpleXMLElement $apiResponse)
     {
         $this->_initScalarProperties($apiResponse, [
             'id',

@@ -4,14 +4,13 @@
 namespace PleskX\Api\Struct\Server;
 
 use PleskX\Api\Struct;
-use PleskX\Api\XmlResponse;
 
 class UpdatesInfo extends Struct
 {
     public string $lastInstalledUpdate;
     public bool $installUpdatesAutomatically;
 
-    public function __construct(XmlResponse $apiResponse)
+    public function __construct(\SimpleXMLElement $apiResponse)
     {
         $this->_initScalarProperties($apiResponse, [
             'last_installed_update',

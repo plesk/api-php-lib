@@ -4,7 +4,6 @@
 namespace PleskX\Api\Struct\Server\Statistics;
 
 use PleskX\Api\Struct;
-use PleskX\Api\XmlResponse;
 
 class Memory extends Struct
 {
@@ -15,7 +14,7 @@ class Memory extends Struct
     public int $buffer;
     public int $cached;
 
-    public function __construct(XmlResponse $apiResponse)
+    public function __construct(\SimpleXMLElement $apiResponse)
     {
         $this->_initScalarProperties($apiResponse, [
             'total',

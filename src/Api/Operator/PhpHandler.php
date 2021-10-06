@@ -10,19 +10,19 @@ use PleskX\Api\Struct\PhpHandler\Info;
 class PhpHandler extends Operator
 {
     /**
-     * @param string $field
-     * @param int|string $value
+     * @param string|null $field
+     * @param int|string|null $value
      *
      * @return Info
      */
-    public function get($field, $value)
+    public function get($field = null, $value = null): Info
     {
         $packet = $this->_client->getPacket();
         $getTag = $packet->addChild($this->_wrapperTag)->addChild('get');
         $filterTag = $getTag->addChild('filter');
 
         if (!is_null($field)) {
-            $filterTag->addChild($field, $value);
+            $filterTag->addChild($field, (string)$value);
         }
 
         $response = $this->_client->request($packet, Client::RESPONSE_FULL);
@@ -37,14 +37,14 @@ class PhpHandler extends Operator
      *
      * @return Info[]
      */
-    public function getAll($field = null, $value = null)
+    public function getAll($field = null, $value = null): array
     {
         $packet = $this->_client->getPacket();
         $getTag = $packet->addChild($this->_wrapperTag)->addChild('get');
 
         $filterTag = $getTag->addChild('filter');
         if (!is_null($field)) {
-            $filterTag->addChild($field, $value);
+            $filterTag->addChild($field, (string) $value);
         }
 
         $response = $this->_client->request($packet, Client::RESPONSE_FULL);

@@ -3,9 +3,11 @@
 
 namespace PleskX\Api\Operator;
 
+use PleskX\Api\Client;
+use PleskX\Api\Operator;
 use PleskX\Api\Struct\Mail as Struct;
 
-class Mail extends \PleskX\Api\Operator
+class Mail extends Operator
 {
     /**
      * @param string $name
@@ -21,7 +23,7 @@ class Mail extends \PleskX\Api\Operator
         $info = $packet->addChild($this->_wrapperTag)->addChild('create');
 
         $filter = $info->addChild('filter');
-        $filter->addChild('site-id', $siteId);
+        $filter->addChild('site-id', (string) $siteId);
         $mailname = $filter->addChild('mailname');
         $mailname->addChild('name', $name);
         if ($mailbox) {
@@ -43,12 +45,14 @@ class Mail extends \PleskX\Api\Operator
      *
      * @return bool
      */
-    public function delete($field, $value, $siteId)
+    public function delete(string $field, $value, $siteId): bool
     {
         $packet = $this->_client->getPacket();
         $filter = $packet->addChild($this->_wrapperTag)->addChild('remove')->addChild('filter');
-        $filter->addChild('site-id', $siteId);
-        $filter->{$field} = $value;
+
+        $filter->addChild('site-id', (string) $siteId);
+        $filter->{$field} = (string) $value;
+
         $response = $this->_client->request($packet);
 
         return 'ok' === (string) $response->status;
@@ -79,12 +83,12 @@ class Mail extends \PleskX\Api\Operator
         $getTag = $packet->addChild($this->_wrapperTag)->addChild('get_info');
 
         $filterTag = $getTag->addChild('filter');
-        $filterTag->addChild('site-id', $siteId);
+        $filterTag->addChild('site-id', (string) $siteId);
         if (!is_null($name)) {
             $filterTag->addChild('name', $name);
         }
 
-        $response = $this->_client->request($packet, \PleskX\Api\Client::RESPONSE_FULL);
+        $response = $this->_client->request($packet, Client::RESPONSE_FULL);
         $items = [];
         foreach ($response->xpath('//result') as $xmlResult) {
             if (!isset($xmlResult->mailname)) {

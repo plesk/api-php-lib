@@ -4,7 +4,6 @@
 namespace PleskX\Api\Struct\Server\Statistics;
 
 use PleskX\Api\Struct;
-use PleskX\Api\XmlResponse;
 
 class Objects extends Struct
 {
@@ -20,7 +19,7 @@ class Objects extends Struct
     public int $problemClients;
     public int $problemDomains;
 
-    public function __construct(XmlResponse $apiResponse)
+    public function __construct(\SimpleXMLElement $apiResponse)
     {
         $this->_initScalarProperties($apiResponse, [
             'clients',

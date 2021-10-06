@@ -8,7 +8,7 @@ class Operator
     protected string $_wrapperTag = '';
     protected Client $_client;
 
-    public function __construct($client)
+    public function __construct(Client $client)
     {
         $this->_client = $client;
 
@@ -78,7 +78,7 @@ class Operator
 
         $filterTag = $getTag->addChild('filter');
         if (!is_null($field)) {
-            $filterTag->{$field} = $value;
+            $filterTag->{$field} = (string) $value;
         }
 
         $getTag->addChild('dataset')->addChild($infoTag);
@@ -93,6 +93,7 @@ class Operator
             if (!isset($xmlResult->data) || !isset($xmlResult->data->$infoTag)) {
                 continue;
             }
+            /** @psalm-suppress InvalidStringClass */
             $item = new $structClass($xmlResult->data->$infoTag);
             if (isset($xmlResult->id) && property_exists($item, 'id')) {
                 $item->id = (int) $xmlResult->id;

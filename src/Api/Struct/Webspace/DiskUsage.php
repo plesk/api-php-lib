@@ -4,7 +4,6 @@
 namespace PleskX\Api\Struct\Webspace;
 
 use PleskX\Api\Struct;
-use PleskX\Api\XmlResponse;
 
 class DiskUsage extends Struct
 {
@@ -20,7 +19,7 @@ class DiskUsage extends Struct
     public int $configs;
     public int $chroot;
 
-    public function __construct(XmlResponse $apiResponse)
+    public function __construct(\SimpleXMLElement $apiResponse)
     {
         $this->_initScalarProperties($apiResponse, [
             'httpdocs',

@@ -3,9 +3,11 @@
 
 namespace PleskX\Api\Operator;
 
+use PleskX\Api\Client;
+use PleskX\Api\Operator;
 use PleskX\Api\Struct\ProtectedDirectory as Struct;
 
-class ProtectedDirectory extends \PleskX\Api\Operator
+class ProtectedDirectory extends Operator
 {
     protected string $_wrapperTag = 'protected-dir';
 
@@ -21,7 +23,7 @@ class ProtectedDirectory extends \PleskX\Api\Operator
         $packet = $this->_client->getPacket();
         $info = $packet->addChild($this->_wrapperTag)->addChild('add');
 
-        $info->addChild('site-id', $siteId);
+        $info->addChild('site-id', (string) $siteId);
         $info->addChild('name', $name);
         $info->addChild('header', $header);
 
@@ -45,7 +47,7 @@ class ProtectedDirectory extends \PleskX\Api\Operator
      *
      * @return Struct\DataInfo|false
      */
-    public function get($field, $value)
+    public function get(string $field, $value)
     {
         $items = $this->getAll($field, $value);
 
@@ -58,7 +60,7 @@ class ProtectedDirectory extends \PleskX\Api\Operator
      *
      * @return Struct\DataInfo[]
      */
-    public function getAll($field, $value)
+    public function getAll(string $field, $value): array
     {
         $response = $this->_get('get', $field, $value);
         $items = [];
@@ -81,7 +83,7 @@ class ProtectedDirectory extends \PleskX\Api\Operator
         $packet = $this->_client->getPacket();
         $info = $packet->addChild($this->_wrapperTag)->addChild('add-user');
 
-        $info->{'pd-id'} = $protectedDirectory->id;
+        $info->{'pd-id'} = (string) $protectedDirectory->id;
         $info->login = $login;
         $info->password = $password;
 
@@ -100,24 +102,20 @@ class ProtectedDirectory extends \PleskX\Api\Operator
     }
 
     /**
-     * @param $command
-     * @param $field
-     * @param $value
+     * @param string $command
+     * @param string $field
+     * @param int|string $value
      *
      * @return \PleskX\Api\XmlResponse
      */
-    private function _get($command, $field, $value)
+    private function _get(string $command, string $field, $value)
     {
         $packet = $this->_client->getPacket();
         $getTag = $packet->addChild($this->_wrapperTag)->addChild($command);
 
         $filterTag = $getTag->addChild('filter');
-        if (!is_null($field)) {
-            $filterTag->{$field} = $value;
-        }
+        $filterTag->{$field} = (string) $value;
 
-        $response = $this->_client->request($packet, \PleskX\Api\Client::RESPONSE_FULL);
-
-        return $response;
+        return $this->_client->request($packet, Client::RESPONSE_FULL);
     }
 }

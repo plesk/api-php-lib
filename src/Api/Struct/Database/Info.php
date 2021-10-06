@@ -4,7 +4,6 @@
 namespace PleskX\Api\Struct\Database;
 
 use PleskX\Api\Struct;
-use PleskX\Api\XmlResponse;
 
 class Info extends Struct
 {
@@ -15,7 +14,7 @@ class Info extends Struct
     public int $dbServerId;
     public int $defaultUserId;
 
-    public function __construct(XmlResponse $apiResponse)
+    public function __construct(\SimpleXMLElement $apiResponse)
     {
         $this->_initScalarProperties($apiResponse, [
             'id',

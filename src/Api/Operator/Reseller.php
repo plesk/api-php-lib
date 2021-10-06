@@ -63,7 +63,7 @@ class Reseller extends \PleskX\Api\Operator
 
         $filterTag = $getTag->addChild('filter');
         if (!is_null($field)) {
-            $filterTag->addChild($field, $value);
+            $filterTag->addChild($field, (string) $value);
         }
 
         $datasetTag = $getTag->addChild('dataset');

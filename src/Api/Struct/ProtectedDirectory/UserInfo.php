@@ -4,13 +4,12 @@
 namespace PleskX\Api\Struct\ProtectedDirectory;
 
 use PleskX\Api\Struct;
-use PleskX\Api\XmlResponse;
 
 class UserInfo extends Struct
 {
     public int $id;
 
-    public function __construct(XmlResponse $apiResponse)
+    public function __construct(\SimpleXMLElement $apiResponse)
     {
         $this->_initScalarProperties($apiResponse, [
             'id',

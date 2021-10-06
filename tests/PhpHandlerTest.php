@@ -7,9 +7,8 @@ class PhpHandlerTest extends TestCase
 {
     public function testGet()
     {
-        $handler = static::$_client->phpHandler()->get(null, null);
+        $handler = static::$_client->phpHandler()->get();
 
-        $this->assertIsObject($handler);
         $this->assertObjectHasAttribute('type', $handler);
     }
 

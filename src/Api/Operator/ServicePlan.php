@@ -55,7 +55,7 @@ class ServicePlan extends \PleskX\Api\Operator
      * @param string|null $field
      * @param int|string|null $value
      *
-     * @return Struct\Info|Struct\Info[]
+     * @return Struct\Info[]
      */
     private function _get($field = null, $value = null)
     {
@@ -64,7 +64,7 @@ class ServicePlan extends \PleskX\Api\Operator
 
         $filterTag = $getTag->addChild('filter');
         if (!is_null($field)) {
-            $filterTag->addChild($field, $value);
+            $filterTag->addChild($field, (string) $value);
         }
 
         $response = $this->_client->request($packet, \PleskX\Api\Client::RESPONSE_FULL);

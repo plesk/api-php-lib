@@ -19,7 +19,7 @@ class Info extends Struct
     public string $custom;
     public string $handlerStatus;
 
-    public function __construct(XmlResponse $apiResponse)
+    public function __construct(\SimpleXMLElement $apiResponse)
     {
         $this->_initScalarProperties($apiResponse, [
             'id',

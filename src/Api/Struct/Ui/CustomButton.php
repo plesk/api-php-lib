@@ -4,7 +4,6 @@
 namespace PleskX\Api\Struct\Ui;
 
 use PleskX\Api\Struct;
-use PleskX\Api\XmlResponse;
 
 class CustomButton extends Struct
 {
@@ -17,7 +16,7 @@ class CustomButton extends Struct
     public string $url;
     public string $text;
 
-    public function __construct(XmlResponse $apiResponse)
+    public function __construct(\SimpleXMLElement $apiResponse)
     {
         $this->_initScalarProperties($apiResponse, ['id']);
         $this->_initScalarProperties($apiResponse->properties, [

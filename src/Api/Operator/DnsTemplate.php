@@ -46,14 +46,14 @@ class DnsTemplate extends \PleskX\Api\Operator
      *
      * @return Struct\Info[]
      */
-    public function getAll($field = null, $value = null)
+    public function getAll($field = null, $value = null): array
     {
         $packet = $this->_client->getPacket();
         $getTag = $packet->addChild($this->_wrapperTag)->addChild('get_rec');
 
         $filterTag = $getTag->addChild('filter');
         if (!is_null($field)) {
-            $filterTag->{$field} = $value;
+            $filterTag->{$field} = (string) $value;
         }
         $getTag->addChild('template');
 
@@ -74,11 +74,11 @@ class DnsTemplate extends \PleskX\Api\Operator
      *
      * @return bool
      */
-    public function delete($field, $value)
+    public function delete(string $field, $value): bool
     {
         $packet = $this->_client->getPacket();
         $delTag = $packet->addChild($this->_wrapperTag)->addChild('del_rec');
-        $delTag->addChild('filter')->addChild($field, $value);
+        $delTag->addChild('filter')->addChild($field, (string) $value);
         $delTag->addChild('template');
 
         $response = $this->_client->request($packet);

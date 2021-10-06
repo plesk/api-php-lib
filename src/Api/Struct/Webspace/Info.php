@@ -4,7 +4,6 @@
 namespace PleskX\Api\Struct\Webspace;
 
 use PleskX\Api\Struct;
-use PleskX\Api\XmlResponse;
 
 class Info extends Struct
 {
@@ -12,7 +11,7 @@ class Info extends Struct
     public string $guid;
     public string $name;
 
-    public function __construct(XmlResponse $apiResponse, string $name = '')
+    public function __construct(\SimpleXMLElement $apiResponse, string $name = '')
     {
         $this->_initScalarProperties($apiResponse, [
             'id',

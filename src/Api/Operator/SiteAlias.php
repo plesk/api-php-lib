@@ -22,7 +22,7 @@ class SiteAlias extends \PleskX\Api\Operator
             $prefs = $info->addChild('pref');
 
             foreach ($preferences as $key => $value) {
-                $prefs->addChild($key, is_bool($value) ? ($value ? 1 : 0) : $value);
+                $prefs->addChild($key, is_bool($value) ? ($value ? "1" : "0") : $value);
             }
         }
 
@@ -64,14 +64,14 @@ class SiteAlias extends \PleskX\Api\Operator
      *
      * @return Struct\GeneralInfo[]
      */
-    public function getAll($field = null, $value = null)
+    public function getAll($field = null, $value = null): array
     {
         $packet = $this->_client->getPacket();
         $getTag = $packet->addChild($this->_wrapperTag)->addChild('get');
 
         $filterTag = $getTag->addChild('filter');
         if (!is_null($field)) {
-            $filterTag->{$field} = $value;
+            $filterTag->{$field} = (string) $value;
         }
 
         $response = $this->_client->request($packet, \PleskX\Api\Client::RESPONSE_FULL);

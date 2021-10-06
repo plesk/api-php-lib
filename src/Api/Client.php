@@ -25,7 +25,7 @@ class Client
     protected array $_operatorsCache = [];
 
     /**
-     * @var callable
+     * @var callable|null
      */
     protected $_verifyResponseCallback;
 
@@ -169,7 +169,7 @@ class Client
             /** @psalm-suppress UndefinedClass */
             $xml = \pm_ApiRpc::getService($version)->call($requestXml->children()[0]->asXml(), $this->_login);
         } else {
-            $xml = $this->_performHttpRequest($request);
+            $xml = $this->_performHttpRequest((string) $request);
         }
 
         $this->_verifyResponseCallback
@@ -212,22 +212,19 @@ class Client
 
         curl_close($curl);
 
-        $xml = new XmlResponse($result);
-
-        return $xml;
+        return new XmlResponse((string) $result);
     }
 
     /**
      * Perform multiple API requests using single HTTP request.
      *
-     * @param $requests
+     * @param array $requests
      * @param int $mode
      *
-     * @throws Client\Exception
-     *
      * @return array
+     * @throws Client\Exception
      */
-    public function multiRequest($requests, $mode = self::RESPONSE_SHORT)
+    public function multiRequest(array $requests, $mode = self::RESPONSE_SHORT): array
     {
         $requestXml = $this->getPacket();
 
@@ -237,23 +234,32 @@ class Client
             } else {
                 if (is_array($request)) {
                     $request = $this->_arrayToXml($request, $requestXml)->asXML();
+                    if (!$request) {
+                        throw new Client\Exception('Failed to create an XML string for request');
+                    }
                 } elseif (preg_match('/^[a-z]/', $request)) {
                     $this->_expandRequestShortSyntax($request, $requestXml);
                 }
             }
-            $responses[] = $this->request($request);
         }
 
         if ('sdk' == $this->_protocol) {
             throw new Client\Exception('Multi requests are not supported via SDK.');
         } else {
-            $responseXml = $this->_performHttpRequest($requestXml->asXML());
+            $xmlString = $requestXml->asXML();
+            if (!$xmlString) {
+                throw new Client\Exception('Failed to create an XML string for request');
+            }
+            $responseXml = $this->_performHttpRequest($xmlString);
         }
 
         $responses = [];
         foreach ($responseXml->children() as $childNode) {
             $xml = $this->getPacket();
             $dom = dom_import_simplexml($xml)->ownerDocument;
+            if (!$dom) {
+                continue;
+            }
 
             $childDomNode = dom_import_simplexml($childNode);
             $childDomNode = $dom->importNode($childDomNode, true);
@@ -371,230 +377,150 @@ class Client
     /**
      * @param string $name
      *
-     * @return \PleskX\Api\Operator
+     * @return mixed
      */
-    protected function _getOperator($name)
+    protected function _getOperator(string $name)
     {
         if (!isset($this->_operatorsCache[$name])) {
             $className = '\\PleskX\\Api\\Operator\\'.$name;
+            /** @psalm-suppress InvalidStringClass */
             $this->_operatorsCache[$name] = new $className($this);
         }
 
         return $this->_operatorsCache[$name];
     }
 
-    /**
-     * @return Operator\Server
-     */
-    public function server()
+    public function server(): Operator\Server
     {
         return $this->_getOperator('Server');
     }
 
-    /**
-     * @return Operator\Customer
-     */
-    public function customer()
+    public function customer(): Operator\Customer
     {
         return $this->_getOperator('Customer');
     }
 
-    /**
-     * @return Operator\Webspace
-     */
-    public function webspace()
+    public function webspace(): Operator\Webspace
     {
         return $this->_getOperator('Webspace');
     }
 
-    /**
-     * @return Operator\Subdomain
-     */
-    public function subdomain()
+    public function subdomain(): Operator\Subdomain
     {
         return $this->_getOperator('Subdomain');
     }
 
-    /**
-     * @return Operator\Dns
-     */
-    public function dns()
+    public function dns(): Operator\Dns
     {
         return $this->_getOperator('Dns');
     }
 
-    /**
-     * @return Operator\DnsTemplate
-     */
-    public function dnsTemplate()
+    public function dnsTemplate(): Operator\DnsTemplate
     {
         return $this->_getOperator('DnsTemplate');
     }
 
-    /**
-     * @return Operator\DatabaseServer
-     */
-    public function databaseServer()
+    public function databaseServer(): Operator\DatabaseServer
     {
         return $this->_getOperator('DatabaseServer');
     }
 
-    /**
-     * @return Operator\Mail
-     */
-    public function mail()
+    public function mail(): Operator\Mail
     {
         return $this->_getOperator('Mail');
     }
 
-    /**
-     * @return Operator\Certificate
-     */
-    public function certificate()
+    public function certificate(): Operator\Certificate
     {
         return $this->_getOperator('Certificate');
     }
 
-    /**
-     * @return Operator\SiteAlias
-     */
-    public function siteAlias()
+    public function siteAlias(): Operator\SiteAlias
     {
         return $this->_getOperator('SiteAlias');
     }
 
-    /**
-     * @return Operator\Ip
-     */
-    public function ip()
+    public function ip(): Operator\Ip
     {
         return $this->_getOperator('Ip');
     }
 
-    /**
-     * @return Operator\EventLog
-     */
-    public function eventLog()
+    public function eventLog(): Operator\EventLog
     {
         return $this->_getOperator('EventLog');
     }
 
-    /**
-     * @return Operator\SecretKey
-     */
-    public function secretKey()
+    public function secretKey(): Operator\SecretKey
     {
         return $this->_getOperator('SecretKey');
     }
 
-    /**
-     * @return Operator\Ui
-     */
-    public function ui()
+    public function ui(): Operator\Ui
     {
         return $this->_getOperator('Ui');
     }
 
-    /**
-     * @return Operator\ServicePlan
-     */
-    public function servicePlan()
+    public function servicePlan(): Operator\ServicePlan
     {
         return $this->_getOperator('ServicePlan');
     }
 
-    /**
-     * @return Operator\VirtualDirectory
-     */
-    public function virtualDirectory()
+    public function virtualDirectory(): Operator\VirtualDirectory
     {
         return $this->_getOperator('VirtualDirectory');
     }
 
-    /**
-     * @return Operator\Database
-     */
-    public function database()
+    public function database(): Operator\Database
     {
         return $this->_getOperator('Database');
     }
 
-    /**
-     * @return Operator\Session
-     */
-    public function session()
+    public function session(): Operator\Session
     {
         return $this->_getOperator('Session');
     }
 
-    /**
-     * @return Operator\Locale
-     */
-    public function locale()
+    public function locale(): Operator\Locale
     {
         return $this->_getOperator('Locale');
     }
 
-    /**
-     * @return Operator\LogRotation
-     */
-    public function logRotation()
+    public function logRotation(): Operator\LogRotation
     {
         return $this->_getOperator('LogRotation');
     }
 
-    /**
-     * @return Operator\ProtectedDirectory
-     */
-    public function protectedDirectory()
+    public function protectedDirectory(): Operator\ProtectedDirectory
     {
         return $this->_getOperator('ProtectedDirectory');
     }
 
-    /**
-     * @return Operator\Reseller
-     */
-    public function reseller()
+    public function reseller(): Operator\Reseller
     {
         return $this->_getOperator('Reseller');
     }
 
-    /**
-     * @return Operator\ResellerPlan
-     */
-    public function resellerPlan()
+    public function resellerPlan(): Operator\ResellerPlan
     {
         return $this->_getOperator('ResellerPlan');
     }
 
-    /**
-     * @return Operator\Aps
-     */
-    public function aps()
+    public function aps(): Operator\Aps
     {
         return $this->_getOperator('Aps');
     }
 
-    /**
-     * @return Operator\ServicePlanAddon
-     */
-    public function servicePlanAddon()
+    public function servicePlanAddon(): Operator\ServicePlanAddon
     {
         return $this->_getOperator('ServicePlanAddon');
     }
 
-    /**
-     * @return Operator\Site
-     */
-    public function site()
+    public function site(): Operator\Site
     {
         return $this->_getOperator('Site');
     }
 
-    /**
-     * @return Operator\PhpHandler
-     */
-    public function phpHandler()
+    public function phpHandler(): Operator\PhpHandler
     {
         return $this->_getOperator('PhpHandler');
     }

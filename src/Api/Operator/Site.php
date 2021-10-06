@@ -24,7 +24,7 @@ class Site extends \PleskX\Api\Operator
             if (!is_scalar($value)) {
                 continue;
             }
-            $infoGeneral->{$name} = $value;
+            $infoGeneral->{$name} = (string) $value;
         }
 
         // set hosting properties
@@ -74,7 +74,7 @@ class Site extends \PleskX\Api\Operator
      */
     public function getHosting($field, $value)
     {
-        $items = $this->_getItems(Struct\HostingInfo::class, 'hosting', $field, $value, function ($node) {
+        $items = $this->_getItems(Struct\HostingInfo::class, 'hosting', $field, $value, function (\SimpleXMLElement $node) {
             return isset($node->vrt_hst);
         });
 

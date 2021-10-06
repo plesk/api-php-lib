@@ -4,7 +4,6 @@
 namespace PleskX\Api\Struct\SecretKey;
 
 use PleskX\Api\Struct;
-use PleskX\Api\XmlResponse;
 
 class Info extends Struct
 {
@@ -13,7 +12,7 @@ class Info extends Struct
     public string $description;
     public string $login;
 
-    public function __construct(XmlResponse $apiResponse)
+    public function __construct(\SimpleXMLElement $apiResponse)
     {
         $this->_initScalarProperties($apiResponse, [
             'key',

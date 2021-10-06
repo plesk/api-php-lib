@@ -4,7 +4,6 @@
 namespace PleskX\Api\Struct\Server;
 
 use PleskX\Api\Struct;
-use PleskX\Api\XmlResponse;
 
 class Admin extends Struct
 {
@@ -12,7 +11,7 @@ class Admin extends Struct
     public string $name;
     public string $email;
 
-    public function __construct(XmlResponse $apiResponse)
+    public function __construct(\SimpleXMLElement $apiResponse)
     {
         $this->_initScalarProperties($apiResponse, [
             ['admin_cname' => 'companyName'],

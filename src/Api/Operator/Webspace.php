@@ -40,7 +40,7 @@ class Webspace extends Operator
         $packet = $this->_client->getPacket();
         $getTag = $packet->addChild($this->_wrapperTag)->addChild('get');
 
-        $getTag->addChild('filter')->addChild($field, $value);
+        $getTag->addChild('filter')->addChild($field, (string) $value);
         $getTag->addChild('dataset')->addChild('php-settings');
 
         $response = $this->_client->request($packet, \PleskX\Api\Client::RESPONSE_FULL);

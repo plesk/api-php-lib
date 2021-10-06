@@ -4,7 +4,6 @@
 namespace PleskX\Api\Struct\Server\Statistics;
 
 use PleskX\Api\Struct;
-use PleskX\Api\XmlResponse;
 
 class LoadAverage extends Struct
 {
@@ -12,7 +11,7 @@ class LoadAverage extends Struct
     public float $load5min;
     public float $load15min;
 
-    public function __construct(XmlResponse $apiResponse)
+    public function __construct(\SimpleXMLElement $apiResponse)
     {
         $this->load1min = $apiResponse->l1 / 100.0;
         $this->load5min = $apiResponse->l5 / 100.0;

@@ -4,7 +4,6 @@
 namespace PleskX\Api\Struct\Server;
 
 use PleskX\Api\Struct;
-use PleskX\Api\XmlResponse;
 
 class Statistics extends Struct
 {
@@ -29,7 +28,7 @@ class Statistics extends Struct
     /** @var Statistics\DiskSpace[] */
     public $diskSpace;
 
-    public function __construct(XmlResponse $apiResponse)
+    public function __construct(\SimpleXMLElement $apiResponse)
     {
         $this->objects = new Statistics\Objects($apiResponse->objects);
         $this->version = new Statistics\Version($apiResponse->version);

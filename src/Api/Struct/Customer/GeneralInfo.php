@@ -4,7 +4,6 @@
 namespace PleskX\Api\Struct\Customer;
 
 use PleskX\Api\Struct;
-use PleskX\Api\XmlResponse;
 
 class GeneralInfo extends Struct
 {
@@ -24,7 +23,7 @@ class GeneralInfo extends Struct
     public string $description;
     public string $externalId;
 
-    public function __construct(XmlResponse $apiResponse)
+    public function __construct(\SimpleXMLElement $apiResponse)
     {
         $this->_initScalarProperties($apiResponse, [
             ['cname' => 'company'],

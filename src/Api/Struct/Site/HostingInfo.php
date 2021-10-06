@@ -4,14 +4,13 @@
 namespace PleskX\Api\Struct\Site;
 
 use PleskX\Api\Struct;
-use PleskX\Api\XmlResponse;
 
 class HostingInfo extends Struct
 {
     public array $properties = [];
     public string $ipAddress;
 
-    public function __construct(XmlResponse $apiResponse)
+    public function __construct(\SimpleXMLElement $apiResponse)
     {
         foreach ($apiResponse->vrt_hst->property as $property) {
             $this->properties[(string) $property->name] = (string) $property->value;

@@ -4,7 +4,6 @@
 namespace PleskX\Api\Struct\Session;
 
 use PleskX\Api\Struct;
-use PleskX\Api\XmlResponse;
 
 class Info extends Struct
 {
@@ -15,7 +14,7 @@ class Info extends Struct
     public string $loginTime;
     public string $idle;
 
-    public function __construct(XmlResponse $apiResponse)
+    public function __construct(\SimpleXMLElement $apiResponse)
     {
         $this->_initScalarProperties($apiResponse, [
             'id',
