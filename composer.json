@@ -28,10 +28,7 @@
         "process-timeout": 0
     },
     "scripts": {
-        "test": [
-            "psalm",
-            "phpunit"
-        ],
+        "test": "phpunit",
         "test:watch": "phpunit-watcher watch",
         "lint": "psalm"
     },
