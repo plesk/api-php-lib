@@ -221,8 +221,9 @@ class Client
      * @param array $requests
      * @param int $mode
      *
-     * @return array
      * @throws Client\Exception
+     *
+     * @return array
      */
     public function multiRequest(array $requests, $mode = self::RESPONSE_SHORT): array
     {

@@ -22,7 +22,7 @@ class PhpHandler extends Operator
         $filterTag = $getTag->addChild('filter');
 
         if (!is_null($field)) {
-            $filterTag->addChild($field, (string)$value);
+            $filterTag->addChild($field, (string) $value);
         }
 
         $response = $this->_client->request($packet, Client::RESPONSE_FULL);

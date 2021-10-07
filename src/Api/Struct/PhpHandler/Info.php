@@ -4,7 +4,6 @@
 namespace PleskX\Api\Struct\PhpHandler;
 
 use PleskX\Api\Struct;
-use PleskX\Api\XmlResponse;
 
 class Info extends Struct
 {

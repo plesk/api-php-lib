@@ -22,7 +22,7 @@ class SiteAlias extends \PleskX\Api\Operator
             $prefs = $info->addChild('pref');
 
             foreach ($preferences as $key => $value) {
-                $prefs->addChild($key, is_bool($value) ? ($value ? "1" : "0") : $value);
+                $prefs->addChild($key, is_bool($value) ? ($value ? '1' : '0') : $value);
             }
         }
 
