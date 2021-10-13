@@ -84,4 +84,25 @@ class CustomerTest extends TestCase
         static::$_client->customer()->delete('login', 'customer-a');
         static::$_client->customer()->delete('login', 'customer-b');
     }
+
+    public function testEnable()
+    {
+        $customer = static::$_client->customer()->create($this->_customerProperties);
+        static::$_client->customer()->disable('id', $customer->id);
+        static::$_client->customer()->enable('id', $customer->id);
+        $customerInfo = static::$_client->customer()->get('id', $customer->id);
+        $this->assertTrue($customerInfo->enabled);
+
+        static::$_client->customer()->delete('id', $customer->id);
+    }
+
+    public function testDisable()
+    {
+        $customer = static::$_client->customer()->create($this->_customerProperties);
+        static::$_client->customer()->disable('id', $customer->id);
+        $customerInfo = static::$_client->customer()->get('id', $customer->id);
+        $this->assertFalse($customerInfo->enabled);
+
+        static::$_client->customer()->delete('id', $customer->id);
+    }
 }

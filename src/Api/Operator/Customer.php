@@ -57,4 +57,48 @@ class Customer extends \PleskX\Api\Operator
     {
         return $this->_getItems(Struct\GeneralInfo::class, 'gen_info');
     }
+
+    /**
+     * @param string $field
+     * @param int|string $value
+     *
+     * @return bool
+     */
+    public function enable(string $field, $value): bool
+    {
+        return $this->setProperty($field, $value, 'status', 0);
+    }
+
+    /**
+     * @param string $field
+     * @param int|string $value
+     *
+     * @return bool
+     */
+    public function disable(string $field, $value): bool
+    {
+        return $this->setProperty($field, $value, 'status', 1);
+    }
+
+    /**
+     * @param string $field
+     * @param int|string $value
+     * @param string $property
+     * @param int|string $propertyValue
+     *
+     * @return bool
+     */
+    public function setProperty(string $field, $value, string $property, $propertyValue): bool
+    {
+        $packet = $this->_client->getPacket();
+        $setTag = $packet->addChild($this->_wrapperTag)->addChild('set');
+        $setTag->addChild('filter')->addChild($field, (string) $value);
+        $genInfoTag = $setTag->addChild('values')->addChild('gen_info');
+        $genInfoTag->addChild($property, (string) $propertyValue);
+
+        $response = $this->_client->request($packet);
+
+        return 'ok' === (string) $response->status;
+    }
+
 }

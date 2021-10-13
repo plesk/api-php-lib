@@ -22,6 +22,7 @@ class GeneralInfo extends Struct
     public string $country;
     public string $description;
     public string $externalId;
+    public bool $enabled;
 
     public function __construct(\SimpleXMLElement $apiResponse)
     {
@@ -41,5 +42,7 @@ class GeneralInfo extends Struct
             'external-id',
             'description',
         ]);
+
+        $this->enabled = '0' === (string) $apiResponse->status;
     }
 }
