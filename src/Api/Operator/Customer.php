@@ -100,5 +100,4 @@ class Customer extends \PleskX\Api\Operator
 
         return 'ok' === (string) $response->status;
     }
-
 }
