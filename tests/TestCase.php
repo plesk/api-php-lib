@@ -15,9 +15,9 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
 
     public static function setUpBeforeClass(): void
     {
-        $login = getenv('REMOTE_LOGIN');
-        $password = getenv('REMOTE_PASSWORD');
-        $host = getenv('REMOTE_HOST');
+        $login = getenv('REMOTE_LOGIN') ?: 'admin';
+        $password = getenv('REMOTE_PASSWORD') ?: 'changeme1Q**';
+        $host = getenv('REMOTE_HOST') ?: 'localhost';
         $port = 8443;
         $scheme = 'https';
 
