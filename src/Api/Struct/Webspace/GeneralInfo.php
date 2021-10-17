@@ -18,9 +18,8 @@ class GeneralInfo extends Struct
     public string $guid;
     public string $vendorGuid;
     public string $description;
-
-    /** @var string */
     public string $adminDescription;
+    public bool $enabled;
 
     public function __construct(\SimpleXMLElement $apiResponse)
     {
@@ -40,5 +39,7 @@ class GeneralInfo extends Struct
         foreach ($apiResponse->dns_ip_address as $ip) {
             $this->ipAddresses[] = (string) $ip;
         }
+
+        $this->enabled = '0' === (string) $apiResponse->status;
     }
 }

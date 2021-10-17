@@ -187,4 +187,39 @@ class WebspaceTest extends TestCase
 
         static::$_client->webspace()->delete('id', $webspace->id);
     }
+
+    public function testEnable()
+    {
+        $webspace = static::_createWebspace();
+
+        static::$_client->webspace()->disable('id', $webspace->id);
+        static::$_client->webspace()->enable('id', $webspace->id);
+        $webspaceInfo = static::$_client->webspace()->get('id', $webspace->id);
+        $this->assertTrue($webspaceInfo->enabled);
+
+        static::$_client->webspace()->delete('id', $webspace->id);
+    }
+
+    public function testDisable()
+    {
+        $webspace = static::_createWebspace();
+
+        static::$_client->webspace()->disable('id', $webspace->id);
+        $webspaceInfo = static::$_client->webspace()->get('id', $webspace->id);
+        $this->assertFalse($webspaceInfo->enabled);
+
+        static::$_client->webspace()->delete('id', $webspace->id);
+    }
+
+    public function testSetProperties()
+    {
+        $webspace = static::_createWebspace();
+        static::$_client->webspace()->setProperties('id', $webspace->id, [
+            'description' => 'Test Description',
+        ]);
+        $webspaceInfo = static::$_client->webspace()->get('id', $webspace->id);
+        $this->assertEquals('Test Description', $webspaceInfo->description);
+
+        static::$_client->webspace()->delete('id', $webspace->id);
+    }
 }

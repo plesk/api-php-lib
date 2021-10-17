@@ -144,4 +144,48 @@ class Webspace extends Operator
 
         return reset($items);
     }
+
+    /**
+     * @param string $field
+     * @param int|string $value
+     *
+     * @return bool
+     */
+    public function enable(string $field, $value): bool
+    {
+        return $this->setProperties($field, $value, ['status' => 0]);
+    }
+
+    /**
+     * @param string $field
+     * @param int|string $value
+     *
+     * @return bool
+     */
+    public function disable(string $field, $value): bool
+    {
+        return $this->setProperties($field, $value, ['status' => 1]);
+    }
+
+    /**
+     * @param string $field
+     * @param int|string $value
+     * @param array $properties
+     *
+     * @return bool
+     */
+    public function setProperties(string $field, $value, array $properties): bool
+    {
+        $packet = $this->_client->getPacket();
+        $setTag = $packet->addChild($this->_wrapperTag)->addChild('set');
+        $setTag->addChild('filter')->addChild($field, (string) $value);
+        $genInfoTag = $setTag->addChild('values')->addChild('gen_setup');
+        foreach ($properties as $property => $propertyValue) {
+            $genInfoTag->addChild($property, (string) $propertyValue);
+        }
+
+        $response = $this->_client->request($packet);
+
+        return 'ok' === (string) $response->status;
+    }
 }
