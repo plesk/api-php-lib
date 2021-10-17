@@ -105,4 +105,18 @@ class CustomerTest extends TestCase
 
         static::$_client->customer()->delete('id', $customer->id);
     }
+
+    public function testSetProperties()
+    {
+        $customer = static::$_client->customer()->create($this->_customerProperties);
+        static::$_client->customer()->setProperties('id', $customer->id, [
+            'pname' => 'Mike Black',
+            'email' => 'mike@black.com',
+        ]);
+        $customerInfo = static::$_client->customer()->get('id', $customer->id);
+        $this->assertEquals('Mike Black', $customerInfo->personalName);
+        $this->assertEquals('mike@black.com', $customerInfo->email);
+
+        static::$_client->customer()->delete('id', $customer->id);
+    }
 }

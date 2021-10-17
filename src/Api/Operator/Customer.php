@@ -66,7 +66,7 @@ class Customer extends \PleskX\Api\Operator
      */
     public function enable(string $field, $value): bool
     {
-        return $this->setProperty($field, $value, 'status', 0);
+        return $this->setProperties($field, $value, ['status' => 0]);
     }
 
     /**
@@ -77,24 +77,25 @@ class Customer extends \PleskX\Api\Operator
      */
     public function disable(string $field, $value): bool
     {
-        return $this->setProperty($field, $value, 'status', 1);
+        return $this->setProperties($field, $value, ['status' => 1]);
     }
 
     /**
      * @param string $field
      * @param int|string $value
-     * @param string $property
-     * @param int|string $propertyValue
+     * @param array $properties
      *
      * @return bool
      */
-    public function setProperty(string $field, $value, string $property, $propertyValue): bool
+    public function setProperties(string $field, $value, array $properties): bool
     {
         $packet = $this->_client->getPacket();
         $setTag = $packet->addChild($this->_wrapperTag)->addChild('set');
         $setTag->addChild('filter')->addChild($field, (string) $value);
         $genInfoTag = $setTag->addChild('values')->addChild('gen_info');
-        $genInfoTag->addChild($property, (string) $propertyValue);
+        foreach ($properties as $property => $propertyValue) {
+            $genInfoTag->addChild($property, (string) $propertyValue);
+        }
 
         $response = $this->_client->request($packet);
 
