@@ -7,7 +7,7 @@ use PleskX\Api\Struct\Site as Struct;
 
 class Site extends \PleskX\Api\Operator
 {
-    const PROPERTIES_HOSTING = 'hosting';
+    public const PROPERTIES_HOSTING = 'hosting';
 
     /**
      * @param array $properties
@@ -16,8 +16,8 @@ class Site extends \PleskX\Api\Operator
      */
     public function create(array $properties)
     {
-        $packet = $this->_client->getPacket();
-        $info = $packet->addChild($this->_wrapperTag)->addChild('add');
+        $packet = $this->client->getPacket();
+        $info = $packet->addChild($this->wrapperTag)->addChild('add');
 
         $infoGeneral = $info->addChild('gen_setup');
         foreach ($properties as $name => $value) {
@@ -37,7 +37,7 @@ class Site extends \PleskX\Api\Operator
             }
         }
 
-        $response = $this->_client->request($packet);
+        $response = $this->client->request($packet);
 
         return new Struct\Info($response);
     }
@@ -50,7 +50,7 @@ class Site extends \PleskX\Api\Operator
      */
     public function delete($field, $value)
     {
-        return $this->_delete($field, $value);
+        return $this->deleteBy($field, $value);
     }
 
     /**
@@ -61,7 +61,7 @@ class Site extends \PleskX\Api\Operator
      */
     public function get($field, $value)
     {
-        $items = $this->_getItems(Struct\GeneralInfo::class, 'gen_info', $field, $value);
+        $items = $this->getItems(Struct\GeneralInfo::class, 'gen_info', $field, $value);
 
         return reset($items);
     }
@@ -74,9 +74,15 @@ class Site extends \PleskX\Api\Operator
      */
     public function getHosting($field, $value)
     {
-        $items = $this->_getItems(Struct\HostingInfo::class, 'hosting', $field, $value, function (\SimpleXMLElement $node) {
-            return isset($node->vrt_hst);
-        });
+        $items = $this->getItems(
+            Struct\HostingInfo::class,
+            'hosting',
+            $field,
+            $value,
+            function (\SimpleXMLElement $node) {
+                return isset($node->vrt_hst);
+            }
+        );
 
         return empty($items) ? null : reset($items);
     }
@@ -86,6 +92,6 @@ class Site extends \PleskX\Api\Operator
      */
     public function getAll()
     {
-        return $this->_getItems(Struct\GeneralInfo::class, 'gen_info');
+        return $this->getItems(Struct\GeneralInfo::class, 'gen_info');
     }
 }

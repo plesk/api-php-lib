@@ -3,9 +3,9 @@
 
 namespace PleskX\Api\Struct\Server;
 
-use PleskX\Api\Struct;
+use PleskX\Api\AbstractStruct;
 
-class Preferences extends Struct
+class Preferences extends AbstractStruct
 {
     public int $statTtl;
     public int $trafficAccounting;
@@ -13,7 +13,7 @@ class Preferences extends Struct
 
     public function __construct(\SimpleXMLElement $apiResponse)
     {
-        $this->_initScalarProperties($apiResponse, [
+        $this->initScalarProperties($apiResponse, [
             'stat_ttl',
             'traffic_accounting',
             'restart_apache_interval',

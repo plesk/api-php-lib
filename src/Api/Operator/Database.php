@@ -14,7 +14,7 @@ class Database extends \PleskX\Api\Operator
      */
     public function create($properties)
     {
-        return new Struct\Info($this->_process('add-db', $properties));
+        return new Struct\Info($this->process('add-db', $properties));
     }
 
     /**
@@ -24,7 +24,7 @@ class Database extends \PleskX\Api\Operator
      */
     public function createUser($properties)
     {
-        return new Struct\UserInfo($this->_process('add-db-user', $properties));
+        return new Struct\UserInfo($this->process('add-db-user', $properties));
     }
 
     /**
@@ -33,10 +33,10 @@ class Database extends \PleskX\Api\Operator
      *
      * @return \PleskX\Api\XmlResponse
      */
-    private function _process($command, array $properties)
+    private function process($command, array $properties)
     {
-        $packet = $this->_client->getPacket();
-        $info = $packet->addChild($this->_wrapperTag)->addChild($command);
+        $packet = $this->client->getPacket();
+        $info = $packet->addChild($this->wrapperTag)->addChild($command);
 
         foreach ($properties as $name => $value) {
             if (false !== strpos($value, '&')) {
@@ -46,7 +46,7 @@ class Database extends \PleskX\Api\Operator
             $info->{$name} = $value;
         }
 
-        return $this->_client->request($packet);
+        return $this->client->request($packet);
     }
 
     /**
@@ -56,7 +56,7 @@ class Database extends \PleskX\Api\Operator
      */
     public function updateUser(array $properties)
     {
-        $response = $this->_process('set-db-user', $properties);
+        $response = $this->process('set-db-user', $properties);
 
         return 'ok' === (string) $response->status;
     }
@@ -95,7 +95,7 @@ class Database extends \PleskX\Api\Operator
      */
     public function getAll($field, $value)
     {
-        $response = $this->_get('get-db', $field, $value);
+        $response = $this->getBy('get-db', $field, $value);
         $items = [];
         foreach ($response->xpath('//result') as $xmlResult) {
             $items[] = new Struct\Info($xmlResult);
@@ -112,7 +112,7 @@ class Database extends \PleskX\Api\Operator
      */
     public function getAllUsers($field, $value)
     {
-        $response = $this->_get('get-db-users', $field, $value);
+        $response = $this->getBy('get-db-users', $field, $value);
         $items = [];
         foreach ($response->xpath('//result') as $xmlResult) {
             $items[] = new Struct\UserInfo($xmlResult);
@@ -128,15 +128,15 @@ class Database extends \PleskX\Api\Operator
      *
      * @return \PleskX\Api\XmlResponse
      */
-    private function _get(string $command, string $field, $value)
+    private function getBy(string $command, string $field, $value)
     {
-        $packet = $this->_client->getPacket();
-        $getTag = $packet->addChild($this->_wrapperTag)->addChild($command);
+        $packet = $this->client->getPacket();
+        $getTag = $packet->addChild($this->wrapperTag)->addChild($command);
 
         $filterTag = $getTag->addChild('filter');
         $filterTag->{$field} = (string) $value;
 
-        return $this->_client->request($packet, \PleskX\Api\Client::RESPONSE_FULL);
+        return $this->client->request($packet, \PleskX\Api\Client::RESPONSE_FULL);
     }
 
     /**
@@ -147,7 +147,7 @@ class Database extends \PleskX\Api\Operator
      */
     public function delete($field, $value)
     {
-        return $this->_delete($field, $value, 'del-db');
+        return $this->deleteBy($field, $value, 'del-db');
     }
 
     /**
@@ -158,6 +158,6 @@ class Database extends \PleskX\Api\Operator
      */
     public function deleteUser($field, $value)
     {
-        return $this->_delete($field, $value, 'del-db-user');
+        return $this->deleteBy($field, $value, 'del-db-user');
     }
 }

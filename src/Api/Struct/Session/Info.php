@@ -3,9 +3,9 @@
 
 namespace PleskX\Api\Struct\Session;
 
-use PleskX\Api\Struct;
+use PleskX\Api\AbstractStruct;
 
-class Info extends Struct
+class Info extends AbstractStruct
 {
     public string $id;
     public string $type;
@@ -16,7 +16,7 @@ class Info extends Struct
 
     public function __construct(\SimpleXMLElement $apiResponse)
     {
-        $this->_initScalarProperties($apiResponse, [
+        $this->initScalarProperties($apiResponse, [
             'id',
             'type',
             'ip-address',

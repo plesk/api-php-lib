@@ -3,9 +3,9 @@
 
 namespace PleskX\Api\Struct\Site;
 
-use PleskX\Api\Struct;
+use PleskX\Api\AbstractStruct;
 
-class HostingInfo extends Struct
+class HostingInfo extends AbstractStruct
 {
     public array $properties = [];
     public string $ipAddress;
@@ -15,7 +15,7 @@ class HostingInfo extends Struct
         foreach ($apiResponse->vrt_hst->property as $property) {
             $this->properties[(string) $property->name] = (string) $property->value;
         }
-        $this->_initScalarProperties($apiResponse->vrt_hst, [
+        $this->initScalarProperties($apiResponse->vrt_hst, [
             'ip_address',
         ]);
     }

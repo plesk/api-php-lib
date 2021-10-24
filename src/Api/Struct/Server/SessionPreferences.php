@@ -3,15 +3,15 @@
 
 namespace PleskX\Api\Struct\Server;
 
-use PleskX\Api\Struct;
+use PleskX\Api\AbstractStruct;
 
-class SessionPreferences extends Struct
+class SessionPreferences extends AbstractStruct
 {
     public int $loginTimeout;
 
     public function __construct(\SimpleXMLElement $apiResponse)
     {
-        $this->_initScalarProperties($apiResponse, [
+        $this->initScalarProperties($apiResponse, [
             'login_timeout',
         ]);
     }

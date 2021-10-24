@@ -3,9 +3,9 @@
 
 namespace PleskX\Api\Struct\Dns;
 
-use PleskX\Api\Struct;
+use PleskX\Api\AbstractStruct;
 
-class Info extends Struct
+class Info extends AbstractStruct
 {
     public int $id;
     public int $siteId;
@@ -17,7 +17,7 @@ class Info extends Struct
 
     public function __construct(\SimpleXMLElement $apiResponse)
     {
-        $this->_initScalarProperties($apiResponse, [
+        $this->initScalarProperties($apiResponse, [
             'id',
             'site-id',
             'site-alias-id',

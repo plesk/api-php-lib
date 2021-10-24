@@ -3,9 +3,9 @@
 
 namespace PleskX\Api\Struct\Server\Statistics;
 
-use PleskX\Api\Struct;
+use PleskX\Api\AbstractStruct;
 
-class Objects extends Struct
+class Objects extends AbstractStruct
 {
     public int $clients;
     public int $domains;
@@ -21,7 +21,7 @@ class Objects extends Struct
 
     public function __construct(\SimpleXMLElement $apiResponse)
     {
-        $this->_initScalarProperties($apiResponse, [
+        $this->initScalarProperties($apiResponse, [
             'clients',
             'domains',
             'databases',

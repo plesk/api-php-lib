@@ -3,9 +3,9 @@
 
 namespace PleskX\Api\Struct\Webspace;
 
-use PleskX\Api\Struct;
+use PleskX\Api\AbstractStruct;
 
-class PhysicalHostingDescriptor extends Struct
+class PhysicalHostingDescriptor extends AbstractStruct
 {
     public array $properties;
 

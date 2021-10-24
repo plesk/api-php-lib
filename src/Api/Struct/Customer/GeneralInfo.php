@@ -3,9 +3,9 @@
 
 namespace PleskX\Api\Struct\Customer;
 
-use PleskX\Api\Struct;
+use PleskX\Api\AbstractStruct;
 
-class GeneralInfo extends Struct
+class GeneralInfo extends AbstractStruct
 {
     public int $id;
     public string $company;
@@ -26,7 +26,7 @@ class GeneralInfo extends Struct
 
     public function __construct(\SimpleXMLElement $apiResponse)
     {
-        $this->_initScalarProperties($apiResponse, [
+        $this->initScalarProperties($apiResponse, [
             ['cname' => 'company'],
             ['pname' => 'personalName'],
             'login',

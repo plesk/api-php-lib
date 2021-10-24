@@ -3,16 +3,16 @@
 
 namespace PleskX\Api\Struct\Webspace;
 
-use PleskX\Api\Struct;
+use PleskX\Api\AbstractStruct;
 
-class Limit extends Struct
+class Limit extends AbstractStruct
 {
     public string $name;
     public string $value;
 
     public function __construct(\SimpleXMLElement $apiResponse)
     {
-        $this->_initScalarProperties($apiResponse, [
+        $this->initScalarProperties($apiResponse, [
             'name',
             'value',
         ]);

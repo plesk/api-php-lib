@@ -14,8 +14,8 @@ class Subdomain extends \PleskX\Api\Operator
      */
     public function create($properties)
     {
-        $packet = $this->_client->getPacket();
-        $info = $packet->addChild($this->_wrapperTag)->addChild('add');
+        $packet = $this->client->getPacket();
+        $info = $packet->addChild($this->wrapperTag)->addChild('add');
 
         foreach ($properties as $name => $value) {
             if (is_array($value)) {
@@ -29,7 +29,7 @@ class Subdomain extends \PleskX\Api\Operator
             $info->{$name} = $value;
         }
 
-        $response = $this->_client->request($packet);
+        $response = $this->client->request($packet);
 
         return new Struct\Info($response);
     }
@@ -42,7 +42,7 @@ class Subdomain extends \PleskX\Api\Operator
      */
     public function delete($field, $value)
     {
-        return $this->_delete($field, $value);
+        return $this->deleteBy($field, $value);
     }
 
     /**
@@ -66,15 +66,15 @@ class Subdomain extends \PleskX\Api\Operator
      */
     public function getAll($field = null, $value = null): array
     {
-        $packet = $this->_client->getPacket();
-        $getTag = $packet->addChild($this->_wrapperTag)->addChild('get');
+        $packet = $this->client->getPacket();
+        $getTag = $packet->addChild($this->wrapperTag)->addChild('get');
 
         $filterTag = $getTag->addChild('filter');
         if (!is_null($field)) {
             $filterTag->addChild($field, (string) $value);
         }
 
-        $response = $this->_client->request($packet, \PleskX\Api\Client::RESPONSE_FULL);
+        $response = $this->client->request($packet, \PleskX\Api\Client::RESPONSE_FULL);
 
         $items = [];
         foreach ($response->xpath('//result') as $xmlResult) {

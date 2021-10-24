@@ -3,9 +3,9 @@
 
 namespace PleskX\Api\Struct\Webspace;
 
-use PleskX\Api\Struct;
+use PleskX\Api\AbstractStruct;
 
-class PhpSettings extends Struct
+class PhpSettings extends AbstractStruct
 {
     public array $properties;
 

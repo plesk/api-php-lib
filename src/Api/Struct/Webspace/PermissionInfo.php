@@ -3,9 +3,9 @@
 
 namespace PleskX\Api\Struct\Webspace;
 
-use PleskX\Api\Struct;
+use PleskX\Api\AbstractStruct;
 
-class PermissionInfo extends Struct
+class PermissionInfo extends AbstractStruct
 {
     public string $name;
     public string $type;
@@ -13,7 +13,7 @@ class PermissionInfo extends Struct
 
     public function __construct(\SimpleXMLElement $apiResponse)
     {
-        $this->_initScalarProperties($apiResponse, [
+        $this->initScalarProperties($apiResponse, [
             'name',
             'type',
             'label',

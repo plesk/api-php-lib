@@ -3,7 +3,7 @@
 
 namespace PleskXTest;
 
-class DnsTest extends TestCase
+class DnsAbstractTest extends AbstractTestCase
 {
     /** @var \PleskX\Api\Struct\Webspace\Info */
     private static $webspace;
@@ -14,11 +14,11 @@ class DnsTest extends TestCase
     {
         parent::setUpBeforeClass();
 
-        $serviceStates = static::$_client->server()->getServiceStates();
+        $serviceStates = static::$client->server()->getServiceStates();
         static::$isDnsSupported = isset($serviceStates['dns']) && ('running' == $serviceStates['dns']['state']);
 
         if (static::$isDnsSupported) {
-            static::$webspace = static::_createWebspace();
+            static::$webspace = static::createWebspace();
         }
     }
 
@@ -33,7 +33,7 @@ class DnsTest extends TestCase
 
     public function testCreate()
     {
-        $dns = static::$_client->dns()->create([
+        $dns = static::$client->dns()->create([
             'site-id' => static::$webspace->id,
             'type' => 'TXT',
             'host' => 'host',
@@ -41,7 +41,7 @@ class DnsTest extends TestCase
         ]);
         $this->assertIsInt($dns->id);
         $this->assertGreaterThan(0, $dns->id);
-        static::$_client->dns()->delete('id', $dns->id);
+        static::$client->dns()->delete('id', $dns->id);
     }
 
     /**
@@ -49,7 +49,7 @@ class DnsTest extends TestCase
      */
     public function testBulkCreate()
     {
-        $response = static::$_client->dns()->bulkCreate([
+        $response = static::$client->dns()->bulkCreate([
             [
                 'site-id' => static::$webspace->id,
                 'type' => 'TXT',
@@ -92,7 +92,7 @@ class DnsTest extends TestCase
             return (int) $record->id;
         }, $createdRecords);
 
-        $response = static::$_client->dns()->bulkDelete($createdRecordIds);
+        $response = static::$client->dns()->bulkDelete($createdRecordIds);
 
         $this->assertCount(3, $response);
 
@@ -104,36 +104,36 @@ class DnsTest extends TestCase
 
     public function testGetById()
     {
-        $dns = static::$_client->dns()->create([
+        $dns = static::$client->dns()->create([
             'site-id' => static::$webspace->id,
             'type' => 'TXT',
             'host' => '',
             'value' => 'value',
         ]);
 
-        $dnsInfo = static::$_client->dns()->get('id', $dns->id);
+        $dnsInfo = static::$client->dns()->get('id', $dns->id);
         $this->assertEquals('TXT', $dnsInfo->type);
         $this->assertEquals(static::$webspace->id, $dnsInfo->siteId);
         $this->assertEquals('value', $dnsInfo->value);
 
-        static::$_client->dns()->delete('id', $dns->id);
+        static::$client->dns()->delete('id', $dns->id);
     }
 
     public function testGetAllByWebspaceId()
     {
-        $dns = static::$_client->dns()->create([
+        $dns = static::$client->dns()->create([
             'site-id' => static::$webspace->id,
             'type' => 'DS',
             'host' => '',
             'value' => '60485 5 1 2BB183AF5F22588179A53B0A98631FAD1A292118',
         ]);
-        $dns2 = static::$_client->dns()->create([
+        $dns2 = static::$client->dns()->create([
             'site-id' => static::$webspace->id,
             'type' => 'DS',
             'host' => '',
             'value' => '60485 5 1 2BB183AF5F22588179A53B0A98631FAD1A292119',
         ]);
-        $dnsInfo = static::$_client->dns()->getAll('site-id', static::$webspace->id);
+        $dnsInfo = static::$client->dns()->getAll('site-id', static::$webspace->id);
         $dsRecords = [];
         foreach ($dnsInfo as $dnsRec) {
             if ('DS' == $dnsRec->type) {
@@ -145,19 +145,19 @@ class DnsTest extends TestCase
             $this->assertEquals(static::$webspace->id, $dsRecord->siteId);
         }
 
-        static::$_client->dns()->delete('id', $dns->id);
-        static::$_client->dns()->delete('id', $dns2->id);
+        static::$client->dns()->delete('id', $dns->id);
+        static::$client->dns()->delete('id', $dns2->id);
     }
 
     public function testDelete()
     {
-        $dns = static::$_client->dns()->create([
+        $dns = static::$client->dns()->create([
             'site-id' => static::$webspace->id,
             'type' => 'TXT',
             'host' => 'host',
             'value' => 'value',
         ]);
-        $result = static::$_client->dns()->delete('id', $dns->id);
+        $result = static::$client->dns()->delete('id', $dns->id);
         $this->assertTrue($result);
     }
 }

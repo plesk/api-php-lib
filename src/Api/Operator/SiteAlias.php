@@ -15,8 +15,8 @@ class SiteAlias extends \PleskX\Api\Operator
      */
     public function create(array $properties, array $preferences = [])
     {
-        $packet = $this->_client->getPacket();
-        $info = $packet->addChild($this->_wrapperTag)->addChild('create');
+        $packet = $this->client->getPacket();
+        $info = $packet->addChild($this->wrapperTag)->addChild('create');
 
         if (count($preferences) > 0) {
             $prefs = $info->addChild('pref');
@@ -29,7 +29,7 @@ class SiteAlias extends \PleskX\Api\Operator
         $info->addChild('site-id', $properties['site-id']);
         $info->addChild('name', $properties['name']);
 
-        $response = $this->_client->request($packet);
+        $response = $this->client->request($packet);
 
         return new Struct\Info($response);
     }
@@ -42,7 +42,7 @@ class SiteAlias extends \PleskX\Api\Operator
      */
     public function delete($field, $value)
     {
-        return $this->_delete($field, $value, 'delete');
+        return $this->deleteBy($field, $value, 'delete');
     }
 
     /**
@@ -66,15 +66,15 @@ class SiteAlias extends \PleskX\Api\Operator
      */
     public function getAll($field = null, $value = null): array
     {
-        $packet = $this->_client->getPacket();
-        $getTag = $packet->addChild($this->_wrapperTag)->addChild('get');
+        $packet = $this->client->getPacket();
+        $getTag = $packet->addChild($this->wrapperTag)->addChild('get');
 
         $filterTag = $getTag->addChild('filter');
         if (!is_null($field)) {
             $filterTag->{$field} = (string) $value;
         }
 
-        $response = $this->_client->request($packet, \PleskX\Api\Client::RESPONSE_FULL);
+        $response = $this->client->request($packet, \PleskX\Api\Client::RESPONSE_FULL);
         $items = [];
         foreach ($response->xpath('//result') as $xmlResult) {
             $item = new Struct\GeneralInfo($xmlResult->info);

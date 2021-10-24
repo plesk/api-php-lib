@@ -3,18 +3,18 @@
 
 namespace PleskXTest;
 
-class PhpHandlerTest extends TestCase
+class PhpHandlerAbstractTest extends AbstractTestCase
 {
     public function testGet()
     {
-        $handler = static::$_client->phpHandler()->get();
+        $handler = static::$client->phpHandler()->get();
 
         $this->assertObjectHasAttribute('type', $handler);
     }
 
     public function testGetAll()
     {
-        $handlers = static::$_client->phpHandler()->getAll();
+        $handlers = static::$client->phpHandler()->getAll();
 
         $this->assertIsArray($handlers);
         $this->assertNotEmpty($handlers);
@@ -30,6 +30,6 @@ class PhpHandlerTest extends TestCase
         $this->expectException(\PleskX\Api\Exception::class);
         $this->expectExceptionMessage('Php handler does not exists');
 
-        static::$_client->phpHandler()->get('id', 'this-handler-does-not-exist');
+        static::$client->phpHandler()->get('id', 'this-handler-does-not-exist');
     }
 }

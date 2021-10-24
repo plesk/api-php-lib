@@ -5,10 +5,10 @@ namespace PleskXTest;
 
 use PleskXTest\Utility\PasswordProvider;
 
-abstract class TestCase extends \PHPUnit\Framework\TestCase
+abstract class AbstractTestCase extends \PHPUnit\Framework\TestCase
 {
     /** @var \PleskX\Api\Client */
-    protected static $_client;
+    protected static $client;
 
     private static $webspaces = [];
     private static $servicePlans = [];
@@ -21,16 +21,18 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
         $port = 8443;
         $scheme = 'https';
 
-        if ($url = getenv('REMOTE_URL')) {
+        $url = getenv('REMOTE_URL');
+        if ($url) {
             $parsedUrl = parse_url($url);
             list($host, $port, $scheme) = [$parsedUrl['host'], $parsedUrl['port'], $parsedUrl['scheme']];
         }
 
-        static::$_client = new \PleskX\Api\Client($host, $port, $scheme);
-        static::$_client->setCredentials($login, $password);
+        static::$client = new \PleskX\Api\Client($host, $port, $scheme);
+        static::$client->setCredentials($login, $password);
 
-        if ($proxy = getenv('REMOTE_PROXY')) {
-            static::$_client->setProxy($proxy);
+        $proxy = getenv('REMOTE_PROXY');
+        if ($proxy) {
+            static::$client->setProxy($proxy);
         }
     }
 
@@ -38,14 +40,16 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
     {
         foreach (self::$webspaces as $webspace) {
             try {
-                static::$_client->webspace()->delete('id', $webspace->id);
+                static::$client->webspace()->delete('id', $webspace->id);
+                // phpcs:ignore
             } catch (\Exception $e) {
             }
         }
 
         foreach (self::$servicePlans as $servicePlan) {
             try {
-                static::$_client->servicePlan()->delete('id', $servicePlan->id);
+                static::$client->servicePlan()->delete('id', $servicePlan->id);
+                // phpcs:ignore
             } catch (\Exception $e) {
             }
         }
@@ -54,9 +58,9 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
     /**
      * @return string
      */
-    protected static function _getIpAddress()
+    protected static function getIpAddress()
     {
-        $ips = static::$_client->ip()->get();
+        $ips = static::$client->ip()->get();
         $ipInfo = reset($ips);
 
         return $ipInfo->ipAddress;
@@ -65,13 +69,13 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
     /**
      * @return \PleskX\Api\Struct\Webspace\Info
      */
-    protected static function _createWebspace()
+    protected static function createWebspace()
     {
         $id = uniqid();
-        $webspace = static::$_client->webspace()->create(
+        $webspace = static::$client->webspace()->create(
             [
                 'name' => "test{$id}.test",
-                'ip_address' => static::_getIpAddress(),
+                'ip_address' => static::getIpAddress(),
             ],
             [
                 'ftp_login' => "u{$id}",
@@ -83,10 +87,10 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
         return $webspace;
     }
 
-    protected static function _createServicePlan()
+    protected static function createServicePlan()
     {
         $id = uniqid();
-        $servicePlan = static::$_client->servicePlan()->create(['name' => "test{$id}plan"]);
+        $servicePlan = static::$client->servicePlan()->create(['name' => "test{$id}plan"]);
 
         self::$servicePlans[] = $servicePlan;
 

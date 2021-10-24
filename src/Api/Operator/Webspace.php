@@ -37,13 +37,13 @@ class Webspace extends Operator
      */
     public function getPhpSettings(string $field, $value): Struct\PhpSettings
     {
-        $packet = $this->_client->getPacket();
-        $getTag = $packet->addChild($this->_wrapperTag)->addChild('get');
+        $packet = $this->client->getPacket();
+        $getTag = $packet->addChild($this->wrapperTag)->addChild('get');
 
         $getTag->addChild('filter')->addChild($field, (string) $value);
         $getTag->addChild('dataset')->addChild('php-settings');
 
-        $response = $this->_client->request($packet, \PleskX\Api\Client::RESPONSE_FULL);
+        $response = $this->client->request($packet, \PleskX\Api\Client::RESPONSE_FULL);
 
         return new Struct\PhpSettings($response);
     }
@@ -56,7 +56,7 @@ class Webspace extends Operator
      */
     public function getLimits(string $field, $value): Struct\Limits
     {
-        $items = $this->_getItems(Struct\Limits::class, 'limits', $field, $value);
+        $items = $this->getItems(Struct\Limits::class, 'limits', $field, $value);
 
         return reset($items);
     }
@@ -70,8 +70,8 @@ class Webspace extends Operator
      */
     public function create(array $properties, array $hostingProperties = null, string $planName = ''): Struct\Info
     {
-        $packet = $this->_client->getPacket();
-        $info = $packet->addChild($this->_wrapperTag)->addChild('add');
+        $packet = $this->client->getPacket();
+        $info = $packet->addChild($this->wrapperTag)->addChild('add');
 
         $infoGeneral = $info->addChild('gen_setup');
         foreach ($properties as $name => $value) {
@@ -95,7 +95,7 @@ class Webspace extends Operator
             $info->addChild('plan-name', $planName);
         }
 
-        $response = $this->_client->request($packet);
+        $response = $this->client->request($packet);
 
         return new Struct\Info($response, $properties['name'] ?? '');
     }
@@ -108,7 +108,7 @@ class Webspace extends Operator
      */
     public function delete(string $field, $value): bool
     {
-        return $this->_delete($field, $value);
+        return $this->deleteBy($field, $value);
     }
 
     /**
@@ -119,7 +119,7 @@ class Webspace extends Operator
      */
     public function get(string $field, $value): Struct\GeneralInfo
     {
-        $items = $this->_getItems(Struct\GeneralInfo::class, 'gen_info', $field, $value);
+        $items = $this->getItems(Struct\GeneralInfo::class, 'gen_info', $field, $value);
 
         return reset($items);
     }
@@ -129,7 +129,7 @@ class Webspace extends Operator
      */
     public function getAll(): array
     {
-        return $this->_getItems(Struct\GeneralInfo::class, 'gen_info');
+        return $this->getItems(Struct\GeneralInfo::class, 'gen_info');
     }
 
     /**
@@ -140,7 +140,7 @@ class Webspace extends Operator
      */
     public function getDiskUsage(string $field, $value): Struct\DiskUsage
     {
-        $items = $this->_getItems(Struct\DiskUsage::class, 'disk_usage', $field, $value);
+        $items = $this->getItems(Struct\DiskUsage::class, 'disk_usage', $field, $value);
 
         return reset($items);
     }
@@ -176,15 +176,15 @@ class Webspace extends Operator
      */
     public function setProperties(string $field, $value, array $properties): bool
     {
-        $packet = $this->_client->getPacket();
-        $setTag = $packet->addChild($this->_wrapperTag)->addChild('set');
+        $packet = $this->client->getPacket();
+        $setTag = $packet->addChild($this->wrapperTag)->addChild('set');
         $setTag->addChild('filter')->addChild($field, (string) $value);
         $genInfoTag = $setTag->addChild('values')->addChild('gen_setup');
         foreach ($properties as $property => $propertyValue) {
             $genInfoTag->addChild($property, (string) $propertyValue);
         }
 
-        $response = $this->_client->request($packet);
+        $response = $this->client->request($packet);
 
         return 'ok' === (string) $response->status;
     }

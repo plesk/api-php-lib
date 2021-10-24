@@ -3,9 +3,9 @@
 
 namespace PleskX\Api\Struct\Ui;
 
-use PleskX\Api\Struct;
+use PleskX\Api\AbstractStruct;
 
-class CustomButton extends Struct
+class CustomButton extends AbstractStruct
 {
     public int $id;
     public int $sortKey;
@@ -18,8 +18,8 @@ class CustomButton extends Struct
 
     public function __construct(\SimpleXMLElement $apiResponse)
     {
-        $this->_initScalarProperties($apiResponse, ['id']);
-        $this->_initScalarProperties($apiResponse->properties, [
+        $this->initScalarProperties($apiResponse, ['id']);
+        $this->initScalarProperties($apiResponse->properties, [
             'sort_key',
             'public',
             'internal',

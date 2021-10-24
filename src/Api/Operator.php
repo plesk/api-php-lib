@@ -5,17 +5,17 @@ namespace PleskX\Api;
 
 class Operator
 {
-    protected string $_wrapperTag = '';
-    protected Client $_client;
+    protected string $wrapperTag = '';
+    protected Client $client;
 
     public function __construct(Client $client)
     {
-        $this->_client = $client;
+        $this->client = $client;
 
-        if ('' === $this->_wrapperTag) {
+        if ('' === $this->wrapperTag) {
             $classNameParts = explode('\\', get_class($this));
-            $this->_wrapperTag = end($classNameParts);
-            $this->_wrapperTag = strtolower(preg_replace('/([a-z])([A-Z])/', '\1-\2', $this->_wrapperTag));
+            $this->wrapperTag = end($classNameParts);
+            $this->wrapperTag = strtolower(preg_replace('/([a-z])([A-Z])/', '\1-\2', $this->wrapperTag));
         }
     }
 
@@ -29,7 +29,7 @@ class Operator
      */
     public function request($request, $mode = Client::RESPONSE_SHORT)
     {
-        $wrapperTag = $this->_wrapperTag;
+        $wrapperTag = $this->wrapperTag;
 
         if (is_array($request)) {
             $request = [$wrapperTag => $request];
@@ -39,7 +39,7 @@ class Operator
             $request = "<$wrapperTag>$request</$wrapperTag>";
         }
 
-        return $this->_client->request($request, $mode);
+        return $this->client->request($request, $mode);
     }
 
     /**
@@ -49,7 +49,7 @@ class Operator
      *
      * @return bool
      */
-    protected function _delete($field, $value, $deleteMethodName = 'del')
+    protected function deleteBy(string $field, $value, string $deleteMethodName = 'del'): bool
     {
         $response = $this->request([
             $deleteMethodName => [
@@ -71,10 +71,10 @@ class Operator
      *
      * @return mixed
      */
-    protected function _getItems($structClass, $infoTag, $field = null, $value = null, callable $filter = null)
+    protected function getItems($structClass, $infoTag, $field = null, $value = null, callable $filter = null)
     {
-        $packet = $this->_client->getPacket();
-        $getTag = $packet->addChild($this->_wrapperTag)->addChild('get');
+        $packet = $this->client->getPacket();
+        $getTag = $packet->addChild($this->wrapperTag)->addChild('get');
 
         $filterTag = $getTag->addChild('filter');
         if (!is_null($field)) {
@@ -83,7 +83,7 @@ class Operator
 
         $getTag->addChild('dataset')->addChild($infoTag);
 
-        $response = $this->_client->request($packet, \PleskX\Api\Client::RESPONSE_FULL);
+        $response = $this->client->request($packet, \PleskX\Api\Client::RESPONSE_FULL);
 
         $items = [];
         foreach ($response->xpath('//result') as $xmlResult) {

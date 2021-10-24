@@ -3,9 +3,9 @@
 
 namespace PleskX\Api\Struct\Server\Statistics;
 
-use PleskX\Api\Struct;
+use PleskX\Api\AbstractStruct;
 
-class DiskSpace extends Struct
+class DiskSpace extends AbstractStruct
 {
     public int $total;
     public int $used;
@@ -13,7 +13,7 @@ class DiskSpace extends Struct
 
     public function __construct(\SimpleXMLElement $apiResponse)
     {
-        $this->_initScalarProperties($apiResponse, [
+        $this->initScalarProperties($apiResponse, [
             'total',
             'used',
             'free',

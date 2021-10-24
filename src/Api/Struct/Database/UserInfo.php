@@ -3,9 +3,9 @@
 
 namespace PleskX\Api\Struct\Database;
 
-use PleskX\Api\Struct;
+use PleskX\Api\AbstractStruct;
 
-class UserInfo extends Struct
+class UserInfo extends AbstractStruct
 {
     public int $id;
     public string $login;
@@ -13,7 +13,7 @@ class UserInfo extends Struct
 
     public function __construct(\SimpleXMLElement $apiResponse)
     {
-        $this->_initScalarProperties($apiResponse, [
+        $this->initScalarProperties($apiResponse, [
             'id',
             'login',
             'db-id',

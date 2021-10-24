@@ -3,9 +3,9 @@
 
 namespace PleskX\Api\Struct\Subdomain;
 
-use PleskX\Api\Struct;
+use PleskX\Api\AbstractStruct;
 
-class Info extends Struct
+class Info extends AbstractStruct
 {
     public int $id;
     public string $parent;
@@ -15,7 +15,7 @@ class Info extends Struct
     public function __construct(\SimpleXMLElement $apiResponse)
     {
         $this->properties = [];
-        $this->_initScalarProperties($apiResponse, [
+        $this->initScalarProperties($apiResponse, [
             'id',
             'parent',
             'name',

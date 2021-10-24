@@ -3,16 +3,16 @@
 
 namespace PleskX\Api\Struct\Webspace;
 
-use PleskX\Api\Struct;
+use PleskX\Api\AbstractStruct;
 
-class Limits extends Struct
+class Limits extends AbstractStruct
 {
     public string $overuse;
     public array $limits;
 
     public function __construct(\SimpleXMLElement $apiResponse)
     {
-        $this->_initScalarProperties($apiResponse, ['overuse']);
+        $this->initScalarProperties($apiResponse, ['overuse']);
         $this->limits = [];
 
         foreach ($apiResponse->limit as $limit) {

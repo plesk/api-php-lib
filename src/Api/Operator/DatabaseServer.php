@@ -7,7 +7,7 @@ use PleskX\Api\Struct\DatabaseServer as Struct;
 
 class DatabaseServer extends \PleskX\Api\Operator
 {
-    protected string $_wrapperTag = 'db_server';
+    protected string $wrapperTag = 'db_server';
 
     /**
      * @return array
@@ -27,7 +27,7 @@ class DatabaseServer extends \PleskX\Api\Operator
      */
     public function get(string $field, $value)
     {
-        $items = $this->_get($field, $value);
+        $items = $this->getBy($field, $value);
 
         return reset($items);
     }
@@ -37,7 +37,7 @@ class DatabaseServer extends \PleskX\Api\Operator
      */
     public function getAll()
     {
-        return $this->_get();
+        return $this->getBy();
     }
 
     /**
@@ -46,17 +46,17 @@ class DatabaseServer extends \PleskX\Api\Operator
      *
      * @return Struct\Info[]
      */
-    private function _get($field = null, $value = null)
+    private function getBy($field = null, $value = null)
     {
-        $packet = $this->_client->getPacket();
-        $getTag = $packet->addChild($this->_wrapperTag)->addChild('get');
+        $packet = $this->client->getPacket();
+        $getTag = $packet->addChild($this->wrapperTag)->addChild('get');
 
         $filterTag = $getTag->addChild('filter');
         if (!is_null($field)) {
             $filterTag->{$field} = (string) $value;
         }
 
-        $response = $this->_client->request($packet, \PleskX\Api\Client::RESPONSE_FULL);
+        $response = $this->client->request($packet, \PleskX\Api\Client::RESPONSE_FULL);
 
         $items = [];
         foreach ($response->xpath('//result') as $xmlResult) {

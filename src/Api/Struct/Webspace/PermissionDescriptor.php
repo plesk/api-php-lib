@@ -3,9 +3,9 @@
 
 namespace PleskX\Api\Struct\Webspace;
 
-use PleskX\Api\Struct;
+use PleskX\Api\AbstractStruct;
 
-class PermissionDescriptor extends Struct
+class PermissionDescriptor extends AbstractStruct
 {
     public array $permissions;
 

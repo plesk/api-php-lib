@@ -3,9 +3,9 @@
 
 namespace PleskX\Api\Struct\Webspace;
 
-use PleskX\Api\Struct;
+use PleskX\Api\AbstractStruct;
 
-class LimitDescriptor extends Struct
+class LimitDescriptor extends AbstractStruct
 {
     public array $limits;
 

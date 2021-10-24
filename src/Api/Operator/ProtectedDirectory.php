@@ -9,7 +9,7 @@ use PleskX\Api\Struct\ProtectedDirectory as Struct;
 
 class ProtectedDirectory extends Operator
 {
-    protected string $_wrapperTag = 'protected-dir';
+    protected string $wrapperTag = 'protected-dir';
 
     /**
      * @param string $name
@@ -20,14 +20,14 @@ class ProtectedDirectory extends Operator
      */
     public function add($name, $siteId, $header = '')
     {
-        $packet = $this->_client->getPacket();
-        $info = $packet->addChild($this->_wrapperTag)->addChild('add');
+        $packet = $this->client->getPacket();
+        $info = $packet->addChild($this->wrapperTag)->addChild('add');
 
         $info->addChild('site-id', (string) $siteId);
         $info->addChild('name', $name);
         $info->addChild('header', $header);
 
-        return new Struct\Info($this->_client->request($packet));
+        return new Struct\Info($this->client->request($packet));
     }
 
     /**
@@ -38,7 +38,7 @@ class ProtectedDirectory extends Operator
      */
     public function delete($field, $value)
     {
-        return $this->_delete($field, $value, 'delete');
+        return $this->deleteBy($field, $value, 'delete');
     }
 
     /**
@@ -62,7 +62,7 @@ class ProtectedDirectory extends Operator
      */
     public function getAll(string $field, $value): array
     {
-        $response = $this->_get('get', $field, $value);
+        $response = $this->getBy('get', $field, $value);
         $items = [];
         foreach ($response->xpath('//result/data') as $xmlResult) {
             $items[] = new Struct\DataInfo($xmlResult);
@@ -80,14 +80,14 @@ class ProtectedDirectory extends Operator
      */
     public function addUser($protectedDirectory, $login, $password)
     {
-        $packet = $this->_client->getPacket();
-        $info = $packet->addChild($this->_wrapperTag)->addChild('add-user');
+        $packet = $this->client->getPacket();
+        $info = $packet->addChild($this->wrapperTag)->addChild('add-user');
 
         $info->{'pd-id'} = (string) $protectedDirectory->id;
         $info->login = $login;
         $info->password = $password;
 
-        return new Struct\UserInfo($this->_client->request($packet));
+        return new Struct\UserInfo($this->client->request($packet));
     }
 
     /**
@@ -98,7 +98,7 @@ class ProtectedDirectory extends Operator
      */
     public function deleteUser($field, $value)
     {
-        return $this->_delete($field, $value, 'delete-user');
+        return $this->deleteBy($field, $value, 'delete-user');
     }
 
     /**
@@ -108,14 +108,14 @@ class ProtectedDirectory extends Operator
      *
      * @return \PleskX\Api\XmlResponse
      */
-    private function _get(string $command, string $field, $value)
+    private function getBy(string $command, string $field, $value)
     {
-        $packet = $this->_client->getPacket();
-        $getTag = $packet->addChild($this->_wrapperTag)->addChild($command);
+        $packet = $this->client->getPacket();
+        $getTag = $packet->addChild($this->wrapperTag)->addChild($command);
 
         $filterTag = $getTag->addChild('filter');
         $filterTag->{$field} = (string) $value;
 
-        return $this->_client->request($packet, Client::RESPONSE_FULL);
+        return $this->client->request($packet, Client::RESPONSE_FULL);
     }
 }

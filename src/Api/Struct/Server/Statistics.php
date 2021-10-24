@@ -3,9 +3,9 @@
 
 namespace PleskX\Api\Struct\Server;
 
-use PleskX\Api\Struct;
+use PleskX\Api\AbstractStruct;
 
-class Statistics extends Struct
+class Statistics extends AbstractStruct
 {
     /** @var Statistics\Objects */
     public $objects;

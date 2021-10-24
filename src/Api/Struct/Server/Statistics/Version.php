@@ -3,9 +3,9 @@
 
 namespace PleskX\Api\Struct\Server\Statistics;
 
-use PleskX\Api\Struct;
+use PleskX\Api\AbstractStruct;
 
-class Version extends Struct
+class Version extends AbstractStruct
 {
     public string $internalName;
     public string $version;
@@ -16,7 +16,7 @@ class Version extends Struct
 
     public function __construct(\SimpleXMLElement $apiResponse)
     {
-        $this->_initScalarProperties($apiResponse, [
+        $this->initScalarProperties($apiResponse, [
             ['plesk_name' => 'internalName'],
             ['plesk_version' => 'version'],
             ['plesk_build' => 'build'],

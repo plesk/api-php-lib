@@ -3,9 +3,9 @@
 
 namespace PleskX\Api\Struct\Server\Statistics;
 
-use PleskX\Api\Struct;
+use PleskX\Api\AbstractStruct;
 
-class LoadAverage extends Struct
+class LoadAverage extends AbstractStruct
 {
     public float $load1min;
     public float $load5min;

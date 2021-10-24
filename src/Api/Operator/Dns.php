@@ -14,14 +14,14 @@ class Dns extends \PleskX\Api\Operator
      */
     public function create($properties)
     {
-        $packet = $this->_client->getPacket();
-        $info = $packet->addChild($this->_wrapperTag)->addChild('add_rec');
+        $packet = $this->client->getPacket();
+        $info = $packet->addChild($this->wrapperTag)->addChild('add_rec');
 
         foreach ($properties as $name => $value) {
             $info->{$name} = $value;
         }
 
-        return new Struct\Info($this->_client->request($packet));
+        return new Struct\Info($this->client->request($packet));
     }
 
     /**
@@ -33,17 +33,17 @@ class Dns extends \PleskX\Api\Operator
      */
     public function bulkCreate(array $records): array
     {
-        $packet = $this->_client->getPacket();
+        $packet = $this->client->getPacket();
 
         foreach ($records as $properties) {
-            $info = $packet->addChild($this->_wrapperTag)->addChild('add_rec');
+            $info = $packet->addChild($this->wrapperTag)->addChild('add_rec');
 
             foreach ($properties as $name => $value) {
                 $info->{$name} = $value;
             }
         }
 
-        $response = $this->_client->request($packet, \PleskX\Api\Client::RESPONSE_FULL);
+        $response = $this->client->request($packet, \PleskX\Api\Client::RESPONSE_FULL);
         $items = [];
         foreach ($response->xpath('//result') as $xmlResult) {
             $items[] = $xmlResult;
@@ -73,13 +73,13 @@ class Dns extends \PleskX\Api\Operator
      */
     public function getAll(string $field, $value): array
     {
-        $packet = $this->_client->getPacket();
-        $getTag = $packet->addChild($this->_wrapperTag)->addChild('get_rec');
+        $packet = $this->client->getPacket();
+        $getTag = $packet->addChild($this->wrapperTag)->addChild('get_rec');
 
         $filterTag = $getTag->addChild('filter');
         $filterTag->addChild($field, (string) $value);
 
-        $response = $this->_client->request($packet, \PleskX\Api\Client::RESPONSE_FULL);
+        $response = $this->client->request($packet, \PleskX\Api\Client::RESPONSE_FULL);
         $items = [];
         foreach ($response->xpath('//result') as $xmlResult) {
             $item = new Struct\Info($xmlResult->data);
@@ -98,7 +98,7 @@ class Dns extends \PleskX\Api\Operator
      */
     public function delete(string $field, $value): bool
     {
-        return $this->_delete($field, $value, 'del_rec');
+        return $this->deleteBy($field, $value, 'del_rec');
     }
 
     /**
@@ -110,14 +110,14 @@ class Dns extends \PleskX\Api\Operator
      */
     public function bulkDelete(array $recordIds): array
     {
-        $packet = $this->_client->getPacket();
+        $packet = $this->client->getPacket();
 
         foreach ($recordIds as $recordId) {
-            $packet->addChild($this->_wrapperTag)->addChild('del_rec')
+            $packet->addChild($this->wrapperTag)->addChild('del_rec')
                 ->addChild('filter')->addChild('id', $recordId);
         }
 
-        $response = $this->_client->request($packet, \PleskX\Api\Client::RESPONSE_FULL);
+        $response = $this->client->request($packet, \PleskX\Api\Client::RESPONSE_FULL);
         $items = [];
         foreach ($response->xpath('//result') as $xmlResult) {
             $items[] = $xmlResult;

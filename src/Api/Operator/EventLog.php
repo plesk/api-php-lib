@@ -7,7 +7,7 @@ use PleskX\Api\Struct\EventLog as Struct;
 
 class EventLog extends \PleskX\Api\Operator
 {
-    protected string $_wrapperTag = 'event_log';
+    protected string $wrapperTag = 'event_log';
 
     /**
      * @return Struct\Event[]

@@ -20,6 +20,6 @@ class InternalClient extends Client
      */
     public function setLogin(string $login): void
     {
-        $this->_login = $login;
+        $this->login = $login;
     }
 }

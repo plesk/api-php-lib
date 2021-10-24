@@ -3,25 +3,25 @@
 
 namespace PleskXTest;
 
-class ServicePlanTest extends TestCase
+class ServicePlanAbstractTest extends AbstractTestCase
 {
     public function testGet()
     {
-        $servicePlan = static::_createServicePlan();
-        $servicePlanInfo = static::$_client->servicePlan()->get('id', $servicePlan->id);
+        $servicePlan = static::createServicePlan();
+        $servicePlanInfo = static::$client->servicePlan()->get('id', $servicePlan->id);
         $this->assertNotEmpty($servicePlanInfo->name);
         $this->assertSame($servicePlan->id, $servicePlanInfo->id);
 
-        static::$_client->servicePlan()->delete('id', $servicePlan->id);
+        static::$client->servicePlan()->delete('id', $servicePlan->id);
     }
 
     public function testGetAll()
     {
-        static::_createServicePlan();
-        static::_createServicePlan();
-        static::_createServicePlan();
+        static::createServicePlan();
+        static::createServicePlan();
+        static::createServicePlan();
 
-        $servicePlans = static::$_client->servicePlan()->getAll();
+        $servicePlans = static::$client->servicePlan()->getAll();
         $this->assertIsArray($servicePlans);
         $this->assertGreaterThan(2, count($servicePlans));
         $this->assertNotEmpty($servicePlans[0]->name);
@@ -29,16 +29,16 @@ class ServicePlanTest extends TestCase
 
     public function testCreateServicePlan()
     {
-        $servicePlan = static::_createServicePlan();
+        $servicePlan = static::createServicePlan();
         $this->assertGreaterThan(0, $servicePlan->id);
 
-        static::$_client->servicePlan()->delete('id', $servicePlan->id);
+        static::$client->servicePlan()->delete('id', $servicePlan->id);
     }
 
     public function testDelete()
     {
-        $servicePlan = static::_createServicePlan();
-        $result = static::$_client->servicePlan()->delete('id', $servicePlan->id);
+        $servicePlan = static::createServicePlan();
+        $result = static::$client->servicePlan()->delete('id', $servicePlan->id);
 
         $this->assertTrue($result);
     }
@@ -72,9 +72,9 @@ class ServicePlanTest extends TestCase
             ],
         ];
 
-        $servicePlan = static::$_client->servicePlan()->create($properties);
+        $servicePlan = static::$client->servicePlan()->create($properties);
         $this->assertGreaterThan(0, $servicePlan->id);
 
-        static::$_client->servicePlan()->delete('id', $servicePlan->id);
+        static::$client->servicePlan()->delete('id', $servicePlan->id);
     }
 }

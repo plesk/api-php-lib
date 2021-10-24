@@ -3,9 +3,9 @@
 
 namespace PleskX\Api\Struct\Ip;
 
-use PleskX\Api\Struct;
+use PleskX\Api\AbstractStruct;
 
-class Info extends Struct
+class Info extends AbstractStruct
 {
     public string $ipAddress;
     public string $netmask;
@@ -14,7 +14,7 @@ class Info extends Struct
 
     public function __construct(\SimpleXMLElement $apiResponse)
     {
-        $this->_initScalarProperties($apiResponse, [
+        $this->initScalarProperties($apiResponse, [
             'ip_address',
             'netmask',
             'type',

@@ -25,8 +25,8 @@ class Ui extends \PleskX\Api\Operator
      */
     public function createCustomButton($owner, $properties)
     {
-        $packet = $this->_client->getPacket();
-        $buttonNode = $packet->addChild($this->_wrapperTag)->addChild('create-custombutton');
+        $packet = $this->client->getPacket();
+        $buttonNode = $packet->addChild($this->wrapperTag)->addChild('create-custombutton');
         $buttonNode->addChild('owner')->addChild($owner);
         $propertiesNode = $buttonNode->addChild('properties');
 
@@ -34,7 +34,7 @@ class Ui extends \PleskX\Api\Operator
             $propertiesNode->{$name} = $value;
         }
 
-        $response = $this->_client->request($packet);
+        $response = $this->client->request($packet);
 
         return (int) $response->id;
     }
@@ -58,6 +58,6 @@ class Ui extends \PleskX\Api\Operator
      */
     public function deleteCustomButton($id)
     {
-        return $this->_delete('custombutton-id', $id, 'delete-custombutton');
+        return $this->deleteBy('custombutton-id', $id, 'delete-custombutton');
     }
 }

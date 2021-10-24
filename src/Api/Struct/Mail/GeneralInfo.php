@@ -3,9 +3,9 @@
 
 namespace PleskX\Api\Struct\Mail;
 
-use PleskX\Api\Struct;
+use PleskX\Api\AbstractStruct;
 
-class GeneralInfo extends Struct
+class GeneralInfo extends AbstractStruct
 {
     public int $id;
     public string $name;
@@ -13,7 +13,7 @@ class GeneralInfo extends Struct
 
     public function __construct(\SimpleXMLElement $apiResponse)
     {
-        $this->_initScalarProperties($apiResponse, [
+        $this->initScalarProperties($apiResponse, [
             'id',
             'name',
             'description',

@@ -7,7 +7,7 @@ use PleskX\Api\Struct\SecretKey as Struct;
 
 class SecretKey extends \PleskX\Api\Operator
 {
-    protected string $_wrapperTag = 'secret_key';
+    protected string $wrapperTag = 'secret_key';
 
     /**
      * @param string $ipAddress
@@ -17,8 +17,8 @@ class SecretKey extends \PleskX\Api\Operator
      */
     public function create($ipAddress = '', $description = '')
     {
-        $packet = $this->_client->getPacket();
-        $createTag = $packet->addChild($this->_wrapperTag)->addChild('create');
+        $packet = $this->client->getPacket();
+        $createTag = $packet->addChild($this->wrapperTag)->addChild('create');
 
         if ('' !== $ipAddress) {
             $createTag->addChild('ip_address', $ipAddress);
@@ -28,7 +28,7 @@ class SecretKey extends \PleskX\Api\Operator
             $createTag->addChild('description', $description);
         }
 
-        $response = $this->_client->request($packet);
+        $response = $this->client->request($packet);
 
         return (string) $response->key;
     }
@@ -40,7 +40,7 @@ class SecretKey extends \PleskX\Api\Operator
      */
     public function delete($keyId)
     {
-        return $this->_delete('key', $keyId, 'delete');
+        return $this->deleteBy('key', $keyId, 'delete');
     }
 
     /**
@@ -50,7 +50,7 @@ class SecretKey extends \PleskX\Api\Operator
      */
     public function get($keyId)
     {
-        $items = $this->_get($keyId);
+        $items = $this->getBy($keyId);
 
         return reset($items);
     }
@@ -60,7 +60,7 @@ class SecretKey extends \PleskX\Api\Operator
      */
     public function getAll()
     {
-        return $this->_get();
+        return $this->getBy();
     }
 
     /**
@@ -68,17 +68,17 @@ class SecretKey extends \PleskX\Api\Operator
      *
      * @return Struct\Info[]
      */
-    public function _get($keyId = null)
+    public function getBy($keyId = null)
     {
-        $packet = $this->_client->getPacket();
-        $getTag = $packet->addChild($this->_wrapperTag)->addChild('get_info');
+        $packet = $this->client->getPacket();
+        $getTag = $packet->addChild($this->wrapperTag)->addChild('get_info');
 
         $filterTag = $getTag->addChild('filter');
         if (!is_null($keyId)) {
             $filterTag->addChild('key', $keyId);
         }
 
-        $response = $this->_client->request($packet, \PleskX\Api\Client::RESPONSE_FULL);
+        $response = $this->client->request($packet, \PleskX\Api\Client::RESPONSE_FULL);
 
         $items = [];
         foreach ($response->xpath('//result/key_info') as $keyInfo) {

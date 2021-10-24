@@ -19,8 +19,8 @@ class Mail extends Operator
      */
     public function create($name, $siteId, $mailbox = false, $password = '')
     {
-        $packet = $this->_client->getPacket();
-        $info = $packet->addChild($this->_wrapperTag)->addChild('create');
+        $packet = $this->client->getPacket();
+        $info = $packet->addChild($this->wrapperTag)->addChild('create');
 
         $filter = $info->addChild('filter');
         $filter->addChild('site-id', (string) $siteId);
@@ -33,7 +33,7 @@ class Mail extends Operator
             $mailname->addChild('password')->value = $password;
         }
 
-        $response = $this->_client->request($packet);
+        $response = $this->client->request($packet);
 
         return new Struct\Info($response->mailname);
     }
@@ -47,13 +47,13 @@ class Mail extends Operator
      */
     public function delete(string $field, $value, $siteId): bool
     {
-        $packet = $this->_client->getPacket();
-        $filter = $packet->addChild($this->_wrapperTag)->addChild('remove')->addChild('filter');
+        $packet = $this->client->getPacket();
+        $filter = $packet->addChild($this->wrapperTag)->addChild('remove')->addChild('filter');
 
         $filter->addChild('site-id', (string) $siteId);
         $filter->{$field} = (string) $value;
 
-        $response = $this->_client->request($packet);
+        $response = $this->client->request($packet);
 
         return 'ok' === (string) $response->status;
     }
@@ -79,8 +79,8 @@ class Mail extends Operator
      */
     public function getAll($siteId, $name = null)
     {
-        $packet = $this->_client->getPacket();
-        $getTag = $packet->addChild($this->_wrapperTag)->addChild('get_info');
+        $packet = $this->client->getPacket();
+        $getTag = $packet->addChild($this->wrapperTag)->addChild('get_info');
 
         $filterTag = $getTag->addChild('filter');
         $filterTag->addChild('site-id', (string) $siteId);
@@ -88,7 +88,7 @@ class Mail extends Operator
             $filterTag->addChild('name', $name);
         }
 
-        $response = $this->_client->request($packet, Client::RESPONSE_FULL);
+        $response = $this->client->request($packet, Client::RESPONSE_FULL);
         $items = [];
         foreach ($response->xpath('//result') as $xmlResult) {
             if (!isset($xmlResult->mailname)) {

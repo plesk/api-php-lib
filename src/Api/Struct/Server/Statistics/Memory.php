@@ -3,9 +3,9 @@
 
 namespace PleskX\Api\Struct\Server\Statistics;
 
-use PleskX\Api\Struct;
+use PleskX\Api\AbstractStruct;
 
-class Memory extends Struct
+class Memory extends AbstractStruct
 {
     public int $total;
     public int $used;
@@ -16,7 +16,7 @@ class Memory extends Struct
 
     public function __construct(\SimpleXMLElement $apiResponse)
     {
-        $this->_initScalarProperties($apiResponse, [
+        $this->initScalarProperties($apiResponse, [
             'total',
             'used',
             'free',

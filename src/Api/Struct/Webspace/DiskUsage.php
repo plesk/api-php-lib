@@ -3,9 +3,9 @@
 
 namespace PleskX\Api\Struct\Webspace;
 
-use PleskX\Api\Struct;
+use PleskX\Api\AbstractStruct;
 
-class DiskUsage extends Struct
+class DiskUsage extends AbstractStruct
 {
     public int $httpdocs;
     public int $httpsdocs;
@@ -21,7 +21,7 @@ class DiskUsage extends Struct
 
     public function __construct(\SimpleXMLElement $apiResponse)
     {
-        $this->_initScalarProperties($apiResponse, [
+        $this->initScalarProperties($apiResponse, [
             'httpdocs',
             'httpsdocs',
             'subdomains',

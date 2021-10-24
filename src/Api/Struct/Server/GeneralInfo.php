@@ -3,9 +3,9 @@
 
 namespace PleskX\Api\Struct\Server;
 
-use PleskX\Api\Struct;
+use PleskX\Api\AbstractStruct;
 
-class GeneralInfo extends Struct
+class GeneralInfo extends AbstractStruct
 {
     public string $serverName;
     public string $serverGuid;
@@ -13,7 +13,7 @@ class GeneralInfo extends Struct
 
     public function __construct(\SimpleXMLElement $apiResponse)
     {
-        $this->_initScalarProperties($apiResponse, [
+        $this->initScalarProperties($apiResponse, [
             'server_name',
             'server_guid',
             'mode',

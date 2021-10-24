@@ -3,16 +3,16 @@
 
 namespace PleskX\Api\Struct\ProtectedDirectory;
 
-use PleskX\Api\Struct;
+use PleskX\Api\AbstractStruct;
 
-class DataInfo extends Struct
+class DataInfo extends AbstractStruct
 {
     public string $name;
     public string $header;
 
     public function __construct(\SimpleXMLElement $apiResponse)
     {
-        $this->_initScalarProperties($apiResponse, [
+        $this->initScalarProperties($apiResponse, [
             'name',
             'header',
         ]);

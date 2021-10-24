@@ -14,14 +14,14 @@ class Certificate extends \PleskX\Api\Operator
      */
     public function generate($properties)
     {
-        $packet = $this->_client->getPacket();
-        $info = $packet->addChild($this->_wrapperTag)->addChild('generate')->addChild('info');
+        $packet = $this->client->getPacket();
+        $info = $packet->addChild($this->wrapperTag)->addChild('generate')->addChild('info');
 
         foreach ($properties as $name => $value) {
             $info->{$name} = $value;
         }
 
-        $response = $this->_client->request($packet);
+        $response = $this->client->request($packet);
 
         return new Struct\Info($response);
     }

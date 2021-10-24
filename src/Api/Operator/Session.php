@@ -15,7 +15,7 @@ class Session extends \PleskX\Api\Operator
      */
     public function create($username, $userIp)
     {
-        $packet = $this->_client->getPacket();
+        $packet = $this->client->getPacket();
         $creator = $packet->addChild('server')->addChild('create_session');
 
         $creator->addChild('login', $username);
@@ -24,7 +24,7 @@ class Session extends \PleskX\Api\Operator
         $loginData->addChild('user_ip', base64_encode($userIp));
         $loginData->addChild('source_server', '');
 
-        $response = $this->_client->request($packet);
+        $response = $this->client->request($packet);
 
         return (string) $response->id;
     }

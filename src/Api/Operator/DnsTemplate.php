@@ -7,7 +7,7 @@ use PleskX\Api\Struct\Dns as Struct;
 
 class DnsTemplate extends \PleskX\Api\Operator
 {
-    protected string $_wrapperTag = 'dns';
+    protected string $wrapperTag = 'dns';
 
     /**
      * @param array $properties
@@ -16,15 +16,15 @@ class DnsTemplate extends \PleskX\Api\Operator
      */
     public function create(array $properties)
     {
-        $packet = $this->_client->getPacket();
-        $info = $packet->addChild($this->_wrapperTag)->addChild('add_rec');
+        $packet = $this->client->getPacket();
+        $info = $packet->addChild($this->wrapperTag)->addChild('add_rec');
 
         unset($properties['site-id'], $properties['site-alias-id']);
         foreach ($properties as $name => $value) {
             $info->{$name} = $value;
         }
 
-        return new Struct\Info($this->_client->request($packet));
+        return new Struct\Info($this->client->request($packet));
     }
 
     /**
@@ -48,8 +48,8 @@ class DnsTemplate extends \PleskX\Api\Operator
      */
     public function getAll($field = null, $value = null): array
     {
-        $packet = $this->_client->getPacket();
-        $getTag = $packet->addChild($this->_wrapperTag)->addChild('get_rec');
+        $packet = $this->client->getPacket();
+        $getTag = $packet->addChild($this->wrapperTag)->addChild('get_rec');
 
         $filterTag = $getTag->addChild('filter');
         if (!is_null($field)) {
@@ -57,7 +57,7 @@ class DnsTemplate extends \PleskX\Api\Operator
         }
         $getTag->addChild('template');
 
-        $response = $this->_client->request($packet, \PleskX\Api\Client::RESPONSE_FULL);
+        $response = $this->client->request($packet, \PleskX\Api\Client::RESPONSE_FULL);
         $items = [];
         foreach ($response->xpath('//result') as $xmlResult) {
             $item = new Struct\Info($xmlResult->data);
@@ -76,12 +76,12 @@ class DnsTemplate extends \PleskX\Api\Operator
      */
     public function delete(string $field, $value): bool
     {
-        $packet = $this->_client->getPacket();
-        $delTag = $packet->addChild($this->_wrapperTag)->addChild('del_rec');
+        $packet = $this->client->getPacket();
+        $delTag = $packet->addChild($this->wrapperTag)->addChild('del_rec');
         $delTag->addChild('filter')->addChild($field, (string) $value);
         $delTag->addChild('template');
 
-        $response = $this->_client->request($packet);
+        $response = $this->client->request($packet);
 
         return 'ok' === (string) $response->status;
     }

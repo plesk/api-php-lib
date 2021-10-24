@@ -5,5 +5,5 @@ namespace PleskX\Api\Operator;
 
 class VirtualDirectory extends \PleskX\Api\Operator
 {
-    protected string $_wrapperTag = 'virtdir';
+    protected string $wrapperTag = 'virtdir';
 }

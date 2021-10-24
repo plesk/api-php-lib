@@ -3,7 +3,7 @@
 
 namespace PleskX\Api;
 
-abstract class Struct
+abstract class AbstractStruct
 {
     /**
      * @param string $property
@@ -13,7 +13,7 @@ abstract class Struct
      */
     public function __set(string $property, $value)
     {
-        throw new \Exception("Try to set an undeclared property '$property'.");
+        throw new \Exception("Try to set an undeclared property '$property' to a value: $value.");
     }
 
     /**
@@ -24,7 +24,7 @@ abstract class Struct
      *
      * @throws \Exception
      */
-    protected function _initScalarProperties($apiResponse, array $properties): void
+    protected function initScalarProperties($apiResponse, array $properties): void
     {
         foreach ($properties as $property) {
             if (is_array($property)) {
@@ -68,7 +68,7 @@ abstract class Struct
      */
     private function underToCamel(string $under): string
     {
-        $under = '_'.str_replace('_', ' ', strtolower($under));
+        $under = '_' . str_replace('_', ' ', strtolower($under));
 
         return ltrim(str_replace(' ', '', ucwords($under)), '_');
     }

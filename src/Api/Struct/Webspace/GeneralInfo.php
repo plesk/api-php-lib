@@ -3,9 +3,9 @@
 
 namespace PleskX\Api\Struct\Webspace;
 
-use PleskX\Api\Struct;
+use PleskX\Api\AbstractStruct;
 
-class GeneralInfo extends Struct
+class GeneralInfo extends AbstractStruct
 {
     public int $id;
     public string $creationDate;
@@ -23,7 +23,7 @@ class GeneralInfo extends Struct
 
     public function __construct(\SimpleXMLElement $apiResponse)
     {
-        $this->_initScalarProperties($apiResponse, [
+        $this->initScalarProperties($apiResponse, [
             ['cr_date' => 'creationDate'],
             'name',
             'ascii-name',
