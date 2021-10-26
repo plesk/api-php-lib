@@ -31,7 +31,10 @@
     "scripts": {
         "test": "phpunit",
         "test:watch": "phpunit-watcher watch",
-        "lint": "psalm"
+        "lint": [
+            "psalm",
+            "phpcs"
+        ]
     },
     "autoload": {
         "psr-4": {
