@@ -5,10 +5,8 @@ namespace PleskXTest;
 
 class DnsTest extends AbstractTestCase
 {
-    /** @var \PleskX\Api\Struct\Webspace\Info */
-    private static $webspace;
-
-    private static $isDnsSupported;
+    private static \PleskX\Api\Struct\Webspace\Info $webspace;
+    private static bool $isDnsSupported;
 
     public static function setUpBeforeClass(): void
     {
@@ -45,9 +43,9 @@ class DnsTest extends AbstractTestCase
     }
 
     /**
-     * @return \PleskX\Api\XmlResponse[]
+     * @return \SimpleXMLElement[]
      */
-    public function testBulkCreate()
+    public function testBulkCreate(): array
     {
         $response = static::$client->dns()->bulkCreate([
             [
@@ -84,7 +82,7 @@ class DnsTest extends AbstractTestCase
     /**
      * @depends testBulkCreate
      *
-     * @param \PleskX\Api\XmlResponse[] $createdRecords
+     * @param \SimpleXMLElement[] $createdRecords
      */
     public function testBulkDelete(array $createdRecords)
     {

@@ -5,11 +5,8 @@ namespace PleskXTest;
 
 class SubdomainTest extends AbstractTestCase
 {
-    /** @var \PleskX\Api\Struct\Webspace\Info */
-    private static $webspace;
-
-    /** @var string */
-    private static $webspaceName;
+    private static \PleskX\Api\Struct\Webspace\Info $webspace;
+    private static string $webspaceName;
 
     public static function setUpBeforeClass(): void
     {
@@ -19,12 +16,7 @@ class SubdomainTest extends AbstractTestCase
         static::$webspaceName = $webspaceInfo->name;
     }
 
-    /**
-     * @param string $name
-     *
-     * @return \PleskX\Api\Struct\Subdomain\Info
-     */
-    private function createSubdomain(string $name)
+    private function createSubdomain(string $name): \PleskX\Api\Struct\Subdomain\Info
     {
         return static::$client->subdomain()->create([
             'parent' => static::$webspaceName,

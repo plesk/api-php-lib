@@ -7,8 +7,7 @@ use PleskXTest\Utility\PasswordProvider;
 
 class ProtectedDirectoryTest extends AbstractTestCase
 {
-    /** @var \PleskX\Api\Struct\Webspace\Info */
-    private static $webspace;
+    private static \PleskX\Api\Struct\Webspace\Info $webspace;
 
     public static function setUpBeforeClass(): void
     {

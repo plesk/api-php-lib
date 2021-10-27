@@ -7,8 +7,7 @@ use PleskXTest\Utility\PasswordProvider;
 
 class DatabaseTest extends AbstractTestCase
 {
-    /** @var \PleskX\Api\Struct\Webspace\Info */
-    private static $webspace;
+    private static \PleskX\Api\Struct\Webspace\Info $webspace;
 
     public static function setUpBeforeClass(): void
     {
@@ -207,12 +206,7 @@ class DatabaseTest extends AbstractTestCase
         static::$client->database()->delete('id', $database->id);
     }
 
-    /**
-     * @param array $params
-     *
-     * @return \PleskX\Api\Struct\Database\Info
-     */
-    private function createDatabase(array $params)
+    private function createDatabase(array $params): \PleskX\Api\Struct\Database\Info
     {
         $database = static::$client->database()->create($params);
         $this->assertIsInt($database->id);
@@ -221,12 +215,7 @@ class DatabaseTest extends AbstractTestCase
         return $database;
     }
 
-    /**
-     * @param array $params
-     *
-     * @return \PleskX\Api\Struct\Database\UserInfo
-     */
-    private function createUser(array $params)
+    private function createUser(array $params): \PleskX\Api\Struct\Database\UserInfo
     {
         $user = static::$client->database()->createUser($params);
         $this->assertIsInt($user->id);

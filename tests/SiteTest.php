@@ -7,8 +7,7 @@ use PleskXTest\Utility\KeyLimitChecker;
 
 class SiteTest extends AbstractTestCase
 {
-    /** @var \PleskX\Api\Struct\Webspace\Info */
-    private static $webspace;
+    private static \PleskX\Api\Struct\Webspace\Info $webspace;
 
     public static function setUpBeforeClass(): void
     {
@@ -27,7 +26,7 @@ class SiteTest extends AbstractTestCase
         }
     }
 
-    private function createSite($name, array $properties = [])
+    private function createSite($name, array $properties = []): \PleskX\Api\Struct\Site\Info
     {
         $properties = array_merge([
             'name' => $name,

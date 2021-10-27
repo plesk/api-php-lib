@@ -7,13 +7,8 @@ use PleskXTest\Utility\PasswordProvider;
 
 class MailTest extends AbstractTestCase
 {
-    /** @var \PleskX\Api\Struct\Webspace\Info */
-    private static $webspace;
-
-    /**
-     * @var bool
-     */
-    private static $isMailSupported;
+    private static \PleskX\Api\Struct\Webspace\Info $webspace;
+    private static bool $isMailSupported;
 
     public static function setUpBeforeClass(): void
     {

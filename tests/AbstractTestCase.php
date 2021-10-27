@@ -3,15 +3,16 @@
 
 namespace PleskXTest;
 
+use PHPUnit\Framework\TestCase;
+use PleskX\Api\Client;
 use PleskXTest\Utility\PasswordProvider;
 
-abstract class AbstractTestCase extends \PHPUnit\Framework\TestCase
+abstract class AbstractTestCase extends TestCase
 {
-    /** @var \PleskX\Api\Client */
-    protected static $client;
+    protected static Client $client;
 
-    private static $webspaces = [];
-    private static $servicePlans = [];
+    private static array $webspaces = [];
+    private static array $servicePlans = [];
 
     public static function setUpBeforeClass(): void
     {
@@ -27,7 +28,7 @@ abstract class AbstractTestCase extends \PHPUnit\Framework\TestCase
             list($host, $port, $scheme) = [$parsedUrl['host'], $parsedUrl['port'], $parsedUrl['scheme']];
         }
 
-        static::$client = new \PleskX\Api\Client($host, $port, $scheme);
+        static::$client = new Client($host, $port, $scheme);
         static::$client->setCredentials($login, $password);
 
         $proxy = getenv('REMOTE_PROXY');
@@ -55,10 +56,7 @@ abstract class AbstractTestCase extends \PHPUnit\Framework\TestCase
         }
     }
 
-    /**
-     * @return string
-     */
-    protected static function getIpAddress()
+    protected static function getIpAddress(): string
     {
         $ips = static::$client->ip()->get();
         $ipInfo = reset($ips);
@@ -66,10 +64,7 @@ abstract class AbstractTestCase extends \PHPUnit\Framework\TestCase
         return $ipInfo->ipAddress;
     }
 
-    /**
-     * @return \PleskX\Api\Struct\Webspace\Info
-     */
-    protected static function createWebspace()
+    protected static function createWebspace(): \PleskX\Api\Struct\Webspace\Info
     {
         $id = uniqid();
         $webspace = static::$client->webspace()->create(
@@ -87,7 +82,7 @@ abstract class AbstractTestCase extends \PHPUnit\Framework\TestCase
         return $webspace;
     }
 
-    protected static function createServicePlan()
+    protected static function createServicePlan(): \PleskX\Api\Struct\ServicePlan\Info
     {
         $id = uniqid();
         $servicePlan = static::$client->servicePlan()->create(['name' => "test{$id}plan"]);

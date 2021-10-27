@@ -5,8 +5,7 @@ namespace PleskXTest;
 
 class SiteAliasTest extends AbstractTestCase
 {
-    /** @var \PleskX\Api\Struct\Webspace\Info */
-    private static $webspace;
+    private static \PleskX\Api\Struct\Webspace\Info $webspace;
 
     public static function setUpBeforeClass(): void
     {
@@ -14,7 +13,7 @@ class SiteAliasTest extends AbstractTestCase
         static::$webspace = static::createWebspace();
     }
 
-    private function createSiteAlias($name, array $properties = [])
+    private function createSiteAlias($name, array $properties = []): \PleskX\Api\Struct\SiteAlias\Info
     {
         $properties = array_merge([
             'name' => $name,
