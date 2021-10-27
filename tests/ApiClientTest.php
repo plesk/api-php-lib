@@ -5,7 +5,7 @@ namespace PleskXTest;
 
 use PleskX\Api\Client\Exception;
 
-class ApiClientAbstractTest extends AbstractTestCase
+class ApiClientTest extends AbstractTestCase
 {
     public function testWrongProtocol()
     {

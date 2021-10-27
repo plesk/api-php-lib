@@ -3,7 +3,7 @@
 
 namespace PleskXTest;
 
-class IpAbstractTest extends AbstractTestCase
+class IpTest extends AbstractTestCase
 {
     public function testGet()
     {

@@ -6,7 +6,7 @@ namespace PleskXTest;
 use PleskXTest\Utility\KeyLimitChecker;
 use PleskXTest\Utility\PasswordProvider;
 
-class CustomerAbstractTest extends AbstractTestCase
+class CustomerTest extends AbstractTestCase
 {
     private array $customerProperties;
 

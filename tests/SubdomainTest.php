@@ -3,7 +3,7 @@
 
 namespace PleskXTest;
 
-class SubdomainAbstractTest extends AbstractTestCase
+class SubdomainTest extends AbstractTestCase
 {
     /** @var \PleskX\Api\Struct\Webspace\Info */
     private static $webspace;

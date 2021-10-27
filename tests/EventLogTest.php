@@ -3,7 +3,7 @@
 
 namespace PleskXTest;
 
-class EventLogAbstractTest extends AbstractTestCase
+class EventLogTest extends AbstractTestCase
 {
     public function testGet()
     {

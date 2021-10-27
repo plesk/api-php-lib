@@ -3,7 +3,7 @@
 
 namespace PleskXTest;
 
-class ServerAbstractTest extends AbstractTestCase
+class ServerTest extends AbstractTestCase
 {
     public function testGetProtos()
     {

@@ -3,7 +3,7 @@
 
 namespace PleskXTest;
 
-class ServicePlanAbstractTest extends AbstractTestCase
+class ServicePlanTest extends AbstractTestCase
 {
     public function testGet()
     {

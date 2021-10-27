@@ -3,7 +3,7 @@
 
 namespace PleskXTest;
 
-class DnsAbstractTest extends AbstractTestCase
+class DnsTest extends AbstractTestCase
 {
     /** @var \PleskX\Api\Struct\Webspace\Info */
     private static $webspace;

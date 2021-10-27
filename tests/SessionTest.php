@@ -3,7 +3,7 @@
 
 namespace PleskXTest;
 
-class SessionAbstractTest extends AbstractTestCase
+class SessionTest extends AbstractTestCase
 {
     public function testCreate()
     {

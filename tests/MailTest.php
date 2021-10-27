@@ -5,7 +5,7 @@ namespace PleskXTest;
 
 use PleskXTest\Utility\PasswordProvider;
 
-class MailAbstractTest extends AbstractTestCase
+class MailTest extends AbstractTestCase
 {
     /** @var \PleskX\Api\Struct\Webspace\Info */
     private static $webspace;

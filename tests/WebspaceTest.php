@@ -5,7 +5,7 @@ namespace PleskXTest;
 
 use PleskXTest\Utility\PasswordProvider;
 
-class WebspaceAbstractTest extends AbstractTestCase
+class WebspaceTest extends AbstractTestCase
 {
     public function testGetPermissionDescriptor()
     {

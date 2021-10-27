@@ -3,7 +3,7 @@
 
 namespace PleskXTest;
 
-class CertificateAbstractTest extends AbstractTestCase
+class CertificateTest extends AbstractTestCase
 {
     public function testGenerate()
     {

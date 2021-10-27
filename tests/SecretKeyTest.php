@@ -5,7 +5,7 @@ namespace PleskXTest;
 
 use PleskX\Api\Exception;
 
-class SecretKeyAbstractTest extends AbstractTestCase
+class SecretKeyTest extends AbstractTestCase
 {
     public function testCreate()
     {

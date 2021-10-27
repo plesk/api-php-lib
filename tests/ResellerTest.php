@@ -6,7 +6,7 @@ namespace PleskXTest;
 use PleskXTest\Utility\KeyLimitChecker;
 use PleskXTest\Utility\PasswordProvider;
 
-class ResellerAbstractTest extends AbstractTestCase
+class ResellerTest extends AbstractTestCase
 {
     private array $resellerProperties;
 

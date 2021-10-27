@@ -3,7 +3,7 @@
 
 namespace PleskXTest;
 
-class UiAbstractTest extends AbstractTestCase
+class UiTest extends AbstractTestCase
 {
     private array $customButtonProperties = [
         'place' => 'admin',

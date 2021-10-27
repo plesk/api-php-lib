@@ -3,7 +3,7 @@
 
 namespace PleskXTest;
 
-class PhpHandlerAbstractTest extends AbstractTestCase
+class PhpHandlerTest extends AbstractTestCase
 {
     public function testGet()
     {

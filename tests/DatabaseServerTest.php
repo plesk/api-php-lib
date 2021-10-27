@@ -3,7 +3,7 @@
 
 namespace PleskXTest;
 
-class DatabaseServerAbstractTest extends AbstractTestCase
+class DatabaseServerTest extends AbstractTestCase
 {
     public function testGetSupportedTypes()
     {

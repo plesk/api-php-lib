@@ -3,7 +3,7 @@
 
 namespace PleskXTest;
 
-class SiteAliasAbstractTest extends AbstractTestCase
+class SiteAliasTest extends AbstractTestCase
 {
     /** @var \PleskX\Api\Struct\Webspace\Info */
     private static $webspace;

@@ -3,7 +3,7 @@
 
 namespace PleskXTest;
 
-class DnsTemplateAbstractTest extends AbstractTestCase
+class DnsTemplateTest extends AbstractTestCase
 {
     private static bool $isDnsSupported;
 

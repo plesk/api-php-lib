@@ -5,7 +5,7 @@ namespace PleskXTest;
 
 use PleskXTest\Utility\KeyLimitChecker;
 
-class SiteAbstractTest extends AbstractTestCase
+class SiteTest extends AbstractTestCase
 {
     /** @var \PleskX\Api\Struct\Webspace\Info */
     private static $webspace;

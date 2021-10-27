@@ -5,7 +5,7 @@ namespace PleskXTest;
 
 use PleskXTest\Utility\PasswordProvider;
 
-class ProtectedDirectoryAbstractTest extends AbstractTestCase
+class ProtectedDirectoryTest extends AbstractTestCase
 {
     /** @var \PleskX\Api\Struct\Webspace\Info */
     private static $webspace;

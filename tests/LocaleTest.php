@@ -3,7 +3,7 @@
 
 namespace PleskXTest;
 
-class LocaleAbstractTest extends AbstractTestCase
+class LocaleTest extends AbstractTestCase
 {
     public function testGet()
     {
