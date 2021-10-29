@@ -10,7 +10,7 @@ class Ip extends \PleskX\Api\Operator
     /**
      * @return Struct\Info[]
      */
-    public function get()
+    public function get(): array
     {
         $ips = [];
         $packet = $this->client->getPacket();

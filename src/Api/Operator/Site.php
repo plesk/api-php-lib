@@ -9,12 +9,7 @@ class Site extends \PleskX\Api\Operator
 {
     public const PROPERTIES_HOSTING = 'hosting';
 
-    /**
-     * @param array $properties
-     *
-     * @return Struct\Info
-     */
-    public function create(array $properties)
+    public function create(array $properties): Struct\Info
     {
         $packet = $this->client->getPacket();
         $info = $packet->addChild($this->wrapperTag)->addChild('add');
@@ -48,7 +43,7 @@ class Site extends \PleskX\Api\Operator
      *
      * @return bool
      */
-    public function delete($field, $value)
+    public function delete(string $field, $value): bool
     {
         return $this->deleteBy($field, $value);
     }
@@ -59,7 +54,7 @@ class Site extends \PleskX\Api\Operator
      *
      * @return Struct\GeneralInfo
      */
-    public function get($field, $value)
+    public function get(string $field, $value): Struct\GeneralInfo
     {
         $items = $this->getItems(Struct\GeneralInfo::class, 'gen_info', $field, $value);
 
@@ -72,7 +67,7 @@ class Site extends \PleskX\Api\Operator
      *
      * @return Struct\HostingInfo|null
      */
-    public function getHosting($field, $value)
+    public function getHosting(string $field, $value): ?Struct\HostingInfo
     {
         $items = $this->getItems(
             Struct\HostingInfo::class,
@@ -90,7 +85,7 @@ class Site extends \PleskX\Api\Operator
     /**
      * @return Struct\GeneralInfo[]
      */
-    public function getAll()
+    public function getAll(): array
     {
         return $this->getItems(Struct\GeneralInfo::class, 'gen_info');
     }

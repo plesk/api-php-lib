@@ -9,13 +9,7 @@ class SecretKey extends \PleskX\Api\Operator
 {
     protected string $wrapperTag = 'secret_key';
 
-    /**
-     * @param string $ipAddress
-     * @param string $description
-     *
-     * @return string
-     */
-    public function create($ipAddress = '', $description = '')
+    public function create(string $ipAddress = '', string $description = ''): string
     {
         $packet = $this->client->getPacket();
         $createTag = $packet->addChild($this->wrapperTag)->addChild('create');
@@ -33,22 +27,12 @@ class SecretKey extends \PleskX\Api\Operator
         return (string) $response->key;
     }
 
-    /**
-     * @param string $keyId
-     *
-     * @return bool
-     */
-    public function delete($keyId)
+    public function delete(string $keyId): bool
     {
         return $this->deleteBy('key', $keyId, 'delete');
     }
 
-    /**
-     * @param string $keyId
-     *
-     * @return Struct\Info
-     */
-    public function get($keyId)
+    public function get(string $keyId): Struct\Info
     {
         $items = $this->getBy($keyId);
 
@@ -58,7 +42,7 @@ class SecretKey extends \PleskX\Api\Operator
     /**
      * @return Struct\Info[]
      */
-    public function getAll()
+    public function getAll(): array
     {
         return $this->getBy();
     }
@@ -68,7 +52,7 @@ class SecretKey extends \PleskX\Api\Operator
      *
      * @return Struct\Info[]
      */
-    public function getBy($keyId = null)
+    public function getBy($keyId = null): array
     {
         $packet = $this->client->getPacket();
         $getTag = $packet->addChild($this->wrapperTag)->addChild('get_info');

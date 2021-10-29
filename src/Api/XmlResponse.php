@@ -15,7 +15,7 @@ class XmlResponse extends \SimpleXMLElement
      *
      * @return string
      */
-    public function getValue($node)
+    public function getValue(string $node): string
     {
         return (string) $this->xpath('//' . $node)[0];
     }

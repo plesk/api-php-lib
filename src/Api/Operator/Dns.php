@@ -7,12 +7,7 @@ use PleskX\Api\Struct\Dns as Struct;
 
 class Dns extends \PleskX\Api\Operator
 {
-    /**
-     * @param array $properties
-     *
-     * @return Struct\Info
-     */
-    public function create($properties)
+    public function create(array $properties): Struct\Info
     {
         $packet = $this->client->getPacket();
         $info = $packet->addChild($this->wrapperTag)->addChild('add_rec');
@@ -58,7 +53,7 @@ class Dns extends \PleskX\Api\Operator
      *
      * @return Struct\Info
      */
-    public function get(string $field, $value)
+    public function get(string $field, $value): Struct\Info
     {
         $items = $this->getAll($field, $value);
 

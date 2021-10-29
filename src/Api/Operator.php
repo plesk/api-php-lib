@@ -27,7 +27,7 @@ class Operator
      *
      * @return XmlResponse
      */
-    public function request($request, $mode = Client::RESPONSE_SHORT)
+    public function request($request, $mode = Client::RESPONSE_SHORT): XmlResponse
     {
         $wrapperTag = $this->wrapperTag;
 
@@ -69,9 +69,9 @@ class Operator
      * @param int|string|null $value
      * @param callable|null $filter
      *
-     * @return mixed
+     * @return array
      */
-    protected function getItems($structClass, $infoTag, $field = null, $value = null, callable $filter = null)
+    protected function getItems($structClass, $infoTag, $field = null, $value = null, callable $filter = null): array
     {
         $packet = $this->client->getPacket();
         $getTag = $packet->addChild($this->wrapperTag)->addChild('get');

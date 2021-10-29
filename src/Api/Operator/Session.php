@@ -7,13 +7,7 @@ use PleskX\Api\Struct\Session as Struct;
 
 class Session extends \PleskX\Api\Operator
 {
-    /**
-     * @param string $username
-     * @param string $userIp
-     *
-     * @return string
-     */
-    public function create($username, $userIp)
+    public function create(string $username, string $userIp): string
     {
         $packet = $this->client->getPacket();
         $creator = $packet->addChild('server')->addChild('create_session');
@@ -32,7 +26,7 @@ class Session extends \PleskX\Api\Operator
     /**
      * @return Struct\Info[]
      */
-    public function get()
+    public function get(): array
     {
         $sessions = [];
         $response = $this->request('get');
@@ -44,12 +38,7 @@ class Session extends \PleskX\Api\Operator
         return $sessions;
     }
 
-    /**
-     * @param string $sessionId
-     *
-     * @return bool
-     */
-    public function terminate($sessionId)
+    public function terminate(string $sessionId): bool
     {
         $response = $this->request("terminate.session-id=$sessionId");
 

@@ -7,23 +7,14 @@ use PleskX\Api\Struct\Ui as Struct;
 
 class Ui extends \PleskX\Api\Operator
 {
-    /**
-     * @return array
-     */
-    public function getNavigation()
+    public function getNavigation(): array
     {
         $response = $this->request('get-navigation');
 
         return unserialize(base64_decode($response->navigation));
     }
 
-    /**
-     * @param string $owner
-     * @param array $properties
-     *
-     * @return int
-     */
-    public function createCustomButton($owner, $properties)
+    public function createCustomButton(string $owner, array $properties): int
     {
         $packet = $this->client->getPacket();
         $buttonNode = $packet->addChild($this->wrapperTag)->addChild('create-custombutton');
@@ -39,24 +30,14 @@ class Ui extends \PleskX\Api\Operator
         return (int) $response->id;
     }
 
-    /**
-     * @param int $id
-     *
-     * @return Struct\CustomButton
-     */
-    public function getCustomButton($id)
+    public function getCustomButton(int $id): Struct\CustomButton
     {
         $response = $this->request("get-custombutton.filter.custombutton-id=$id");
 
         return new Struct\CustomButton($response);
     }
 
-    /**
-     * @param int $id
-     *
-     * @return bool
-     */
-    public function deleteCustomButton($id)
+    public function deleteCustomButton(int $id): bool
     {
         return $this->deleteBy('custombutton-id', $id, 'delete-custombutton');
     }

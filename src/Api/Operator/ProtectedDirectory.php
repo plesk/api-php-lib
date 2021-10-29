@@ -11,14 +11,7 @@ class ProtectedDirectory extends Operator
 {
     protected string $wrapperTag = 'protected-dir';
 
-    /**
-     * @param string $name
-     * @param int $siteId
-     * @param string $header
-     *
-     * @return Struct\Info
-     */
-    public function add($name, $siteId, $header = '')
+    public function add(string $name, int $siteId, string $header = ''): Struct\Info
     {
         $packet = $this->client->getPacket();
         $info = $packet->addChild($this->wrapperTag)->addChild('add');
@@ -36,7 +29,7 @@ class ProtectedDirectory extends Operator
      *
      * @return bool
      */
-    public function delete($field, $value)
+    public function delete(string $field, $value): bool
     {
         return $this->deleteBy($field, $value, 'delete');
     }
@@ -45,9 +38,9 @@ class ProtectedDirectory extends Operator
      * @param string $field
      * @param int|string $value
      *
-     * @return Struct\DataInfo|false
+     * @return Struct\DataInfo
      */
-    public function get(string $field, $value)
+    public function get(string $field, $value): Struct\DataInfo
     {
         $items = $this->getAll($field, $value);
 

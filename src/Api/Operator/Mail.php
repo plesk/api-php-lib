@@ -9,15 +9,7 @@ use PleskX\Api\Struct\Mail as Struct;
 
 class Mail extends Operator
 {
-    /**
-     * @param string $name
-     * @param int $siteId
-     * @param bool $mailbox
-     * @param string $password
-     *
-     * @return Struct\Info
-     */
-    public function create($name, $siteId, $mailbox = false, $password = '')
+    public function create(string $name, int $siteId, bool $mailbox = false, string $password = ''): Struct\Info
     {
         $packet = $this->client->getPacket();
         $info = $packet->addChild($this->wrapperTag)->addChild('create');
@@ -45,7 +37,7 @@ class Mail extends Operator
      *
      * @return bool
      */
-    public function delete(string $field, $value, $siteId): bool
+    public function delete(string $field, $value, int $siteId): bool
     {
         $packet = $this->client->getPacket();
         $filter = $packet->addChild($this->wrapperTag)->addChild('remove')->addChild('filter');
@@ -58,13 +50,7 @@ class Mail extends Operator
         return 'ok' === (string) $response->status;
     }
 
-    /**
-     * @param string $name
-     * @param int $siteId
-     *
-     * @return Struct\GeneralInfo
-     */
-    public function get($name, $siteId)
+    public function get(string $name, int $siteId): Struct\GeneralInfo
     {
         $items = $this->getAll($siteId, $name);
 
@@ -77,7 +63,7 @@ class Mail extends Operator
      *
      * @return Struct\GeneralInfo[]
      */
-    public function getAll($siteId, $name = null)
+    public function getAll(int $siteId, $name = null): array
     {
         $packet = $this->client->getPacket();
         $getTag = $packet->addChild($this->wrapperTag)->addChild('get_info');

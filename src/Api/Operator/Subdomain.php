@@ -7,12 +7,7 @@ use PleskX\Api\Struct\Subdomain as Struct;
 
 class Subdomain extends \PleskX\Api\Operator
 {
-    /**
-     * @param array $properties
-     *
-     * @return Struct\Info
-     */
-    public function create($properties)
+    public function create(array $properties): Struct\Info
     {
         $packet = $this->client->getPacket();
         $info = $packet->addChild($this->wrapperTag)->addChild('add');
@@ -40,7 +35,7 @@ class Subdomain extends \PleskX\Api\Operator
      *
      * @return bool
      */
-    public function delete($field, $value)
+    public function delete(string $field, $value): bool
     {
         return $this->deleteBy($field, $value);
     }
@@ -51,7 +46,7 @@ class Subdomain extends \PleskX\Api\Operator
      *
      * @return Struct\Info
      */
-    public function get($field, $value)
+    public function get(string $field, $value): Struct\Info
     {
         $items = $this->getAll($field, $value);
 

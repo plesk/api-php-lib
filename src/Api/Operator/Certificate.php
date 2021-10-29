@@ -7,12 +7,7 @@ use PleskX\Api\Struct\Certificate as Struct;
 
 class Certificate extends \PleskX\Api\Operator
 {
-    /**
-     * @param array $properties
-     *
-     * @return Struct\Info
-     */
-    public function generate($properties)
+    public function generate(array $properties): Struct\Info
     {
         $packet = $this->client->getPacket();
         $info = $packet->addChild($this->wrapperTag)->addChild('generate')->addChild('info');

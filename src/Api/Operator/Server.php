@@ -118,12 +118,6 @@ class Server extends \PleskX\Api\Operator
         return new Struct\UpdatesInfo($this->getInfo('updates'));
     }
 
-    /**
-     * @param string $login
-     * @param string $clientIp
-     *
-     * @return string
-     */
     public function createSession(string $login, string $clientIp): string
     {
         $packet = $this->client->getPacket();

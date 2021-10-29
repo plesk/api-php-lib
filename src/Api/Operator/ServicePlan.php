@@ -7,12 +7,7 @@ use PleskX\Api\Struct\ServicePlan as Struct;
 
 class ServicePlan extends \PleskX\Api\Operator
 {
-    /**
-     * @param array $properties
-     *
-     * @return Struct\Info
-     */
-    public function create($properties)
+    public function create(array $properties): Struct\Info
     {
         $response = $this->request(['add' => $properties]);
 
@@ -25,7 +20,7 @@ class ServicePlan extends \PleskX\Api\Operator
      *
      * @return bool
      */
-    public function delete($field, $value)
+    public function delete(string $field, $value): bool
     {
         return $this->deleteBy($field, $value);
     }
@@ -36,7 +31,7 @@ class ServicePlan extends \PleskX\Api\Operator
      *
      * @return Struct\Info
      */
-    public function get($field, $value)
+    public function get(string $field, $value): Struct\Info
     {
         $items = $this->getBy($field, $value);
 
@@ -46,7 +41,7 @@ class ServicePlan extends \PleskX\Api\Operator
     /**
      * @return Struct\Info[]
      */
-    public function getAll()
+    public function getAll(): array
     {
         return $this->getBy();
     }
@@ -57,7 +52,7 @@ class ServicePlan extends \PleskX\Api\Operator
      *
      * @return Struct\Info[]
      */
-    private function getBy($field = null, $value = null)
+    private function getBy($field = null, $value = null): array
     {
         $packet = $this->client->getPacket();
         $getTag = $packet->addChild($this->wrapperTag)->addChild('get');

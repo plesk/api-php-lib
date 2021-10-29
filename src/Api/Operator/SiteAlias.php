@@ -7,13 +7,7 @@ use PleskX\Api\Struct\SiteAlias as Struct;
 
 class SiteAlias extends \PleskX\Api\Operator
 {
-    /**
-     * @param array $properties
-     * @param array $preferences
-     *
-     * @return Struct\Info
-     */
-    public function create(array $properties, array $preferences = [])
+    public function create(array $properties, array $preferences = []): Struct\Info
     {
         $packet = $this->client->getPacket();
         $info = $packet->addChild($this->wrapperTag)->addChild('create');
@@ -40,7 +34,7 @@ class SiteAlias extends \PleskX\Api\Operator
      *
      * @return bool
      */
-    public function delete($field, $value)
+    public function delete(string $field, $value): bool
     {
         return $this->deleteBy($field, $value, 'delete');
     }
@@ -51,7 +45,7 @@ class SiteAlias extends \PleskX\Api\Operator
      *
      * @return Struct\GeneralInfo
      */
-    public function get($field, $value)
+    public function get(string $field, $value): Struct\GeneralInfo
     {
         $items = $this->getAll($field, $value);
 

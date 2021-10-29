@@ -9,10 +9,7 @@ class DatabaseServer extends \PleskX\Api\Operator
 {
     protected string $wrapperTag = 'db_server';
 
-    /**
-     * @return array
-     */
-    public function getSupportedTypes()
+    public function getSupportedTypes(): array
     {
         $response = $this->request('get-supported-types');
 
@@ -25,7 +22,7 @@ class DatabaseServer extends \PleskX\Api\Operator
      *
      * @return Struct\Info
      */
-    public function get(string $field, $value)
+    public function get(string $field, $value): Struct\Info
     {
         $items = $this->getBy($field, $value);
 
@@ -35,7 +32,7 @@ class DatabaseServer extends \PleskX\Api\Operator
     /**
      * @return Struct\Info[]
      */
-    public function getAll()
+    public function getAll(): array
     {
         return $this->getBy();
     }
@@ -46,7 +43,7 @@ class DatabaseServer extends \PleskX\Api\Operator
      *
      * @return Struct\Info[]
      */
-    private function getBy($field = null, $value = null)
+    private function getBy($field = null, $value = null): array
     {
         $packet = $this->client->getPacket();
         $getTag = $packet->addChild($this->wrapperTag)->addChild('get');
