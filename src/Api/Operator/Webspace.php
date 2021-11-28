@@ -87,7 +87,9 @@ class Webspace extends Operator
             }
 
             if (isset($properties['ip_address'])) {
-                $infoHosting->addChild('ip_address', $properties['ip_address']);
+                foreach ((array) $properties['ip_address'] as $ipAddress) {
+                    $infoHosting->addChild('ip_address', $ipAddress);
+                }
             }
         }
 
