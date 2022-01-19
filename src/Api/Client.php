@@ -149,8 +149,9 @@ class Client
      * @param int $mode
      *
      * @return XmlResponse
+     * @throws \Exception
      */
-    public function request($request, $mode = self::RESPONSE_SHORT)
+    public function request($request, int $mode = self::RESPONSE_SHORT): XmlResponse
     {
         if ($request instanceof SimpleXMLElement) {
             $request = $request->asXml();
@@ -177,7 +178,8 @@ class Client
             ? call_user_func($this->verifyResponseCallback, $xml)
             : $this->verifyResponse($xml);
 
-        return (self::RESPONSE_FULL == $mode) ? $xml : $xml->xpath('//result')[0];
+        $result = (self::RESPONSE_FULL === $mode) ? $xml : $xml->xpath('//result')[0];
+        return new XmlResponse((string) $result->asXML());
     }
 
     /**
