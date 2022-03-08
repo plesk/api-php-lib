@@ -75,6 +75,10 @@ class Webspace extends Operator
 
         $infoGeneral = $info->addChild('gen_setup');
         foreach ($properties as $name => $value) {
+            if ('ip_address' === $name) {
+                continue;
+            }
+
             $infoGeneral->addChild($name, $value);
         }
 
