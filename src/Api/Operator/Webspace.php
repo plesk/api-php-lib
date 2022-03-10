@@ -75,7 +75,11 @@ class Webspace extends Operator
 
         $infoGeneral = $info->addChild('gen_setup');
         foreach ($properties as $name => $value) {
-            $infoGeneral->addChild($name, $value);
+            if (is_array($value)) {
+                continue;
+            } else {
+                $infoGeneral->addChild($name, (string) $value);
+            }
         }
 
         if ($hostingProperties) {

@@ -222,4 +222,22 @@ class WebspaceTest extends AbstractTestCase
 
         static::$client->webspace()->delete('id', $webspace->id);
     }
+
+    public function testIpsAsArray()
+    {
+        $webspace = static::$client->webspace()->create(
+            [
+                'name' => "test-ips.test",
+                'ip_address' => [static::getIpAddress()],
+            ],
+            [
+                'ftp_login' => "u-ips",
+                'ftp_password' => PasswordProvider::STRONG_PASSWORD,
+            ]
+        );
+
+        $this->assertGreaterThan(0, $webspace->id);
+
+        static::$client->webspace()->delete('id', $webspace->id);
+    }
 }
