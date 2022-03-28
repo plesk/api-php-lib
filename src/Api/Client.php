@@ -349,7 +349,7 @@ class Client
             $el = is_int($key) && $parentEl ? $parentEl : $key;
             if (is_array($value)) {
                 $this->_arrayToXml($value, $this->_isAssocArray($value) ? $xml->addChild($el) : $xml, $el);
-            } elseif(!isset($xml->{$el})) {
+            } elseif (!isset($xml->{$el})) {
                 $xml->{$el} = (string) $value;
             } else {
                 $xml->{$el}[] = (string) $value;
