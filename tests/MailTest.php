@@ -47,6 +47,57 @@ class MailTest extends AbstractTestCase
         static::$client->mail()->delete('name', $mailname->name, static::$webspace->id);
     }
 
+    public function testCreateMultiForwarding()
+    {
+        $mailname = static::$client->request([
+            'mail' => [
+                'create' => [
+                    'filter' => [
+                        'site-id' => static::$webspace->id,
+                        'mailname' => [
+                            'name' => 'test',
+                            'mailbox' => [
+                                'enabled' => true,
+                            ],
+                            'forwarding' => [
+                                'enabled' => true,
+                                'address' => [
+                                    'user1@example.com',
+                                    'user2@example.com',
+                                ],
+                            ],
+                            'alias' => [
+                                'test1',
+                                'test2',
+                            ],
+                            'password' => [
+                                'value' => PasswordProvider::STRONG_PASSWORD,
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+        $mailnameInfo = static::$client->request([
+            'mail' => [
+                'get_info' => [
+                    'filter' => [
+                        'site-id' => static::$webspace->id,
+                        'name' => 'test',
+                    ],
+                    'forwarding' => null,
+                    'aliases' => null,
+                ],
+            ],
+        ]);
+
+        $this->assertSame(2, count($mailnameInfo->mailname->forwarding->address));
+        $this->assertSame(2, count($mailnameInfo->mailname->alias));
+
+        static::$client->mail()->delete('name', 'test', static::$webspace->id);
+    }
+
     public function testDelete()
     {
         $mailname = static::$client->mail()->create('test', static::$webspace->id);
