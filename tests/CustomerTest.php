@@ -85,6 +85,12 @@ class CustomerTest extends AbstractTestCase
         static::$client->customer()->delete('login', 'customer-b');
     }
 
+    public function testGetAllEmpty()
+    {
+        $customersInfo = static::$client->customer()->getAll();
+        $this->assertCount(0, $customersInfo);
+    }
+
     public function testEnable()
     {
         $customer = static::$client->customer()->create($this->customerProperties);

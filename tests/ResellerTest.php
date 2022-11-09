@@ -74,4 +74,10 @@ class ResellerTest extends AbstractTestCase
         static::$client->reseller()->delete('login', 'reseller-a');
         static::$client->reseller()->delete('login', 'reseller-b');
     }
+
+    public function testGetAllEmpty()
+    {
+        $resellersInfo = static::$client->reseller()->getAll();
+        $this->assertCount(0, $resellersInfo);
+    }
 }

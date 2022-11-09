@@ -69,6 +69,10 @@ class Reseller extends \PleskX\Api\Operator
 
         $items = [];
         foreach ($response->xpath('//result') as $xmlResult) {
+            if (!$xmlResult->data) {
+                continue;
+            }
+
             $item = new Struct\GeneralInfo($xmlResult->data);
             $item->id = (int) $xmlResult->id;
             $items[] = $item;
