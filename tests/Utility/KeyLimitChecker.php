@@ -1,13 +1,13 @@
 <?php
-// Copyright 1999-2020. Plesk International GmbH.
+// Copyright 1999-2022. Plesk International GmbH.
 
 namespace PleskXTest\Utility;
 
 class KeyLimitChecker
 {
-    const LIMIT_CLIENTS = 'limit_clients';
-    const LIMIT_RESELLERS = 'limit_resellers';
-    const LIMIT_DOMAINS = 'limit_domains';
+    public const LIMIT_CLIENTS = 'limit_clients';
+    public const LIMIT_RESELLERS = 'limit_resellers';
+    public const LIMIT_DOMAINS = 'limit_domains';
 
     /**
      * Checks whether limit is within the required constraint.

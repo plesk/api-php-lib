@@ -2,21 +2,18 @@
 
 namespace PleskX\Api\Struct\Webspace;
 
-class Limit extends \PleskX\Api\Struct
+use PleskX\Api\AbstractStruct;
+
+class Limit extends AbstractStruct
 {
-    /** @var array */
-    public $properties;
+    public string $name;
+    public string $value;
 
-    public function __construct($apiResponse)
+    public function __construct(\SimpleXMLElement $apiResponse)
     {
-        $this->properties = [];
-
-		if( !isset( $apiResponse->limit ) ) {
-			return;
-		}
-		
-        foreach ($apiResponse->limit as $propertyInfo) {
-            $this->properties[reset( $propertyInfo->name)] = reset( $propertyInfo->value );
-        }
+        $this->initScalarProperties($apiResponse, [
+            'name',
+            'value',
+        ]);
     }
 }

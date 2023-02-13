@@ -1,21 +1,28 @@
 <?php
-// Copyright 1999-2020. Plesk International GmbH.
+// Copyright 1999-2022. Plesk International GmbH.
 
 namespace PleskX\Api\Struct\Server\Statistics;
 
-class Version extends \PleskX\Api\Struct
+use PleskX\Api\AbstractStruct;
+
+class Version extends AbstractStruct
 {
-    /** @var string */
-    public $internalName;
+    public string $internalName;
+    public string $version;
+    public string $build;
+    public string $osName;
+    public string $osVersion;
+    public string $osRelease;
 
-    /** @var string */
-    public $version;
-
-    public function __construct($apiResponse)
+    public function __construct(\SimpleXMLElement $apiResponse)
     {
-        $this->_initScalarProperties($apiResponse, [
+        $this->initScalarProperties($apiResponse, [
             ['plesk_name' => 'internalName'],
             ['plesk_version' => 'version'],
+            ['plesk_build' => 'build'],
+            ['plesk_os' => 'osName'],
+            ['plesk_os_version' => 'osVersion'],
+            ['os_release' => 'osRelease'],
         ]);
     }
 }

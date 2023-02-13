@@ -1,16 +1,17 @@
 <?php
-// Copyright 1999-2020. Plesk International GmbH.
+// Copyright 1999-2022. Plesk International GmbH.
 
 namespace PleskX\Api\Struct\Server;
 
-class SessionPreferences extends \PleskX\Api\Struct
-{
-    /** @var int */
-    public $loginTimeout;
+use PleskX\Api\AbstractStruct;
 
-    public function __construct($apiResponse)
+class SessionPreferences extends AbstractStruct
+{
+    public int $loginTimeout;
+
+    public function __construct(\SimpleXMLElement $apiResponse)
     {
-        $this->_initScalarProperties($apiResponse, [
+        $this->initScalarProperties($apiResponse, [
             'login_timeout',
         ]);
     }

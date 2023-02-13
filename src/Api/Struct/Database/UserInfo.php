@@ -1,22 +1,19 @@
 <?php
-// Copyright 1999-2020. Plesk International GmbH.
+// Copyright 1999-2022. Plesk International GmbH.
 
 namespace PleskX\Api\Struct\Database;
 
-class UserInfo extends \PleskX\Api\Struct
+use PleskX\Api\AbstractStruct;
+
+class UserInfo extends AbstractStruct
 {
-    /** @var int */
-    public $id;
+    public int $id;
+    public string $login;
+    public int $dbId;
 
-    /** @var string */
-    public $login;
-
-    /** @var int */
-    public $dbId;
-
-    public function __construct($apiResponse)
+    public function __construct(\SimpleXMLElement $apiResponse)
     {
-        $this->_initScalarProperties($apiResponse, [
+        $this->initScalarProperties($apiResponse, [
             'id',
             'login',
             'db-id',

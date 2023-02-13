@@ -1,5 +1,5 @@
 <?php
-// Copyright 1999-2020. Plesk International GmbH.
+// Copyright 1999-2022. Plesk International GmbH.
 
 namespace PleskX\Api\Operator;
 
@@ -10,12 +10,12 @@ class Ip extends \PleskX\Api\Operator
     /**
      * @return Struct\Info[]
      */
-    public function get()
+    public function get(): array
     {
         $ips = [];
-        $packet = $this->_client->getPacket();
-        $packet->addChild($this->_wrapperTag)->addChild('get');
-        $response = $this->_client->request($packet);
+        $packet = $this->client->getPacket();
+        $packet->addChild($this->wrapperTag)->addChild('get');
+        $response = $this->client->request($packet);
 
         foreach ($response->addresses->ip_info as $ipInfo) {
             $ips[] = new Struct\Info($ipInfo);

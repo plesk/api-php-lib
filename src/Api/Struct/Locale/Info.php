@@ -1,22 +1,19 @@
 <?php
-// Copyright 1999-2020. Plesk International GmbH.
+// Copyright 1999-2022. Plesk International GmbH.
 
 namespace PleskX\Api\Struct\Locale;
 
-class Info extends \PleskX\Api\Struct
+use PleskX\Api\AbstractStruct;
+
+class Info extends AbstractStruct
 {
-    /** @var string */
-    public $id;
+    public string $id;
+    public string $language;
+    public string $country;
 
-    /** @var string */
-    public $language;
-
-    /** @var string */
-    public $country;
-
-    public function __construct($apiResponse)
+    public function __construct(\SimpleXMLElement $apiResponse)
     {
-        $this->_initScalarProperties($apiResponse, [
+        $this->initScalarProperties($apiResponse, [
             'id',
             ['lang' => 'language'],
             'country',

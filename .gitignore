@@ -3,4 +3,4 @@
 .idea
 /nbproject/
 /.phpunit.result.cache
-/php/tests/node_modules/
+/coverage.xml

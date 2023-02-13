@@ -1,20 +1,20 @@
 <?php
-// Copyright 1999-2020. Plesk International GmbH.
+// Copyright 1999-2022. Plesk International GmbH.
 
 namespace PleskXTest;
 
 use PleskX\Api\Client\Exception;
 
-class ApiClientTest extends TestCase
+class ApiClientTest extends AbstractTestCase
 {
     public function testWrongProtocol()
     {
         $this->expectException(\PleskX\Api\Exception::class);
         $this->expectExceptionCode(1005);
 
-        $packet = static::$_client->getPacket('100.0.0');
+        $packet = static::$client->getPacket('100.0.0');
         $packet->addChild('server')->addChild('get_protos');
-        static::$_client->request($packet);
+        static::$client->request($packet);
     }
 
     public function testUnknownOperator()
@@ -22,9 +22,9 @@ class ApiClientTest extends TestCase
         $this->expectException(\PleskX\Api\Exception::class);
         $this->expectExceptionCode(1014);
 
-        $packet = static::$_client->getPacket();
+        $packet = static::$client->getPacket();
         $packet->addChild('unknown');
-        static::$_client->request($packet);
+        static::$client->request($packet);
     }
 
     public function testInvalidXmlRequest()
@@ -32,7 +32,7 @@ class ApiClientTest extends TestCase
         $this->expectException(\PleskX\Api\Exception::class);
         $this->expectExceptionCode(1014);
 
-        static::$_client->request('<packet><wrongly formatted xml</packet>');
+        static::$client->request('<packet><wrongly formatted xml</packet>');
     }
 
     public function testInvalidCredentials()
@@ -40,12 +40,12 @@ class ApiClientTest extends TestCase
         $this->expectException(\PleskX\Api\Exception::class);
         $this->expectExceptionCode(1001);
 
-        $host = static::$_client->getHost();
-        $port = static::$_client->getPort();
-        $protocol = static::$_client->getProtocol();
+        $host = static::$client->getHost();
+        $port = static::$client->getPort();
+        $protocol = static::$client->getProtocol();
         $client = new \PleskX\Api\Client($host, $port, $protocol);
         $client->setCredentials('bad-login', 'bad-password');
-        $packet = static::$_client->getPacket();
+        $packet = static::$client->getPacket();
         $packet->addChild('server')->addChild('get_protos');
         $client->request($packet);
     }
@@ -55,48 +55,48 @@ class ApiClientTest extends TestCase
         $this->expectException(\PleskX\Api\Exception::class);
         $this->expectExceptionCode(11003);
 
-        $host = static::$_client->getHost();
-        $port = static::$_client->getPort();
-        $protocol = static::$_client->getProtocol();
+        $host = static::$client->getHost();
+        $port = static::$client->getPort();
+        $protocol = static::$client->getProtocol();
         $client = new \PleskX\Api\Client($host, $port, $protocol);
         $client->setSecretKey('bad-key');
-        $packet = static::$_client->getPacket();
+        $packet = static::$client->getPacket();
         $packet->addChild('server')->addChild('get_protos');
         $client->request($packet);
     }
 
     public function testLatestMajorProtocol()
     {
-        $packet = static::$_client->getPacket('1.6');
+        $packet = static::$client->getPacket('1.6');
         $packet->addChild('server')->addChild('get_protos');
-        $result = static::$_client->request($packet);
+        $result = static::$client->request($packet);
         $this->assertEquals('ok', $result->status);
     }
 
     public function testLatestMinorProtocol()
     {
-        $packet = static::$_client->getPacket('1.6.5');
+        $packet = static::$client->getPacket('1.6.5');
         $packet->addChild('server')->addChild('get_protos');
-        $result = static::$_client->request($packet);
+        $result = static::$client->request($packet);
         $this->assertEquals('ok', $result->status);
     }
 
     public function testRequestShortSyntax()
     {
-        $response = static::$_client->request('server.get.gen_info');
+        $response = static::$client->request('server.get.gen_info');
         $this->assertGreaterThan(0, strlen($response->gen_info->server_name));
     }
 
     public function testOperatorPlainRequest()
     {
-        $response = static::$_client->server()->request('get.gen_info');
+        $response = static::$client->server()->request('get.gen_info');
         $this->assertGreaterThan(0, strlen($response->gen_info->server_name));
         $this->assertEquals(36, strlen($response->getValue('server_guid')));
     }
 
     public function testRequestArraySyntax()
     {
-        $response = static::$_client->request([
+        $response = static::$client->request([
             'server' => [
                 'get' => [
                     'gen_info' => '',
@@ -108,13 +108,13 @@ class ApiClientTest extends TestCase
 
     public function testOperatorArraySyntax()
     {
-        $response = static::$_client->server()->request(['get' => ['gen_info' => '']]);
+        $response = static::$client->server()->request(['get' => ['gen_info' => '']]);
         $this->assertGreaterThan(0, strlen($response->gen_info->server_name));
     }
 
     public function testMultiRequest()
     {
-        $responses = static::$_client->multiRequest([
+        $responses = static::$client->multiRequest([
             'server.get_protos',
             'server.get.gen_info',
         ]);
@@ -156,18 +156,18 @@ class ApiClientTest extends TestCase
 
     public function testSetVerifyResponse()
     {
-        static::$_client->setVerifyResponse(function ($xml) {
+        static::$client->setVerifyResponse(function ($xml) {
             if ($xml->xpath('//proto')) {
                 throw new Exception('proto');
             }
         });
 
         try {
-            static::$_client->server()->getProtos();
+            static::$client->server()->getProtos();
         } catch (Exception $e) {
             $this->assertEquals('proto', $e->getMessage());
         } finally {
-            static::$_client->setVerifyResponse();
+            static::$client->setVerifyResponse();
         }
     }
 }

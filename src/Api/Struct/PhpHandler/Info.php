@@ -1,45 +1,26 @@
 <?php
-// Copyright 1999-2020. Plesk International GmbH.
+// Copyright 1999-2022. Plesk International GmbH.
 
 namespace PleskX\Api\Struct\PhpHandler;
 
-use PleskX\Api\Struct;
+use PleskX\Api\AbstractStruct;
 
-class Info extends Struct
+class Info extends AbstractStruct
 {
-    /** @var string */
-    public $id;
+    public string $id;
+    public string $displayName;
+    public string $fullVersion;
+    public string $version;
+    public string $type;
+    public string $path;
+    public string $clipath;
+    public string $phpini;
+    public string $custom;
+    public string $handlerStatus;
 
-    /** @var string */
-    public $displayName;
-
-    /** @var string */
-    public $fullVersion;
-
-    /** @var string */
-    public $version;
-
-    /** @var string */
-    public $type;
-
-    /** @var string */
-    public $path;
-
-    /** @var string */
-    public $clipath;
-
-    /** @var string */
-    public $phpini;
-
-    /** @var string */
-    public $custom;
-
-    /** @var string */
-    public $handlerStatus;
-
-    public function __construct($apiResponse)
+    public function __construct(\SimpleXMLElement $apiResponse)
     {
-        $this->_initScalarProperties($apiResponse, [
+        $this->initScalarProperties($apiResponse, [
             'id',
             'display-name',
             'full-version',

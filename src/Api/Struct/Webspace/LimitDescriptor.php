@@ -1,14 +1,15 @@
 <?php
-// Copyright 1999-2020. Plesk International GmbH.
+// Copyright 1999-2022. Plesk International GmbH.
 
 namespace PleskX\Api\Struct\Webspace;
 
-class LimitDescriptor extends \PleskX\Api\Struct
-{
-    /** @var array */
-    public $limits;
+use PleskX\Api\AbstractStruct;
 
-    public function __construct($apiResponse)
+class LimitDescriptor extends AbstractStruct
+{
+    public array $limits;
+
+    public function __construct(\SimpleXMLElement $apiResponse)
     {
         $this->limits = [];
 

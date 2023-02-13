@@ -1,25 +1,20 @@
 <?php
-// Copyright 1999-2020. Plesk International GmbH.
+// Copyright 1999-2022. Plesk International GmbH.
 
 namespace PleskX\Api\Struct\EventLog;
 
-class Event extends \PleskX\Api\Struct
+use PleskX\Api\AbstractStruct;
+
+class Event extends AbstractStruct
 {
-    /** @var string */
-    public $type;
+    public string $type;
+    public int $time;
+    public string $class;
+    public string $id;
 
-    /** @var int */
-    public $time;
-
-    /** @var string */
-    public $class;
-
-    /** @var string */
-    public $id;
-
-    public function __construct($apiResponse)
+    public function __construct(\SimpleXMLElement $apiResponse)
     {
-        $this->_initScalarProperties($apiResponse, [
+        $this->initScalarProperties($apiResponse, [
             'type',
             'time',
             'class',

@@ -1,31 +1,26 @@
 <?php
-// Copyright 1999-2020. Plesk International GmbH.
+// Copyright 1999-2022. Plesk International GmbH.
 
 namespace PleskX\Api\Operator;
 
+use PleskX\Api\Client;
+use PleskX\Api\Operator;
 use PleskX\Api\Struct\ProtectedDirectory as Struct;
 
-class ProtectedDirectory extends \PleskX\Api\Operator
+class ProtectedDirectory extends Operator
 {
-    protected $_wrapperTag = 'protected-dir';
+    protected string $wrapperTag = 'protected-dir';
 
-    /**
-     * @param string $name
-     * @param int $siteId
-     * @param string $header
-     *
-     * @return Struct\Info
-     */
-    public function add($name, $siteId, $header = '')
+    public function add(string $name, int $siteId, string $header = ''): Struct\Info
     {
-        $packet = $this->_client->getPacket();
-        $info = $packet->addChild($this->_wrapperTag)->addChild('add');
+        $packet = $this->client->getPacket();
+        $info = $packet->addChild($this->wrapperTag)->addChild('add');
 
-        $info->addChild('site-id', $siteId);
+        $info->addChild('site-id', (string) $siteId);
         $info->addChild('name', $name);
         $info->addChild('header', $header);
 
-        return new Struct\Info($this->_client->request($packet));
+        return new Struct\Info($this->client->request($packet));
     }
 
     /**
@@ -34,18 +29,18 @@ class ProtectedDirectory extends \PleskX\Api\Operator
      *
      * @return bool
      */
-    public function delete($field, $value)
+    public function delete(string $field, $value): bool
     {
-        return $this->_delete($field, $value, 'delete');
+        return $this->deleteBy($field, $value, 'delete');
     }
 
     /**
      * @param string $field
      * @param int|string $value
      *
-     * @return Struct\DataInfo|false
+     * @return Struct\DataInfo
      */
-    public function get($field, $value)
+    public function get(string $field, $value): Struct\DataInfo
     {
         $items = $this->getAll($field, $value);
 
@@ -58,9 +53,9 @@ class ProtectedDirectory extends \PleskX\Api\Operator
      *
      * @return Struct\DataInfo[]
      */
-    public function getAll($field, $value)
+    public function getAll(string $field, $value): array
     {
-        $response = $this->_get('get', $field, $value);
+        $response = $this->getBy('get', $field, $value);
         $items = [];
         foreach ($response->xpath('//result/data') as $xmlResult) {
             $items[] = new Struct\DataInfo($xmlResult);
@@ -78,14 +73,14 @@ class ProtectedDirectory extends \PleskX\Api\Operator
      */
     public function addUser($protectedDirectory, $login, $password)
     {
-        $packet = $this->_client->getPacket();
-        $info = $packet->addChild($this->_wrapperTag)->addChild('add-user');
+        $packet = $this->client->getPacket();
+        $info = $packet->addChild($this->wrapperTag)->addChild('add-user');
 
-        $info->addChild('pd-id', $protectedDirectory->id);
-        $info->addChild('login', $login);
-        $info->addChild('password', $password);
+        $info->{'pd-id'} = (string) $protectedDirectory->id;
+        $info->login = $login;
+        $info->password = $password;
 
-        return new Struct\UserInfo($this->_client->request($packet));
+        return new Struct\UserInfo($this->client->request($packet));
     }
 
     /**
@@ -96,28 +91,24 @@ class ProtectedDirectory extends \PleskX\Api\Operator
      */
     public function deleteUser($field, $value)
     {
-        return $this->_delete($field, $value, 'delete-user');
+        return $this->deleteBy($field, $value, 'delete-user');
     }
 
     /**
-     * @param $command
-     * @param $field
-     * @param $value
+     * @param string $command
+     * @param string $field
+     * @param int|string $value
      *
      * @return \PleskX\Api\XmlResponse
      */
-    private function _get($command, $field, $value)
+    private function getBy(string $command, string $field, $value)
     {
-        $packet = $this->_client->getPacket();
-        $getTag = $packet->addChild($this->_wrapperTag)->addChild($command);
+        $packet = $this->client->getPacket();
+        $getTag = $packet->addChild($this->wrapperTag)->addChild($command);
 
         $filterTag = $getTag->addChild('filter');
-        if (!is_null($field)) {
-            $filterTag->addChild($field, $value);
-        }
+        $filterTag->{$field} = (string) $value;
 
-        $response = $this->_client->request($packet, \PleskX\Api\Client::RESPONSE_FULL);
-
-        return $response;
+        return $this->client->request($packet, Client::RESPONSE_FULL);
     }
 }

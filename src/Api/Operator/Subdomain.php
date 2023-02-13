@@ -1,5 +1,5 @@
 <?php
-// Copyright 1999-2020. Plesk International GmbH.
+// Copyright 1999-2022. Plesk International GmbH.
 
 namespace PleskX\Api\Operator;
 
@@ -7,29 +7,24 @@ use PleskX\Api\Struct\Subdomain as Struct;
 
 class Subdomain extends \PleskX\Api\Operator
 {
-    /**
-     * @param array $properties
-     *
-     * @return Struct\Info
-     */
-    public function create($properties)
+    public function create(array $properties): Struct\Info
     {
-        $packet = $this->_client->getPacket();
-        $info = $packet->addChild($this->_wrapperTag)->addChild('add');
+        $packet = $this->client->getPacket();
+        $info = $packet->addChild($this->wrapperTag)->addChild('add');
 
         foreach ($properties as $name => $value) {
             if (is_array($value)) {
                 foreach ($value as $propertyName => $propertyValue) {
                     $property = $info->addChild($name);
-                    $property->addChild('name', $propertyName);
-                    $property->addChild('value', $propertyValue);
+                    $property->name = $propertyName;
+                    $property->value = $propertyValue;
                 }
                 continue;
             }
-            $info->addChild($name, $value);
+            $info->{$name} = $value;
         }
 
-        $response = $this->_client->request($packet);
+        $response = $this->client->request($packet);
 
         return new Struct\Info($response);
     }
@@ -40,9 +35,9 @@ class Subdomain extends \PleskX\Api\Operator
      *
      * @return bool
      */
-    public function delete($field, $value)
+    public function delete(string $field, $value): bool
     {
-        return $this->_delete($field, $value);
+        return $this->deleteBy($field, $value);
     }
 
     /**
@@ -51,7 +46,7 @@ class Subdomain extends \PleskX\Api\Operator
      *
      * @return Struct\Info
      */
-    public function get($field, $value)
+    public function get(string $field, $value): Struct\Info
     {
         $items = $this->getAll($field, $value);
 
@@ -64,17 +59,17 @@ class Subdomain extends \PleskX\Api\Operator
      *
      * @return Struct\Info[]
      */
-    public function getAll($field = null, $value = null)
+    public function getAll($field = null, $value = null): array
     {
-        $packet = $this->_client->getPacket();
-        $getTag = $packet->addChild($this->_wrapperTag)->addChild('get');
+        $packet = $this->client->getPacket();
+        $getTag = $packet->addChild($this->wrapperTag)->addChild('get');
 
         $filterTag = $getTag->addChild('filter');
         if (!is_null($field)) {
-            $filterTag->addChild($field, $value);
+            $filterTag->addChild($field, (string) $value);
         }
 
-        $response = $this->_client->request($packet, \PleskX\Api\Client::RESPONSE_FULL);
+        $response = $this->client->request($packet, \PleskX\Api\Client::RESPONSE_FULL);
 
         $items = [];
         foreach ($response->xpath('//result') as $xmlResult) {

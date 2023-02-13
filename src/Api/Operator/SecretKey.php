@@ -1,5 +1,5 @@
 <?php
-// Copyright 1999-2020. Plesk International GmbH.
+// Copyright 1999-2022. Plesk International GmbH.
 
 namespace PleskX\Api\Operator;
 
@@ -7,40 +7,34 @@ use PleskX\Api\Struct\SecretKey as Struct;
 
 class SecretKey extends \PleskX\Api\Operator
 {
-    protected $_wrapperTag = 'secret_key';
+    protected string $wrapperTag = 'secret_key';
 
-    /**
-     * @param string $ipAddress
-     *
-     * @return string
-     */
-    public function create($ipAddress)
+    public function create(string $ipAddress = '', string $description = ''): string
     {
-        $packet = $this->_client->getPacket();
-        $packet->addChild($this->_wrapperTag)->addChild('create')->addChild('ip_address', $ipAddress);
-        $response = $this->_client->request($packet);
+        $packet = $this->client->getPacket();
+        $createTag = $packet->addChild($this->wrapperTag)->addChild('create');
+
+        if ('' !== $ipAddress) {
+            $createTag->addChild('ip_address', $ipAddress);
+        }
+
+        if ('' !== $description) {
+            $createTag->addChild('description', $description);
+        }
+
+        $response = $this->client->request($packet);
 
         return (string) $response->key;
     }
 
-    /**
-     * @param string $keyId
-     *
-     * @return bool
-     */
-    public function delete($keyId)
+    public function delete(string $keyId): bool
     {
-        return $this->_delete('key', $keyId, 'delete');
+        return $this->deleteBy('key', $keyId, 'delete');
     }
 
-    /**
-     * @param string $keyId
-     *
-     * @return Struct\Info
-     */
-    public function get($keyId)
+    public function get(string $keyId): Struct\Info
     {
-        $items = $this->_get($keyId);
+        $items = $this->getBy($keyId);
 
         return reset($items);
     }
@@ -48,9 +42,9 @@ class SecretKey extends \PleskX\Api\Operator
     /**
      * @return Struct\Info[]
      */
-    public function getAll()
+    public function getAll(): array
     {
-        return $this->_get();
+        return $this->getBy();
     }
 
     /**
@@ -58,17 +52,17 @@ class SecretKey extends \PleskX\Api\Operator
      *
      * @return Struct\Info[]
      */
-    public function _get($keyId = null)
+    public function getBy($keyId = null): array
     {
-        $packet = $this->_client->getPacket();
-        $getTag = $packet->addChild($this->_wrapperTag)->addChild('get_info');
+        $packet = $this->client->getPacket();
+        $getTag = $packet->addChild($this->wrapperTag)->addChild('get_info');
 
         $filterTag = $getTag->addChild('filter');
         if (!is_null($keyId)) {
             $filterTag->addChild('key', $keyId);
         }
 
-        $response = $this->_client->request($packet, \PleskX\Api\Client::RESPONSE_FULL);
+        $response = $this->client->request($packet, \PleskX\Api\Client::RESPONSE_FULL);
 
         $items = [];
         foreach ($response->xpath('//result/key_info') as $keyInfo) {

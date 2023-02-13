@@ -1,62 +1,42 @@
 <?php
-// Copyright 1999-2020. Plesk International GmbH.
+// Copyright 1999-2022. Plesk International GmbH.
 
 namespace PleskX\Api\Operator;
 
 use PleskX\Api\Struct\Database as Struct;
+use PleskX\Api\XmlResponse;
 
 class Database extends \PleskX\Api\Operator
 {
-    /**
-     * @param array $properties
-     *
-     * @return Struct\Info
-     */
-    public function create($properties)
+    public function create(array $properties): Struct\Info
     {
-        return new Struct\Info($this->_process('add-db', $properties));
+        return new Struct\Info($this->process('add-db', $properties));
     }
 
-    /**
-     * @param array $properties
-     *
-     * @return Struct\UserInfo
-     */
-    public function createUser($properties)
+    public function createUser(array $properties): Struct\UserInfo
     {
-        return new Struct\UserInfo($this->_process('add-db-user', $properties));
+        return new Struct\UserInfo($this->process('add-db-user', $properties));
     }
 
-    /**
-     * @param string $command
-     * @param array $properties
-     *
-     * @return \PleskX\Api\XmlResponse
-     */
-    private function _process($command, array $properties)
+    private function process(string $command, array $properties): XmlResponse
     {
-        $packet = $this->_client->getPacket();
-        $info = $packet->addChild($this->_wrapperTag)->addChild($command);
+        $packet = $this->client->getPacket();
+        $info = $packet->addChild($this->wrapperTag)->addChild($command);
 
         foreach ($properties as $name => $value) {
             if (false !== strpos($value, '&')) {
                 $info->$name = $value;
                 continue;
             }
-            $info->addChild($name, $value);
+            $info->{$name} = $value;
         }
 
-        return $this->_client->request($packet);
+        return $this->client->request($packet);
     }
 
-    /**
-     * @param array $properties
-     *
-     * @return bool
-     */
-    public function updateUser(array $properties)
+    public function updateUser(array $properties): bool
     {
-        $response = $this->_process('set-db-user', $properties);
+        $response = $this->process('set-db-user', $properties);
 
         return 'ok' === (string) $response->status;
     }
@@ -67,7 +47,7 @@ class Database extends \PleskX\Api\Operator
      *
      * @return Struct\Info
      */
-    public function get($field, $value)
+    public function get(string $field, $value): Struct\Info
     {
         $items = $this->getAll($field, $value);
 
@@ -80,7 +60,7 @@ class Database extends \PleskX\Api\Operator
      *
      * @return Struct\UserInfo
      */
-    public function getUser($field, $value)
+    public function getUser(string $field, $value): Struct\UserInfo
     {
         $items = $this->getAllUsers($field, $value);
 
@@ -93,9 +73,9 @@ class Database extends \PleskX\Api\Operator
      *
      * @return Struct\Info[]
      */
-    public function getAll($field, $value)
+    public function getAll(string $field, $value): array
     {
-        $response = $this->_get('get-db', $field, $value);
+        $response = $this->getBy('get-db', $field, $value);
         $items = [];
         foreach ($response->xpath('//result') as $xmlResult) {
             $items[] = new Struct\Info($xmlResult);
@@ -110,9 +90,9 @@ class Database extends \PleskX\Api\Operator
      *
      * @return Struct\UserInfo[]
      */
-    public function getAllUsers($field, $value)
+    public function getAllUsers(string $field, $value): array
     {
-        $response = $this->_get('get-db-users', $field, $value);
+        $response = $this->getBy('get-db-users', $field, $value);
         $items = [];
         foreach ($response->xpath('//result') as $xmlResult) {
             $items[] = new Struct\UserInfo($xmlResult);
@@ -126,21 +106,17 @@ class Database extends \PleskX\Api\Operator
      * @param string $field
      * @param int|string $value
      *
-     * @return \PleskX\Api\XmlResponse
+     * @return XmlResponse
      */
-    private function _get($command, $field, $value)
+    private function getBy(string $command, string $field, $value): XmlResponse
     {
-        $packet = $this->_client->getPacket();
-        $getTag = $packet->addChild($this->_wrapperTag)->addChild($command);
+        $packet = $this->client->getPacket();
+        $getTag = $packet->addChild($this->wrapperTag)->addChild($command);
 
         $filterTag = $getTag->addChild('filter');
-        if (!is_null($field)) {
-            $filterTag->addChild($field, $value);
-        }
+        $filterTag->{$field} = (string) $value;
 
-        $response = $this->_client->request($packet, \PleskX\Api\Client::RESPONSE_FULL);
-
-        return $response;
+        return $this->client->request($packet, \PleskX\Api\Client::RESPONSE_FULL);
     }
 
     /**
@@ -149,9 +125,9 @@ class Database extends \PleskX\Api\Operator
      *
      * @return bool
      */
-    public function delete($field, $value)
+    public function delete(string $field, $value): bool
     {
-        return $this->_delete($field, $value, 'del-db');
+        return $this->deleteBy($field, $value, 'del-db');
     }
 
     /**
@@ -160,8 +136,8 @@ class Database extends \PleskX\Api\Operator
      *
      * @return bool
      */
-    public function deleteUser($field, $value)
+    public function deleteUser(string $field, $value): bool
     {
-        return $this->_delete($field, $value, 'del-db-user');
+        return $this->deleteBy($field, $value, 'del-db-user');
     }
 }

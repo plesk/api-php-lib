@@ -1,5 +1,5 @@
 <?php
-// Copyright 1999-2020. Plesk International GmbH.
+// Copyright 1999-2022. Plesk International GmbH.
 
 namespace PleskX\Api\Operator;
 
@@ -7,6 +7,24 @@ use PleskX\Api\Struct\ServicePlan as Struct;
 
 class ServicePlan extends \PleskX\Api\Operator
 {
+    public function create(array $properties): Struct\Info
+    {
+        $response = $this->request(['add' => $properties]);
+
+        return new Struct\Info($response);
+    }
+
+    /**
+     * @param string $field
+     * @param int|string $value
+     *
+     * @return bool
+     */
+    public function delete(string $field, $value): bool
+    {
+        return $this->deleteBy($field, $value);
+    }
+
     /**
 	 * Restituisce i dettagli di un servizio a listino
      * @param string $field
@@ -14,9 +32,9 @@ class ServicePlan extends \PleskX\Api\Operator
      *
      * @return Struct\Info
      */
-    public function get($field, $value)
+    public function get(string $field, $value): Struct\Info
     {
-        $items = $this->_get($field, $value);
+        $items = $this->getBy($field, $value);
 
         return reset($items);
     }
@@ -24,28 +42,28 @@ class ServicePlan extends \PleskX\Api\Operator
     /**
      * @return Struct\Info[]
      */
-    public function getAll()
+    public function getAll(): array
     {
-        return $this->_get();
+        return $this->getBy();
     }
 
     /**
      * @param string|null $field
      * @param int|string|null $value
      *
-     * @return Struct\Info|Struct\Info[]
+     * @return Struct\Info[]
      */
-    private function _get($field = null, $value = null)
+    private function getBy($field = null, $value = null): array
     {
-        $packet = $this->_client->getPacket();
-        $getTag = $packet->addChild($this->_wrapperTag)->addChild('get');
+        $packet = $this->client->getPacket();
+        $getTag = $packet->addChild($this->wrapperTag)->addChild('get');
 
         $filterTag = $getTag->addChild('filter');
         if (!is_null($field)) {
-            $filterTag->addChild($field, $value);
+            $filterTag->addChild($field, (string) $value);
         }
 
-        $response = $this->_client->request($packet, \PleskX\Api\Client::RESPONSE_FULL);
+        $response = $this->client->request($packet, \PleskX\Api\Client::RESPONSE_FULL);
 
         $items = [];
         foreach ($response->xpath('//result') as $xmlResult) {

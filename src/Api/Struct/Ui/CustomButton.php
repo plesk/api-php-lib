@@ -1,38 +1,25 @@
 <?php
-// Copyright 1999-2020. Plesk International GmbH.
+// Copyright 1999-2022. Plesk International GmbH.
 
 namespace PleskX\Api\Struct\Ui;
 
-class CustomButton extends \PleskX\Api\Struct
+use PleskX\Api\AbstractStruct;
+
+class CustomButton extends AbstractStruct
 {
-    /** @var string */
-    public $id;
+    public int $id;
+    public int $sortKey;
+    public bool $public;
+    public bool $internal;
+    public bool $noFrame;
+    public string $place;
+    public string $url;
+    public string $text;
 
-    /** @var int */
-    public $sortKey;
-
-    /** @var bool */
-    public $public;
-
-    /** @var bool */
-    public $internal;
-
-    /** @var bool */
-    public $noFrame;
-
-    /** @var string */
-    public $place;
-
-    /** @var string */
-    public $url;
-
-    /** @var string */
-    public $text;
-
-    public function __construct($apiResponse)
+    public function __construct(\SimpleXMLElement $apiResponse)
     {
-        $this->_initScalarProperties($apiResponse, ['id']);
-        $this->_initScalarProperties($apiResponse->properties, [
+        $this->initScalarProperties($apiResponse, ['id']);
+        $this->initScalarProperties($apiResponse->properties, [
             'sort_key',
             'public',
             'internal',

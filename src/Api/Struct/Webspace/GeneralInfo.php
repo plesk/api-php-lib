@@ -1,25 +1,45 @@
 <?php
-// Copyright 1999-2020. Plesk International GmbH.
+// Copyright 1999-2022. Plesk International GmbH.
 
 namespace PleskX\Api\Struct\Webspace;
 
-class GeneralInfo extends \PleskX\Api\Struct
+use PleskX\Api\AbstractStruct;
+
+class GeneralInfo extends AbstractStruct
 {
-    /** @var string */
-    public $name;
+    public int $id;
+    public string $creationDate;
+    public string $name;
+    public string $asciiName;
+    public string $status;
+    public int $realSize;
+    public int $ownerId;
+    public array $ipAddresses = [];
+    public string $guid;
+    public string $vendorGuid;
+    public string $description;
+    public string $adminDescription;
+    public bool $enabled;
 
-    /** @var string */
-    public $guid;
-
-    /** @var int */
-    public $realSize;
-
-    public function __construct($apiResponse)
+    public function __construct(\SimpleXMLElement $apiResponse)
     {
-        $this->_initScalarProperties($apiResponse, [
+        $this->initScalarProperties($apiResponse, [
+            ['cr_date' => 'creationDate'],
             'name',
-            'guid',
+            'ascii-name',
+            'status',
             'real_size',
+            'owner-id',
+            'guid',
+            'vendor-guid',
+            'description',
+            'admin-description',
         ]);
+
+        foreach ($apiResponse->dns_ip_address as $ip) {
+            $this->ipAddresses[] = (string) $ip;
+        }
+
+        $this->enabled = '0' === (string) $apiResponse->status;
     }
 }

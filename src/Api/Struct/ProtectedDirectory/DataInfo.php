@@ -1,21 +1,18 @@
 <?php
-// Copyright 1999-2020. Plesk International GmbH.
+// Copyright 1999-2022. Plesk International GmbH.
 
 namespace PleskX\Api\Struct\ProtectedDirectory;
 
-use PleskX\Api\Struct;
+use PleskX\Api\AbstractStruct;
 
-class DataInfo extends Struct
+class DataInfo extends AbstractStruct
 {
-    /** @var string */
-    public $name;
+    public string $name;
+    public string $header;
 
-    /** @var string */
-    public $header;
-
-    public function __construct($apiResponse)
+    public function __construct(\SimpleXMLElement $apiResponse)
     {
-        $this->_initScalarProperties($apiResponse, [
+        $this->initScalarProperties($apiResponse, [
             'name',
             'header',
         ]);

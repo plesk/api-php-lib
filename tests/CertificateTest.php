@@ -1,13 +1,13 @@
 <?php
-// Copyright 1999-2020. Plesk International GmbH.
+// Copyright 1999-2022. Plesk International GmbH.
 
 namespace PleskXTest;
 
-class CertificateTest extends TestCase
+class CertificateTest extends AbstractTestCase
 {
     public function testGenerate()
     {
-        $certificate = static::$_client->certificate()->generate([
+        $certificate = static::$client->certificate()->generate([
             'bits' => 2048,
             'country' => 'RU',
             'state' => 'NSO',

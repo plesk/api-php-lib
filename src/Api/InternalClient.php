@@ -1,5 +1,5 @@
 <?php
-// Copyright 1999-2020. Plesk International GmbH.
+// Copyright 1999-2022. Plesk International GmbH.
 
 namespace PleskX\Api;
 
@@ -16,10 +16,10 @@ class InternalClient extends Client
     /**
      * Setup login to execute requests under certain user.
      *
-     * @param $login
+     * @param string $login
      */
-    public function setLogin($login)
+    public function setLogin(string $login): void
     {
-        $this->_login = $login;
+        $this->login = $login;
     }
 }

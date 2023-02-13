@@ -1,5 +1,5 @@
 <?php
-// Copyright 1999-2020. Plesk International GmbH.
+// Copyright 1999-2022. Plesk International GmbH.
 
 namespace PleskX\Api;
 
@@ -15,8 +15,8 @@ class XmlResponse extends \SimpleXMLElement
      *
      * @return string
      */
-    public function getValue($node)
+    public function getValue(string $node): string
     {
-        return (string) $this->xpath('//'.$node)[0];
+        return (string) $this->xpath('//' . $node)[0];
     }
 }

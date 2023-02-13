@@ -1,5 +1,5 @@
 <?php
-// Copyright 1999-2020. Plesk International GmbH.
+// Copyright 1999-2022. Plesk International GmbH.
 
 namespace PleskX\Api\Operator;
 
@@ -7,12 +7,12 @@ use PleskX\Api\Struct\EventLog as Struct;
 
 class EventLog extends \PleskX\Api\Operator
 {
-    protected $_wrapperTag = 'event_log';
+    protected string $wrapperTag = 'event_log';
 
     /**
      * @return Struct\Event[]
      */
-    public function get()
+    public function get(): array
     {
         $records = [];
         $response = $this->request('get');
@@ -27,7 +27,7 @@ class EventLog extends \PleskX\Api\Operator
     /**
      * @return Struct\DetailedEvent[]
      */
-    public function getDetailedLog()
+    public function getDetailedLog(): array
     {
         $records = [];
         $response = $this->request('get_events');
@@ -39,10 +39,7 @@ class EventLog extends \PleskX\Api\Operator
         return $records;
     }
 
-    /**
-     * @return int
-     */
-    public function getLastId()
+    public function getLastId(): int
     {
         return (int) $this->request('get-last-id')->getValue('id');
     }

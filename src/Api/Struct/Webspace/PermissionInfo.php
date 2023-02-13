@@ -1,22 +1,19 @@
 <?php
-// Copyright 1999-2020. Plesk International GmbH.
+// Copyright 1999-2022. Plesk International GmbH.
 
 namespace PleskX\Api\Struct\Webspace;
 
-class PermissionInfo extends \PleskX\Api\Struct
+use PleskX\Api\AbstractStruct;
+
+class PermissionInfo extends AbstractStruct
 {
-    /** @var string */
-    public $name;
+    public string $name;
+    public string $type;
+    public string $label;
 
-    /** @var string */
-    public $type;
-
-    /** @var string */
-    public $label;
-
-    public function __construct($apiResponse)
+    public function __construct(\SimpleXMLElement $apiResponse)
     {
-        $this->_initScalarProperties($apiResponse, [
+        $this->initScalarProperties($apiResponse, [
             'name',
             'type',
             'label',

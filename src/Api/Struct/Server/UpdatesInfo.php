@@ -1,19 +1,18 @@
 <?php
-// Copyright 1999-2020. Plesk International GmbH.
+// Copyright 1999-2022. Plesk International GmbH.
 
 namespace PleskX\Api\Struct\Server;
 
-class UpdatesInfo extends \PleskX\Api\Struct
+use PleskX\Api\AbstractStruct;
+
+class UpdatesInfo extends AbstractStruct
 {
-    /** @var string */
-    public $lastInstalledUpdate;
+    public string $lastInstalledUpdate;
+    public bool $installUpdatesAutomatically;
 
-    /** @var bool */
-    public $installUpdatesAutomatically;
-
-    public function __construct($apiResponse)
+    public function __construct(\SimpleXMLElement $apiResponse)
     {
-        $this->_initScalarProperties($apiResponse, [
+        $this->initScalarProperties($apiResponse, [
             'last_installed_update',
             'install_updates_automatically',
         ]);

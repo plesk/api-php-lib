@@ -1,28 +1,31 @@
 <?php
-// Copyright 1999-2020. Plesk International GmbH.
+// Copyright 1999-2022. Plesk International GmbH.
 
 namespace PleskXTest;
 
-class ServerTest extends TestCase
+class ServerTest extends AbstractTestCase
 {
     public function testGetProtos()
     {
-        $protos = static::$_client->server()->getProtos();
+        $protos = static::$client->server()->getProtos();
         $this->assertIsArray($protos);
         $this->assertContains('1.6.3.0', $protos);
     }
 
     public function testGetGenInfo()
     {
-        $generalInfo = static::$_client->server()->getGeneralInfo();
+        $generalInfo = static::$client->server()->getGeneralInfo();
         $this->assertGreaterThan(0, strlen($generalInfo->serverName));
-        $this->assertRegExp('/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/', strtolower($generalInfo->serverGuid));
+        $this->assertMatchesRegularExpression(
+            '/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/',
+            strtolower($generalInfo->serverGuid)
+        );
         $this->assertEquals('standard', $generalInfo->mode);
     }
 
     public function testGetPreferences()
     {
-        $preferences = static::$_client->server()->getPreferences();
+        $preferences = static::$client->server()->getPreferences();
         $this->assertIsNumeric($preferences->statTtl);
         $this->assertGreaterThan(0, $preferences->statTtl);
         $this->assertEquals(0, $preferences->restartApacheInterval);
@@ -30,14 +33,14 @@ class ServerTest extends TestCase
 
     public function testGetAdmin()
     {
-        $admin = static::$_client->server()->getAdmin();
+        $admin = static::$client->server()->getAdmin();
         $this->assertGreaterThan(0, strlen($admin->name));
         $this->assertStringContainsString('@', $admin->email);
     }
 
     public function testGetKeyInfo()
     {
-        $keyInfo = static::$_client->server()->getKeyInfo();
+        $keyInfo = static::$client->server()->getKeyInfo();
         $this->assertIsArray($keyInfo);
         $this->assertGreaterThan(0, count($keyInfo));
         $this->assertArrayHasKey('plesk_key_id', $keyInfo);
@@ -46,7 +49,7 @@ class ServerTest extends TestCase
 
     public function testGetComponents()
     {
-        $components = static::$_client->server()->getComponents();
+        $components = static::$client->server()->getComponents();
         $this->assertIsArray($components);
         $this->assertGreaterThan(0, count($components));
         $this->assertArrayHasKey('psa', $components);
@@ -54,7 +57,7 @@ class ServerTest extends TestCase
 
     public function testGetServiceStates()
     {
-        $serviceStates = static::$_client->server()->getServiceStates();
+        $serviceStates = static::$client->server()->getServiceStates();
 
         $this->assertIsArray($serviceStates);
         $this->assertGreaterThan(0, count($serviceStates));
@@ -68,14 +71,14 @@ class ServerTest extends TestCase
 
     public function testGetSessionPreferences()
     {
-        $preferences = static::$_client->server()->getSessionPreferences();
+        $preferences = static::$client->server()->getSessionPreferences();
         $this->assertIsNumeric($preferences->loginTimeout);
         $this->assertGreaterThan(0, $preferences->loginTimeout);
     }
 
     public function testGetShells()
     {
-        $shells = static::$_client->server()->getShells();
+        $shells = static::$client->server()->getShells();
 
         $this->assertIsArray($shells);
         $this->assertGreaterThan(0, count($shells));
@@ -83,21 +86,33 @@ class ServerTest extends TestCase
 
     public function testGetNetworkInterfaces()
     {
-        $netInterfaces = static::$_client->server()->getNetworkInterfaces();
+        $netInterfaces = static::$client->server()->getNetworkInterfaces();
         $this->assertIsArray($netInterfaces);
         $this->assertGreaterThan(0, count($netInterfaces));
     }
 
     public function testGetStatistics()
     {
-        $stats = static::$_client->server()->getStatistics();
+        $stats = static::$client->server()->getStatistics();
         $this->assertIsNumeric($stats->objects->clients);
+        $this->assertIsNumeric($stats->objects->domains);
+        $this->assertIsNumeric($stats->objects->databases);
         $this->assertEquals('psa', $stats->version->internalName);
+        $this->assertNotEmpty($stats->version->osName);
+        $this->assertNotEmpty($stats->version->osVersion);
+        $this->assertGreaterThan(0, $stats->other->uptime);
+        $this->assertGreaterThan(0, strlen($stats->other->cpu));
+        $this->assertIsFloat($stats->loadAverage->load1min);
+        $this->assertGreaterThan(0, $stats->memory->total);
+        $this->assertGreaterThan($stats->memory->free, $stats->memory->total);
+        $this->assertIsNumeric($stats->swap->total);
+        $this->assertIsArray($stats->diskSpace);
+        $this->assertGreaterThan(0, array_pop($stats->diskSpace)->total);
     }
 
     public function testGetSiteIsolationConfig()
     {
-        $config = static::$_client->server()->getSiteIsolationConfig();
+        $config = static::$client->server()->getSiteIsolationConfig();
         $this->assertIsArray($config);
         $this->assertGreaterThan(0, count($config));
         $this->assertArrayHasKey('php', $config);
@@ -105,7 +120,7 @@ class ServerTest extends TestCase
 
     public function testGetUpdatesInfo()
     {
-        $updatesInfo = static::$_client->server()->getUpdatesInfo();
+        $updatesInfo = static::$client->server()->getUpdatesInfo();
         $this->assertIsBool($updatesInfo->installUpdatesAutomatically);
     }
 }

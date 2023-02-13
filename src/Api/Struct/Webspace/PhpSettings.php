@@ -1,14 +1,15 @@
 <?php
-// Copyright 1999-2020. Plesk International GmbH.
+// Copyright 1999-2022. Plesk International GmbH.
 
 namespace PleskX\Api\Struct\Webspace;
 
-class PhpSettings extends \PleskX\Api\Struct
-{
-    /** @var array */
-    public $properties;
+use PleskX\Api\AbstractStruct;
 
-    public function __construct($apiResponse)
+class PhpSettings extends AbstractStruct
+{
+    public array $properties;
+
+    public function __construct(\SimpleXMLElement $apiResponse)
     {
         $this->properties = [];
 

@@ -1,22 +1,19 @@
 <?php
-// Copyright 1999-2020. Plesk International GmbH.
+// Copyright 1999-2022. Plesk International GmbH.
 
 namespace PleskX\Api\Struct\Server;
 
-class GeneralInfo extends \PleskX\Api\Struct
+use PleskX\Api\AbstractStruct;
+
+class GeneralInfo extends AbstractStruct
 {
-    /** @var string */
-    public $serverName;
+    public string $serverName;
+    public string $serverGuid;
+    public string $mode;
 
-    /** @var string */
-    public $serverGuid;
-
-    /** @var string */
-    public $mode;
-
-    public function __construct($apiResponse)
+    public function __construct(\SimpleXMLElement $apiResponse)
     {
-        $this->_initScalarProperties($apiResponse, [
+        $this->initScalarProperties($apiResponse, [
             'server_name',
             'server_guid',
             'mode',

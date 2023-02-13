@@ -1,5 +1,5 @@
 <?php
-// Copyright 1999-2020. Plesk International GmbH.
+// Copyright 1999-2022. Plesk International GmbH.
 
 namespace PleskX\Api\Operator;
 
@@ -10,22 +10,22 @@ use PleskX\Api\Struct\PhpHandler\Info;
 class PhpHandler extends Operator
 {
     /**
-     * @param string $field
-     * @param int|string $value
+     * @param string|null $field
+     * @param int|string|null $value
      *
      * @return Info
      */
-    public function get($field, $value)
+    public function get($field = null, $value = null): Info
     {
-        $packet = $this->_client->getPacket();
-        $getTag = $packet->addChild($this->_wrapperTag)->addChild('get');
+        $packet = $this->client->getPacket();
+        $getTag = $packet->addChild($this->wrapperTag)->addChild('get');
         $filterTag = $getTag->addChild('filter');
 
         if (!is_null($field)) {
-            $filterTag->addChild($field, $value);
+            $filterTag->addChild($field, (string) $value);
         }
 
-        $response = $this->_client->request($packet, Client::RESPONSE_FULL);
+        $response = $this->client->request($packet, Client::RESPONSE_FULL);
         $xmlResult = $response->xpath('//result')[0];
 
         return new Info($xmlResult);
@@ -37,17 +37,17 @@ class PhpHandler extends Operator
      *
      * @return Info[]
      */
-    public function getAll($field = null, $value = null)
+    public function getAll($field = null, $value = null): array
     {
-        $packet = $this->_client->getPacket();
-        $getTag = $packet->addChild($this->_wrapperTag)->addChild('get');
+        $packet = $this->client->getPacket();
+        $getTag = $packet->addChild($this->wrapperTag)->addChild('get');
 
         $filterTag = $getTag->addChild('filter');
         if (!is_null($field)) {
-            $filterTag->addChild($field, $value);
+            $filterTag->addChild($field, (string) $value);
         }
 
-        $response = $this->_client->request($packet, Client::RESPONSE_FULL);
+        $response = $this->client->request($packet, Client::RESPONSE_FULL);
         $items = [];
         foreach ($response->xpath('//result') as $xmlResult) {
             $item = new Info($xmlResult);
