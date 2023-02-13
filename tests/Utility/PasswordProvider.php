@@ -1,9 +1,9 @@
 <?php
-// Copyright 1999-2020. Plesk International GmbH.
+// Copyright 1999-2022. Plesk International GmbH.
 
 namespace PleskXTest\Utility;
 
 class PasswordProvider
 {
-    const STRONG_PASSWORD = 'test-PWD*1@42!13#';
+    public const STRONG_PASSWORD = 'test-&PWD*1@42!13#';
 }

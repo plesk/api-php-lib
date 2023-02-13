@@ -1,22 +1,19 @@
 <?php
-// Copyright 1999-2020. Plesk International GmbH.
+// Copyright 1999-2022. Plesk International GmbH.
 
 namespace PleskX\Api\Struct\SiteAlias;
 
-class GeneralInfo extends \PleskX\Api\Struct
+use PleskX\Api\AbstractStruct;
+
+class GeneralInfo extends AbstractStruct
 {
-    /** @var string */
-    public $name;
+    public string $name;
+    public string $asciiName;
+    public string $status;
 
-    /** @var string */
-    public $asciiName;
-
-    /** @var string */
-    public $status;
-
-    public function __construct($apiResponse)
+    public function __construct(\SimpleXMLElement $apiResponse)
     {
-        $this->_initScalarProperties($apiResponse, [
+        $this->initScalarProperties($apiResponse, [
             'name',
             'ascii-name',
             'status',

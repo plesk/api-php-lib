@@ -1,18 +1,18 @@
 <?php
-// Copyright 1999-2020. Plesk International GmbH.
+// Copyright 1999-2022. Plesk International GmbH.
 
 namespace PleskXTest;
 
 use PleskXTest\Utility\KeyLimitChecker;
 use PleskXTest\Utility\PasswordProvider;
 
-class CustomerTest extends TestCase
+class CustomerTest extends AbstractTestCase
 {
-    private $_customerProperties;
+    private array $customerProperties;
 
     public function setUp(): void
     {
-        $this->_customerProperties = [
+        $this->customerProperties = [
             'cname' => 'Plesk',
             'pname' => 'John Smith',
             'login' => 'john-unit-test',
@@ -25,54 +25,55 @@ class CustomerTest extends TestCase
 
     public function testCreate()
     {
-        $customer = static::$_client->customer()->create($this->_customerProperties);
+        $customer = static::$client->customer()->create($this->customerProperties);
         $this->assertIsInt($customer->id);
         $this->assertGreaterThan(0, $customer->id);
 
-        static::$_client->customer()->delete('id', $customer->id);
+        static::$client->customer()->delete('id', $customer->id);
     }
 
     public function testDelete()
     {
-        $customer = static::$_client->customer()->create($this->_customerProperties);
-        $result = static::$_client->customer()->delete('id', $customer->id);
+        $customer = static::$client->customer()->create($this->customerProperties);
+        $result = static::$client->customer()->delete('id', $customer->id);
         $this->assertTrue($result);
     }
 
     public function testGet()
     {
-        $customer = static::$_client->customer()->create($this->_customerProperties);
-        $customerInfo = static::$_client->customer()->get('id', $customer->id);
+        $customer = static::$client->customer()->create($this->customerProperties);
+        $customerInfo = static::$client->customer()->get('id', $customer->id);
         $this->assertEquals('Plesk', $customerInfo->company);
         $this->assertEquals('John Smith', $customerInfo->personalName);
         $this->assertEquals('john-unit-test', $customerInfo->login);
         $this->assertEquals('john@smith.com', $customerInfo->email);
         $this->assertEquals('Good guy', $customerInfo->description);
         $this->assertEquals('link:12345', $customerInfo->externalId);
+        $this->assertEquals($customer->id, $customerInfo->id);
 
-        static::$_client->customer()->delete('id', $customer->id);
+        static::$client->customer()->delete('id', $customer->id);
     }
 
     public function testGetAll()
     {
-        $keyInfo = static::$_client->server()->getKeyInfo();
+        $keyInfo = static::$client->server()->getKeyInfo();
 
         if (!KeyLimitChecker::checkByType($keyInfo, KeyLimitChecker::LIMIT_CLIENTS, 2)) {
             $this->markTestSkipped('License does not allow to create more than 1 customer.');
         }
 
-        static::$_client->customer()->create([
+        static::$client->customer()->create([
             'pname' => 'John Smith',
             'login' => 'customer-a',
             'passwd' => PasswordProvider::STRONG_PASSWORD,
         ]);
-        static::$_client->customer()->create([
+        static::$client->customer()->create([
             'pname' => 'Mike Black',
             'login' => 'customer-b',
             'passwd' => PasswordProvider::STRONG_PASSWORD,
         ]);
 
-        $customersInfo = static::$_client->customer()->getAll();
+        $customersInfo = static::$client->customer()->getAll();
         $this->assertIsArray($customersInfo);
 
         $customersCheck = array_filter($customersInfo, function ($value) {
@@ -80,7 +81,48 @@ class CustomerTest extends TestCase
         });
         $this->assertCount(2, $customersCheck);
 
-        static::$_client->customer()->delete('login', 'customer-a');
-        static::$_client->customer()->delete('login', 'customer-b');
+        static::$client->customer()->delete('login', 'customer-a');
+        static::$client->customer()->delete('login', 'customer-b');
+    }
+
+    public function testGetAllEmpty()
+    {
+        $customersInfo = static::$client->customer()->getAll();
+        $this->assertCount(0, $customersInfo);
+    }
+
+    public function testEnable()
+    {
+        $customer = static::$client->customer()->create($this->customerProperties);
+        static::$client->customer()->disable('id', $customer->id);
+        static::$client->customer()->enable('id', $customer->id);
+        $customerInfo = static::$client->customer()->get('id', $customer->id);
+        $this->assertTrue($customerInfo->enabled);
+
+        static::$client->customer()->delete('id', $customer->id);
+    }
+
+    public function testDisable()
+    {
+        $customer = static::$client->customer()->create($this->customerProperties);
+        static::$client->customer()->disable('id', $customer->id);
+        $customerInfo = static::$client->customer()->get('id', $customer->id);
+        $this->assertFalse($customerInfo->enabled);
+
+        static::$client->customer()->delete('id', $customer->id);
+    }
+
+    public function testSetProperties()
+    {
+        $customer = static::$client->customer()->create($this->customerProperties);
+        static::$client->customer()->setProperties('id', $customer->id, [
+            'pname' => 'Mike Black',
+            'email' => 'mike@black.com',
+        ]);
+        $customerInfo = static::$client->customer()->get('id', $customer->id);
+        $this->assertEquals('Mike Black', $customerInfo->personalName);
+        $this->assertEquals('mike@black.com', $customerInfo->email);
+
+        static::$client->customer()->delete('id', $customer->id);
     }
 }

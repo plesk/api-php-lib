@@ -1,25 +1,20 @@
 <?php
-// Copyright 1999-2020. Plesk International GmbH.
+// Copyright 1999-2022. Plesk International GmbH.
 
 namespace PleskX\Api\Struct\SecretKey;
 
-class Info extends \PleskX\Api\Struct
+use PleskX\Api\AbstractStruct;
+
+class Info extends AbstractStruct
 {
-    /** @var string */
-    public $key;
+    public string $key;
+    public string $ipAddress;
+    public string $description;
+    public string $login;
 
-    /** @var string */
-    public $ipAddress;
-
-    /** @var string */
-    public $description;
-
-    /** @var string */
-    public $login;
-
-    public function __construct($apiResponse)
+    public function __construct(\SimpleXMLElement $apiResponse)
     {
-        $this->_initScalarProperties($apiResponse, [
+        $this->initScalarProperties($apiResponse, [
             'key',
             'ip_address',
             'description',

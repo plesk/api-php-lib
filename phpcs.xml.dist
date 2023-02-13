@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<ruleset name="PHP library for Plesk XML-RPC API">
+    <file>src</file>
+    <file>tests</file>
+    <rule ref="Generic">
+        <exclude name="Generic.WhiteSpace.DisallowSpaceIndent"/>
+        <exclude name="Generic.Files.EndFileNoNewline"/>
+        <exclude name="Generic.Files.LowercasedFilename.NotFound"/>
+        <exclude name="Generic.PHP.RequireStrictTypes"/>
+        <exclude name="Generic.PHP.ClosingPHPTag"/>
+        <exclude name="Generic.PHP.UpperCaseConstant"/>
+        <exclude name="Generic.Arrays.DisallowShortArraySyntax"/>
+        <exclude name="Generic.Classes.OpeningBraceSameLine"/>
+        <exclude name="Generic.Functions.OpeningFunctionBraceKernighanRitchie"/>
+        <exclude name="Generic.Formatting.MultipleStatementAlignment"/>
+        <exclude name="Generic.Formatting.NoSpaceAfterCast"/>
+        <exclude name="Generic.Formatting.SpaceBeforeCast"/>
+        <exclude name="Generic.Formatting.SpaceAfterNot"/>
+        <exclude name="Generic.Commenting.DocComment"/>
+        <exclude name="Generic.ControlStructures.DisallowYodaConditions"/>
+    </rule>
+    <rule ref="PSR1"/>
+    <rule ref="PSR2"/>
+    <rule ref="PSR12">
+        <exclude name="PSR12.Files.FileHeader"/>
+    </rule>
+</ruleset>

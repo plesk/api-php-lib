@@ -1,14 +1,15 @@
 <?php
-// Copyright 1999-2020. Plesk International GmbH.
+// Copyright 1999-2022. Plesk International GmbH.
 
 namespace PleskX\Api\Struct\Webspace;
 
-class PermissionDescriptor extends \PleskX\Api\Struct
-{
-    /** @var array */
-    public $permissions;
+use PleskX\Api\AbstractStruct;
 
-    public function __construct($apiResponse)
+class PermissionDescriptor extends AbstractStruct
+{
+    public array $permissions;
+
+    public function __construct(\SimpleXMLElement $apiResponse)
     {
         $this->permissions = [];
 

@@ -1,25 +1,20 @@
 <?php
-// Copyright 1999-2020. Plesk International GmbH.
+// Copyright 1999-2022. Plesk International GmbH.
 
 namespace PleskX\Api\Struct\Reseller;
 
-class GeneralInfo extends \PleskX\Api\Struct
+use PleskX\Api\AbstractStruct;
+
+class GeneralInfo extends AbstractStruct
 {
-    /** @var int */
-    public $id;
+    public int $id;
+    public string $personalName;
+    public string $login;
+    public array $permissions;
 
-    /** @var string */
-    public $personalName;
-
-    /** @var string */
-    public $login;
-
-    /** @var array */
-    public $permissions;
-
-    public function __construct($apiResponse)
+    public function __construct(\SimpleXMLElement $apiResponse)
     {
-        $this->_initScalarProperties($apiResponse->{'gen-info'}, [
+        $this->initScalarProperties($apiResponse->{'gen-info'}, [
             ['pname' => 'personalName'],
             'login',
         ]);

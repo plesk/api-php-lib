@@ -1,13 +1,15 @@
 <?php
-// Copyright 1999-2020. Plesk International GmbH.
+// Copyright 1999-2022. Plesk International GmbH.
 
 namespace PleskX\Api\Operator;
 
+use PleskX\Api\Operator;
 use PleskX\Api\Struct\Webspace as Struct;
+use PleskX\Api\XmlResponse;
 
-class Webspace extends \PleskX\Api\Operator
+class Webspace extends Operator
 {
-    public function getPermissionDescriptor()
+    public function getPermissionDescriptor(): Struct\PermissionDescriptor
     {
         $response = $this->request('get-permission-descriptor.filter');
 
@@ -21,14 +23,14 @@ class Webspace extends \PleskX\Api\Operator
 	 * informazioni come il codice del parametro, il data type, i permessi di scrittura, ...
 	 * @return \PleskX\Api\Struct\Webspace\LimitDescriptor
 	 */
-    public function getLimitDescriptor()
+    public function getLimitDescriptor(): Struct\LimitDescriptor
     {
         $response = $this->request('get-limit-descriptor.filter');
 
         return new Struct\LimitDescriptor($response);
     }
 
-    public function getPhysicalHostingDescriptor()
+    public function getPhysicalHostingDescriptor(): Struct\PhysicalHostingDescriptor
     {
         $response = $this->request('get-physical-hosting-descriptor.filter');
 
@@ -41,15 +43,15 @@ class Webspace extends \PleskX\Api\Operator
      *
      * @return Struct\PhpSettings
      */
-    public function getPhpSettings($field, $value)
+    public function getPhpSettings(string $field, $value): Struct\PhpSettings
     {
-        $packet = $this->_client->getPacket();
-        $getTag = $packet->addChild($this->_wrapperTag)->addChild('get');
+        $packet = $this->client->getPacket();
+        $getTag = $packet->addChild($this->wrapperTag)->addChild('get');
 
-        $getTag->addChild('filter')->addChild($field, $value);
+        $getTag->addChild('filter')->addChild($field, (string) $value);
         $getTag->addChild('dataset')->addChild('php-settings');
 
-        $response = $this->_client->request($packet, \PleskX\Api\Client::RESPONSE_FULL);
+        $response = $this->client->request($packet, \PleskX\Api\Client::RESPONSE_FULL);
 
         return new Struct\PhpSettings($response);
     }
@@ -61,62 +63,56 @@ class Webspace extends \PleskX\Api\Operator
      *
      * @return Struct\Limits
      */
-//    public function getLimits($field, $value)
-//    {
-//        $items = $this->_getItems(Struct\Limits::class, 'limits', $field, $value);
-//
-//        return reset($items);
-//    }
-	
-	
-    /**
-	 * Restituisce i limiti massimi per una subscription
-     * @param int $guid L'identificativo universale della subscription
-     * @return Struct\Limit
-     */
-    public function getLimits( $guid )
+    public function getLimits(string $field, $value): Struct\Limits
     {
-        $items = $this->_getItems(Struct\Limit::class, 'limits', 'guid', $guid );
+        $items = $this->getItems(Struct\Limits::class, 'limits', $field, $value);
+
         return reset($items);
     }
 
     /**
      * @param array $properties
      * @param array|null $hostingProperties
-     * @param $planName
+     * @param string $planName
      *
      * @return Struct\Info
      */
-    public function create(array $properties, array $hostingProperties = null, $planName = null)
+    public function create(array $properties, array $hostingProperties = null, string $planName = ''): Struct\Info
     {
-        $packet = $this->_client->getPacket();
-        $info = $packet->addChild($this->_wrapperTag)->addChild('add');
+        $packet = $this->client->getPacket();
+        $info = $packet->addChild($this->wrapperTag)->addChild('add');
 
         $infoGeneral = $info->addChild('gen_setup');
         foreach ($properties as $name => $value) {
-            $infoGeneral->addChild($name, $value);
+            if (is_array($value)) {
+                continue;
+            } else {
+                $infoGeneral->addChild($name, (string) $value);
+            }
         }
 
         if ($hostingProperties) {
             $infoHosting = $info->addChild('hosting')->addChild('vrt_hst');
             foreach ($hostingProperties as $name => $value) {
                 $property = $infoHosting->addChild('property');
-                $property->addChild('name', $name);
-                $property->addChild('value', $value);
+                $property->name = $name;
+                $property->value = $value;
             }
 
             if (isset($properties['ip_address'])) {
-                $infoHosting->addChild('ip_address', $properties['ip_address']);
+                foreach ((array) $properties['ip_address'] as $ipAddress) {
+                    $infoHosting->addChild('ip_address', $ipAddress);
+                }
             }
         }
 
-        if ($planName) {
+        if ('' !== $planName) {
             $info->addChild('plan-name', $planName);
         }
 
-        $response = $this->_client->request($packet);
+        $response = $this->client->request($packet);
 
-        return new Struct\Info($response);
+        return new Struct\Info($response, $properties['name'] ?? '');
     }
     
     
@@ -127,15 +123,15 @@ class Webspace extends \PleskX\Api\Operator
 	 */
 	public function getStatus( $webspaceId )
 	{
-		$packet = $this->_client->getPacket();
-		$getterTag = $packet->addChild( $this->_wrapperTag )->addChild( 'get' );
+		$packet = $this->client->getPacket();
+		$getterTag = $packet->addChild( $this->wrapperTag )->addChild( 'get' );
 		
 		$filterTag = $getterTag->addChild( 'filter' );
 		$filterTag->addChild( 'id', $webspaceId );
 		
 		$getterTag->addChild( 'dataset' )->addChild( 'gen_info' );
 		
-		$response = $this->_client->request( $packet );
+		$response = $this->client->request( $packet );
 		
 		if( !isset( $response->data->gen_info->status ) ) {
 			return null;
@@ -153,8 +149,8 @@ class Webspace extends \PleskX\Api\Operator
 	 */
 	public function setStatus( array $filters, $status )
 	{
-		$packet = $this->_client->getPacket();
-		$setterTag = $packet->addChild( $this->_wrapperTag )->addChild( 'set' );
+		$packet = $this->client->getPacket();
+		$setterTag = $packet->addChild( $this->wrapperTag )->addChild( 'set' );
 		if ( !empty( $filters ) ) {
 			$filterTag = $setterTag->addChild( 'filter' );
 			foreach ( $filters as $key => $value ) {
@@ -163,7 +159,7 @@ class Webspace extends \PleskX\Api\Operator
 		}
 		$valuesTag = $setterTag->addChild( 'values' );
 		$valuesTag->addChild( 'gen_setup' )->addChild( 'status', $status );
-		$response = $this->_client->request( $packet );
+		$response = $this->client->request( $packet );
 
 		return 'ok' === (string)$response->status;
 	}
@@ -176,8 +172,8 @@ class Webspace extends \PleskX\Api\Operator
 	 */
 	public function updateFtpPassword( array $filters, $newPassword )
 	{
-		$packet = $this->_client->getPacket();
-		$setterTag = $packet->addChild( $this->_wrapperTag )->addChild( 'set' );
+		$packet = $this->client->getPacket();
+		$setterTag = $packet->addChild( $this->wrapperTag )->addChild( 'set' );
 		if ( !empty( $filters ) ) {
 			$filterTag = $setterTag->addChild( 'filter' );
 			foreach ( $filters as $key => $value ) {
@@ -192,7 +188,7 @@ class Webspace extends \PleskX\Api\Operator
 		$property->addChild('name', 'ftp_password');
 		$property->addChild('value', $newPassword);
 		
-		$response = $this->_client->request( $packet );
+		$response = $this->client->request( $packet );
 
 		return 'ok' === (string)$response->status;
 	}
@@ -203,9 +199,9 @@ class Webspace extends \PleskX\Api\Operator
      *
      * @return bool
      */
-    public function delete($field, $value)
+    public function delete(string $field, $value): bool
     {
-        return $this->_delete($field, $value);
+        return $this->deleteBy($field, $value);
     }
 
     /**
@@ -214,9 +210,9 @@ class Webspace extends \PleskX\Api\Operator
      *
      * @return Struct\GeneralInfo
      */
-    public function get($field, $value)
+    public function get(string $field, $value): Struct\GeneralInfo
     {
-        $items = $this->_getItems(Struct\GeneralInfo::class, 'gen_info', $field, $value);
+        $items = $this->getItems(Struct\GeneralInfo::class, 'gen_info', $field, $value);
 
         return reset($items);
     }
@@ -229,7 +225,7 @@ class Webspace extends \PleskX\Api\Operator
      */
     public function getHostingSettings( $guid )
     {
-        $items = $this->_getItems(Struct\HostingSetting::class, 'hosting', 'guid', $guid );
+        $items = $this->getItems(Struct\HostingSetting::class, 'hosting', 'guid', $guid );
         return reset($items);
     }
 	
@@ -241,15 +237,15 @@ class Webspace extends \PleskX\Api\Operator
      */
     public function getPlanGuid( $guid )
     {
-		$packet = $this->_client->getPacket();
-		$getterTag = $packet->addChild( $this->_wrapperTag )->addChild( 'get' );
+		$packet = $this->client->getPacket();
+		$getterTag = $packet->addChild( $this->wrapperTag )->addChild( 'get' );
 		
 		$filterTag = $getterTag->addChild( 'filter' );
         $filterTag->addChild( 'guid', $guid );
 		
 		$getterTag->addChild( 'dataset' )->addChild( 'subscriptions' );
 		
-		$response = $this->_client->request( $packet );
+		$response = $this->client->request( $packet );
 		
 		$guidPropertyName = 'plan-guid';
 		
@@ -284,14 +280,14 @@ class Webspace extends \PleskX\Api\Operator
 	 * @return XmlResponse
 	 */
 	public function switchSubscription( $webspaceId, $planGuid ) {
-		$packet = $this->_client->getPacket();
+		$packet = $this->client->getPacket();
 		
-		$switchSubscriptionTag = $packet->addChild( $this->_wrapperTag )->addChild( 'switch-subscription' );
+		$switchSubscriptionTag = $packet->addChild( $this->wrapperTag )->addChild( 'switch-subscription' );
 		
 		$switchSubscriptionTag->addChild( 'filter' )->addChild( 'id', $webspaceId );
 		$switchSubscriptionTag->addChild( 'plan-guid', $planGuid );
 		
-		$response = $this->_client->request( $packet );
+		$response = $this->client->request( $packet );
 		
 		return $response;
 	}
@@ -302,20 +298,9 @@ class Webspace extends \PleskX\Api\Operator
 	 * Tali subscription potrebbero anche essere in uno stato non attivo
      * @return Struct\GeneralInfo[]
      */
-    public function getAll()
+    public function getAll(): array
     {
-        return $this->_getItems(Struct\GeneralInfo::class, 'gen_info');
-    }
-	
-	
-    /**
-	 * Restituisce tutte le subscriptions (servizi attivati) presenti sul server.
-	 * Tali subscription potrebbero anche essere in uno stato non attivo
-     * @return Struct\CompleteGeneralInfo[]
-     */
-    public function getCompleteList()
-    {
-        return $this->_getItems( Struct\CompleteGeneralInfo::class, 'gen_info' );
+        return $this->getItems(Struct\GeneralInfo::class, 'gen_info');
     }
 	
 	
@@ -325,9 +310,9 @@ class Webspace extends \PleskX\Api\Operator
      *
      * @return Struct\DiskUsage
      */
-    public function getDiskUsage($field, $value)
+    public function getDiskUsage(string $field, $value): Struct\DiskUsage
     {
-        $items = $this->_getItems(Struct\DiskUsage::class, 'disk_usage', $field, $value);
+        $items = $this->getItems(Struct\DiskUsage::class, 'disk_usage', $field, $value);
 
         return reset($items);
     }
@@ -339,8 +324,8 @@ class Webspace extends \PleskX\Api\Operator
 	 * @return bool
 	 */
 	public function setCurrentCertificate( $filters, $certificateName ) {
-		$packet = $this->_client->getPacket();
-		$setterTag = $packet->addChild( $this->_wrapperTag )->addChild( 'set' );
+		$packet = $this->client->getPacket();
+		$setterTag = $packet->addChild( $this->wrapperTag )->addChild( 'set' );
 		if ( !empty( $filters ) ) {
 			$filterTag = $setterTag->addChild( 'filter' );
 			foreach ( $filters as $key => $value ) {
@@ -355,7 +340,7 @@ class Webspace extends \PleskX\Api\Operator
 		$property->addChild('name', 'certificate_name');
 		$property->addChild('value', $certificateName);
 		
-		$response = $this->_client->request( $packet );
+		$response = $this->client->request( $packet );
 		
 		return 'ok' === (string)$response->status;
 	}
@@ -366,8 +351,8 @@ class Webspace extends \PleskX\Api\Operator
 	 * @return string|null
 	 */
 	public function getCurrentCertificate( $filters ) {
-		$packet = $this->_client->getPacket();
-		$getterTag = $packet->addChild( $this->_wrapperTag )->addChild( 'get' );
+		$packet = $this->client->getPacket();
+		$getterTag = $packet->addChild( $this->wrapperTag )->addChild( 'get' );
 		
 		if ( !empty( $filters ) ) {
 			$filterTag = $getterTag->addChild( 'filter' );
@@ -379,7 +364,7 @@ class Webspace extends \PleskX\Api\Operator
 		
 		$getterTag->addChild( 'dataset' )->addChild( 'hosting' );
 		
-		$response = $this->_client->request( $packet );
+		$response = $this->client->request( $packet );
 		$responseProperties = $response->data->hosting->vrt_hst->property;
 		
 		foreach( $responseProperties as $property ) {
@@ -390,4 +375,48 @@ class Webspace extends \PleskX\Api\Operator
 		
 		return null;
 	}
+
+    /**
+     * @param string $field
+     * @param int|string $value
+     *
+     * @return bool
+     */
+    public function enable(string $field, $value): bool
+    {
+        return $this->setProperties($field, $value, ['status' => 0]);
+    }
+
+    /**
+     * @param string $field
+     * @param int|string $value
+     *
+     * @return bool
+     */
+    public function disable(string $field, $value): bool
+    {
+        return $this->setProperties($field, $value, ['status' => 1]);
+    }
+
+    /**
+     * @param string $field
+     * @param int|string $value
+     * @param array $properties
+     *
+     * @return bool
+     */
+    public function setProperties(string $field, $value, array $properties): bool
+    {
+        $packet = $this->client->getPacket();
+        $setTag = $packet->addChild($this->wrapperTag)->addChild('set');
+        $setTag->addChild('filter')->addChild($field, (string) $value);
+        $genInfoTag = $setTag->addChild('values')->addChild('gen_setup');
+        foreach ($properties as $property => $propertyValue) {
+            $genInfoTag->addChild($property, (string) $propertyValue);
+        }
+
+        $response = $this->client->request($packet);
+
+        return 'ok' === (string) $response->status;
+    }
 }

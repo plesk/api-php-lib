@@ -1,25 +1,20 @@
 <?php
-// Copyright 1999-2020. Plesk International GmbH.
+// Copyright 1999-2022. Plesk International GmbH.
 
 namespace PleskX\Api\Struct\Ip;
 
-class Info extends \PleskX\Api\Struct
+use PleskX\Api\AbstractStruct;
+
+class Info extends AbstractStruct
 {
-    /** @var string */
-    public $ipAddress;
+    public string $ipAddress;
+    public string $netmask;
+    public string $type;
+    public string $interface;
 
-    /** @var string */
-    public $netmask;
-
-    /** @var string */
-    public $type;
-
-    /** @var string */
-    public $interface;
-
-    public function __construct($apiResponse)
+    public function __construct(\SimpleXMLElement $apiResponse)
     {
-        $this->_initScalarProperties($apiResponse, [
+        $this->initScalarProperties($apiResponse, [
             'ip_address',
             'netmask',
             'type',

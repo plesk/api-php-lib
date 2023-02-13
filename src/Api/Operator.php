@@ -1,24 +1,21 @@
 <?php
-// Copyright 1999-2020. Plesk International GmbH.
+// Copyright 1999-2022. Plesk International GmbH.
 
 namespace PleskX\Api;
 
 class Operator
 {
-    /** @var string|null */
-    protected $_wrapperTag = null;
+    protected string $wrapperTag = '';
+    protected Client $client;
 
-    /** @var \PleskX\Api\Client */
-    protected $_client;
-
-    public function __construct($client)
+    public function __construct(Client $client)
     {
-        $this->_client = $client;
+        $this->client = $client;
 
-        if (is_null($this->_wrapperTag)) {
+        if ('' === $this->wrapperTag) {
             $classNameParts = explode('\\', get_class($this));
-            $this->_wrapperTag = end($classNameParts);
-            $this->_wrapperTag = strtolower(preg_replace('/([a-z])([A-Z])/', '\1-\2', $this->_wrapperTag));
+            $this->wrapperTag = end($classNameParts);
+            $this->wrapperTag = strtolower(preg_replace('/([a-z])([A-Z])/', '\1-\2', $this->wrapperTag));
         }
     }
 
@@ -30,9 +27,9 @@ class Operator
      *
      * @return XmlResponse
      */
-    public function request($request, $mode = Client::RESPONSE_SHORT)
+    public function request($request, $mode = Client::RESPONSE_SHORT): XmlResponse
     {
-        $wrapperTag = $this->_wrapperTag;
+        $wrapperTag = $this->wrapperTag;
 
         if (is_array($request)) {
             $request = [$wrapperTag => $request];
@@ -42,7 +39,7 @@ class Operator
             $request = "<$wrapperTag>$request</$wrapperTag>";
         }
 
-        return $this->_client->request($request, $mode);
+        return $this->client->request($request, $mode);
     }
 
     /**
@@ -52,9 +49,15 @@ class Operator
      *
      * @return bool
      */
-    protected function _delete($field, $value, $deleteMethodName = 'del')
+    protected function deleteBy(string $field, $value, string $deleteMethodName = 'del'): bool
     {
-        $response = $this->request("$deleteMethodName.filter.$field=$value");
+        $response = $this->request([
+            $deleteMethodName => [
+                'filter' => [
+                    $field => $value,
+                ],
+            ],
+        ]);
 
         return 'ok' === (string) $response->status;
     }
@@ -66,28 +69,36 @@ class Operator
      * @param int|string|null $value
      * @param callable|null $filter
      *
-     * @return mixed
+     * @return array
      */
-    protected function _getItems($structClass, $infoTag, $field = null, $value = null, callable $filter = null)
+    protected function getItems($structClass, $infoTag, $field = null, $value = null, callable $filter = null): array
     {
-        $packet = $this->_client->getPacket();
-        $getTag = $packet->addChild($this->_wrapperTag)->addChild('get');
+        $packet = $this->client->getPacket();
+        $getTag = $packet->addChild($this->wrapperTag)->addChild('get');
 
         $filterTag = $getTag->addChild('filter');
         if (!is_null($field)) {
-            $filterTag->addChild($field, $value);
+            $filterTag->{$field} = (string) $value;
         }
 
         $getTag->addChild('dataset')->addChild($infoTag);
 
-        $response = $this->_client->request($packet, \PleskX\Api\Client::RESPONSE_FULL);
+        $response = $this->client->request($packet, \PleskX\Api\Client::RESPONSE_FULL);
 
         $items = [];
         foreach ($response->xpath('//result') as $xmlResult) {
             if (!is_null($filter) && !$filter($xmlResult->data->$infoTag)) {
                 continue;
             }
-            $items[] = new $structClass($xmlResult->data->$infoTag);
+            if (!isset($xmlResult->data) || !isset($xmlResult->data->$infoTag)) {
+                continue;
+            }
+            /** @psalm-suppress InvalidStringClass */
+            $item = new $structClass($xmlResult->data->$infoTag);
+            if (isset($xmlResult->id) && property_exists($item, 'id')) {
+                $item->id = (int) $xmlResult->id;
+            }
+            $items[] = $item;
         }
 
         return $items;

@@ -1,48 +1,42 @@
 <?php
-// Copyright 1999-2020. Plesk International GmbH.
+// Copyright 1999-2022. Plesk International GmbH.
 
 namespace PleskX\Api\Operator;
 
 use PleskX\Api\Struct\Server as Struct;
 use PleskX\Api\Exception;
-
+use PleskX\Api\XmlResponse;
 
 class Server extends \PleskX\Api\Operator
 {
-    /**
-     * @return array
-     */
-    public function getProtos()
+    public function getProtos(): array
     {
-        $packet = $this->_client->getPacket();
-        $packet->addChild($this->_wrapperTag)->addChild('get_protos');
-        $response = $this->_client->request($packet);
+        $packet = $this->client->getPacket();
+        $packet->addChild($this->wrapperTag)->addChild('get_protos');
+        $response = $this->client->request($packet);
 
         return (array) $response->protos->proto;
     }
 
-    public function getGeneralInfo()
+    public function getGeneralInfo(): Struct\GeneralInfo
     {
-        return new Struct\GeneralInfo($this->_getInfo('gen_info'));
+        return new Struct\GeneralInfo($this->getInfo('gen_info'));
     }
 
-    public function getPreferences()
+    public function getPreferences(): Struct\Preferences
     {
-        return new Struct\Preferences($this->_getInfo('prefs'));
+        return new Struct\Preferences($this->getInfo('prefs'));
     }
 
-    public function getAdmin()
+    public function getAdmin(): Struct\Admin
     {
-        return new Struct\Admin($this->_getInfo('admin'));
+        return new Struct\Admin($this->getInfo('admin'));
     }
 
-    /**
-     * @return array
-     */
-    public function getKeyInfo()
+    public function getKeyInfo(): array
     {
         $keyInfo = [];
-        $keyInfoXml = $this->_getInfo('key');
+        $keyInfoXml = $this->getInfo('key');
 
         foreach ($keyInfoXml->property as $property) {
             $keyInfo[(string) $property->name] = (string) $property->value;
@@ -51,13 +45,10 @@ class Server extends \PleskX\Api\Operator
         return $keyInfo;
     }
 
-    /**
-     * @return array
-     */
-    public function getComponents()
+    public function getComponents(): array
     {
         $components = [];
-        $componentsXml = $this->_getInfo('components');
+        $componentsXml = $this->getInfo('components');
 
         foreach ($componentsXml->component as $component) {
             $components[(string) $component->name] = (string) $component->version;
@@ -66,13 +57,10 @@ class Server extends \PleskX\Api\Operator
         return $components;
     }
 
-    /**
-     * @return array
-     */
-    public function getServiceStates()
+    public function getServiceStates(): array
     {
         $states = [];
-        $statesXml = $this->_getInfo('services_state');
+        $statesXml = $this->getInfo('services_state');
 
         foreach ($statesXml->srv as $service) {
             $states[(string) $service->id] = [
@@ -85,18 +73,15 @@ class Server extends \PleskX\Api\Operator
         return $states;
     }
 
-    public function getSessionPreferences()
+    public function getSessionPreferences(): Struct\SessionPreferences
     {
-        return new Struct\SessionPreferences($this->_getInfo('session_setup'));
+        return new Struct\SessionPreferences($this->getInfo('session_setup'));
     }
 
-    /**
-     * @return array
-     */
-    public function getShells()
+    public function getShells(): array
     {
         $shells = [];
-        $shellsXml = $this->_getInfo('shells');
+        $shellsXml = $this->getInfo('shells');
 
         foreach ($shellsXml->shell as $shell) {
             $shells[(string) $shell->name] = (string) $shell->path;
@@ -105,28 +90,22 @@ class Server extends \PleskX\Api\Operator
         return $shells;
     }
 
-    /**
-     * @return array
-     */
-    public function getNetworkInterfaces()
+    public function getNetworkInterfaces(): array
     {
-        $interfacesXml = $this->_getInfo('interfaces');
+        $interfacesXml = $this->getInfo('interfaces');
 
         return (array) $interfacesXml->interface;
     }
 
-    public function getStatistics()
+    public function getStatistics(): Struct\Statistics
     {
-        return new Struct\Statistics($this->_getInfo('stat'));
+        return new Struct\Statistics($this->getInfo('stat'));
     }
 
-    /**
-     * @return array
-     */
-    public function getSiteIsolationConfig()
+    public function getSiteIsolationConfig(): array
     {
         $config = [];
-        $configXml = $this->_getInfo('site-isolation-config');
+        $configXml = $this->getInfo('site-isolation-config');
 
         foreach ($configXml->property as $property) {
             $config[(string) $property->name] = (string) $property->value;
@@ -135,40 +114,29 @@ class Server extends \PleskX\Api\Operator
         return $config;
     }
 
-    public function getUpdatesInfo()
+    public function getUpdatesInfo(): Struct\UpdatesInfo
     {
-        return new Struct\UpdatesInfo($this->_getInfo('updates'));
+        return new Struct\UpdatesInfo($this->getInfo('updates'));
     }
 
-    /**
-     * @param string $login
-     * @param string $clientIp
-     *
-     * @return string
-     */
-    public function createSession($login, $clientIp)
+    public function createSession(string $login, string $clientIp): string
     {
-        $packet = $this->_client->getPacket();
-        $sessionNode = $packet->addChild($this->_wrapperTag)->addChild('create_session');
+        $packet = $this->client->getPacket();
+        $sessionNode = $packet->addChild($this->wrapperTag)->addChild('create_session');
         $sessionNode->addChild('login', $login);
         $dataNode = $sessionNode->addChild('data');
         $dataNode->addChild('user_ip', base64_encode($clientIp));
         $dataNode->addChild('source_server');
-        $response = $this->_client->request($packet);
+        $response = $this->client->request($packet);
 
         return (string) $response->id;
     }
 
-    /**
-     * @param string $operation
-     *
-     * @return \SimpleXMLElement
-     */
-    private function _getInfo($operation)
+    private function getInfo(string $operation): XmlResponse
     {
-        $packet = $this->_client->getPacket();
-        $packet->addChild($this->_wrapperTag)->addChild('get')->addChild($operation);
-        $response = $this->_client->request($packet);
+        $packet = $this->client->getPacket();
+        $packet->addChild($this->wrapperTag)->addChild('get')->addChild($operation);
+        $response = $this->client->request($packet);
 
         return $response->$operation;
     }

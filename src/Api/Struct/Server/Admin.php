@@ -1,22 +1,19 @@
 <?php
-// Copyright 1999-2020. Plesk International GmbH.
+// Copyright 1999-2022. Plesk International GmbH.
 
 namespace PleskX\Api\Struct\Server;
 
-class Admin extends \PleskX\Api\Struct
+use PleskX\Api\AbstractStruct;
+
+class Admin extends AbstractStruct
 {
-    /** @var string */
-    public $companyName;
+    public string $companyName;
+    public string $name;
+    public string $email;
 
-    /** @var string */
-    public $name;
-
-    /** @var string */
-    public $email;
-
-    public function __construct($apiResponse)
+    public function __construct(\SimpleXMLElement $apiResponse)
     {
-        $this->_initScalarProperties($apiResponse, [
+        $this->initScalarProperties($apiResponse, [
             ['admin_cname' => 'companyName'],
             ['admin_pname' => 'name'],
             ['admin_email' => 'email'],

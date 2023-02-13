@@ -1,25 +1,20 @@
 <?php
-// Copyright 1999-2020. Plesk International GmbH.
+// Copyright 1999-2022. Plesk International GmbH.
 
 namespace PleskX\Api\Struct\DatabaseServer;
 
-class Info extends \PleskX\Api\Struct
+use PleskX\Api\AbstractStruct;
+
+class Info extends AbstractStruct
 {
-    /** @var int */
-    public $id;
+    public int $id;
+    public string $host;
+    public int $port;
+    public string $type;
 
-    /** @var string */
-    public $host;
-
-    /** @var int */
-    public $port;
-
-    /** @var string */
-    public $type;
-
-    public function __construct($apiResponse)
+    public function __construct(\SimpleXMLElement $apiResponse)
     {
-        $this->_initScalarProperties($apiResponse, [
+        $this->initScalarProperties($apiResponse, [
             'id',
             'host',
             'port',

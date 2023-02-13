@@ -1,21 +1,38 @@
 <?php
-// Copyright 1999-2020. Plesk International GmbH.
+// Copyright 1999-2022. Plesk International GmbH.
 
 namespace PleskX\Api\Struct\Server\Statistics;
 
-class Objects extends \PleskX\Api\Struct
+use PleskX\Api\AbstractStruct;
+
+class Objects extends AbstractStruct
 {
-    /** @var int */
-    public $clients;
+    public int $clients;
+    public int $domains;
+    public int $databases;
+    public int $activeDomains;
+    public int $mailBoxes;
+    public int $mailRedirects;
+    public int $mailGroups;
+    public int $mailResponders;
+    public int $databaseUsers;
+    public int $problemClients;
+    public int $problemDomains;
 
-    /** @var int */
-    public $domains;
-
-    public function __construct($apiResponse)
+    public function __construct(\SimpleXMLElement $apiResponse)
     {
-        $this->_initScalarProperties($apiResponse, [
+        $this->initScalarProperties($apiResponse, [
             'clients',
             'domains',
+            'databases',
+            ['active_domains' => 'activeDomains'],
+            ['mail_boxes' => 'mailBoxes'],
+            ['mail_redirects' => 'mailRedirects'],
+            ['mail_groups' => 'mailGroups'],
+            ['mail_responders' => 'mailResponders'],
+            ['database_users' => 'databaseUsers'],
+            ['problem_clients' => 'problemClients'],
+            ['problem_domains' => 'problemDomains'],
         ]);
     }
 }

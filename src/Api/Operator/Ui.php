@@ -1,5 +1,5 @@
 <?php
-// Copyright 1999-2020. Plesk International GmbH.
+// Copyright 1999-2022. Plesk International GmbH.
 
 namespace PleskX\Api\Operator;
 
@@ -7,57 +7,38 @@ use PleskX\Api\Struct\Ui as Struct;
 
 class Ui extends \PleskX\Api\Operator
 {
-    /**
-     * @return array
-     */
-    public function getNavigation()
+    public function getNavigation(): array
     {
         $response = $this->request('get-navigation');
 
         return unserialize(base64_decode($response->navigation));
     }
 
-    /**
-     * @param string $owner
-     * @param array $properties
-     *
-     * @return int
-     */
-    public function createCustomButton($owner, $properties)
+    public function createCustomButton(string $owner, array $properties): int
     {
-        $packet = $this->_client->getPacket();
-        $buttonNode = $packet->addChild($this->_wrapperTag)->addChild('create-custombutton');
+        $packet = $this->client->getPacket();
+        $buttonNode = $packet->addChild($this->wrapperTag)->addChild('create-custombutton');
         $buttonNode->addChild('owner')->addChild($owner);
         $propertiesNode = $buttonNode->addChild('properties');
 
         foreach ($properties as $name => $value) {
-            $propertiesNode->addChild($name, $value);
+            $propertiesNode->{$name} = $value;
         }
 
-        $response = $this->_client->request($packet);
+        $response = $this->client->request($packet);
 
         return (int) $response->id;
     }
 
-    /**
-     * @param int $id
-     *
-     * @return Struct\CustomButton
-     */
-    public function getCustomButton($id)
+    public function getCustomButton(int $id): Struct\CustomButton
     {
         $response = $this->request("get-custombutton.filter.custombutton-id=$id");
 
         return new Struct\CustomButton($response);
     }
 
-    /**
-     * @param int $id
-     *
-     * @return bool
-     */
-    public function deleteCustomButton($id)
+    public function deleteCustomButton(int $id): bool
     {
-        return $this->_delete('custombutton-id', $id, 'delete-custombutton');
+        return $this->deleteBy('custombutton-id', $id, 'delete-custombutton');
     }
 }

@@ -1,21 +1,20 @@
 <?php
-// Copyright 1999-2020. Plesk International GmbH.
+// Copyright 1999-2022. Plesk International GmbH.
 
 namespace PleskXTest;
 
-class PhpHandlerTest extends TestCase
+class PhpHandlerTest extends AbstractTestCase
 {
     public function testGet()
     {
-        $handler = static::$_client->phpHandler()->get(null, null);
+        $handler = static::$client->phpHandler()->get();
 
-        $this->assertIsObject($handler);
         $this->assertObjectHasAttribute('type', $handler);
     }
 
     public function testGetAll()
     {
-        $handlers = static::$_client->phpHandler()->getAll();
+        $handlers = static::$client->phpHandler()->getAll();
 
         $this->assertIsArray($handlers);
         $this->assertNotEmpty($handlers);
@@ -31,6 +30,6 @@ class PhpHandlerTest extends TestCase
         $this->expectException(\PleskX\Api\Exception::class);
         $this->expectExceptionMessage('Php handler does not exists');
 
-        static::$_client->phpHandler()->get('id', 'this-handler-does-not-exist');
+        static::$client->phpHandler()->get('id', 'this-handler-does-not-exist');
     }
 }

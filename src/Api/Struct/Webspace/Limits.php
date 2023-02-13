@@ -1,19 +1,18 @@
 <?php
-// Copyright 1999-2020. Plesk International GmbH.
+// Copyright 1999-2022. Plesk International GmbH.
 
 namespace PleskX\Api\Struct\Webspace;
 
-class Limits extends \PleskX\Api\Struct
+use PleskX\Api\AbstractStruct;
+
+class Limits extends AbstractStruct
 {
-    /** @var string */
-    public $overuse;
+    public string $overuse;
+    public array $limits;
 
-    /** @var array */
-    public $limits;
-
-    public function __construct($apiResponse)
+    public function __construct(\SimpleXMLElement $apiResponse)
     {
-        $this->_initScalarProperties($apiResponse, ['overuse']);
+        $this->initScalarProperties($apiResponse, ['overuse']);
         $this->limits = [];
 
         foreach ($apiResponse->limit as $limit) {

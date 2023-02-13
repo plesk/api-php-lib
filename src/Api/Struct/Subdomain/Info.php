@@ -1,26 +1,21 @@
 <?php
-// Copyright 1999-2020. Plesk International GmbH.
+// Copyright 1999-2022. Plesk International GmbH.
 
 namespace PleskX\Api\Struct\Subdomain;
 
-class Info extends \PleskX\Api\Struct
+use PleskX\Api\AbstractStruct;
+
+class Info extends AbstractStruct
 {
-    /** @var int */
-    public $id;
+    public int $id;
+    public string $parent;
+    public string $name;
+    public array $properties;
 
-    /** @var string */
-    public $parent;
-
-    /** @var string */
-    public $name;
-
-    /** @var array */
-    public $properties;
-
-    public function __construct($apiResponse)
+    public function __construct(\SimpleXMLElement $apiResponse)
     {
         $this->properties = [];
-        $this->_initScalarProperties($apiResponse, [
+        $this->initScalarProperties($apiResponse, [
             'id',
             'parent',
             'name',

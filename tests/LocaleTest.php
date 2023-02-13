@@ -1,13 +1,13 @@
 <?php
-// Copyright 1999-2020. Plesk International GmbH.
+// Copyright 1999-2022. Plesk International GmbH.
 
 namespace PleskXTest;
 
-class LocaleTest extends TestCase
+class LocaleTest extends AbstractTestCase
 {
     public function testGet()
     {
-        $locales = static::$_client->locale()->get();
+        $locales = static::$client->locale()->get();
         $this->assertGreaterThan(0, count($locales));
 
         $locale = $locales['en-US'];
@@ -16,7 +16,7 @@ class LocaleTest extends TestCase
 
     public function testGetById()
     {
-        $locale = static::$_client->locale()->get('en-US');
+        $locale = static::$client->locale()->get('en-US');
         $this->assertEquals('en-US', $locale->id);
     }
 }

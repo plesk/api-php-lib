@@ -1,13 +1,13 @@
 <?php
-// Copyright 1999-2020. Plesk International GmbH.
+// Copyright 1999-2022. Plesk International GmbH.
 
 namespace PleskXTest;
 
-class EventLogTest extends TestCase
+class EventLogTest extends AbstractTestCase
 {
     public function testGet()
     {
-        $events = static::$_client->eventLog()->get();
+        $events = static::$client->eventLog()->get();
         $this->assertGreaterThan(0, $events);
 
         $event = reset($events);
@@ -16,7 +16,7 @@ class EventLogTest extends TestCase
 
     public function testGetDetailedLog()
     {
-        $events = static::$_client->eventLog()->getDetailedLog();
+        $events = static::$client->eventLog()->getDetailedLog();
         $this->assertGreaterThan(0, $events);
 
         $event = reset($events);
@@ -25,7 +25,7 @@ class EventLogTest extends TestCase
 
     public function testGetLastId()
     {
-        $lastId = static::$_client->eventLog()->getLastId();
+        $lastId = static::$client->eventLog()->getLastId();
         $this->assertGreaterThan(0, $lastId);
     }
 }
