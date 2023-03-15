@@ -52,13 +52,13 @@ class Site extends \PleskX\Api\Operator
      * @param string $field
      * @param int|string $value
      *
-     * @return Struct\GeneralInfo
+     * @return ?Struct\GeneralInfo
      */
-    public function get(string $field, $value): Struct\GeneralInfo
+    public function get(string $field, $value): ?Struct\GeneralInfo
     {
         $items = $this->getItems(Struct\GeneralInfo::class, 'gen_info', $field, $value);
 
-        return reset($items);
+        return reset($items) ?: null;
     }
 
     /**

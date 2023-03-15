@@ -68,6 +68,9 @@ class SiteTest extends AbstractTestCase
         $this->assertEquals($site->id, $siteInfo->id);
 
         static::$client->site()->delete('id', $site->id);
+
+        $siteInfo = static::$client->site()->get('parent-id', static::$webspace->id);
+        $this->assertNull($siteInfo);
     }
 
     public function testGetHostingWoHosting()
