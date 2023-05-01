@@ -1,5 +1,5 @@
 <?php
-// Copyright 1999-2022. Plesk International GmbH.
+// Copyright 1999-2023. Plesk International GmbH.
 
 namespace PleskX\Api\Operator;
 
@@ -7,7 +7,6 @@ use PleskX\Api\Struct\ServicePlanAddon as Struct;
 
 class ServicePlanAddon extends \PleskX\Api\Operator
 {
-
     public function create(array $properties): Struct\Info
     {
         $response = $this->request(['add' => $properties]);

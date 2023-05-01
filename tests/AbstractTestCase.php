@@ -13,6 +13,7 @@ abstract class AbstractTestCase extends TestCase
 
     private static array $webspaces = [];
     private static array $servicePlans = [];
+    private static array $servicePlanAddons = [];
 
     public static function setUpBeforeClass(): void
     {
@@ -54,6 +55,14 @@ abstract class AbstractTestCase extends TestCase
             } catch (\Exception $e) {
             }
         }
+
+        foreach (self::$servicePlanAddons as $servicePlanAddon) {
+            try {
+                static::$client->servicePlanAddon()->delete('id', $servicePlanAddon->id);
+                // phpcs:ignore
+            } catch (\Exception $e) {
+            }
+        }
     }
 
     protected static function getIpAddress(): string
@@ -90,5 +99,15 @@ abstract class AbstractTestCase extends TestCase
         self::$servicePlans[] = $servicePlan;
 
         return $servicePlan;
+    }
+
+    protected static function createServicePlanAddon(): \PleskX\Api\Struct\ServicePlanAddon\Info
+    {
+        $id = uniqid();
+        $servicePlanAddon = static::$client->servicePlanAddon()->create(['name' => "test{$id}planaddon"]);
+
+        self::$servicePlanAddons[] = $servicePlanAddon;
+
+        return $servicePlanAddon;
     }
 }
