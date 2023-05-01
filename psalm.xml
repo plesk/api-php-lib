@@ -1,4 +1,5 @@
 <?xml version="1.0"?>
+<!-- Copyright 1999-2023. Plesk International GmbH. -->
 <psalm
     errorLevel="3"
     resolveFromConfigFile="true"

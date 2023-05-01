@@ -1,3 +1,4 @@
+# Copyright 1999-2023. Plesk International GmbH.
 version: '2'
 services:
   plesk:

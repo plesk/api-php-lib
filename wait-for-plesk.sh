@@ -1,5 +1,5 @@
 #!/bin/bash
-### Copyright 1999-2022. Plesk International GmbH.
+### Copyright 1999-2023. Plesk International GmbH.
 
 while : ; do
     curl -ksL https://plesk:8443/ | grep "<title>Plesk" > /dev/null
