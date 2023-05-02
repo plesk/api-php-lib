@@ -3,6 +3,8 @@
 
 namespace PleskXTest;
 
+use PleskX\Api\Struct\Certificate as Struct;
+
 class CertificateTest extends AbstractTestCase
 {
     private array $certificateProperties = [
@@ -13,6 +15,13 @@ class CertificateTest extends AbstractTestCase
         'company' => 'Plesk',
         'email' => 'info@plesk.com',
         'name' => 'plesk.com',
+    ];
+    private array $distinguishedNames = [
+        "countryName" => "CH",
+        "stateOrProvinceName" => "Schaffhausen",
+        "localityName" => "Schaffhausen",
+        "organizationName" => "Plesk",
+        "emailAddress" => "info@plesk.com"
     ];
 
     public function testGenerate()
@@ -37,6 +46,22 @@ class CertificateTest extends AbstractTestCase
         static::$client->certificate()->delete('test', ['admin' => true]);
     }
 
+    public function testUpdate()
+    {
+        $payLoad = [
+            'name' => 'test',
+            'admin' => true,
+        ];
+        $certificate = static::$client->certificate()->generate($this->certificateProperties);
+        static::$client->certificate()->install($payLoad, $certificate);
+
+        $certificate = $this->generateCertificateOpenSsl($this->distinguishedNames);
+        $result = static::$client->certificate()->update($payLoad, $certificate);
+        $this->assertTrue($result);
+
+        static::$client->certificate()->delete('test', ['admin' => true]);
+    }
+
     public function testDelete()
     {
         $certificate = static::$client->certificate()->generate($this->certificateProperties);
@@ -44,9 +69,29 @@ class CertificateTest extends AbstractTestCase
         static::$client->certificate()->install([
             'name' => 'test',
             'admin' => true,
-        ], $certificate->request, $certificate->privateKey);
+        ], $certificate);
 
         $result = static::$client->certificate()->delete('test', ['admin' => true]);
         $this->assertTrue($result);
+    }
+
+    private function generateCertificateOpenSsl(array $dn): Struct\Info
+    {
+        $privkey = openssl_pkey_new([
+            "private_key_bits" => 2048,
+            "private_key_type" => OPENSSL_KEYTYPE_RSA,
+        ]);
+        $csr = openssl_csr_new($dn, $privkey, ['digest_alg' => 'sha256']);
+        $x509 = openssl_csr_sign($csr, null, $privkey, $days = 365, ['digest_alg' => 'sha256']);
+
+        openssl_csr_export($csr, $csrout);
+        openssl_x509_export($x509, $certout);
+        openssl_pkey_export($privkey, $pkeyout);
+
+        return new Struct\Info([
+            'publicKey' => $certout,
+            'request' => $csrout,
+            'privateKey' => $pkeyout
+        ]);
     }
 }
