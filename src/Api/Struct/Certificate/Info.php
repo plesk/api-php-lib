@@ -7,14 +7,32 @@ use PleskX\Api\AbstractStruct;
 
 class Info extends AbstractStruct
 {
-    public string $request;
-    public string $privateKey;
+    public ?string $request = null;
+    public ?string $privateKey = null;
+    public ?string $publicKey = null;
+    public ?string $publicKeyCA = null;
 
-    public function __construct(\SimpleXMLElement $apiResponse)
+    public function __construct($input)
     {
-        $this->initScalarProperties($apiResponse, [
-            ['csr' => 'request'],
-            ['pvt' => 'privateKey'],
+        if ($input instanceof \SimpleXMLElement) {
+            $this->initScalarProperties($input, [
+                ['csr' => 'request'],
+                ['pvt' => 'privateKey'],
+            ]);
+        } else {
+            foreach ($input as $name => $value) {
+                $this->$name = $value;
+            }
+        }
+    }
+
+    public function getMapping(): array
+    {
+        return array_filter([
+            'csr' => $this->request,
+            'pvt' => $this->privateKey,
+            'cert' => $this->publicKey,
+            'ca' => $this->publicKeyCA,
         ]);
     }
 }
