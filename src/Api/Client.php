@@ -3,6 +3,7 @@
 
 namespace PleskX\Api;
 
+use DOMDocument;
 use SimpleXMLElement;
 
 /**
@@ -257,23 +258,40 @@ class Client
             $responseXml = $this->performHttpRequest($xmlString);
         }
 
+        return $this->splitResponseToArray($responseXml, $mode);
+    }
+
+    private function splitResponseToArray(XmlResponse $responseXml, $mode = self::RESPONSE_SHORT): array
+    {
         $responses = [];
+
         foreach ($responseXml->children() as $childNode) {
-            $xml = $this->getPacket();
-            $dom = dom_import_simplexml($xml)->ownerDocument;
+            $dom = $this->getDomDocument($this->getPacket());
             if (!$dom) {
                 continue;
             }
 
             $childDomNode = dom_import_simplexml($childNode);
-            $childDomNode = $dom->importNode($childDomNode, true);
-            $dom->documentElement->appendChild($childDomNode);
+            if (!is_null($childDomNode)) {
+                $childDomNode = $dom->importNode($childDomNode, true);
+                $dom->documentElement->appendChild($childDomNode);
+            }
 
             $response = simplexml_load_string($dom->saveXML());
             $responses[] = (self::RESPONSE_FULL == $mode) ? $response : $response->xpath('//result')[0];
         }
 
         return $responses;
+    }
+
+    private function getDomDocument(SimpleXMLElement $xml): ?DOMDocument
+    {
+        $dom = dom_import_simplexml($xml);
+        if (is_null($dom)) {
+            return null;
+        }
+
+        return $dom->ownerDocument;
     }
 
     /**
