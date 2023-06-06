@@ -3,14 +3,16 @@
 
 namespace PleskX\Api\Struct\Certificate;
 
-class PoolInfo extends \PleskX\Api\Struct
+use PleskX\Api\AbstractStruct;
+
+class PoolInfo extends AbstractStruct
 {
     /** @var string */
     public $name;
 
     public function __construct($apiResponse)
     {
-        $this->_initScalarProperties($apiResponse, [
+        $this->initScalarProperties($apiResponse, [
             ['name' => 'name'],
         ]);
     }

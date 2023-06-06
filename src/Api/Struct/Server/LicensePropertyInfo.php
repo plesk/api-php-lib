@@ -3,10 +3,12 @@
 namespace PleskX\Api\Struct\Server;
 
 
+use PleskX\Api\AbstractStruct;
+
 /**
  * Struttura dati per le informazioni su una proprietà di una licenza
  */
-class LicensePropertyInfo extends \PleskX\Api\Struct {
+class LicensePropertyInfo extends AbstractStruct {
 	
     /** @var string Nome della proprietà */
     public $name;
@@ -19,7 +21,7 @@ class LicensePropertyInfo extends \PleskX\Api\Struct {
 	 * @param \SimpleXMLElement $apiResponse
 	 */
     public function __construct( $apiResponse ) {
-		$this->_initScalarProperties( $apiResponse, [
+		$this->initScalarProperties( $apiResponse, [
             'name',
             'value',
         ]);

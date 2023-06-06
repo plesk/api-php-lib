@@ -2,7 +2,9 @@
 
 namespace PleskX\Api\Struct\Webspace;
 
-class HostingSetting extends \PleskX\Api\Struct
+use PleskX\Api\AbstractStruct;
+
+class HostingSetting extends AbstractStruct
 {
     /** @var array */
     public $properties;

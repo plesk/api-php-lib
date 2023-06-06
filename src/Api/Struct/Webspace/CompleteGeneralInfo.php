@@ -3,7 +3,9 @@
 namespace PleskX\Api\Struct\Webspace;
 
 
-class CompleteGeneralInfo extends \PleskX\Api\Struct
+use PleskX\Api\AbstractStruct;
+
+class CompleteGeneralInfo extends AbstractStruct
 {
 	/**
 	 * Nome della subscription. E' il nome a dominio

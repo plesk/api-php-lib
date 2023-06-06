@@ -63,12 +63,12 @@ class PhpHandler extends Operator
 	 * @return Struct\GeneralInfo[]
 	 */
 	public function getHandler( $handlerId ) {
-		$packet = $this->_client->getPacket();
-		$getTag = $packet->addChild($this->_wrapperTag)->addChild('get');
+		$packet = $this->client->getPacket();
+		$getTag = $packet->addChild($this->wrapperTag)->addChild('get');
 		
 		$filterTag = $getTag->addChild('filter');
 		$filterTag->addChild('id', $handlerId);
-		$response = $this->_client->request( $packet );
+		$response = $this->client->request( $packet );
 		
 		$item = [];
 		
