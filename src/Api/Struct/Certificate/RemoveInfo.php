@@ -3,14 +3,16 @@
 
 namespace PleskX\Api\Struct\Certificate;
 
-class RemoveInfo extends \PleskX\Api\Struct
+use PleskX\Api\AbstractStruct;
+
+class RemoveInfo extends AbstractStruct
 {
 	/** @var string */
 	public $status;
 
 	public function __construct($apiResponse)
 	{
-		$this->_initScalarProperties($apiResponse, [
+		$this->initScalarProperties($apiResponse, [
 			'status',
 		]);
 	}

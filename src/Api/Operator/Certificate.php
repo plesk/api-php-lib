@@ -30,13 +30,13 @@ class Certificate extends \PleskX\Api\Operator
      */
     public function getAll($field, $value )
     {
-        $packet = $this->_client->getPacket();
-        $getTag = $packet->addChild($this->_wrapperTag)->addChild('get-pool');
+        $packet = $this->client->getPacket();
+        $getTag = $packet->addChild($this->wrapperTag)->addChild('get-pool');
 
 		$filterTag = $getTag->addChild('filter');
 		$filterTag->addChild($field, $value);
 		
-        $response = $this->_client->request($packet, \PleskX\Api\Client::RESPONSE_FULL);
+        $response = $this->client->request($packet, \PleskX\Api\Client::RESPONSE_FULL);
 		
         $items = [];
         foreach ($response->xpath('//result/certificates') as $xmlResult) {
@@ -54,8 +54,8 @@ class Certificate extends \PleskX\Api\Operator
 	 */
 	public function install($properties)
 	{
-		$packet = $this->_client->getPacket();
-		$install = $packet->addChild($this->_wrapperTag)->addChild('install');
+		$packet = $this->client->getPacket();
+		$install = $packet->addChild($this->wrapperTag)->addChild('install');
 
 		foreach ($properties as $name => $value) {
 			if ($name == 'content') {
@@ -71,7 +71,7 @@ class Certificate extends \PleskX\Api\Operator
 			$install->addChild($name, $value);
 		}
 
-		$response = $this->_client->request($packet);
+		$response = $this->client->request($packet);
 		return new Struct\InstallInfo($response);
 	}
 	
@@ -82,8 +82,8 @@ class Certificate extends \PleskX\Api\Operator
 	 */
 	public function remove($properties)
 	{
-		$packet = $this->_client->getPacket();
-		$removeNode = $packet->addChild($this->_wrapperTag)->addChild('remove');
+		$packet = $this->client->getPacket();
+		$removeNode = $packet->addChild($this->wrapperTag)->addChild('remove');
 
 		foreach ($properties as $key => $value) {
 			if( $key == 'filter' ) {
@@ -99,7 +99,7 @@ class Certificate extends \PleskX\Api\Operator
 			$removeNode->addChild($key, $value);
 		}
 
-		$response = $this->_client->request($packet);
+		$response = $this->client->request($packet);
 		
 		return new Struct\RemoveInfo( $response );
 	}

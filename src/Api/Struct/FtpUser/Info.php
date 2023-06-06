@@ -2,7 +2,9 @@
 
 namespace PleskX\Api\Struct\FtpUser;
 
-class Info extends \PleskX\Api\Struct
+use PleskX\Api\AbstractStruct;
+
+class Info extends AbstractStruct
 {
 
     /** @var integer */
@@ -19,7 +21,7 @@ class Info extends \PleskX\Api\Struct
 	
 	
     public function __construct( $apiResponse ) {
-        $this->_initScalarProperties($apiResponse, [
+        $this->initScalarProperties($apiResponse, [
             'id',
             'name',
             'home',

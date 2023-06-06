@@ -112,8 +112,8 @@ class Operator
 	 */
 	protected function _getId( $field = null, $value = null ) 
 	{
-		$packet = $this->_client->getPacket();
-        $getTag = $packet->addChild($this->_wrapperTag)->addChild('get');
+		$packet = $this->client->getPacket();
+        $getTag = $packet->addChild($this->wrapperTag)->addChild('get');
 
         $filterTag = $getTag->addChild('filter');
         if (!is_null($field)) {
@@ -122,7 +122,7 @@ class Operator
 		
 		$getTag->addChild('dataset');
 		
-        $response = $this->_client->request($packet, \PleskX\Api\Client::RESPONSE_FULL);
+        $response = $this->client->request($packet, \PleskX\Api\Client::RESPONSE_FULL);
 		
 		$ids = [];
         foreach ($response->xpath('//result') as $xmlResult) {

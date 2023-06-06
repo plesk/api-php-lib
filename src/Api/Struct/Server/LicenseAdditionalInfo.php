@@ -2,13 +2,14 @@
 
 namespace PleskX\Api\Struct\Server;
 
+use PleskX\Api\AbstractStruct;
 use PleskX\Api\Struct\Server\LicenseAdditional\keyAdditionalInfo;
 
 
 /**
  * Struttura dati per le informazioni su una licenza aggiuntiva
  */
-class LicenseAdditionalInfo extends \PleskX\Api\Struct {
+class LicenseAdditionalInfo extends AbstractStruct {
 	
     /** @var string Stato della licenza */
     public $status;
@@ -19,7 +20,7 @@ class LicenseAdditionalInfo extends \PleskX\Api\Struct {
     /** @var string Messaggio di errore in caso di fallimento della richiesta */
     public $error_message;
 	
-    /** @var \PleskX\Api\Struct\Server\License\keyAdditionalInfo Licenza aggiuntiva */
+    /** @var $key \PleskX\Api\Struct\Server\LicenseAdditional\keyAdditionalInfo */
     public $key;
 
 	
@@ -27,7 +28,7 @@ class LicenseAdditionalInfo extends \PleskX\Api\Struct {
 	 * @param \SimpleXMLElement $apiResponse Oggetto xml a partire da <result>
 	 */
     public function __construct( $apiResponse ) {
-        $this->_initScalarProperties( $apiResponse, [
+        $this->initScalarProperties( $apiResponse, [
             'status',
         ]);
 		

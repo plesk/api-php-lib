@@ -2,13 +2,14 @@
 
 namespace PleskX\Api\Struct\Server\License;
 
+use PleskX\Api\AbstractStruct;
 use PleskX\Api\Struct\Server\LicensePropertyInfo;
 
 
 /**
  * Struttura dati per le informazioni su una licenza
  */
-class keyInfo extends \PleskX\Api\Struct {
+class keyInfo extends AbstractStruct {
 	
     /** @var \PleskX\Api\Struct\Server\LicensePropertyInfo[] Collezione di proprietà della licenza */
     public $properties;

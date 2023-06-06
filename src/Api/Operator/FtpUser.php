@@ -14,15 +14,15 @@ class FtpUser extends \PleskX\Api\Operator {
      * @return \PleskX\Api\XmlResponse
      */
     private function _get($command, $field, $value) {
-        $packet = $this->_client->getPacket();
-        $getTag = $packet->addChild($this->_wrapperTag)->addChild($command);
+        $packet = $this->client->getPacket();
+        $getTag = $packet->addChild($this->wrapperTag)->addChild($command);
 
         $filterTag = $getTag->addChild('filter');
         if (!is_null($field)) {
             $filterTag->addChild($field, $value);
         }
 
-        $response = $this->_client->request($packet, \PleskX\Api\Client::RESPONSE_FULL);
+        $response = $this->client->request($packet, \PleskX\Api\Client::RESPONSE_FULL);
         return $response;
     }
 	
@@ -32,8 +32,8 @@ class FtpUser extends \PleskX\Api\Operator {
 	 * @param string $newPassword
 	 */
 	public function updateFtpPassword( $ftpUser, $newPassword ) {
-		$packet = $this->_client->getPacket();
-		$set = $packet->addChild( $this->_wrapperTag )->addChild( 'set' );
+		$packet = $this->client->getPacket();
+		$set = $packet->addChild( $this->wrapperTag )->addChild( 'set' );
 		
 		$filter = $set->addChild( 'filter' );
 		$filter->addChild( 'name', $ftpUser );
@@ -41,7 +41,7 @@ class FtpUser extends \PleskX\Api\Operator {
 		$values = $set->addChild( 'values' );
 		$values->addChild( 'password', $newPassword );
 		
-		$this->_client->request($packet);
+		$this->client->request($packet);
 	}
 	
 	

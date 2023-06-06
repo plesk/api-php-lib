@@ -2,13 +2,14 @@
 
 namespace PleskX\Api\Struct\Server\LicenseAdditional;
 
+use PleskX\Api\AbstractStruct;
 use PleskX\Api\Struct\Server\LicensePropertyInfo;
 
 
 /**
  * Struttura dati per le informazioni su una licenza
  */
-class keyAdditionalInfo extends \PleskX\Api\Struct {
+class keyAdditionalInfo extends AbstractStruct {
 	
     /** @var string Numero completo della licenza */
     public $key_number;
@@ -30,7 +31,7 @@ class keyAdditionalInfo extends \PleskX\Api\Struct {
 	 * @param \SimpleXMLElement $apiResponse
 	 */
     public function __construct( $apiResponse ) {
-        $this->_initScalarProperties( $apiResponse, [
+        $this->initScalarProperties( $apiResponse, [
             ['number' => 'key_number'],
             ['name' => 'full_name'],
             ['active' => 'active'],

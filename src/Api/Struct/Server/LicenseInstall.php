@@ -3,10 +3,12 @@
 namespace PleskX\Api\Struct\Server;
 
 
+use PleskX\Api\AbstractStruct;
+
 /**
  * Struttura dati per la response di installazione licenza principale o aggiuntiva
  */
-class LicenseInstall extends \PleskX\Api\Struct {
+class LicenseInstall extends AbstractStruct {
 	
     /** @var string Stato della licenza */
     public $status;
@@ -22,7 +24,7 @@ class LicenseInstall extends \PleskX\Api\Struct {
 	 * @param \SimpleXMLElement $apiResponse
 	 */
     public function __construct( $apiResponse ) {
-        $this->_initScalarProperties( $apiResponse, [
+        $this->initScalarProperties( $apiResponse, [
             [ 'status'  => 'status'],
         ]);
 		

@@ -2,13 +2,14 @@
 
 namespace PleskX\Api\Struct\Server;
 
+use PleskX\Api\AbstractStruct;
 use PleskX\Api\Struct\Server\License\keyInfo;
 
 
 /**
  * Struttura dati per le informazioni sulla licenza installata
  */
-class LicenseInfo extends \PleskX\Api\Struct {
+class LicenseInfo extends AbstractStruct {
 	
     /** @var string Stato della licenza */
     public $status;
@@ -21,7 +22,7 @@ class LicenseInfo extends \PleskX\Api\Struct {
 	 * @param \SimpleXMLElement $apiResponse Oggetto xml a partire da <result>
 	 */
     public function __construct( $apiResponse ) {
-        $this->_initScalarProperties( $apiResponse, [
+        $this->initScalarProperties( $apiResponse, [
             'status',
         ]);
 		

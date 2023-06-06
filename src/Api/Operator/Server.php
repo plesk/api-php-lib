@@ -147,10 +147,10 @@ class Server extends \PleskX\Api\Operator
      * @return Struct\LicenseInfo
 	 */
 	public function getLicenseInfo() {
-        $packet = $this->_client->getPacket();
-		$packet->addChild( $this->_wrapperTag )->addChild( 'get' )->addChild( 'key' );
+        $packet = $this->client->getPacket();
+		$packet->addChild( $this->wrapperTag )->addChild( 'get' )->addChild( 'key' );
 		
-		$response = $this->_client->request( $packet );
+		$response = $this->client->request( $packet );
 		
 		return new Struct\LicenseInfo( $response );
 	}
@@ -161,10 +161,10 @@ class Server extends \PleskX\Api\Operator
      * @return Struct\LicenseAdditionalInfo
 	 */
 	public function getAdditionalLicensesInfo() {
-        $packet = $this->_client->getPacket();
-		$packet->addChild( $this->_wrapperTag )->addChild( 'get_additional_key' );
+        $packet = $this->client->getPacket();
+		$packet->addChild( $this->wrapperTag )->addChild( 'get_additional_key' );
 		
-		$response = new Struct\LicenseAdditionalInfo( $this->_client->request( $packet ) );
+		$response = new Struct\LicenseAdditionalInfo( $this->client->request( $packet ) );
 		
 		if( !is_null( $response->error_code ) or !empty( $response->error_message ) ) {
 			throw new Exception( $response->error_message, $response->error_code );
@@ -181,8 +181,8 @@ class Server extends \PleskX\Api\Operator
      * @return Struct\LicenseInstall
 	 */
 	public function installLicense( $activationCode, $isAdditionalLicense = false ) {
-        $packet = $this->_client->getPacket();
-		$server = $packet->addChild( $this->_wrapperTag );
+        $packet = $this->client->getPacket();
+		$server = $packet->addChild( $this->wrapperTag );
 		$licInstall = $server->addChild( 'lic_install' );
 		
 		$licInstall->addChild( 'activation-code', $activationCode );
@@ -191,7 +191,7 @@ class Server extends \PleskX\Api\Operator
 			$licInstall->addChild( 'additional_key' );
 		}
 		
-		$response = new Struct\LicenseInstall( $this->_client->request( $packet ) );
+		$response = new Struct\LicenseInstall( $this->client->request( $packet ) );
 		
 		if( !is_null( $response->error_code ) or !empty( $response->error_message ) ) {
 			throw new Exception( $response->error_message, $response->error_code );
