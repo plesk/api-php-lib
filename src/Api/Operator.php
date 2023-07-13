@@ -86,11 +86,11 @@ class Operator
         $response = $this->client->request($packet, \PleskX\Api\Client::RESPONSE_FULL);
 
         $items = [];
-        foreach ($response->xpath('//result') as $xmlResult) {
-            if (!is_null($filter) && !$filter($xmlResult->data->$infoTag)) {
+        foreach ((array) $response->xpath('//result') as $xmlResult) {
+            if (!$xmlResult || !isset($xmlResult->data) || !isset($xmlResult->data->$infoTag)) {
                 continue;
             }
-            if (!isset($xmlResult->data) || !isset($xmlResult->data->$infoTag)) {
+            if (!is_null($filter) && !$filter($xmlResult->data->$infoTag)) {
                 continue;
             }
             /** @psalm-suppress InvalidStringClass */

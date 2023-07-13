@@ -40,8 +40,10 @@ class Dns extends \PleskX\Api\Operator
 
         $response = $this->client->request($packet, \PleskX\Api\Client::RESPONSE_FULL);
         $items = [];
-        foreach ($response->xpath('//result') as $xmlResult) {
-            $items[] = $xmlResult;
+        foreach ((array) $response->xpath('//result') as $xmlResult) {
+            if ($xmlResult) {
+                $items[] = $xmlResult;
+            }
         }
 
         return $items;
@@ -76,7 +78,10 @@ class Dns extends \PleskX\Api\Operator
 
         $response = $this->client->request($packet, \PleskX\Api\Client::RESPONSE_FULL);
         $items = [];
-        foreach ($response->xpath('//result') as $xmlResult) {
+        foreach ((array) $response->xpath('//result') as $xmlResult) {
+            if (!$xmlResult) {
+                continue;
+            }
             $item = new Struct\Info($xmlResult->data);
             $item->id = (int) $xmlResult->id;
             $items[] = $item;
@@ -114,8 +119,10 @@ class Dns extends \PleskX\Api\Operator
 
         $response = $this->client->request($packet, \PleskX\Api\Client::RESPONSE_FULL);
         $items = [];
-        foreach ($response->xpath('//result') as $xmlResult) {
-            $items[] = $xmlResult;
+        foreach ((array) $response->xpath('//result') as $xmlResult) {
+            if ($xmlResult) {
+                $items[] = $xmlResult;
+            }
         }
 
         return $items;

@@ -167,10 +167,7 @@ class Client
         }
 
         if ('sdk' == $this->protocol) {
-            $version = ('' == $this->version) ? null : $this->version;
-            $requestXml = new SimpleXMLElement((string) $request);
-            /** @psalm-suppress UndefinedClass */
-            $xml = \pm_ApiRpc::getService($version)->call($requestXml->children()[0]->asXml(), $this->login);
+            $xml = $this->performSdkCall((string) $request);
         } else {
             $xml = $this->performHttpRequest((string) $request);
         }
@@ -179,8 +176,25 @@ class Client
             ? call_user_func($this->verifyResponseCallback, $xml)
             : $this->verifyResponse($xml);
 
-        $result = (self::RESPONSE_FULL === $mode) ? $xml : $xml->xpath('//result')[0];
-        return new XmlResponse((string) $result->asXML());
+        $result = (self::RESPONSE_FULL === $mode)
+            ? $xml
+            : ($xml->xpath('//result') ?: [null])[0];
+
+        return new XmlResponse($result ? (string) $result->asXML() : '');
+    }
+
+    private function performSdkCall(string $request): XmlResponse
+    {
+        $version = ('' == $this->version) ? null : $this->version;
+
+        $requestXml = new SimpleXMLElement($request);
+        $innerNodes = $requestXml->children();
+        $innerXml = $innerNodes && count($innerNodes) > 0 && $innerNodes[0] ? $innerNodes[0]->asXml() : '';
+
+        /** @psalm-suppress UndefinedClass */
+        $result = \pm_ApiRpc::getService($version)->call($innerXml, $this->login);
+
+        return new XmlResponse($result ? (string) $result->asXML() : '');
     }
 
     /**
@@ -265,7 +279,12 @@ class Client
     {
         $responses = [];
 
-        foreach ($responseXml->children() as $childNode) {
+        $nodes = $responseXml->children();
+        if (!$nodes) {
+            return [];
+        }
+
+        foreach ($nodes as $childNode) {
             $dom = $this->getDomDocument($this->getPacket());
             if (!$dom) {
                 continue;
@@ -278,7 +297,13 @@ class Client
             }
 
             $response = simplexml_load_string($dom->saveXML());
-            $responses[] = (self::RESPONSE_FULL == $mode) ? $response : $response->xpath('//result')[0];
+            if (!$response) {
+                return [];
+            }
+
+            $responses[] = (self::RESPONSE_FULL == $mode)
+                ? $response
+                : ($response->xpath('//result') ?: [null])[0];
         }
 
         return $responses;
@@ -330,8 +355,8 @@ class Client
         }
 
         if ($xml->xpath('//status[text()="error"]') && $xml->xpath('//errcode') && $xml->xpath('//errtext')) {
-            $errorCode = (int) $xml->xpath('//errcode')[0];
-            $errorMessage = (string) $xml->xpath('//errtext')[0];
+            $errorCode = (int) ($xml->xpath('//errcode') ?: [null])[0];
+            $errorMessage = (string) ($xml->xpath('//errtext') ?: [null])[0];
 
             throw new Exception($errorMessage, $errorCode);
         }

@@ -76,8 +76,8 @@ class Mail extends Operator
 
         $response = $this->client->request($packet, Client::RESPONSE_FULL);
         $items = [];
-        foreach ($response->xpath('//result') as $xmlResult) {
-            if (!isset($xmlResult->mailname)) {
+        foreach ((array) $response->xpath('//result') as $xmlResult) {
+            if (!$xmlResult || !isset($xmlResult->mailname)) {
                 continue;
             }
             $item = new Struct\GeneralInfo($xmlResult->mailname);

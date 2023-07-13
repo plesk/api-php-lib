@@ -77,8 +77,10 @@ class Database extends \PleskX\Api\Operator
     {
         $response = $this->getBy('get-db', $field, $value);
         $items = [];
-        foreach ($response->xpath('//result') as $xmlResult) {
-            $items[] = new Struct\Info($xmlResult);
+        foreach ((array) $response->xpath('//result') as $xmlResult) {
+            if ($xmlResult) {
+                $items[] = new Struct\Info($xmlResult);
+            }
         }
 
         return $items;
@@ -94,8 +96,10 @@ class Database extends \PleskX\Api\Operator
     {
         $response = $this->getBy('get-db-users', $field, $value);
         $items = [];
-        foreach ($response->xpath('//result') as $xmlResult) {
-            $items[] = new Struct\UserInfo($xmlResult);
+        foreach ((array) $response->xpath('//result') as $xmlResult) {
+            if ($xmlResult) {
+                $items[] = new Struct\UserInfo($xmlResult);
+            }
         }
 
         return $items;

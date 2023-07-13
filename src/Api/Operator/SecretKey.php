@@ -65,7 +65,10 @@ class SecretKey extends \PleskX\Api\Operator
         $response = $this->client->request($packet, \PleskX\Api\Client::RESPONSE_FULL);
 
         $items = [];
-        foreach ($response->xpath('//result/key_info') as $keyInfo) {
+        foreach ((array) $response->xpath('//result/key_info') as $keyInfo) {
+            if (!$keyInfo) {
+                continue;
+            }
             $items[] = new Struct\Info($keyInfo);
         }
 

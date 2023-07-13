@@ -72,8 +72,8 @@ class Subdomain extends \PleskX\Api\Operator
         $response = $this->client->request($packet, \PleskX\Api\Client::RESPONSE_FULL);
 
         $items = [];
-        foreach ($response->xpath('//result') as $xmlResult) {
-            if (empty($xmlResult->data)) {
+        foreach ((array) $response->xpath('//result') as $xmlResult) {
+            if (!$xmlResult || empty($xmlResult->data)) {
                 continue;
             }
             $item = new Struct\Info($xmlResult->data);
