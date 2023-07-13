@@ -15,7 +15,7 @@ class PhpHandler extends Operator
      *
      * @return Info
      */
-    public function get($field = null, $value = null): Info
+    public function get($field = null, $value = null): ?Info
     {
         $packet = $this->client->getPacket();
         $getTag = $packet->addChild($this->wrapperTag)->addChild('get');
@@ -26,9 +26,9 @@ class PhpHandler extends Operator
         }
 
         $response = $this->client->request($packet, Client::RESPONSE_FULL);
-        $xmlResult = $response->xpath('//result')[0];
+        $xmlResult = ($response->xpath('//result') ?: [null])[0];
 
-        return new Info($xmlResult);
+        return $xmlResult ? new Info($xmlResult) : null;
     }
 
     /**
@@ -49,7 +49,10 @@ class PhpHandler extends Operator
 
         $response = $this->client->request($packet, Client::RESPONSE_FULL);
         $items = [];
-        foreach ($response->xpath('//result') as $xmlResult) {
+        foreach ((array) $response->xpath('//result') as $xmlResult) {
+            if (!$xmlResult) {
+                continue;
+            }
             $item = new Info($xmlResult);
             $items[] = $item;
         }

@@ -57,7 +57,10 @@ class ProtectedDirectory extends Operator
     {
         $response = $this->getBy('get', $field, $value);
         $items = [];
-        foreach ($response->xpath('//result/data') as $xmlResult) {
+        foreach ((array) $response->xpath('//result/data') as $xmlResult) {
+            if (!$xmlResult) {
+                continue;
+            }
             $items[] = new Struct\DataInfo($xmlResult);
         }
 

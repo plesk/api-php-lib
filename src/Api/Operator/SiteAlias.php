@@ -70,7 +70,10 @@ class SiteAlias extends \PleskX\Api\Operator
 
         $response = $this->client->request($packet, \PleskX\Api\Client::RESPONSE_FULL);
         $items = [];
-        foreach ($response->xpath('//result') as $xmlResult) {
+        foreach ((array) $response->xpath('//result') as $xmlResult) {
+            if (!$xmlResult) {
+                continue;
+            }
             $item = new Struct\GeneralInfo($xmlResult->info);
             $items[] = $item;
         }
