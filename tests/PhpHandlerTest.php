@@ -9,7 +9,7 @@ class PhpHandlerTest extends AbstractTestCase
     {
         $handler = static::$client->phpHandler()->get();
 
-        $this->assertObjectHasAttribute('type', $handler);
+        $this->assertTrue(property_exists($handler, 'type'));
     }
 
     public function testGetAll()
@@ -22,7 +22,7 @@ class PhpHandlerTest extends AbstractTestCase
         $handler = current($handlers);
 
         $this->assertIsObject($handler);
-        $this->assertObjectHasAttribute('type', $handler);
+        $this->assertTrue(property_exists($handler, 'type'));
     }
 
     public function testGetUnknownHandlerThrowsException()

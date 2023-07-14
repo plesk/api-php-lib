@@ -26,7 +26,7 @@ class WebspaceTest extends AbstractTestCase
         $webspace = static::createWebspace();
         $diskusage = static::$client->webspace()->getDiskUsage('id', $webspace->id);
 
-        $this->assertObjectHasAttribute('httpdocs', $diskusage);
+        $this->assertTrue(property_exists($diskusage, 'httpdocs'));
 
         static::$client->webspace()->delete('id', $webspace->id);
     }
