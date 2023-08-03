@@ -31,6 +31,7 @@ abstract class AbstractStruct
                 $classPropertyName = current($property);
                 $value = $apiResponse->{key($property)};
             } else {
+                /** @psalm-suppress PossiblyInvalidArgument */
                 $classPropertyName = $this->underToCamel(str_replace('-', '_', $property));
                 $value = $apiResponse->$property;
             }
