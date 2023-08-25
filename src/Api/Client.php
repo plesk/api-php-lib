@@ -243,7 +243,7 @@ class Client
      *
      * @return array
      */
-    public function multiRequest(array $requests, $mode = self::RESPONSE_SHORT): array
+    public function multiRequest(array $requests, int $mode = self::RESPONSE_SHORT): array
     {
         $requestXml = $this->getPacket();
 
