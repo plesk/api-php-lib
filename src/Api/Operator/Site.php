@@ -27,7 +27,9 @@ class Site extends \PleskX\Api\Operator
             $hostingNode = $info->addChild('hosting')->addChild('vrt_hst');
             foreach ($properties[static::PROPERTIES_HOSTING] as $name => $value) {
                 $propertyNode = $hostingNode->addChild('property');
+                /** @psalm-suppress UndefinedPropertyAssignment */
                 $propertyNode->name = $name;
+                /** @psalm-suppress UndefinedPropertyAssignment */
                 $propertyNode->value = $value;
             }
         }

@@ -16,7 +16,9 @@ class Subdomain extends \PleskX\Api\Operator
             if (is_array($value)) {
                 foreach ($value as $propertyName => $propertyValue) {
                     $property = $info->addChild($name);
+                    /** @psalm-suppress UndefinedPropertyAssignment */
                     $property->name = $propertyName;
+                    /** @psalm-suppress UndefinedPropertyAssignment */
                     $property->value = $propertyValue;
                 }
                 continue;

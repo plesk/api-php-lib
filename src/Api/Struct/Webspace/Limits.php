@@ -15,7 +15,7 @@ class Limits extends AbstractStruct
         $this->initScalarProperties($apiResponse, ['overuse']);
         $this->limits = [];
 
-        foreach ($apiResponse->limit as $limit) {
+        foreach ($apiResponse->limit ?? [] as $limit) {
             $this->limits[(string) $limit->name] = new Limit($limit);
         }
     }

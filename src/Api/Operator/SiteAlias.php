@@ -74,8 +74,10 @@ class SiteAlias extends \PleskX\Api\Operator
             if (!$xmlResult) {
                 continue;
             }
-            $item = new Struct\GeneralInfo($xmlResult->info);
-            $items[] = $item;
+            if (!is_null($xmlResult->info)) {
+                $item = new Struct\GeneralInfo($xmlResult->info);
+                $items[] = $item;
+            }
         }
 
         return $items;

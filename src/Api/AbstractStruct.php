@@ -24,7 +24,7 @@ abstract class AbstractStruct
      *
      * @throws \Exception
      */
-    protected function initScalarProperties($apiResponse, array $properties): void
+    protected function initScalarProperties(\SimpleXMLElement $apiResponse, array $properties): void
     {
         foreach ($properties as $property) {
             if (is_array($property)) {

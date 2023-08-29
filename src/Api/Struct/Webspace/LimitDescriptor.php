@@ -13,7 +13,7 @@ class LimitDescriptor extends AbstractStruct
     {
         $this->limits = [];
 
-        foreach ($apiResponse->descriptor->property as $propertyInfo) {
+        foreach ($apiResponse->descriptor->property ?? [] as $propertyInfo) {
             $this->limits[(string) $propertyInfo->name] = new LimitInfo($propertyInfo);
         }
     }

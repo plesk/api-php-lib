@@ -86,7 +86,9 @@ class Webspace extends Operator
             $infoHosting = $info->addChild('hosting')->addChild('vrt_hst');
             foreach ($hostingProperties as $name => $value) {
                 $property = $infoHosting->addChild('property');
+                /** @psalm-suppress UndefinedPropertyAssignment */
                 $property->name = $name;
+                /** @psalm-suppress UndefinedPropertyAssignment */
                 $property->value = $value;
             }
 

@@ -13,7 +13,7 @@ class PhpSettings extends AbstractStruct
     {
         $this->properties = [];
 
-        foreach ($apiResponse->webspace->get->result->data->{'php-settings'}->setting as $setting) {
+        foreach ($apiResponse->webspace->get->result->data->{'php-settings'}->setting ?? [] as $setting) {
             $this->properties[(string) $setting->name] = (string) $setting->value;
         }
     }

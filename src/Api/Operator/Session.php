@@ -31,7 +31,7 @@ class Session extends \PleskX\Api\Operator
         $sessions = [];
         $response = $this->request('get');
 
-        foreach ($response->session as $sessionInfo) {
+        foreach ($response->session ?? [] as $sessionInfo) {
             $sessions[(string) $sessionInfo->id] = new Struct\Info($sessionInfo);
         }
 

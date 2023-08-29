@@ -19,14 +19,17 @@ class CustomButton extends AbstractStruct
     public function __construct(\SimpleXMLElement $apiResponse)
     {
         $this->initScalarProperties($apiResponse, ['id']);
-        $this->initScalarProperties($apiResponse->properties, [
-            'sort_key',
-            'public',
-            'internal',
-            ['noframe' => 'noFrame'],
-            'place',
-            'url',
-            'text',
-        ]);
+
+        if (!is_null($apiResponse->properties)) {
+            $this->initScalarProperties($apiResponse->properties, [
+                'sort_key',
+                'public',
+                'internal',
+                ['noframe' => 'noFrame'],
+                'place',
+                'url',
+                'text',
+            ]);
+        }
     }
 }

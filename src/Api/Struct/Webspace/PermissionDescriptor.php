@@ -13,7 +13,7 @@ class PermissionDescriptor extends AbstractStruct
     {
         $this->permissions = [];
 
-        foreach ($apiResponse->descriptor->property as $propertyInfo) {
+        foreach ($apiResponse->descriptor->property ?? [] as $propertyInfo) {
             $this->permissions[(string) $propertyInfo->name] = new PermissionInfo($propertyInfo);
         }
     }
