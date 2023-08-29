@@ -73,6 +73,7 @@ class ProtectedDirectory extends Operator
      * @param string $password
      *
      * @return Struct\UserInfo
+     * @psalm-suppress UndefinedPropertyAssignment
      */
     public function addUser($protectedDirectory, $login, $password)
     {

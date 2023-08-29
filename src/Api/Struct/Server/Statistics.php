@@ -28,6 +28,10 @@ class Statistics extends AbstractStruct
     /** @var Statistics\DiskSpace[] */
     public $diskSpace;
 
+    /**
+     * @param \SimpleXMLElement $apiResponse
+     * @psalm-suppress PossiblyNullArgument
+     */
     public function __construct(\SimpleXMLElement $apiResponse)
     {
         $this->objects = new Statistics\Objects($apiResponse->objects);
@@ -38,7 +42,7 @@ class Statistics extends AbstractStruct
         $this->swap = new Statistics\Swap($apiResponse->swap);
 
         $this->diskSpace = [];
-        foreach ($apiResponse->diskspace as $disk) {
+        foreach ($apiResponse->diskspace ?? [] as $disk) {
             $this->diskSpace[(string) $disk->device->name] = new Statistics\DiskSpace($disk->device);
         }
     }

@@ -36,7 +36,7 @@ class GeneralInfo extends AbstractStruct
             'admin-description',
         ]);
 
-        foreach ($apiResponse->dns_ip_address as $ip) {
+        foreach ($apiResponse->dns_ip_address ?? [] as $ip) {
             $this->ipAddresses[] = (string) $ip;
         }
 

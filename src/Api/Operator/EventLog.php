@@ -17,7 +17,7 @@ class EventLog extends \PleskX\Api\Operator
         $records = [];
         $response = $this->request('get');
 
-        foreach ($response->event as $eventInfo) {
+        foreach ($response->event ?? [] as $eventInfo) {
             $records[] = new Struct\Event($eventInfo);
         }
 
@@ -32,7 +32,7 @@ class EventLog extends \PleskX\Api\Operator
         $records = [];
         $response = $this->request('get_events');
 
-        foreach ($response->event as $eventInfo) {
+        foreach ($response->event ?? [] as $eventInfo) {
             $records[] = new Struct\DetailedEvent($eventInfo);
         }
 

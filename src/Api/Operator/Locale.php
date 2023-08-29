@@ -24,8 +24,10 @@ class Locale extends \PleskX\Api\Operator
 
         $response = $this->client->request($packet, \PleskX\Api\Client::RESPONSE_FULL);
 
-        foreach ($response->locale->get->result as $localeInfo) {
-            $locales[(string) $localeInfo->info->id] = new Struct\Info($localeInfo->info);
+        foreach ($response->locale->get->result ?? [] as $localeInfo) {
+            if (!is_null($localeInfo->info)) {
+                $locales[(string) $localeInfo->info->id] = new Struct\Info($localeInfo->info);
+            }
         }
 
         return !is_null($id) ? reset($locales) : $locales;

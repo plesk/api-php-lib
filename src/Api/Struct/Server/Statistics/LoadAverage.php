@@ -13,8 +13,8 @@ class LoadAverage extends AbstractStruct
 
     public function __construct(\SimpleXMLElement $apiResponse)
     {
-        $this->load1min = $apiResponse->l1 / 100.0;
-        $this->load5min = $apiResponse->l5 / 100.0;
-        $this->load15min = $apiResponse->l15 / 100.0;
+        $this->load1min = (float) $apiResponse->l1 / 100.0;
+        $this->load5min = (float) $apiResponse->l5 / 100.0;
+        $this->load15min = (float) $apiResponse->l15 / 100.0;
     }
 }

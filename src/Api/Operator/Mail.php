@@ -22,11 +22,13 @@ class Mail extends Operator
             $mailname->addChild('mailbox')->addChild('enabled', 'true');
         }
         if (!empty($password)) {
+            /** @psalm-suppress UndefinedPropertyAssignment */
             $mailname->addChild('password')->value = $password;
         }
 
         $response = $this->client->request($packet);
 
+        /** @psalm-suppress PossiblyNullArgument */
         return new Struct\Info($response->mailname);
     }
 

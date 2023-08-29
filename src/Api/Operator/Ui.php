@@ -11,6 +11,7 @@ class Ui extends \PleskX\Api\Operator
     {
         $response = $this->request('get-navigation');
 
+        /** @psalm-suppress ImplicitToStringCast, PossiblyNullArgument */
         return unserialize(base64_decode($response->navigation));
     }
 

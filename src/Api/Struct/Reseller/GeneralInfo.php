@@ -14,13 +14,15 @@ class GeneralInfo extends AbstractStruct
 
     public function __construct(\SimpleXMLElement $apiResponse)
     {
-        $this->initScalarProperties($apiResponse->{'gen-info'}, [
-            ['pname' => 'personalName'],
-            'login',
-        ]);
+        if (!is_null($apiResponse->{'gen-info'})) {
+            $this->initScalarProperties($apiResponse->{'gen-info'}, [
+                ['pname' => 'personalName'],
+                'login',
+            ]);
+        }
 
         $this->permissions = [];
-        foreach ($apiResponse->permissions->permission as $permissionInfo) {
+        foreach ($apiResponse->permissions->permission ?? [] as $permissionInfo) {
             $this->permissions[(string) $permissionInfo->name] = (string) $permissionInfo->value;
         }
     }

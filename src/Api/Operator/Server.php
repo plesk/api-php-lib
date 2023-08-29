@@ -14,6 +14,7 @@ class Server extends \PleskX\Api\Operator
         $packet->addChild($this->wrapperTag)->addChild('get_protos');
         $response = $this->client->request($packet);
 
+        /** @psalm-suppress PossiblyNullPropertyFetch */
         return (array) $response->protos->proto;
     }
 
@@ -37,7 +38,7 @@ class Server extends \PleskX\Api\Operator
         $keyInfo = [];
         $keyInfoXml = $this->getInfo('key');
 
-        foreach ($keyInfoXml->property as $property) {
+        foreach ($keyInfoXml->property ?? [] as $property) {
             $keyInfo[(string) $property->name] = (string) $property->value;
         }
 
@@ -49,7 +50,7 @@ class Server extends \PleskX\Api\Operator
         $components = [];
         $componentsXml = $this->getInfo('components');
 
-        foreach ($componentsXml->component as $component) {
+        foreach ($componentsXml->component ?? [] as $component) {
             $components[(string) $component->name] = (string) $component->version;
         }
 
@@ -61,7 +62,7 @@ class Server extends \PleskX\Api\Operator
         $states = [];
         $statesXml = $this->getInfo('services_state');
 
-        foreach ($statesXml->srv as $service) {
+        foreach ($statesXml->srv ?? [] as $service) {
             $states[(string) $service->id] = [
                 'id' => (string) $service->id,
                 'title' => (string) $service->title,
@@ -82,7 +83,7 @@ class Server extends \PleskX\Api\Operator
         $shells = [];
         $shellsXml = $this->getInfo('shells');
 
-        foreach ($shellsXml->shell as $shell) {
+        foreach ($shellsXml->shell ?? [] as $shell) {
             $shells[(string) $shell->name] = (string) $shell->path;
         }
 
@@ -106,7 +107,7 @@ class Server extends \PleskX\Api\Operator
         $config = [];
         $configXml = $this->getInfo('site-isolation-config');
 
-        foreach ($configXml->property as $property) {
+        foreach ($configXml->property ?? [] as $property) {
             $config[(string) $property->name] = (string) $property->value;
         }
 

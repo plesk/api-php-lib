@@ -20,7 +20,7 @@ class Info extends AbstractStruct
             'parent',
             'name',
         ]);
-        foreach ($apiResponse->property as $propertyInfo) {
+        foreach ($apiResponse->property ?? [] as $propertyInfo) {
             $this->properties[(string) $propertyInfo->name] = (string) $propertyInfo->value;
         }
     }

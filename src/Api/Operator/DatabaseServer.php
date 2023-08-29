@@ -60,9 +60,11 @@ class DatabaseServer extends \PleskX\Api\Operator
             if (!$xmlResult) {
                 continue;
             }
-            $item = new Struct\Info($xmlResult->data);
-            $item->id = (int) $xmlResult->id;
-            $items[] = $item;
+            if (!is_null($xmlResult->data)) {
+                $item = new Struct\Info($xmlResult->data);
+                $item->id = (int) $xmlResult->id;
+                $items[] = $item;
+            }
         }
 
         return $items;
