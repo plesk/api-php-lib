@@ -37,6 +37,19 @@ class DatabaseServer extends \PleskX\Api\Operator
         return $this->getBy();
     }
 
+    public function getDefault(string $type): Struct\Info
+    {
+        $packet = $this->client->getPacket();
+        $getTag = $packet->addChild($this->wrapperTag)->addChild('get-default');
+        $filterTag = $getTag->addChild('filter');
+        /** @psalm-suppress UndefinedPropertyAssignment */
+        $filterTag->type = $type;
+
+        $response = $this->client->request($packet);
+
+        return new Struct\Info($response);
+    }
+
     /**
      * @param string|null $field
      * @param int|string|null $value

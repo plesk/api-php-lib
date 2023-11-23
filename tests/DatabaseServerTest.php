@@ -26,4 +26,11 @@ class DatabaseServerTest extends AbstractTestCase
         $this->assertGreaterThan(0, count($dbServers));
         $this->assertEquals('localhost', $dbServers[0]->host);
     }
+
+    public function testGetDefault()
+    {
+        $dbServer = static::$client->databaseServer()->getDefault('mysql');
+        $this->assertEquals('mysql', $dbServer->type);
+        $this->assertGreaterThan(0, $dbServer->id);
+    }
 }

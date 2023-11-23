@@ -8,11 +8,13 @@ use PleskXTest\Utility\PasswordProvider;
 class DatabaseTest extends AbstractTestCase
 {
     private static \PleskX\Api\Struct\Webspace\Info $webspace;
+    private static \PleskX\Api\Struct\DatabaseServer\Info $databaseServer;
 
     public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();
         static::$webspace = static::createWebspace();
+        static::$databaseServer = static::$client->databaseServer()->getDefault('mysql');
     }
 
     public function testCreate()
@@ -20,8 +22,8 @@ class DatabaseTest extends AbstractTestCase
         $database = $this->createDatabase([
             'webspace-id' => static::$webspace->id,
             'name' => 'test1',
-            'type' => 'mysql',
-            'db-server-id' => 1,
+            'type' => static::$databaseServer->type,
+            'db-server-id' => static::$databaseServer->id,
         ]);
         static::$client->database()->delete('id', $database->id);
     }
@@ -31,8 +33,8 @@ class DatabaseTest extends AbstractTestCase
         $database = $this->createDatabase([
             'webspace-id' => static::$webspace->id,
             'name' => 'test1',
-            'type' => 'mysql',
-            'db-server-id' => 1,
+            'type' => static::$databaseServer->type,
+            'db-server-id' => static::$databaseServer->id,
         ]);
         $user = $this->createUser([
             'db-id' => $database->id,
@@ -48,8 +50,8 @@ class DatabaseTest extends AbstractTestCase
         $database = $this->createDatabase([
             'webspace-id' => static::$webspace->id,
             'name' => 'test1',
-            'type' => 'mysql',
-            'db-server-id' => 1,
+            'type' => static::$databaseServer->type,
+            'db-server-id' => static::$databaseServer->id,
         ]);
         $user = $this->createUser([
             'db-id' => $database->id,
@@ -71,15 +73,15 @@ class DatabaseTest extends AbstractTestCase
         $database = $this->createDatabase([
             'webspace-id' => static::$webspace->id,
             'name' => 'test1',
-            'type' => 'mysql',
-            'db-server-id' => 1,
+            'type' => static::$databaseServer->type,
+            'db-server-id' => static::$databaseServer->id,
         ]);
 
         $db = static::$client->database()->get('id', $database->id);
         $this->assertEquals('test1', $db->name);
-        $this->assertEquals('mysql', $db->type);
+        $this->assertEquals(static::$databaseServer->type, $db->type);
         $this->assertEquals(static::$webspace->id, $db->webspaceId);
-        $this->assertEquals(1, $db->dbServerId);
+        $this->assertEquals(static::$databaseServer->id, $db->dbServerId);
 
         static::$client->database()->delete('id', $database->id);
     }
@@ -89,20 +91,20 @@ class DatabaseTest extends AbstractTestCase
         $db1 = $this->createDatabase([
             'webspace-id' => static::$webspace->id,
             'name' => 'test1',
-            'type' => 'mysql',
-            'db-server-id' => 1,
+            'type' => static::$databaseServer->type,
+            'db-server-id' => static::$databaseServer->id,
         ]);
         $db2 = $this->createDatabase([
             'webspace-id' => static::$webspace->id,
             'name' => 'test2',
-            'type' => 'mysql',
-            'db-server-id' => 1,
+            'type' => static::$databaseServer->type,
+            'db-server-id' => static::$databaseServer->id,
         ]);
         $databases = static::$client->database()->getAll('webspace-id', static::$webspace->id);
         $this->assertEquals('test1', $databases[0]->name);
         $this->assertEquals('test2', $databases[1]->name);
         $this->assertEquals(static::$webspace->id, $databases[0]->webspaceId);
-        $this->assertEquals(1, $databases[1]->dbServerId);
+        $this->assertEquals(static::$databaseServer->id, $databases[1]->dbServerId);
 
         static::$client->database()->delete('id', $db1->id);
         static::$client->database()->delete('id', $db2->id);
@@ -113,8 +115,8 @@ class DatabaseTest extends AbstractTestCase
         $database = $this->createDatabase([
             'webspace-id' => static::$webspace->id,
             'name' => 'test1',
-            'type' => 'mysql',
-            'db-server-id' => 1,
+            'type' => static::$databaseServer->type,
+            'db-server-id' => static::$databaseServer->id,
         ]);
 
         $user = $this->createUser([
@@ -136,14 +138,14 @@ class DatabaseTest extends AbstractTestCase
         $db1 = $this->createDatabase([
             'webspace-id' => static::$webspace->id,
             'name' => 'test1',
-            'type' => 'mysql',
-            'db-server-id' => 1,
+            'type' => static::$databaseServer->type,
+            'db-server-id' => static::$databaseServer->id,
         ]);
         $db2 = $this->createDatabase([
             'webspace-id' => static::$webspace->id,
             'name' => 'test2',
-            'type' => 'mysql',
-            'db-server-id' => 1,
+            'type' => static::$databaseServer->type,
+            'db-server-id' => static::$databaseServer->id,
         ]);
         $user1 = $this->createUser([
             'db-id' => $db1->id,
@@ -180,8 +182,8 @@ class DatabaseTest extends AbstractTestCase
         $database = $this->createDatabase([
             'webspace-id' => static::$webspace->id,
             'name' => 'test1',
-            'type' => 'mysql',
-            'db-server-id' => 1,
+            'type' => static::$databaseServer->type,
+            'db-server-id' => static::$databaseServer->id,
         ]);
         $result = static::$client->database()->delete('id', $database->id);
         $this->assertTrue($result);
@@ -192,8 +194,8 @@ class DatabaseTest extends AbstractTestCase
         $database = $this->createDatabase([
             'webspace-id' => static::$webspace->id,
             'name' => 'test1',
-            'type' => 'mysql',
-            'db-server-id' => 1,
+            'type' => static::$databaseServer->type,
+            'db-server-id' => static::$databaseServer->id,
         ]);
         $user = $this->createUser([
             'db-id' => $database->id,
