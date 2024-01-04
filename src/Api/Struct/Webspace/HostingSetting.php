@@ -18,7 +18,7 @@ class HostingSetting extends AbstractStruct
 		}
 		
         foreach ($apiResponse->vrt_hst->property as $propertyInfo) {
-            $this->properties[reset( $propertyInfo->name)] = reset( $propertyInfo->value );
+            $this->properties[$propertyInfo->name] = $propertyInfo->value;
         }
     }
 }

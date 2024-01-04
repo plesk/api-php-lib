@@ -137,7 +137,7 @@ class Webspace extends Operator
 			return null;
 		}
 		
-		return trim( reset( $response->data->gen_info->status ) );
+		return trim( $response->data->gen_info->status );
 	}
 	
 	
@@ -253,7 +253,7 @@ class Webspace extends Operator
 			return null;
 		}
 		
-		return trim( reset( $response->data->subscriptions->subscription->plan->$guidPropertyName ) );
+		return trim( $response->data->subscriptions->subscription->plan->$guidPropertyName );
     }
 	
 	
@@ -369,7 +369,7 @@ class Webspace extends Operator
 		
 		foreach( $responseProperties as $property ) {
 			if( $property->name == 'certificate_name' ) {
-				return trim( reset( $property->value ) );
+				return trim( $property->value );
 			}
 		}
 		
