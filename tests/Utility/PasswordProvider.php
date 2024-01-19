@@ -1,5 +1,5 @@
 <?php
-// Copyright 1999-2024. Plesk International GmbH.
+// Copyright 1999-2024. WebPros International GmbH.
 
 namespace PleskXTest\Utility;
 
