@@ -122,13 +122,13 @@ class DnsTest extends AbstractTestCase
         $dns = static::$client->dns()->create([
             'site-id' => static::$webspace->id,
             'type' => 'DS',
-            'host' => '',
+            'host' => 'host',
             'value' => '60485 5 1 2BB183AF5F22588179A53B0A98631FAD1A292118',
         ]);
         $dns2 = static::$client->dns()->create([
             'site-id' => static::$webspace->id,
             'type' => 'DS',
-            'host' => '',
+            'host' => 'host',
             'value' => '60485 5 1 2BB183AF5F22588179A53B0A98631FAD1A292119',
         ]);
         $dnsInfo = static::$client->dns()->getAll('site-id', static::$webspace->id);
