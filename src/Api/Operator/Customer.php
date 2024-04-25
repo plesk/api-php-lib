@@ -72,7 +72,7 @@ class Customer extends \PleskX\Api\Operator
      */
     public function disable(string $field, $value): bool
     {
-        return $this->setProperties($field, $value, ['status' => 1]);
+        return $this->setProperties($field, $value, ['status' => 16]);
     }
 
     /**
