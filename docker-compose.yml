@@ -1,5 +1,5 @@
 # Copyright 1999-2024. WebPros International GmbH.
-version: '2'
+version: '3'
 services:
   plesk:
     image: plesk/plesk:latest
@@ -12,7 +12,8 @@ services:
       - /run
       - /run/lock
     volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+      - /sys/fs/cgroup:/sys/fs/cgroup
+    cgroup: host
   tests:
     build: .
     environment:
