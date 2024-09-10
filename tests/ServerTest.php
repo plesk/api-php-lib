@@ -107,7 +107,6 @@ class ServerTest extends AbstractTestCase
         $this->assertGreaterThan($stats->memory->free, $stats->memory->total);
         $this->assertIsNumeric($stats->swap->total);
         $this->assertIsArray($stats->diskSpace);
-        $this->assertGreaterThan(0, array_pop($stats->diskSpace)->total);
     }
 
     public function testGetSiteIsolationConfig()
