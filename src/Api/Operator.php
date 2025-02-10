@@ -71,7 +71,7 @@ class Operator
      *
      * @return array
      */
-    protected function getItems($structClass, $infoTag, $field = null, $value = null, callable $filter = null): array
+    protected function getItems($structClass, $infoTag, $field = null, $value = null, ?callable $filter = null): array
     {
         $packet = $this->client->getPacket();
         $getTag = $packet->addChild($this->wrapperTag)->addChild('get');

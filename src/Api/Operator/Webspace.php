@@ -68,7 +68,7 @@ class Webspace extends Operator
      *
      * @return Struct\Info
      */
-    public function create(array $properties, array $hostingProperties = null, string $planName = ''): Struct\Info
+    public function create(array $properties, ?array $hostingProperties = null, string $planName = ''): Struct\Info
     {
         $packet = $this->client->getPacket();
         $info = $packet->addChild($this->wrapperTag)->addChild('add');
