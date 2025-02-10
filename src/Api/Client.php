@@ -92,7 +92,7 @@ class Client
      *
      * @param callable|null $function
      */
-    public function setVerifyResponse(callable $function = null): void
+    public function setVerifyResponse(?callable $function = null): void
     {
         $this->verifyResponseCallback = $function;
     }
