@@ -1,5 +1,5 @@
 <?php
-// Copyright 1999-2024. WebPros International GmbH.
+// Copyright 1999-2025. WebPros International GmbH.
 
 namespace PleskX\Api\Struct\Mail;
 

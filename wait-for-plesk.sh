@@ -1,5 +1,5 @@
 #!/bin/bash
-### Copyright 1999-2024. WebPros International GmbH.
+### Copyright 1999-2025. WebPros International GmbH.
 
 COUNTER=1
 
