@@ -68,12 +68,12 @@ class Database extends \PleskX\Api\Operator
     }
 
     /**
-     * @param string $field
+     * @param string|null $field
      * @param int|string $value
      *
      * @return Struct\Info[]
      */
-    public function getAll(string $field, $value): array
+    public function getAll(?string $field, $value): array
     {
         $response = $this->getBy('get-db', $field, $value);
         $items = [];
@@ -107,18 +107,20 @@ class Database extends \PleskX\Api\Operator
 
     /**
      * @param string $command
-     * @param string $field
+     * @param string|null $field
      * @param int|string $value
      *
      * @return XmlResponse
      */
-    private function getBy(string $command, string $field, $value): XmlResponse
+    private function getBy(string $command, ?string $field, $value): XmlResponse
     {
         $packet = $this->client->getPacket();
         $getTag = $packet->addChild($this->wrapperTag)->addChild($command);
 
         $filterTag = $getTag->addChild('filter');
-        $filterTag->{$field} = (string) $value;
+        if (!is_null($field)) {
+            $filterTag->{$field} = (string) $value;
+        }
 
         return $this->client->request($packet, \PleskX\Api\Client::RESPONSE_FULL);
     }
