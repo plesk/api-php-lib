@@ -24,7 +24,7 @@
         "phpunit/phpunit": "^9",
         "spatie/phpunit-watcher": "^1.22",
         "vimeo/psalm": "^4.10 || ^5.0",
-        "squizlabs/php_codesniffer": "^3.6"
+        "squizlabs/php_codesniffer": "^3.6 || ^4.0"
     },
     "config": {
         "process-timeout": 0,
