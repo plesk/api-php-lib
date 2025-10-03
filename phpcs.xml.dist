@@ -14,7 +14,6 @@
         <exclude name="Generic.Classes.OpeningBraceSameLine"/>
         <exclude name="Generic.Functions.OpeningFunctionBraceKernighanRitchie"/>
         <exclude name="Generic.Formatting.MultipleStatementAlignment"/>
-        <exclude name="Generic.Formatting.NoSpaceAfterCast"/>
         <exclude name="Generic.Formatting.SpaceBeforeCast"/>
         <exclude name="Generic.Formatting.SpaceAfterNot"/>
         <exclude name="Generic.Commenting.DocComment"/>
