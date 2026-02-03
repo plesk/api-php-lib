@@ -78,7 +78,7 @@ class Database extends \PleskX\Api\Operator
         $response = $this->getBy('get-db', $field, $value);
         $items = [];
         foreach ((array) $response->xpath('//result') as $xmlResult) {
-            if ($xmlResult) {
+            if ($xmlResult && isset($xmlResult->id) && (int) $xmlResult->id > 0) {
                 $items[] = new Struct\Info($xmlResult);
             }
         }

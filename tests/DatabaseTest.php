@@ -225,4 +225,13 @@ class DatabaseTest extends AbstractTestCase
 
         return $user;
     }
+
+    public function testGetAllForWebspaceWithNoDatabases()
+    {
+        $webspace = static::$webspace;
+        $databases = static::$client->database()->getAll('webspace-id', $webspace->id);
+
+        $this->assertIsArray($databases);
+        $this->assertEmpty($databases);
+    }
 }
