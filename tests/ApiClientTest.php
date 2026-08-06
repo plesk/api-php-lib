@@ -124,7 +124,7 @@ class ApiClientTest extends AbstractTestCase
         $protos = (array) $responses[0]->protos->proto;
         $generalInfo = $responses[1];
 
-        $this->assertContains('1.6.6.0', $protos);
+        $this->assertContains('1.6.9.1', $protos);
         $this->assertGreaterThan(0, strlen($generalInfo->gen_info->server_name));
     }
 

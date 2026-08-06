@@ -9,7 +9,7 @@ class ServerTest extends AbstractTestCase
     {
         $protos = static::$client->server()->getProtos();
         $this->assertIsArray($protos);
-        $this->assertContains('1.6.3.0', $protos);
+        $this->assertContains('1.6.9.1', $protos);
     }
 
     public function testGetGenInfo()
