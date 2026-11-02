@@ -555,11 +555,6 @@ class Client
         return $this->getOperator('ResellerPlan');
     }
 
-    public function aps(): Operator\Aps
-    {
-        return $this->getOperator('Aps');
-    }
-
     public function servicePlanAddon(): Operator\ServicePlanAddon
     {
         return $this->getOperator('ServicePlanAddon');
